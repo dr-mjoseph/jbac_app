@@ -1,0 +1,245 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button (click)="gotohome()">
+        <ion-icon style="font-size: 20px;" name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title style="text-align: center;font-size: 40px;font-family:ramabhadra"><b> క్రైస్తవ మీటింగ్స్ పోస్టర్‌ నమోదు</b></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="pagecss">
+  <h3
+    style="border-radius: 15px;text-align:center ;color: #fb0404;font-family:ramabhadra ; font-size: 20px;background-color: aliceblue;padding: 2%;font-weight: 800;">
+    క్రైస్తవ మీటింగ్స్ సమాచారం సబ్మిట్ చేయండి ( * మార్క్ వున్నవి తప్పనిసరిగా పూరించండి)</h3>
+  <form [formGroup]="form">
+    <ion-row>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>కూటముల టైపు ఎంచుకోండి<span style="color:red; font-family:ramabhadra">*</span></ion-label>
+          <ion-select formControlName="mettingtype" [ngClass]="{'is-invalid': submitted && t['mettingtype'].errors }">
+            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
+            <ion-option value="ఉజ్జీవ">ఉజ్జీవ కూటములు</ion-option>
+            <ion-option value="సువార్త కూటములు">సువార్త కూటములు</ion-option>
+            <ion-option value="ఉపవాస కూటములు">ఉపవాస కూటములు</ion-option>
+            <ion-option value="స్వస్థత కూటములు">స్వస్థత కూటములు</ion-option>
+            <ion-option value="ఉజ్జీవ స్వస్థత కూటములు">ఉజ్జీవ స్వస్థత కూటములు</ion-option>
+            <ion-option value="వార్షికోత్సవ కూటములు">వార్షికోత్సవ కూటములు</ion-option>
+            <ion-option value="కృతజ్ఞత స్తుతి కూటములు">కృతజ్ఞత స్తుతి కూటములు</ion-option>
+            <ion-option value="ప్రవచన విడుదల కూటములు">ప్రవచన విడుదల కూటములు</ion-option>
+            <ion-option value="యూత్ మీటింగ్స్">యూత్ మీటింగ్స్</ion-option>
+            <ion-option value="క్రైస్తవ నాయకుల కూటములు">క్రైస్తవ నాయకుల కూటములు</ion-option>
+            <ion-option value="స్త్రీల కూటములు">స్త్రీల కూటములు</ion-option>
+            <ion-option value="పాస్టర్ ఫెలోషిప్ కూటములు">పాస్టర్ ఫెలోషిప్ కూటములు</ion-option>
+            <ion-option value="క్రైస్తవ పిల్లల కూటములు">క్రైస్తవ పిల్లల కూటములు</ion-option>
+            <ion-option value="క్రైస్తవ బుక్స్ ఎక్సిబిషన్">క్రైస్తవ బుక్స్ ఎక్సిబిషన్</ion-option>
+            <ion-option value="క్రైస్తవ సంగీత కూటములు">క్రైస్తవ సంగీత కూటములు</ion-option>
+            <ion-option value="ఇతర కూటములు">ఇతర కూటములు</ion-option>
+          </ion-select>
+          <div *ngIf="submitted && t['mettingtype'].errors" class="invalid-feedback">
+            <div *ngIf="t['mettingtype'].errors['required']">కూటముల టైపు ఎంచుకోండి</div>
+          </div>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12 class="mb-4 pb-2">
+        <ion-item class="form-outline">
+          <ion-label stacked>మీ డినామినేషన్ మోడల్‌<span style="color:red; ">*</span></ion-label>
+          <ion-select formControlName="denomation" style="height:37px;width: 273px;">
+            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of denomation" [value]="item.id">{{item.denomation_name}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>కూటముల ప్రారంభ తేదీ<span style="color:red; ">*</span></ion-label>
+          <ion-input type="date" formControlName="fromdate" [min]="now"></ion-input>
+          <div *ngIf="submitted && t['fromdate'].errors" class="invalid-feedback">
+            <div *ngIf="t['fromdate'].errors['required']">కూటముల ప్రారంభ తేదీ</div>
+          </div>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>కూటముల చివరి తేదీ<span style="color:red; ">*</span></ion-label>
+          <ion-input type="date" formControlName="todate" [min]="now"></ion-input>
+          <div *ngIf="submitted && t['todate'].errors" class="invalid-feedback">
+            <div *ngIf="t['todate'].errors['required']">కూటముల చివరి తేదీ</div>
+          </div>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <div class="imgerdt" (click)="openphoto()">
+          <img src="assets/icon/Upload.svg" style="height:70px;width:70px;">అప్‌లోడ్ కూటముల పోస్టర్‌
+          <br>
+          <img *ngIf="imagesData.length" [src]="imagesData[0].reviewimg" alt="" height="200px" width="200px">
+          <div *ngIf="submitted && t['image'].errors" class="invalid-feedback">
+            <div *ngIf="t['image'].errors['required']">ఇక్కడ క్లిక్ చేసి అప్‌లోడ్ కూటముల పోస్టర్‌</div>
+          </div>
+        </div>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item class="mb-4 pb-2">
+          <ion-label stacked>కూటముల సమయాలు & ఇతర సమాచారం<span style="color:red; ">*</span></ion-label>
+          <ion-textarea formControlName="description" class="form-control" col="5"
+            placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి"></ion-textarea>
+          <div *ngIf="submitted && t['description'].errors" class="invalid-feedback">
+            <div *ngIf="t['description'].errors['required']">కూటముల సమయాలు ఎంటర్ చేయండి</div>
+          </div>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked> మీటింగ్ ఆర్గనైజర్ పేరు (ఇంటి పేరు తో సహా)</ion-label>
+          <ion-input type="text" formControlName="speakerone" placeholder=" ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి"
+            class="form-control"></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <!-- <ion-col col-12>
+        <ion-item>
+          <ion-label stacked> స్పీకర్ రెండు పేరు</ion-label>
+          <ion-input type="text" formControlName="speakertwo" placeholder="స్పీకర్ ఒక పేరును నమోదు చేయండి"
+            class="form-control"></ion-input>
+        </ion-item>
+      </ion-col> -->
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>మీటింగ్ ఆర్గనైజర్ ఫోన్ నెంబర్[10 అంకెలు]  (పబ్లిక్ కు చూపించ బడదు)</ion-label>
+          <ion-input type="tel" formControlName="orgphone" minlength="10" maxlength="10"
+            placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి" class="form-control"></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>మీటింగ్ కోసం సంప్రదించే ఫోన్[10 అంకెలు]  (పబ్లిక్ కు చూపించ బడును)</ion-label>
+          <ion-input type="tel" formControlName="evntphone" placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి" minlength="10"
+            maxlength="10" class="form-control"></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item class="mb-4 pb-2">
+          <ion-label stacked>మీటింగ్ హాజరు అయ్యే వారి సంఖ్య ఎంత ఉండవచ్చు <span style="color:red; ">*</span></ion-label>
+          <ion-input formControlName="peoplecount" placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి " type="tel" 
+            class="form-control"></ion-input>
+          <div *ngIf="submitted && t['address'].errors" class="invalid-feedback">
+            <div *ngIf="t['address'].errors['required']">>మీటింగ్ హాజరు అయ్యే వారి సంఖ్య ఎంటర్ చేయండి</div>
+          </div>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>మీ యూ ట్యూబ్ ఛానెల్ లింక్</ion-label>
+          <ion-input type="text" formControlName="youtube" placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి"
+            class="form-control"></ion-input>
+          <div *ngIf="submitted && t['youtube'].errors" class="invalid-feedback">
+            <div *ngIf="t['youtube'].errors['required']">మీ యూ ట్యూబ్ ఛానెల్ లింక్ </div>
+          </div>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>మీ ఫేస్ బుక్-లింక్</ion-label>
+          <ion-input type="text" formControlName="facebook" placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి"></ion-input>
+          <div *ngIf="submitted && t['facebook'].errors" class="invalid-feedback">
+            <div *ngIf="t['facebook'].errors['required']">మీ ఫేస్ బుక్-లింక్</div>
+          </div>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <h4 Style="color:whitesmoke;text-align: center;font-weight: 600;">కూటముల జరిగే అడ్రసు </h4>
+        <ion-item class="mb-4 pb-2">
+          <ion-label stacked> జిల్లాను  <span style="color:red; ">*</span></ion-label>
+          <ion-select formControlName="districtname" (ionChange)="getconstency($event)" placeholder="ఇక్కడ క్లిక్ చేసి జిల్లాను ఎంచుకోండి"
+            (click)="geyr(1)" class="form-control">
+            <ion-option value="{{item.id}}" *ngFor="let item of districts">{{item.distrct_nm}}</ion-option>
+          </ion-select>
+          <div *ngIf="submitted && t['districtname'].errors" class="invalid-feedback">
+            <div *ngIf="t['districtname'].errors['required']">జిల్లాను ఎంచుకోండి </div>
+          </div>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item class="mb-4 pb-2">
+          <ion-label stacked>నియోజకవర్గం  <span style="color:red; ">*</span></ion-label>
+          <ion-select formControlName="constituencyname" (ionChange)="getmandals($event)" (click)="geyr(2)"
+            placeholder="ఇక్కడ క్లిక్ చేసి  నియోజకవర్గం ఎంచుకోండి" class="form-control">
+            <ion-option value="{{item.id}}" *ngFor="let item of constituency">{{item.const_nm}}</ion-option>
+          </ion-select>
+          <div *ngIf="submitted && t['constituencyname'].errors" class="invalid-feedback">
+            <div *ngIf="t['constituencyname'].errors['required']">నియోజకవర్గంను ఎంచుకోండి </div>
+          </div>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item class="mb-4 pb-2">
+          <ion-label stacked> మండలం / మున్సిపాలిటీని ఎంచుకోండి <span style="color:red; ">*</span></ion-label>
+          <ion-select formControlName="mandals" (ionChange)="gepanchayati($event)" (click)="geyr(3)"
+            placeholder="ఇక్కడ క్లిక్ చేసి సెలెక్ట్ మండలం / మున్సిపాలిటీ" class="form-control">
+            <ion-option value="{{item.id}}" *ngFor="let item of mandals">{{item.mndl_nm}}</ion-option>
+          </ion-select>
+          <div *ngIf="submitted && t['mandals'].errors" class="invalid-feedback">
+            <div *ngIf="t['mandals'].errors['required']">మండలం / మున్సిపాలిటీని ఎంచుకోండి </div>
+          </div>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item class="mb-4 pb-2">
+          <ion-label stacked> పంచాయతీ / వార్డుని ఎంచుకోండి <span style="color:red; ">*</span></ion-label>
+          <ion-select formControlName="village_name" placeholder="ఇక్కడ క్లిక్ చేసి సెలెక్ట్ పంచాయతీ/వార్డు" (click)="geyr(4)"
+            class="form-control">
+            <ion-option value="{{item.id}}" *ngFor="let item of panchayati">{{item.pnchyt_nm}}</ion-option>
+          </ion-select>
+          <div *ngIf="submitted && t['village_name'].errors" class="invalid-feedback">
+            <div *ngIf="t['village_name'].errors['required']">పంచాయతీ / వార్డు ని ఎంచుకోండి</div>
+          </div>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item class="mb-4 pb-2">
+          <ion-label stacked>కూటముల జరిగే ప్రదేశం ల్యాండ్ మార్క్ మరియు లోకల్ అడ్రస్ <span
+              style="color:red; ">*</span></ion-label>
+          <ion-textarea formControlName="address" col="5" placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి"
+            class="form-control"></ion-textarea>
+          <div *ngIf="submitted && t['address'].errors" class="invalid-feedback">
+            <div *ngIf="t['address'].errors['required']">కూటముల జరిగే ప్రదేశం ల్యాండ్ మార్క్ మరియు లోకల్ అడ్రస్ ఎంటర్ చేయండి </div>
+          </div>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item class="mb-4 pb-2">
+          <ion-label stacked>కూటముల గూగుల్ లొకేషన్ లింక్</ion-label>
+          <ion-input type="text" formControlName="location" placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి"
+            class="form-control"></ion-input>
+          <div *ngIf="submitted && t['location'].errors" class="invalid-feedback">
+            <div *ngIf="t['location'].errors['required']">కూటముల గూగుల్ లొకేషన్ ఎంటర్ చేయండి</div>
+          </div>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12 class="mb-4 pb-2" style="text-align: center;">
+        <button ion-button color="secondary" type="submit" (click)="postmeetings()">
+          నమోదు చేయండి
+        </button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

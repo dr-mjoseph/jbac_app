@@ -1,0 +1,147 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button button (click)="gotohome()">
+        <ion-icon style="font-size: 20px;" name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title style="text-align: center;"><b>Search Business / Rent</b></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="pagecss">
+
+  <ion-searchbar (click)="onSearch()" *ngIf="fromshow==1"></ion-searchbar>
+
+  <form [formGroup]="searchdenomation" *ngIf="fromshow==2">
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-label>
+          <ion-select formControlName="type" (ionChange)="searchchange($event)">
+            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
+            <ion-option value="Sales">అమ్మకాయ</ion-option>
+            <ion-option value="Purchase">కొనుగోలు</ion-option>
+            <ion-option value="Rent">అద్దె</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>డెనమినేషన్‌లను ఎంచుకోండి</ion-label>
+          <ion-select formControlName="denomation" (ionChange)="searchdenomationdata($event)"
+            style="height:37px;width: 273px;">
+            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of denomation" [value]="item.id">{{item.denomation_name}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>ఫ్లాట్‌ల రకాలు</ion-label>
+          <ion-select formControlName="title" (ionChange)="searchspeak($event)">
+            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
+            <ion-option value="1bhk">1BHK</ion-option>
+            <ion-option value="2bhk">2BHK</ion-option>
+            <ion-option value="3bhk">3BHK</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>మంత్రిస్థానం ఎంచుకోండి</ion-label>
+          <ion-select formControlName="ministry_id" (ionChange)="ministry($event)" style="height:37px;width: 273px;">
+            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let i of ministryname" [value]="i.ministryname">{{i.ministryname}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </form>
+
+  <form [formGroup]="serachMeetingform" *ngIf="fromshow==2">
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>జిల్లాలను ఎంచుకోండి</ion-label>
+          <ion-select formControlName="district_id" (ionChange)="getconstency($event)"
+            (ionChange)="searchdistric($event)" style="height:37px;width: 273px;">
+            <ion-option value="" disabled selected>జిల్లా ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>మండలాను ఎంచుకోండి</ion-label>
+          <ion-select formControlName="constenncy_id" (ionChange)="getmandals($event)"
+            (ionChange)="searchconstenct($event)" style="height:37px;width: 273px;">
+            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>మండలాలను ఎంచుకోండి</ion-label>
+          <ion-select formControlName="mandal_id" (ionChange)="gepanchayati($event)" (ionChange)="searchmandals($event)"
+            style="height:37px;width: 273px;">
+            <ion-option value="" disabled selected>మండలo ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>పంచాయితీలను ఎంచుకోండి</ion-label>
+          <ion-select formControlName="panchayati_id" style="height:37px;width: 273px;">
+            <ion-option value="" disabled selected>పంచాయితీ ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 style="text-align: center;">
+        <button ion-button type="submit" color="secondary" (click)="search()"
+          class="default-btn user-all-btn"><b>వెతకండి</b></button>
+      </ion-col>
+    </ion-row>
+  </form>
+
+  <ion-row>
+    <ion-col col-12 *ngFor="let item of searchevents">
+      <div class="flex justify-center items-center h-screen">
+        <div class="main">
+          <ion-list>
+            <ion-item>
+              <ion-card (click)="openimg(item.image,openmodel)">
+                <img *ngIf="!item.image || item.image == ''" src="../../../assets/images/no.jpg">
+                <img *ngIf="item.image" [src]="item.image" style="width:212px;height:250px;">
+                <ion-card-content>
+                  <p>రకం: <strong>{{item.type}}</strong></p>
+                  <p>శీర్షిక: <strong>{{item.title}}</strong></p>
+                  <p><b>చిరునామా: {{item.address}}</b></p>
+                  <button ion-button fill="clear" (click)="callNumber('+91' + item.number)">
+                    <img src="assets/images/phone.png" style="width:45px;">
+                  </button>
+                  <br>
+                  <p *ngIf="item.showMore"><b>{{item.description}}</b></p>
+                  <button ion-button fill="clear" (click)="item.showMore = !item.showMore" *ngIf="!item.showMore"
+                    color="danger">
+                    <b>మరింత చూపు</b>
+                  </button>
+                  <button ion-button fill="clear" (click)="item.showMore = !item.showMore" *ngIf="item.showMore"
+                    color="danger">
+                    <b>కనిపించు లేదు</b>
+                  </button>
+                </ion-card-content>
+              </ion-card>
+            </ion-item>
+          </ion-list>
+        </div>
+      </div>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

@@ -1,0 +1,50 @@
+page-marriage {
+    .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 25px 0;
+        text-align: left;
+      }
+      
+      .styled-table th, .styled-table td {
+        padding: 5px 10px;
+        border: 1px solid #ddd;
+      }
+      
+      .styled-table th {
+        background-color: #f2f2f2;
+        color: #333;
+      }
+      
+      .styled-table tr:nth-of-type(even) {
+        background-color: #f9f9f9;
+      }
+      
+      .styled-table tr:hover {
+        background-color: #f1f1f1;
+      }
+      
+      .styled-table td strong {
+        font-weight: bold;
+      }
+      
+      .read-more-link {
+        color: rgb(175, 15, 15);
+        cursor: pointer;
+        text-decoration: none;
+      }
+      
+      .read-more-link:hover {
+        text-decoration: underline;
+      }
+      
+      .icon-link {
+        margin-right: 10px;
+      }
+      
+      .icon-link ion-icon {
+        font-size: 20px;
+        vertical-align: middle;
+      }
+      
+}

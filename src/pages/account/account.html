@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button (click)="gotohome()">
+        <ion-icon style="font-size: 20px;" name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title style="text-align: center;"><b>మై అకౌంట్</b></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content  class="pagecss">
+  <ion-card class="hesd"  (click)="gotopage(1)">
+    <ion-card-header >
+      చర్చి సమయాలను జోడించండి
+    </ion-card-header>
+  </ion-card>
+  <ion-card class="hesd"  (click)="gotopage(2)">
+    <ion-card-header >
+      ఇన్‌స్టిట్యూట్‌లను జోడించండి మినిస్ట్రీ సంబంధించిన
+    </ion-card-header>
+  </ion-card>
+  <ion-card class="hesd"   (click)="gotopage(3)">
+    <ion-card-header >
+      సమావేశాలు నమోదు
+    </ion-card-header>
+  </ion-card>
+  <ion-card class="hesd"  (click)="gotopage(4)">
+    <ion-card-header >
+      మీ వ్యాపార సమాచారాన్ని సమర్పించండి
+    </ion-card-header>
+  </ion-card>
+  <ion-card class="hesd"  (click)="gotopage(5)">
+    <ion-card-header >
+      వివాహ బంధం కోసం నమోదు చేసుకోండి
+    </ion-card-header>
+  </ion-card>
+  <ion-card class="hesd"  (click)="gotopage(6)">
+    <ion-card-header >
+      ఉపాధి అవసరాలను సమర్పించండి
+    </ion-card-header>
+  </ion-card>
+  <ion-card  class="hesd" (click)="gotopage(7)">
+    <ion-card-header >
+      ప్రకటనల సమాచారాన్ని సమర్పించండి
+    </ion-card-header>
+  </ion-card>
+</ion-content>

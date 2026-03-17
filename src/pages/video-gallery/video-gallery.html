@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button (click)="gotohome()">
+        <ion-icon style="font-size: 20px;" name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title style="text-align: center;"><b>Video-Gallery</b></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="pagecss">
+
+  <div *ngFor="let o of filteredData">
+    <br>
+    <p style="color: white; display: flex; justify-content: space-between; text-transform: capitalize;">
+      <span>{{o.category_nm}}</span>
+      <span (click)="opensub(o.category_id)">More</span>
+    </p>
+
+    <div style="text-align: center;">
+      <iframe [src]="o.banner_url | youtube" allow="autoplay; encrypted-media"
+        style="height:250px;width:333px"></iframe>
+    </div>
+  </div>
+
+  <!-- <div>
+    <br>
+    <p style="color: white;text-transform: capitalize;">Churchs <span style="text-align: left">More</span></p>
+    <div style="text-align: center;">
+      <iframe src=" https://www.youtube.com/embed/Kz5pscwuTF8?si=GCFQfS8y6jiyzRVD" allow="autoplay; encrypted-media"
+        allowfullscreen style="height:250px;width:333px"></iframe>
+    </div>
+  </div> -->
+
+</ion-content>

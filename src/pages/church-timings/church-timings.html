@@ -1,0 +1,166 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title style="text-align: center;font-family: Ramabhadra,sans-serif!important;"><b>చర్చి సమయాలు </b></ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="gotohome()">
+        <ion-icon style="font-size: 20px;" name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content class="pagecss">
+
+  <ion-searchbar (click)="onSearch()" *ngIf="fromshow==1"></ion-searchbar>
+
+  <ion-card>
+    <form [formGroup]="searchchurchingform" *ngIf="fromshow==2">
+      <ion-item>
+        <ion-label stacked style="color:black">సర్వీస్ టైమింగ్స్</ion-label>
+        <ion-select formControlName="typetime" interface="popover">
+          <ion-option value="" disabled selected> సమయాన్ని ఎంచుకోండి</ion-option>
+          <ion-option value="1">With Timings</ion-option>
+          <ion-option value="2">Without Timings</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>సెలెక్ట్ డినామినేషన్ మోడల్‌</ion-label>
+        <ion-select formControlName="denomationid">
+          <ion-option value="" disabled selected>Select Type</ion-option>
+          <ion-option *ngFor="let item of denomation" [value]="item.id">
+            {{ item.denomation_name }}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>సెలెక్ట్ మినిస్ట్రీ</ion-label>
+        <ion-select formControlName="ministry_id">
+          <ion-option value="" disabled selected>సెలెక్ట్ మినిస్ట్రీ</ion-option>
+          <ion-option *ngFor="let i of ministryname" [value]="i.id">
+            {{ i.ministryname }}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>సర్వీసెస్ రోజు</ion-label>
+        <ion-select formControlName="day" [class.is-invalid]="submitted && searchChurchingForm.get('day').errors">
+          <ion-option value="" disabled selected>రోజును ఎంచుకోండి</ion-option>
+          <ion-option value="Sunday">Sunday</ion-option>
+          <ion-option value="Monday">Monday</ion-option>
+          <ion-option value="Tuesday">Tuesday</ion-option>
+          <ion-option value="Wednesday">Wednesday</ion-option>
+          <ion-option value="Thursday">Thursday</ion-option>
+          <ion-option value="Friday">Friday</ion-option>
+          <ion-option value="Saturday">Saturday</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked> జిల్లాలను ఎంచుకోండి <span style="color:red; ">*</span></ion-label>
+        <ion-select formControlName="district_id" (ionChange)="getconstency($event);"
+          [class.invalid]="submitted && h['district_id'].errors">
+          <ion-option value="" disabled>సెలెక్ట్ జిల్లా</ion-option>
+          <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>
+        </ion-select>
+        <div *ngIf="submitted && h['district_id'].errors" class="invalid-feedback">
+          <div *ngIf="h['district_id'].errors['required']">Districts is required</div>
+        </div>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>సెలెక్ట్ నియోజకవర్గం <span style="color:red; ">*</span></ion-label>
+        <ion-select formControlName="constenncy_id" (ionChange)="getmandals($event);"
+          [class.invalid]="submitted && h['constenncy_id'].errors">
+          <ion-option value="" disabled>సెలెక్ట్  నియోజకవర్గం</ion-option>
+          <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>
+        </ion-select>
+        <div *ngIf="submitted && h['constenncy_id'].errors" class="invalid-feedback">
+          <div *ngIf="h['constenncy_id'].errors['required']">Constituency is required</div>
+        </div>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>సెలెక్ట్ మండలం <span style="color:red; ">*</span></ion-label>
+        <ion-select formControlName="mandal_id" (ionChange)="gepanchayati($event);"
+          [class.invalid]="submitted && h['mandal_id'].errors">
+          <ion-option value="" disabled>సెలెక్ట్  మండలం</ion-option>
+          <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>
+        </ion-select>
+        <div *ngIf="submitted && h['mandal_id'].errors" class="invalid-feedback">
+          <div *ngIf="h['mandal_id'].errors['required']">Mandals is required</div>
+        </div>
+      </ion-item>
+
+      <ion-row>
+        <ion-col col-12>
+          <button ion-button full (click)="search()" class="default-btn user-all-btn"
+            style="margin-top: 6px;"><b>Search</b></button>
+        </ion-col>
+
+        <ion-col col-6>
+          <button ion-button full (click)="reset()" class="default-btn user-all-btn"
+            style="margin-top: 6px;"><b>Reset</b></button>
+        </ion-col>
+        <ion-col col-6>
+          <button ion-button full (click)="hidefrom()" class="default-btn user-all-btn" style="margin-top: 6px;"><b>Hide
+              Form</b></button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-card>
+
+  <ion-row>
+    <ion-col size="12" *ngFor="let item of church">
+      <ion-card class="church-card">
+        <ion-card-header style="text-align: center;">
+          <ion-card-title>{{ item.church_name }}</ion-card-title>
+          <ion-card style="padding:2%"> <b>Prayer Day </b> : {{ item.day }}</ion-card>
+        </ion-card-header>
+        <ion-card-content>
+          <h4 class="prayer-time">Prayer Time : {{ item.starttime }} - {{ item.endtime }}</h4>
+          <div class="social-links">
+            <a *ngIf="!item.location" (click)="of()" class="icon-link">
+              <ion-icon name="locate" aria-label="Location"></ion-icon>
+            </a>
+            <a *ngIf="item.location" [href]="item.location" target="_blank" class="icon-link">
+              <ion-icon name="locate-outline" aria-label="Location"></ion-icon>
+            </a>
+
+            <a *ngIf="!item.youtube" class="icon-link" (click)="of()">
+              <ion-icon name="logo-youtube" class="youtube-icon" aria-label="YouTube"></ion-icon>
+            </a>
+            <a *ngIf="item.youtube" [href]="item.youtube" target="_blank" class="icon-link">
+              <ion-icon name="logo-youtube" class="youtube-icon" aria-label="YouTube"></ion-icon>
+            </a>
+
+            <a *ngIf="!item.facebook" class="icon-link" (click)="of()">
+              <ion-icon name="logo-facebook" class="facebook-icon" aria-label="Facebook"></ion-icon>
+            </a>
+            <a *ngIf="item.facebook" [href]="item.facebook" target="_blank" class="icon-link">
+              <ion-icon name="logo-facebook" class="facebook-icon" aria-label="Facebook"></ion-icon>
+            </a>
+
+            <a *ngIf="!item.contactnumber" class="icon-link" (click)="of()">
+              <ion-icon name="call" aria-label="Call"></ion-icon>
+            </a>
+            <a *ngIf="item.contactnumber" [href]="'tel:+91' + item.contactnumber" class="icon-link">
+              <ion-icon name="call" aria-label="Call"></ion-icon>
+            </a>
+          </div>
+          <p class="readmore" (click)="toggleDisplayDiv()">{{ isShowDiv ? 'READ LESS' : 'READ MORE' }}</p>
+          <div *ngIf="isShowDiv">
+            <p><strong>Local Address : </strong> {{ item.street }}</p>
+            <p><strong>Description : </strong> {{ item.description }}</p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+
+
+</ion-content>

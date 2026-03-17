@@ -1,0 +1,102 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button (click)="gotohome()">
+        <ion-icon style="font-size: 20px;" name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title style="text-align: center;"><b>ఉద్యోగాలు</b></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="pagecss">
+  <ion-searchbar (click)="onSearch()" *ngIf="fromshow==1"></ion-searchbar>
+
+  <form [formGroup]="form" *ngIf="fromshow==2">
+    <ion-grid>
+
+      <ion-row>
+        <ion-col col-12 col-md-4>
+          <ion-item>
+            <ion-label stacked>ఉద్యోగ పేరు</ion-label>
+            <ion-select formControlName="jobtile" interface="popover" style="width: 273px;"
+              (ionChange)="searchjobswise($event, 1)">
+              <ion-option value="" disabled selected>పేరు ఎంచుకోండి</ion-option>
+              <ion-option *ngFor="let item of jobswe" [value]="item.jobtitle">{{item.jobtitle}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12 col-md-4>
+          <ion-item>
+            <ion-label stacked>అర్హత</ion-label>
+            <ion-select formControlName="qual" interface="popover" style="width: 273px;"
+              (ionChange)="searchjobswise($event, 2)">
+              <ion-option value="" disabled selected>అర్హత ఎంచుకోండి</ion-option>
+              <ion-option *ngFor="let item of jobswe" [value]="item.qualification">{{item.qualification}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12 col-md-4>
+          <ion-item>
+            <ion-label stacked>అనుభవం</ion-label>
+            <ion-select formControlName="experience" interface="popover" style="width: 273px;"
+              (ionChange)="searchjobswise($event, 3)">
+              <ion-option value="" disabled selected>మీ అనుభవం ఎంచుకోండి</ion-option>
+              <ion-option value="fresher">ఫ్రెషర్</ion-option>
+              <ion-option value="1-2">1-2</ion-option>
+              <ion-option value="2-3">2-3</ion-option>
+              <ion-option value="3-5">3-5</ion-option>
+              <ion-option value="Above 5YEARS">5 ఏళ్ళ మీరున్నారు</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-12 col-md-3>
+          <ion-item>
+            <ion-label stacked>జిల్లాలను ఎంచుకోండండి</ion-label>
+            <ion-select formControlName="district_id" interface="popover" style="width: 273px;"
+              (ionChange)="getconstency($event)" (ionChange)="searchdistric($event)">
+              <ion-option value="" disabled selected>జిల్లా ఎంచుకోండి</ion-option>
+              <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12 col-md-2>
+          <ion-item>
+            <ion-label stacked>నియోజకవర్గం ఎంచుకోండండి</ion-label>
+            <ion-select formControlName="constenncy_id" interface="popover" style="width: 273px;"
+              (ionChange)="getmandals($event)" (ionChange)="searchconstenct($event)">
+              <ion-option value="" disabled selected>నియోజకవర్గం ఎంచుకోండి</ion-option>
+              <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12 col-md-2>
+          <ion-item>
+            <ion-label stacked>మండలాలను ఎంచుకోండండి</ion-label>
+            <ion-select formControlName="mandal_id" interface="popover" style="width: 273px;"
+              (ionChange)="gepanchayati($event)" (ionChange)="searchmandals($event)">
+              <ion-option value="" disabled selected>మండల ఎంచుకోండి</ion-option>
+              <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12 col-md-2>
+          <ion-item>
+            <ion-label stacked>పంచాయతీ ఎంచుకోండండి</ion-label>
+            <ion-select formControlName="panchayati_id" interface="popover" style="width: 273px;">
+              <ion-option value="" disabled selected>పంచాయతీ ఎంచుకోండి</ion-option>
+              <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12 col-md-2>
+          <button type="submit" (click)="search()" ion-button block color="primary"> శోధించు </button>
+        </ion-col>
+      </ion-row>
+    
+    </ion-grid>
+  </form>
+</ion-content> 

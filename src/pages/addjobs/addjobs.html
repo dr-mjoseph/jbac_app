@@ -1,0 +1,183 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button (click)="gotohome()">
+        <ion-icon style="font-size: 20px;" name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title style="text-align: center;"><b>ఉపాధి అవసరాలను నమోదు</b></ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding class="pagecss">
+
+  <form [formGroup]="jobsadding">
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>ఉద్యోగం పేరు <span style="color:red;">*</span></ion-label>
+          <ion-input formControlName="jobname" placeholder="ఉద్యోగం పేరు"></ion-input>
+        </ion-item>
+        <div *ngIf="submitted && jobsadding.get('jobname').errors" class="invalid-feedback">
+          <div *ngIf="jobsadding.get('jobname').hasError('required')">ఉద్యోగ పేరు అవసరం</div>
+        </div>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>అర్హత <span style="color:red;">*</span></ion-label>
+          <ion-input formControlName="qualification" placeholder="అర్హత నిర్వచించండి"></ion-input>
+        </ion-item>
+        <div *ngIf="submitted && jobsadding.get('qualification').errors" class="invalid-feedback">
+          <div *ngIf="jobsadding.get('qualification').hasError('required')">అర్హత అవసరం</div>
+        </div>
+      </ion-col>
+      
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>అనుభవం <span style="color:red;">*</span></ion-label>
+          <ion-select formControlName="experience" placeholder="మీ అనుభవం ఎంచుకోండి">
+            <ion-option value="" disabled selected>మీ అనుభవం ఎంచుకోండి</ion-option>
+            <ion-option value="fresher">ఫ్రెషర్</ion-option>
+            <ion-option value="1-2">1-2</ion-option>
+            <ion-option value="2-3">2-3</ion-option>
+            <ion-option value="3-5">3-5</ion-option>
+            <ion-option value="Above 5YEARS">5 ఏళ్ల పైన</ion-option>
+          </ion-select>
+        </ion-item>
+        <div *ngIf="submitted && jobsadding.get('experience').errors" class="invalid-feedback">
+          <div *ngIf="jobsadding.get('experience').hasError('required')">అనుభవం అవసరం</div>
+        </div>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>ప్రాంతం స్థలం <span style="color:red;">*</span></ion-label>
+          <ion-input formControlName="location" placeholder="మీ పని ప్రాంతం నిర్వచించండి"></ion-input>
+        </ion-item>
+        <div *ngIf="submitted && jobsadding.get('location').errors" class="invalid-feedback">
+          <div *ngIf="jobsadding.get('location').hasError('required')">స్థలం అవసరం</div>
+        </div>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>ఉద్యోగ వివరణ <span style="color:red;">*</span></ion-label>
+          <ion-textarea formControlName="description" placeholder="ఉద్యోగ వివరణను నిర్వచించండి"></ion-textarea>
+        </ion-item>
+        <div *ngIf="submitted && jobsadding.get('description').errors" class="invalid-feedback">
+          <div *ngIf="jobsadding.get('description').hasError('required')">ఉద్యోగ వివరణ అవసరం</div>
+        </div>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>గూగుల్ స్థలం</ion-label>
+          <ion-input formControlName="google_location" placeholder="మీ గూగుల్ స్థలం URL నిర్వచించండి"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 (click)="openphoto()">
+        <div class="imgerdt">
+          <img src="assets/icon/Upload.svg"  style="height:70px;width:70px;">
+          చిత్రం అప్‌లోడ్ చేయండి<br>
+          <img *ngIf="imagesdata.length" style="width:200px;height:200px" src="{{imagesdata[0].reviewimg}}">
+        </div>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>సంప్రదించండి నంబర్1 <span style="color:red;">*</span></ion-label>
+          <ion-input formControlName="number1" placeholder="సంప్రదించండి నంబర్" maxlength="10" minlength="10"
+            (keypress)="numericOnly($event)"></ion-input>
+        </ion-item>
+        <div *ngIf="submitted && jobsadding.get('number1').errors" class="invalid-feedback">
+          <div *ngIf="jobsadding.get('number1').hasError('required')">సంప్రదించండి నంబర్ 1 అవసరం</div>
+          <div *ngIf="jobsadding.get('number1').hasError('minlength')">10 అంశాల కంటే తక్కువిగా ఉంది</div>
+        </div>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>సంప్రదించండి నంబర్2</ion-label>
+          <ion-input formControlName="number2" placeholder="సంప్రదించండి నంబర్" maxlength="10" minlength="10"
+            (keypress)="numericOnly($event)"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>YouTube</ion-label>
+          <ion-input formControlName="youtube" placeholder="యూట్యూబ్ నిర్వచించండి"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>ఫేస్‌బుక్</ion-label>
+          <ion-input formControlName="facebook" placeholder="ఫేస్‌బుక్ నిర్వచించండి"></ion-input>
+        </ion-item>
+      </ion-col>      
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>జిల్లాల ఎంచుకోండి <span style="color:red;">*</span></ion-label>
+          <ion-select formControlName="districtname" (ionChange)="getconstency($event)">
+            <ion-option value="" disabled selected>రకము ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <div *ngIf="submitted && a['districtname'].errors" class="invalid-feedback">
+          <div *ngIf="a['districtname'].errors['required']">జిల్లా అవసరం</div>
+        </div>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>మండలం ఎంచుకోండి <span style="color:red;">*</span></ion-label>
+          <ion-select formControlName="constituencyname" (ionChange)="getmandals($event)">
+            <ion-option value="" disabled selected>రకము ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <div *ngIf="submitted && a['constituencyname'].errors" class="invalid-feedback">
+          <div *ngIf="a['constituencyname'].errors['required']">మండలం అవసరం</div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>పండల ఎంచుకోండి <span style="color:red;">*</span></ion-label>
+          <ion-select formControlName="mandals" (ionChange)="gepanchayati($event)">
+            <ion-option value="" disabled selected>రకము ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <div *ngIf="submitted && a['mandals'].errors" class="invalid-feedback">
+          <div *ngIf="a['mandals'].errors['required']">మండలం అవసరం</div>
+        </div>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>పంచాయితీ ఎంచుకోండి <span style="color:red;">*</span></ion-label>
+          <ion-select formControlName="village_name">
+            <ion-option value="" disabled selected>రకము ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <div *ngIf="submitted && a['village_name'].errors" class="invalid-feedback">
+          <div *ngIf="a['village_name'].errors['required']">పంచాయితీ అవసరం</div>
+        </div>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>షరతులు మరియు షరతులు <span style="color:red;">*</span></ion-label>
+          <ion-checkbox formControlName="term" checked></ion-checkbox>
+        </ion-item>
+        <div *ngIf="submitted && a['term'].errors" class="invalid-feedback">
+          <div *ngIf="a['term'].errors['required']">షరతులు మరియు షరతులు అవసరం</div>
+        </div>
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col col-md-12 style="text-align: center;">
+        <button type="submit" ion-button class="default-btn user-all-btn" (click)="postjobs()">నమోదు</button>
+      </ion-col>
+    </ion-row>
+  </form>
+
+</ion-content>

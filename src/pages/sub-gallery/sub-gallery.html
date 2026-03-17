@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button (click)="gotohome()">
+        <ion-icon style="font-size: 20px;" name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title style="text-align: center;"><b>Sub-Gallery</b></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="pagecss">
+
+  <ion-row>
+    <ion-col col-12 class="fghdh" *ngFor="let gt of gallery">
+      <img style="width:100%" src="{{gt.image}}" (click)="openImage(gt.image)" >
+      <h5>{{gt.image_name}}</h5>
+    </ion-col>
+    <br>
+  </ion-row>
+
+</ion-content>

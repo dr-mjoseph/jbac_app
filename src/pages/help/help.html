@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button (click)="gotohome()">
+        <ion-icon style="font-size: 20px;" name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title style="text-align: center;"><b>మా సహాయం</b></ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding class="pagecss">
+  <form [formGroup]="form">
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>వివరణ<span style="color:red;">*</span></ion-label>
+          <ion-textarea type="text" formControlName="description" placeholder="వివరణను ఎంచుకోండి"></ion-textarea>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>ఏ రకం సహాయం <span style="color:red;">*</span></ion-label>
+          <ion-select formControlName="help" placeholder="సహాయం ఎంచుకోండి">
+            <ion-option value="" disabled>సహాయం ఎంచుకోండి</ion-option>
+            <ion-option value="CommunitySupport Help">కమ్యూనిటీ మద్దతు సహాయం</ion-option>
+            <ion-option value="Education Help">విద్యా సహాయం</ion-option>
+            <ion-option value="Financial Help">ఆర్థిక సహాయం</ion-option>
+            <ion-option value="ForChurchConstruction Help">చర్చి నిర్మాణ సహాయం</ion-option>
+            <ion-option value="Legal Help">చట్టపరమైన సహాయం</ion-option>
+            <ion-option value="Medical Help">మెడికల్ సహాయం</ion-option>
+            <ion-option value="PoliceDepartmental Help">పోలీసు విభాగ సహాయం</ion-option>
+            <ion-option value="Political Help">రాజకీయ సహాయం</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 (click)="openphoto()">
+        <div class="imgerdt">
+          <img src="assets/icon/Upload.svg" style="height:70px;width:70px;">
+          చిత్రం అప్‌లోడ్ చేయండి<br><br>
+          <img *ngIf="imagesdata.length" style="width:200px;height:200px" src="{{imagesdata[0].reviewimg}}">
+        </div>
+      </ion-col>
+      <ion-col col-12 style="text-align: center;">
+        <button ion-button color="secondary" (click)="postmeetings()" style="letter-spacing: 1px;">నమోదు చేయండి</button>
+      </ion-col>
+
+    </ion-row>
+  </form>
+
+</ion-content>

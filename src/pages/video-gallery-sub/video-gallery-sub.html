@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button (click)="gotohome()">
+        <ion-icon style="font-size: 20px;" name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title style="text-align: center;"><b style="text-transform: capitalize;"> {{catreru}} Video-Gallery
+      </b></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="pagecss">
+
+
+  <div *ngFor="let o of videos">
+    <br>
+    <div style="text-align: center;">
+      <iframe [src]="o.banner_url | tubet " allow="autoplay; encrypted-media" style="height:250px;width:333px"></iframe>
+    </div>
+  </div>
+
+  <div>
+    <br>
+    <p style="color: white;text-transform: capitalize;">Church's <span style="text-align: left">More</span></p>
+    <div style="text-align: center;">
+      <iframe src=" https://www.youtube.com/embed/Kz5pscwuTF8?si=GCFQfS8y6jiyzRVD" allow="autoplay; encrypted-media"
+        allowfullscreen style="height:250px;width:333px"></iframe>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,95 @@
+page-entry-form {
+
+
+
+    .header-row {
+        display: flex;
+        align-items: center;
+        // height: 60px;
+        /* Adjust height as needed */
+        padding: 0 16px;
+        /* Add horizontal padding */
+    }
+
+    .title-col {
+        text-align: center;
+        font-weight: bold;
+        color: #1f376e;
+        font-size: 18px;
+        /* Adjust font size as needed */
+    }
+
+    .icon-col {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+    }
+
+    ion-icon {
+        color: #1f376e;
+        /* Icon color */
+        font-size: 24px;
+        /* Adjust icon size as needed */
+    }
+
+
+
+
+
+
+    .content {
+        background-color: #f0f0f0;
+    }
+
+    .form {
+        padding: 10px;
+    }
+
+    .form-item {
+        background-color: #ffffff;
+    }
+
+    .label {
+        color: #1f376e;
+        font-weight: 700;
+    }
+
+    .form-item {
+        margin-bottom: 16px; /* Adds space between form items */
+      }
+      
+      .label {
+        // font-size: 14px; /* Adjusts font size */
+        color: #333; /* Sets a readable text color */
+        line-height: 1.5; /* Increases line height for better readability */
+      }
+      
+      .label br {
+        display: none; /* Prevents line break from affecting layout */
+      }
+      
+      .label {
+        white-space: pre-wrap; /* Allows line breaks in text */
+      }
+      
+
+    button {
+        width: 100%;
+    }
+
+    .button-row {
+        margin-top: 15px;
+    }
+
+    ion-item {
+        --border-color: #e0e0e0;
+    }
+
+    ion-select,
+    ion-input {
+        --background: #ffffff;
+        --color: #1f376e;
+    }
+
+}

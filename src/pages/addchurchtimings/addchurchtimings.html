@@ -1,0 +1,164 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button (click)="gotohome()">
+        <ion-icon style="font-size: 20px;" name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title style="text-align: center;"><b>చర్చి సమయాలను జోడించండి</b></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="pagecss">
+  <form [formGroup]="addingchurchtimimngs">
+    <ion-row>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>సేవా రోజు *</ion-label>
+          <ion-select formControlName="day">
+            <ion-option value="">రోజు ఎంచుకోండి</ion-option>
+            <ion-option value="Sunday">ఆదివారం</ion-option>
+            <ion-option value="Monday">సోమవారం</ion-option>
+            <ion-option value="Tuesday">మంగళవారం</ion-option>
+            <ion-option value="Wednesday">బుధవారం</ion-option>
+            <ion-option value="Thursday">గురువారం</ion-option>
+            <ion-option value="Friday">శుక్రవారం</ion-option>
+            <ion-option value="Saturday">శనివారం</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item *ngIf="addingchurchtimimngs.get('day').hasError('required') && submitted">
+          <p style="color: red">రోజు అవసరం</p>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>సేవా పేరు *</ion-label>
+          <ion-select formControlName="service_name">
+            <ion-option value="">ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
+            <ion-option value="FIRST">మొదటి</ion-option>
+            <ion-option value="SECOND">రెండవ</ion-option>
+            <ion-option value="THIRD">మూడవ</ion-option>
+            <ion-option value="FOURTH">నాలుగవ</ion-option>
+            <ion-option value="FIFTH">ఐదవ</ion-option>
+            <ion-option value="WOMENS MEETING">మహిళల సభ</ion-option>
+            <ion-option value="MENS MEETING">పురుషుల సభ</ion-option>
+            <ion-option value="YOUTH MEETING">యువత సభ</ion-option>
+            <ion-option value="FASTING PRAYER">ఉపవాస ప్రార్థన</ion-option>
+            <ion-option value="SUNDAY SCHOOL">ఆదివార పాఠశాల</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item *ngIf="addingchurchtimimngs.get('service_name').hasError('required') && submitted">
+          <p style="color: red">సేవా పేరు అవసరం</p>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-list>
+          <ion-item>
+            <ion-label stacked>ప్రారంభ సమయం (24 గంటల ఫార్మాట్) *</ion-label>
+            <ion-input type="time" formControlName="time_start"></ion-input>
+          </ion-item>
+          <ion-item>
+            <span style="font-family:monospace;font-weight:bold;padding: 4px;">
+              <b>12 గంటల ఫార్మాట్ సమయం : {{starttime}} -{{starttimea}}</b></span>
+          </ion-item>
+          <ion-item *ngIf="addingchurchtimimngs.get('time_start').hasError('required') && submitted">
+            <p style="color: red">ప్రారంభ సమయం అవసరం</p>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-list>
+          <ion-item>
+            <ion-label stacked>ముగింపు సమయం (24 గంటల ఫార్మాట్) *</ion-label>
+            <ion-input type="time" formControlName="time_end"></ion-input>
+          </ion-item>
+          <ion-item>
+            <span style="font-family:monospace;font-weight:bold;padding: 4px;">
+              <b>12 గంటల ఫార్మాట్ సమయం : {{endtime}} - {{endtimea}}</b></span>
+          </ion-item>
+          <ion-item *ngIf="addingchurchtimimngs.get('time_end').hasError('required') && submitted">
+            <p style="color: red">ముగింపు సమయం అవసరం</p>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+
+      <ion-col col-12 class="mb-4 pb-2">
+        <ion-item>
+          <ion-label stacked>జిల్లాలను ఎంచుకోండి<span style="color:red">*</span></ion-label>
+          <ion-select formControlName="district_id" (ionChange)="getconstency($event)">
+            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <div *ngIf="submitted && c['district_id'].errors" class="invalid-feedback">
+          <div *ngIf="c['district_id'].errors['required']">జిల్లా అవసరం</div>
+        </div>
+      </ion-col>
+
+      <ion-col col-12 class="mb-4 pb-2">
+        <ion-item>
+          <ion-label stacked>నియోజకవర్గం ఎంచుకోండి<span style="color:red">*</span></ion-label>
+          <ion-select formControlName="constituency_id" (ionChange)="getmandals($event)">
+            <ion-option value="" disabled selected>నియోజకవర్గం ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <div *ngIf="submitted && c['constituency_id'].errors" class="invalid-feedback">
+          <div *ngIf="c['constituency_id'].errors['required']">మండలా అవసరం</div>
+        </div>
+      </ion-col>
+
+      <ion-col col-12 class="mb-4 pb-2">
+        <ion-item>
+          <ion-label stacked>మండలాను ఎంచుకోండి<span style="color:red">*</span></ion-label>
+          <ion-select formControlName="mandal_id" (ionChange)="gepanchayati($event);" (click)="filterchurchdata();">
+            <ion-option value="" disabled selected>మండలo ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <div *ngIf="submitted && c['mandal_id'].errors" class="invalid-feedback">
+          <div *ngIf="c['mandal_id'].errors['required']">మండలా అవసరం</div>
+        </div>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>వీధి పేరు<span style="color:red">*</span></ion-label>
+          <ion-input formControlName="streetname"  placeholder="వీధి పేరు"></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12 class="mb-4 pb-2">
+        <ion-item>
+          <ion-label stacked>చర్చును ఎంచుకోండి<span style="color:red">*</span></ion-label>
+          <ion-select formControlName="church" (click)='cheurch()' >
+            <ion-option value="" disabled selected>చర్చు పేరును ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of getchurchstudentfilter" [value]="item.id">{{item.church_name}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <div *ngIf="submitted && c['church'].errors" class="invalid-feedback">
+          <div *ngIf="c['church'].errors['required']">చర్చు అవసరం</div>
+        </div>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>మీ చర్చు గురించి ఇతర సమాచారం</ion-label>
+          <ion-input formControlName="description" placeholder="వివరణ"></ion-input>
+        </ion-item>
+        <div *ngIf="submitted && c['description'].errors" class="invalid-feedback">
+          <div *ngIf="c['description'].errors['required']">వివరణ అవసరం</div>
+        </div>
+      </ion-col>
+
+      <ion-col col-12 style="text-align: center;">
+        <button ion-button block (click)="postchurchtimings()" type="submit">సబ్మిట్</button>
+      </ion-col>
+    </ion-row>
+
+  </form>
+</ion-content>

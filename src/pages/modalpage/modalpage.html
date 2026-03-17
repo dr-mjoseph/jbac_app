@@ -1,0 +1,11 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons end>
+      <button ion-button color="warning" (click)="dismiss()">Close Image</button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding class="pagecss">
+  <img [src]="imageUrl" (click)="dismiss()" class="modal-image" />
+</ion-content>

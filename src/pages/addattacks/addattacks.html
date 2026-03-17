@@ -1,0 +1,187 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button (click)="gotohome()">
+        <ion-icon style="font-size: 20px;" name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title style="text-align: center;"><b> క్రైస్తవులపై దాడుల నమోదు </b></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="pagecss">
+  <form [formGroup]="form">
+    <ion-row>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>అప్లోడ్ దాడులకు సంబంధించిన ఫోటోలు</ion-label>
+        </ion-item>
+        <div class="imgerdt"  (click)="openphoto()" >
+          <img src="assets/icon/upload.svg"style="height:70px;width:70px;">3 ఫోటోలు వరకు చేయవచ్చు.
+          <div *ngIf="imagesData.length">
+            <div *ngFor="let item of imagesData; let i = index">
+              <img src="{{item.reviewImg}}" style="padding: 3px;" height="100px" width="100px">
+            </div>
+          </div>
+        </div>
+      </ion-col>
+      <ion-col col-12>
+        <div class="imgerdt" style="padding:6px 4px">
+          <ion-label stacked> అప్లోడ్ దాడులకు సంబందించిన వీడియో 1</ion-label>
+          <input type="file" (change)="onSelectFile($event)" formControlName="videoa">
+          <video *ngIf="format === 'video' && url" [src]="url" height="200" controls></video>
+        </div>
+      </ion-col>
+      <ion-col col-12>
+        <div class="imgerdt" style="padding:6px 4px">
+          <ion-label stacked> అప్లోడ్ దాడులకు సంబందించిన వీడియో 2</ion-label>
+          <input type="file" (change)="onSelectFileb($event)" formControlName="videob">
+          <video *ngIf="formatb === 'video' && url" [src]="urlb" height="200" controls></video>
+        </div>
+      </ion-col>
+      <ion-col col-12>
+        <div class="imgerdt" style="padding:6px 4px">
+          <ion-label stacked> అప్లోడ్ దాడులకు సంబందించిన డాక్యుమెంట్ లేదా పోలీస్ కంప్లైంట్ pdf ఫార్మాట్ లో మాత్రమే</ion-label>
+          <input type="file" (change)="onSelectFiledoc($event)" formControlName="document">
+          <div class="center">
+            <div *ngFor="let i of filenamearray;let t = index;">
+              <div>{{ t + 1 }}.{{i.name}}</div>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>బాదిత క్రైస్తవుడు-1 ఫోన్ నెంబర్</ion-label>
+          <ion-input type="tel" formControlName="victim1num" maxlength="10" minlength="10"
+            (keypress)="numericOnly($event)"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>బాదిత క్రైస్తవుడు-2 ఫోన్ నెంబర్</ion-label>
+          <ion-input type="tel" formControlName="victim2num" maxlength="10" minlength="10"
+            (keypress)="numericOnly($event)" ></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>బాదిత క్రైస్తవుడు-1  పేరు(ఇంటి పేరు తో సహా)</ion-label>
+          <ion-input type="text" formControlName="victim1name" ></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>బాదిత క్రైస్తవుడు-2  పేరు(ఇంటి పేరు తో సహా)</ion-label>
+          <ion-input type="text" formControlName="victim2name" ></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>దాడి చేసిన వ్యక్తి-1 ఫోన్ నెంబర్ </ion-label>
+          <ion-input type="tel" formControlName="attacker1num" maxlength="10" minlength="10"
+            (keypress)="numericOnly($event)" ></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>దాడి చేసిన వ్యక్తి-2 ఫోన్ నెంబర్ </ion-label>
+          <ion-input type="tel" formControlName="attacker2num" maxlength="10" minlength="10"
+(keypress)="numericOnly($event)"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>దాడి చేసిన వ్యక్తి-1 పేరు(ఇంటి పేరు తో సహా)</ion-label>
+          <ion-input type="text" formControlName="attacker1name"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>దాడి చేసిన వ్యక్తి-2 పేరు(ఇంటి పేరు తో సహా)</ion-label>
+          <ion-input type="text" formControlName="attacker2name" ></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>దాడి గురుంచి మరింత సమాచారం రాయండి</ion-label>
+          <ion-textarea formControlName="noteondescription" ></ion-textarea>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>
+            మీ అడ్రస్<span style="color: red;">*</span>
+          </ion-label>
+          <ion-textarea formControlName="address" placeholder="Attack Address"></ion-textarea>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>వాయిస్ రికార్డు ఉంటే అప్లోడ్ చేయండి&nbsp;</ion-label>
+          <ion-input type="file" (change)="onSelectFileaudio($event)" formControlName="audio"></ion-input>
+          <audio [src]="urlaudio" *ngIf="formataudio==='audio' && urlaudio" controls></audio>
+        </ion-item>
+      </ion-col>
+      
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked> జిల్లా సెలెక్ట్ చేయండి <span style="color: red;">*</span></ion-label>
+          <ion-select formControlName="district_id" (ionChange)="getconstency($event);">
+            <ion-option value="" disabled selected>క్లిక్ చేసి జిల్లా సెలెక్ట్ చేయండి</ion-option>
+            <ion-option *ngFor="let item of districts" [value]="item.id">{{ item.distrct_nm
+              }}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked> నియోజకవర్గం సెలెక్ట్ చేయండి*<span style="color: red;">*</span></ion-label>
+          <ion-select formControlName="constituency_id" (ionChange)="getmandals($event);">
+            <ion-option value="" disabled selected>క్లిక్ చేసి నియోజకవర్గం సిలెక్ట్ చేయండి</ion-option>
+            <ion-option *ngFor="let item of constituency" [value]="item.id">{{ item.const_nm
+              }}</ion-option>
+          </ion-select>
+        </ion-item>
+
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked> మండలంను సెలెక్ట్ చేయండి<span style="color: red;">*</span></ion-label>
+          <ion-select formControlName="mandal_id" (ionChange)="gepanchayati($event);">
+            <ion-option value="" disabled selected>క్లిక్ చేసి మండలంను సెలెక్ట్ చేయండి</ion-option>
+            <ion-option *ngFor="let item of mandals" [value]="item.id">{{ item.mndl_nm }}</ion-option>
+          </ion-select>
+        </ion-item>
+
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked> పంచాయితీ సెలెక్ట్ చేయండి *<span style="color: red;">*</span></ion-label>
+          <ion-select formControlName="village_id">
+            <ion-option value="" disabled selected>క్లిక్ చేసి పంచాయితీ సెలెక్ట్ చేయండి</ion-option>
+            <ion-option *ngFor="let item of panchayati" [value]="item.id">{{ item.pnchyt_nm }}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <div class="imgerdt" style="padding: 0px 3px;">
+          <ion-label> ఈ విషయములో మీ సహాయం కొరకు ఇష్టపడుతున్నాము
+            అవును సెలెక్ట్ చేయండి <span style="color: red;">*</span></ion-label>
+          <ion-checkbox formControlName="term"> </ion-checkbox> అవును
+        </div>
+      </ion-col>
+      <ion-col col-12>
+        <div style="text-align: center;">
+          <button ion-button color="secondary" (click)="postattacks()" style="letter-spacing: 1px;">సబ్మిట్</button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

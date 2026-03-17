@@ -1,0 +1,77 @@
+page-church-timings {
+ 
+  .church-card {
+    margin: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .ion-card-header {
+    background: #f4f4f4;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .ion-card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .ion-card-subtitle {
+    font-size: 1.2rem;
+    color: #666;
+  }
+  
+  .prayer-time {
+    margin: 15px 0;
+  }
+  
+  .prayer-time h4 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+  }
+  
+  .prayer-time p {
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .social-links {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px 0;
+  }
+  
+  .icon-link {
+    font-size: 1.5rem;
+    color: #007bff;
+    transition: color 0.3s;
+  }
+  
+  .icon-link:hover {
+    color: #0056b3;
+  }
+  
+  .description {
+    margin-top: 15px;
+  }
+  
+  .readmore {
+    cursor: pointer;
+    color: #007bff;
+    font-weight: bold;
+  }
+  
+  .readmore:hover {
+    text-decoration: underline;
+  }
+  
+  .description p {
+    font-size: 1rem;
+    color: #333;
+  }
+  
+
+}

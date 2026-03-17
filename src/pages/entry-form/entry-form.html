@@ -1,0 +1,112 @@
+<ion-header>
+  <ion-navbar>
+    <ion-row style="background-color: #f8f8f8;">
+      <ion-col col-11
+        style="text-align: center;font-weight: 900;color: #1f376e;">
+        JBAC యాప్ యాక్టివేషన్ ఫారమ్
+      </ion-col>
+      <!-- <ion-col col-1 (click)="closeModal()">
+        <ion-icon style="color:1f376e" name="home"></ion-icon>
+      </ion-col> -->
+    </ion-row>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="content">
+  <form [formGroup]="form" class="form" style="background-color: #1f376e;">
+    <ion-row>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked >మీ క్యాటగిరి ఎంచుకోండి</ion-label>
+          <ion-select formControlName="category">
+            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
+            <ion-option value="1">విశ్వాసి</ion-option>
+            <ion-option value="2">విద్యార్థి</ion-option>
+            <ion-option value="3">మినిస్ట్రీస్ (ఎక్కువ చర్చిలు ఉంటే)</ion-option>
+            <ion-option value="4">పాస్టర్</ion-option>
+            <ion-option value="5">చర్చి</ion-option>
+            <ion-option value="6">క్రిస్టియన్ ఆర్గనైజెషన్ / కంపెనీ</ion-option>
+             <ion-option value="7">పాస్టర్ల అసోసియేషన్</ion-option> 
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>మీ పేరు(ఇంటి పేరు తో సహా) </ion-label>
+          <ion-input type="text" placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి" formControlName="name"></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>మీ ఫోన్ నంబర్ (10 అంకెలు మాత్రమే, లాగిన్ కు ఫోన్ నెంబర్ & పాస్వర్డ్ అవసరము)</ion-label>
+          <ion-input type="tel" placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి" formControlName="number" maxlength="10"
+            minlength="10"></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>సెట్ పాస్వర్డ్ (కనీసము 4 నుంచి గరిష్టం 16 నెంబర్, అక్షరాల వరకు పెట్టుకోవచ్చు)</ion-label>
+          <ion-input type="password" placeholder="ఇక్కడ క్లిక్ చేసి పాస్‌వర్డ్ సెట్ చేసుకోండి" formControlName="password" maxlength="16"></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <h4 Style="color:whitesmoke;text-align: center;font-weight: 600;">మీ అడ్రస్</h4>
+        <ion-item>
+          <ion-label stacked>జిల్లా</ion-label>
+          <ion-select formControlName="district_id" (ionChange)="getconstency($event)" >
+            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి జిల్లా ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>నియోజకవర్గం</ion-label>
+          <ion-select formControlName="constituency_id" (ionChange)="getmandals($event)" (click)="poorp(1)">
+            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి నియోజకవర్గం ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>మండలం / మున్సిపాలిటీ</ion-label>
+          <ion-select formControlName="mandal_id" (ionChange)="gepanchayati($event);" (click)="poorp(2)">
+            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి మండలం ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>పంచాయితీ / వార్డ్ నంబర్</ion-label>
+          <ion-select formControlName="village_id" (click)="poorp(3)">
+            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి పంచాయితీ ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of getvillages" [value]="item.id">{{item.pnchyt_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    
+     
+      <ion-row class="button">
+      
+        <button ion-button color="secondary" (click)="submit()"><b>సబ్మిట్</b></button>
+      
+    </ion-row>
+    
+      <p >ఇంతకుముందే రిజిస్టర్ ఐతే <a (click)="gotologin()">లాగిన్  కొరకు క్లిక్</a></p>
+     
+       <p > <a (click)="gotoprivacy()">Privacy Policy</a></p> 
+       <br><br>
+  </form>
+</ion-content>

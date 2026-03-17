@@ -1,0 +1,26 @@
+<ion-menu [content]="content" type="overlay">
+  <!-- <ion-header>
+    <ion-navbar>
+      <ion-title style="text-align: center;"><b>Menu</b></ion-title>
+    </ion-navbar>
+  </ion-header> -->
+
+  <ion-content padding style="background-color: aliceblue;">
+
+    <h4 style="text-align: center;">
+      <b>Welcome to JBAC</b>
+    </h4>
+    <hr>
+
+    <ion-row style="text-align: center;">
+      <ion-col col-12 *ngFor="let a of pages;let i=index" (click)="openPage(a.page)" menuToggle>
+        <img class="made" style="width:80%;padding:15px" src="{{a.image}}">
+        <b>{{a.title}}</b>
+      </ion-col>
+    </ion-row>
+  </ion-content>
+
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

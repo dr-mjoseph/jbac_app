@@ -1,0 +1,156 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button button (click)="gotohome()">
+        <ion-icon style="font-size: 20px;" name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title style="text-align: center;"><b> వింగ్ లీడర్</b></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="pagecss">
+  <p style="color: white;text-align:center;"><b> {{generals}} {{wingtypes}} {{leaders}}</b> </p>
+
+  <ion-row>
+    <ion-col col-6 text-center (click)="make(1)">
+      <button ion-button block>Believers Requests</button>
+    </ion-col>
+    <ion-col col-6 text-center (click)="make(3)">
+      <button ion-button block>Pastors Requests</button>
+    </ion-col>
+  </ion-row>
+
+  <ion-card *ngIf="formshow == 1">
+    <ion-card-header>
+      <ion-card-title text-center *ngIf="general != ''">{{ general }} Level Believers Requests</ion-card-title>
+      <ion-card-title text-center *ngIf="general == ''">Village Believers</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+
+      <div style="overflow: auto;">
+        <table class="table" >
+          <thead style="text-align: center;">
+            <tr style="text-align: center;">
+              <th>S.no</th>
+              <th>Name</th>
+              <th>Native Place</th>
+              <th>Status</th>
+              <th>Contact</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let x of belearr; let i = index" style="text-align: center;">
+              <td >{{ i + 1 }}</td>
+              <td>{{ x.fname }}</td>
+              <td>{{ x.nativeplace }}</td>
+              <td class="actions" >
+                <ion-label *ngIf="x.approval_ind == 1" style="color: green;"><b>Accepted</b></ion-label>
+                <ion-label *ngIf="x.approval_ind == 2" style="color: red;"><b>Rejected</b></ion-label>
+                <button *ngIf="x.approval_ind == 0" ion-button color="success"
+                  (click)="confirm(1, x.id)">Confirm</button>
+                <button *ngIf="x.approval_ind == 0" ion-button color="danger"
+                  (click)="deleteAlert(1, x.id)">Reject</button>
+              </td>
+              <td class="contact">
+                <a href="tel:+91{{ x.mobile_number }}">
+                  <ion-icon name="call"></ion-icon>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 *ngIf="belearr.length == 0" text-center>No Requests</h3>
+    </ion-card-content>
+  </ion-card>
+
+
+  <ion-card *ngIf="formshow == 2">
+    <ion-card-header>
+      <ion-card-title text-center>{{ general }} Level Student </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+
+      <div style="overflow: auto;">
+        <table class="table">
+          <thead>
+            <tr style="text-align: center;">
+              <th>S.no</th>
+              <th>Name</th>
+              <th>Native Place</th>
+              <th>Status</th>
+              <th>Contact</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let x of studentarr; let i = index" style="text-align: center;">
+              <td style="text-align: center;">{{ i + 1 }}</td>
+              <td>{{ x.studentname }}</td>
+              <td>{{ x.nativeplace }}</td>
+              <td class="actions">
+                <ion-label *ngIf="x.approval_ind == 1" style="color: green;"><b>Accepted</b></ion-label>
+                <ion-label *ngIf="x.approval_ind == 2" style="color: red;"><b>Rejected</b></ion-label>
+                <button *ngIf="x.approval_ind == 0" ion-button color="success"
+                  (click)="confirm(2, x.id)">Confirm</button>
+                <button *ngIf="x.approval_ind == 0" ion-button color="danger"
+                  (click)="deleteAlert(2, x.id)">Reject</button>
+              </td>
+              <td class="contact">
+                <a href="tel:+91{{ x.number }}">
+                  <ion-icon name="call"></ion-icon>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 *ngIf="studentarr.length === 0" text-center>No Requests</h3>
+    </ion-card-content>
+  </ion-card>
+
+
+
+  <ion-card *ngIf="formshow == 3">
+    <ion-card-header>
+      <ion-card-title text-center *ngIf="general !== ''">{{ general }} Level Pastors </ion-card-title>
+      <ion-card-title text-center *ngIf="general === ''">Village Pastors</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div style="overflow: auto;">
+        <table class="table" >
+          <thead >
+            <tr style="text-align: center;">
+              <th>S.no</th>
+              <th>Name</th>
+              <th>Native Place</th>
+              <th>Status</th>
+              <th>Contact</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let x of pastorarr; let i = index" style="text-align: center;">
+              <td style="text-align: center;">{{ i + 1 }}</td>
+              <td>{{ x.pastorname }}</td>
+              <td>{{ x.nativeplace }}</td>
+              <td class="actions" style="text-align: center;">
+                <ion-label *ngIf="x.approval_ind == 1" style="color: green;"><b>Accepted</b></ion-label>
+                <ion-label *ngIf="x.approval_ind == 2" style="color: red;"><b>Rejected</b></ion-label>
+                <button ion-button color="success" *ngIf="x.approval_ind == 0" color="primary"
+                  (click)="confirm(3, x.id)">Confirm</button>
+                <button ion-button color="danger" *ngIf="x.approval_ind == 0" color="danger"
+                  (click)="deleteAlert(3, x.id)">Reject</button>
+              </td>
+              <td class="contact">
+                <a href="tel:+91{{ x.phonenumber }}">
+                  <ion-icon name="call"></ion-icon>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 *ngIf="pastorarr.length === 0" text-center>No Requests</h3>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

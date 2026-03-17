@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button (click)="gotohome()">
+        <ion-icon style="font-size: 20px;" name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title style="text-align: center;"><b>ఫోటో గేలరీ</b></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="pagecss">
+
+  <ion-row>
+
+    <ion-col col-12 *ngFor="let gt of imagesget" style="text-align: center;">
+      <img style="height: 200px;" src="{{gt.image}}" (click)="gotosub(gt.id)">
+      <h3 style="color:white;">{{gt.categoryname}}</h3>
+    </ion-col>
+
+    <ion-col col-12 style="text-align: center;">
+      <img style="height: 200px;" src="https://jbac.in/websiteimages/8058081698510916218.jpg">
+      <h3 style="color:white;">Main House</h3>
+    </ion-col>
+
+  </ion-row>
+
+</ion-content>

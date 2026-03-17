@@ -1,0 +1,45 @@
+<ion-content padding class="pagecss">
+
+  <div class="form">
+    
+    <form [formGroup]="passloginform" >
+      <div class="header">
+        <img class="jabc" src="assets/icon/png/newlogo.png"><br><br>
+        JBAC యాప్ కి లాగిన్ అవ్వండి
+      </div>
+
+      <!-- <h1 style="text-align: center;">JBAC లాగిన్</h1> -->
+
+      <div class="inputs">
+        <select placeholder="మీ లాగిన్ క్యాటగిరి" class="input" formControlName="category">
+          <option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</option>
+          <option value="1">విశ్వాసి</option>    
+          <option value="4">పాస్టర్</option>          
+          <option value="2">విద్యార్థి</option>
+          <option value="7">పాస్టర్ల అసోసియేషన్</option>
+          <option value="3">మినిస్ట్రీస్</option>
+          <option value="5">చర్చి</option>
+          <option value="6">క్రిస్టియన్ ఆర్గనైజెషన్ / కంపెనీ</option>
+         
+        </select>
+        
+        <input placeholder="మొబైల్ నంబర్ ఎంటర్ చేయండి" class="input" type="text" formControlName="mobile_number"
+          (keypress)="numericOnly($event)" maxlength="10" minlength="10">
+        
+        <input placeholder="పాస్వర్డ్ ఎంటర్ చేయండి" class="input" [type]="password_type" maxlength="16" minlength="4"
+          formControlName="password">
+
+        <div style="text-align: right;" class="field-icon" (click)="togglePasswordMode()">
+          <ion-icon name="eye"> </ion-icon> టైపు చేసిన పాస్వర్డ్ చూపించు
+        </div>
+        <button class="sigin-btn" (click)="passlogin()">సబ్మిట్</button>
+        <div style="text-align: center;" (click)="gotoforgetpasswordpage()">
+          <img src="assets/icon/svg/password.svg" style="width: 10%;margin-bottom: -3%;" ><b>రీసెట్ పాస్వర్డ్ / పాస్వర్డ్ మరిచిపోయాను</b> 
+        </div>
+        <p class="signup-link" (click)="gotoformspage()">ఇంతకముందు రిజిస్టర్ కాకపోతే ? <a>రిజిస్టర్ </a></p>
+      </div>
+    </form>
+
+
+  </div>
+</ion-content>

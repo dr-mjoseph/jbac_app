@@ -1,0 +1,78 @@
+<!-- <ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button (click)="gotohome()">
+        <ion-icon style="font-size: 20px;font-family:ramabhadra;" name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title style="text-align: center;font-family:ramabhadra;"><b> వార్తలు నమోదు </b></ion-title>
+  </ion-navbar>
+</ion-header> -->
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button (click)="gotohome()">
+        <ion-icon style="font-size: 20px;" name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title style="text-align: center;font-size: 12px;font-family:ramabhadra;">ఆంధ్రలోని క్రైస్తవ వార్తలు నమోదు చేయండి </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="pagecss">
+  <ion-row>
+    <ion-col col-12>
+      <form [formGroup]="addingnews">
+        <ion-row>
+          <ion-col col-12>
+            <ion-item>
+              <ion-label stacked>అప్లోడ్ చేసే న్యూస్ ఏ కేటగిరీ క్రింద వస్తుంది<span style="color:red; font-family:ramabhadra;">*</span></ion-label>
+              <ion-select formControlName="news" [ngClass]="{'is-invalid': submitted && h['news'].errors }">
+                <ion-option value="" selected disabled>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
+                <ion-option value="క్రైస్తవుల మీద దాడులు">క్రైస్తవుల మీద దాడులు సంబంధించిన న్యూస్</ion-option>
+                <ion-option value="జనరల్ న్యూస్">జనరల్ న్యూస్</ion-option>
+                <ion-option value="దళిత్ క్రిస్టియన్స్ షెడ్యూల్ కాస్ట్ స్టేటస్ న్యూస్">దళిత్ క్రిస్టియన్స్ షెడ్యూల్ కాస్ట్ స్టేటస్ న్యూస్</ion-option>      
+                <ion-option value="గౌరవ వేతనం, ప్రభుత్వ పథకాలు సంబంధించిన న్యూస్">గౌరవ వేతనం, ప్రభుత్వ పథకాలు సంబంధించిన న్యూస్</ion-option>
+                <ion-option value="క్రైస్తవులకు సంబంధించిన న్యూస్">క్రైస్తవులకు సంబంధించిన న్యూస్</ion-option>
+                <ion-option value="చదువుకి సంబంధించి">చదువుకి సంబంధించి</ion-option>
+                <ion-option value="ట్రైనింగ్ కి సంబంధించి">ట్రైనింగ్ కి సంబంధించి</ion-option>
+                <ion-option value="ఉద్యోగాలకు సంబంధించి">ఉద్యోగాలకు సంబంధించి</ion-option>
+                <ion-option value="ఆరోగ్యం కి సంబంధించి">ఆరోగ్యం కి సంబంధించి</ion-option>
+                <ion-option value="సమాజం లోని సమస్యలు కి సంబంధించి న్యూస్">సమాజం లోని సమస్యలు కి సంబంధించి న్యూస్</ion-option>
+                <ion-option value="డా|| జోసెఫ్ గారి వార్తలు">డా|| జోసెఫ్ గారి వార్తలు</ion-option>
+                
+              </ion-select>
+            </ion-item>
+            <div *ngIf="submitted && h['news'].errors" class="invalid-feedback">
+              <div *ngIf="h['news'].errors['required']">న్యూస్ ఏ కేటగిరీ క్రింద వస్తుంది ఎంచుకోండి </div>
+            </div>
+          </ion-col>
+                  
+          <ion-col col-12 (click)="openphoto()">
+            <div class="imgerdt">
+              <img src="../../assets/icon/Upload.svg" style="height:70px;width:70px;font-family:ramabhadra;">
+              వార్తల పేపర్ కటింగ్ / ఫోటో అప్‌లోడ్ చేయండి<br>
+              <img *ngIf="imagesdata.length" style="width:200px;height:200px" src="{{imagesdata[0].reviewimg}}">
+            </div>
+          </ion-col>
+          <ion-col col-12>
+             <ion-col col-12>
+            <ion-item>
+              <ion-label  stacked>మీరు అప్లోడ్ చేసిన వార్తల గురించి వివరణ (ఏ పేపర్)<span style="color:red;font-family:ramabhadra; "></span></ion-label>
+              <ion-textarea type="text" formControlName="description" placeholder="ఇక్కడ క్లిక్ చేసి అప్లోడ్ చేయండి"
+                [ngClass]="{'is-invalid': submitted && h['description'].errors }"></ion-textarea>
+            </ion-item>
+            <!-- <div *ngIf="submitted && h['description'].errors" class="invalid-feedback">
+              <div *ngIf="h['description'].errors['required']">మీరు అప్లోడ్ చేసిన న్యూస్ గురించి వివరణ (ఏ పేపర్)</div> 
+            </div> -->
+          </ion-col>
+
+            <div style="text-align: center;">
+              <button ion-button color="secondary" (click)="postnews()" style="font-size: 20px;letter-spacing: 1px;font-family:ramabhadra;">సబ్మిట్</button>
+            </div>
+          </ion-col>
+        </ion-row>
+      </form>
+    </ion-col>
+  </ion-row>
+</ion-content>

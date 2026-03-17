@@ -1,0 +1,444 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button (click)="gotohome()">
+        <ion-icon style="font-size: 20px;" name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title style="text-align: center;"><b><u>విశ్వాసి నమోదు </u><br> (ఏ పొజిషన్ లో వున్నా, <br> పాస్టర్ కాని వారు అందరు)</b></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="pagecss">
+  <form [formGroup]="form" class="form-container">
+    <ion-row>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>పేరు(ఇంటి పేరు తో సహా) <span style="color:red; "> *</span></ion-label>
+          <ion-input formControlName="fname" placeholder="పేరు నమోదు చేయండి"></ion-input>
+        </ion-item>
+        <ion-note *ngIf="form.get('fname').invalid && form.get('fname').touched" color="danger">
+          పేరు తప్పనిసరి
+        </ion-note>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>జెండర్</ion-label>
+          <ion-select formControlName="gender">
+            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి సెలెక్ట చేయండి</ion-option>
+            <ion-option value="male">పురుషుడు</ion-option>
+            <ion-option value="female">స్త్రీ</ion-option>
+            <ion-option value="transgender">ట్రాన్స్ జెండర్</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-note *ngIf="form.get('gender').invalid && form.get('gender').touched" color="danger">
+          జెండర్ సెలెక్ట చేయండి 
+        </ion-note>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>మొబైల్ నంబర్<span style="color:red; "> *</span></ion-label>
+          <ion-input type="tel" formControlName="mobile_number" placeholder="ఇక్కడ క్లిక్ చేసి నమోదు చేయండి"
+            maxlength="10" minlength="10"></ion-input>
+        </ion-item>
+        <ion-note *ngIf="form.get('mobile_number').invalid && form.get('mobile_number').touched" color="danger">
+          మొబైల్ నంబర్  నమోదు చేయండి
+        </ion-note>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>వాట్స్ యాప్</ion-label>
+          <ion-input type="tel" formControlName="whatsapp" placeholder="WhatsApp నంబర్ నమోదు చేయండి" maxlength="10"
+            minlength="10"></ion-input>
+        </ion-item>
+        <!-- <ion-note *ngIf="form.get('whatsapp').invalid && form.get('whatsapp').touched" color="danger">
+          ఈ ఫీల్డ్ తప్పనిసరి
+        </ion-note> -->
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>పుట్టినరోజు</ion-label>
+          <ion-input type="date" formControlName="dob"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-note *ngIf="form.get('dob').invalid && form.get('dob').touched" color="danger">
+        పుట్టినరోజు తప్పనిసరి
+      </ion-note>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>మీ ఆధ్యాత్మిక స్థితి</ion-label>
+          <ion-select formControlName="spirit">
+            <ion-option value="" disabled selected>ఆధ్యాత్మిక స్థితి ఎంపిక చేయండి</ion-option>
+            <ion-option value="practicingchristian">ప్రాక్టీసింగ్ క్రిస్టియన్</ion-option>
+            <ion-option value="nominalchristian">నామినల్ క్రిస్టియన్</ion-option>
+            <ion-option value="festivalchristian">ఫెస్టివల్ క్రిస్టియన్</ion-option>
+            <ion-option value="justbelievingjesus">జస్ట్ బిలీవింగ్ జీసస్</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>దేవునికి</ion-label>
+          <ion-select formControlName="god">
+            <ion-option value="" disabled selected>రకం ఎంపిక చేయండి</ion-option>
+            <ion-option value="Singing">పాటలు పాడడం</ion-option>
+            <ion-option value="Music">సంగీతం</ion-option>
+            <ion-option value="Dance">నృత్యం</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>జీవిత లక్ష్యం</ion-label>
+          <ion-input type="text" formControlName="lifegoal" placeholder="మీ జీవిత లక్ష్యాన్ని నమోదు చేయండి"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>ఆసక్తిలు</ion-label>
+          <ion-select formControlName="hobbies">
+            <ion-option value="" disabled selected>రకం ఎంపిక చేయండి</ion-option>
+            <ion-option value="Singing">పాటలు పాడడం</ion-option>
+            <ion-option value="Designing">రూపకలా</ion-option>
+            <ion-option value="Writer">రచయిత</ion-option>
+            <ion-option value="readingbooks">పుస్తకాలు చదవడం</ion-option>
+            <ion-option value="servingpeople">ప్రజలకు సేవ చేయడం</ion-option>
+            <ion-option value="music">సంగీతం</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>మీ వివాహ స్థితి</ion-label>
+          <ion-select formControlName="status">
+            <ion-option value="" disabled selected>మీ వివాహ స్థితిని ఎంపిక చేయండి</ion-option>
+            <ion-option value="వివాహం కాలేదు">వివాహం కాలేదు</ion-option>
+            <ion-option value="వివాహం అయినది">వివాహం అయినది</ion-option>
+            <ion-option value="విడాకులు అయినది">విడాకులు అయినది</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>సెలెక్ట్ డినామినేషన్ మోడల్‌ <span style="color:red; "> *</span></ion-label>
+          <ion-select formControlName="denomination_id" placeholder="డినామినేషన్ ఎంపిక చేయండి">
+            <ion-option value="" disabled>డినామినేషన్ ఎంపిక చేయండి</ion-option>
+            <ion-option *ngFor="let i of denomation" [value]="i.id">{{i.denomation_name}}
+            </ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>టాలెంట్థాయి <span style="color:red; "> *</span></ion-label>
+          <ion-select formControlName="talent" placeholder="నేర్చుకోండి"
+            [ngClass]="{'is-invalid': submitted && form.controls['talent'].errors}">
+            <ion-option value="" disabled selected>రకం ఎంపిక చేయండి</ion-option>
+            <ion-option value="Speaker">స్పీకర్</ion-option>
+            <ion-option value="Writer">రచయిత</ion-option>
+            <ion-option value="Singer">గాయకుడు</ion-option>
+            <ion-option value="Others">ఇతర</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>విద్య <span style="color:red; "> *</span></ion-label>
+          <ion-select formControlName="education" placeholder="విద్య ఎంపిక చేయండి">
+            <ion-option value="" disabled selected>రకం ఎంపిక చేయండి</ion-option>
+            <ion-option value="1-5">1-5</ion-option>
+            <ion-option value="6-10">6-10</ion-option>
+            <ion-option value="ITI">ఐటిఐ</ion-option>
+            <ion-option value="Diploma">డిప్లొమా</ion-option>
+            <ion-option value="Inter">ఇంటర్</ion-option>
+            <ion-option value="Degree">డిగ్రీ</ion-option>
+            <ion-option value="Medical">మెడికల్</ion-option>
+            <ion-option value="Engineering">ఇంజనీరింగ్</ion-option>
+            <ion-option value="PG">పిజి</ion-option>
+            <ion-option value="PHD">పిఎచ్‌డి</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked> అవధిని ఎంపిక చేయండి <span style="color:red; "> *</span></ion-label>
+          <ion-select formControlName="designation" placeholder="అవధిని ఎంపిక చేయండి">
+            <ion-option value="" disabled selected>రకం ఎంపిక చేయండి</ion-option>
+            <ion-option value="1-5">1-5</ion-option>
+            <ion-option value="6-10">6-10</ion-option>
+            <ion-option value="ITI">ఐటిఐ</ion-option>
+            <ion-option value="Diploma">డిప్లొమా</ion-option>
+            <ion-option value="Inter">ఇంటర్</ion-option>
+            <ion-option value="Degree">డిగ్రీ</ion-option>
+            <ion-option value="Medical">మెడికల్</ion-option>
+            <ion-option value="Engineering">ఇంజనీరింగ్</ion-option>
+            <ion-option value="PG">పిజి</ion-option>
+            <ion-option value="PHD">పిఎచ్‌డి</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>విభాగం<span style="color:red; ">*</span></ion-label>
+          <ion-select formControlName="dpartment" placeholder="విభాగం ఎంపిక చేయండి">
+            <ion-option value="" disabled selected>విభాగం ఎంపిక చేయండి</ion-option>
+          
+            <ion-option value="Education">ఎడ్యుకేషన్</ion-option>
+            <ion-option value="Police">పోలీసు</ion-option>
+            <ion-option value="Advocate">అడ్వకేట్</ion-option>
+            <!-- <ion-option value="School">స్కూలు</ion-option>
+            <ion-option value="College">కళాశాల</ion-option>
+            <ion-option value="Cultivation">వ్యవసాయం</ion-option> -->
+            <ion-option value="Paper media">పేపర్ మీడియా</ion-option>
+            <ion-option value="Electronic media">ఎలక్ట్రానిక్ మీడియా</ion-option>
+            <ion-option value="Social media">సోషల్ మీడియా</ion-option>
+            <ion-option value="Real estate">రియల్ ఎస్టేట్</ion-option>
+            <ion-option value="Construction">కన్స్ట్రక్షన్</ion-option>
+                <ion-option value="Other">ఇతర</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>ఎంపిక జిల్లా <span style="color:red; "> *</span></ion-label>
+          <ion-select formControlName="districts" (ionChange)="getconstency($event)">
+            <ion-option value="" disabled selected>ఎంపిక జిల్లా</ion-option>
+            <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>ఎంపిక నియోజకవర్గం <span style="color:red; "> *</span></ion-label>
+          <ion-select formControlName="constituencyname" (ionChange)="getmandals($event)">
+            <ion-option value="" disabled selected>ఎంపిక నియోజకవర్గం</ion-option>
+            <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>మండలం/పంచాయతి <span style="color:red; "> *</span></ion-label>
+          <ion-select formControlName="mandals" (ionChange)="gepanchayati($event);">
+            <ion-option value="" disabled selected>మండలం / పంచాయతి ఎంపిక చేయండి</ion-option>
+            <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>ఎంపిక పంచాయితి/వార్డు <span style="color:red; "> *</span></ion-label>
+          <ion-select formControlName="panchayati">
+            <ion-option value="" disabled selected>ఎంపిక పంచాయితి/వార్డు</ion-option>
+            <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12 col-md-6>
+        <!-- Village Name/Street Name Form Group -->
+        <ion-item>
+          <ion-label stacked>గ్రామం పేరు / స్ట్రీట్ పేరు <span style="color:red; "> *</span></ion-label>
+          <ion-input type="text" formControlName="villagename" placeholder="మీ గ్రామం పేరును నమోదు చేయండి"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <!-- Ward Number Form Group -->
+        <ion-item>
+          <ion-label stacked>వార్డ్ నంబర్</ion-label>
+          <ion-input type="text" formControlName="wardnumber" placeholder="వార్డ్ నంబర్ నమోదు చేయండి"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-12 col-md-6>
+        <!-- Local Address/House Number Form Group -->
+        <ion-item>
+          <ion-label stacked>మీ స్థానిక చిరునామా / హౌస్ నంబర్ <span style="color:red; "> *</span></ion-label>
+          <ion-input type="text" formControlName="ward" placeholder="మీ స్ట్రీట్ పేరును నమోదు చేయండి"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <!-- Living From Form Group -->
+        <ion-item>
+          <ion-label stacked>నివాసం ముందు<span style="color:red; ">*</span></ion-label>
+          <ion-select formControlName="nri" placeholder="నివాసం ముందు ఎంపిక చేయండి">
+            <ion-option value="" disabled selected>రకం ఎంపిక చేయండి</ion-option>
+            <ion-option value="NRI">NRI</ion-option>
+            <ion-option value="NON-NRI">NON-NRI</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <!-- <ion-row>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>పాస్టర్‌ను ఎంచుకోండి</ion-label>
+          <ion-select formControlName="pastor" interface="popover" (ionChange)="getpastorsdata()">
+            <ion-option value="" disabled selected>మీ పాస్టర్‌ను ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of getpastorsdatas" [value]="item.id">{{item.pastorname}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>చర్చిని ఎంచుకోండి</ion-label>
+          <ion-select formControlName="church" interface="popover" (ionChange)="getchurchesdata()">
+            <ion-option value="" disabled selected>చర్చి పేరును ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of getchurchfilter" [value]="item.id">{{item.church_name}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row> -->
+
+
+    <ion-row>
+      <ion-col col-12 col-md-6>
+        <ion-list>
+          <ion-label stacked>నాయకుడు అయితే కావాలా? <span style="color:red; "> *</span></ion-label>
+          <ion-item>
+            <input type="radio" value="YES" (click)="onradiochange($event)" formControlName="leadership">
+            <label> అవును </label>
+          </ion-item>
+          <ion-item>
+            <input type="radio" value="NO" (click)="onradiochange($event)" formControlName="leadership" />
+            <label> కాదు </label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+
+
+      <ion-col col-12 col-md-6 *ngIf="lead">
+        <ion-list>
+          <ion-label stacked>నాయకత్వం</ion-label>
+          <ion-item>
+            <input type="radio" value="1" (click)="onradioleadertype($event)" formControlName="leadertype">
+            <label>జనరల్</label>
+          </ion-item>
+          <ion-item>
+            <input type="radio" value="2" (click)="onradioleadertype($event)" formControlName="leadertype">
+            <label>వింగ్</label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+      <ion-col col-12 col-md-6 *ngIf="leadtype" (click)="onsubward($event)">
+        <ion-item>
+          <ion-label stacked>జనరల్ నాయకత్వం లెవెల్</ion-label>
+          <ion-select formControlName="generaltype">
+            <ion-option value="">జనరల్ నాయకత్వం ఎంచుకోండి</ion-option>
+            <ion-option value="1">జిల్లా</ion-option>
+            <ion-option value="2">నియమకం</ion-option>
+            <ion-option value="3">మండలం</ion-option>
+            <ion-option value="4">గ్రామం</ion-option>
+            <ion-option value="5">వార్డ్</ion-option>
+            <ion-option value="6">సబ్ వార్డ్</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6 *ngIf="subward">
+        <ion-item>
+          <ion-label stacked>ఉప వార్డ్ పేరు</ion-label>
+          <ion-input type="text" formControlName="subward" placeholder="మీ ఉప వార్డ్ నమోదు చేయండి"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6 *ngIf="wingtype">
+        <ion-item>
+          <ion-label stacked>వింగ్ నాయకత్వం లెవెల్</ion-label>
+          <ion-select formControlName="wingtype">
+            <ion-option value="">వింగ్ నాయకత్వం ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of wings" [value]="item.id">{{item.position}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>యూట్యూబ్ ఛానల్</ion-label>
+          <ion-input type="text" formControlName="youtube" placeholder="మీ యూట్యూబ్ ఛానల్ ఎంటర్ చేయండి"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>ఇతర సమాచారం</ion-label>
+          <ion-input type="text" formControlName="lname" placeholder="ఇతర సమాచారం నమోదు చేయండి"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>స్థానిక ప్రాంతం</ion-label>
+          <ion-input type="text" formControlName="nativeplace"
+            placeholder="మీ స్థానిక ప్రాంతం ఎంటర్ చేయండి"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>నెలకు ఆదాయం</ion-label>
+          <ion-input type="text" formControlName="income" placeholder="మీ నెలకు ఆదాయం ఎంటర్ చేయండి"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>మీ కులం</ion-label>
+          <ion-select formControlName="caste">
+            <ion-option value="">జాతి ఎంచుకోండి</ion-option>
+            <ion-option value="no">జాతి లేదు</ion-option>
+            <ion-option value="SC">ఎస్సీ</ion-option>
+            <ion-option value="ST">ఎస్టీ</ion-option>
+            <ion-option value="BC-A">బిస్సి-ఎ</ion-option>
+            <ion-option value="BC-B">బిస్సి-బి</ion-option>
+            <ion-option value="BC-C">బిస్సి-సి</ion-option>
+            <ion-option value="BC-D">బిస్సి-డి</ion-option>
+            <ion-option value="BC-E">బిస్సి-ఇ</ion-option>
+            <ion-option value="OC">ఒస్సీ</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>ఉప జాతి</ion-label>
+          <ion-input type="text" formControlName="subcaste" placeholder="మీ ఉప జాతి ఎంటర్ చేయండి"></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>పాస్‌వర్డ్<span style="color:red; "> * </span></ion-label>
+          <ion-input type="password" formControlName="password" placeholder="మీ పాస్‌వర్డ్ నమోదు చేయండి" maxlength="16"
+            minlength="6"></ion-input>
+          <ion-icon slot="end" name="eye" (click)="togglePasswordVisibility('password')"></ion-icon>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>మళ్ళీ-పాస్వర్డ్<span style="color:red; "> * </span></ion-label>
+          <ion-input type="password" formControlName="retypepassword" placeholder="మీ పాస్‌వర్డ్ నమోదు చేయండి"
+            maxlength="16" minlength="6"></ion-input>
+          <ion-icon slot="end" name="eye" (click)="togglePasswordVisibility('retypepassword')"></ion-icon>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <input type="checkbox" value="yes" formControlName="term">
+          <label>స్టోర్ చేయడానికి మరియు మీకు సమాచారం పంపడానికి ఒప్పుకోండి <span style="color:red; "> *</span></label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-12 col-md-6>
+        <div style="text-align: center;">
+          <button ion-button color="secondary" (click)="postbeliversignup()" style="letter-spacing: 1px;">నమోదు
+            చేయండి</button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

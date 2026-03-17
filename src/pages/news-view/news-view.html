@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button (click)="gotohome()">
+        <ion-icon style="font-size: 20px;" name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title style="text-align: center;font-size: 20px;font-family:ramabhadra;"><b>JBAC: వార్తలు &
+        ప్రకటనలు</b></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="pagecss">
+
+  <ion-item>
+    <ion-label stacked>సెలెక్ట్ న్యూస్<span style="color:red; font-family:ramabhadra;">*</span></ion-label>
+    <ion-select (ionChange)="getfilter($event)">
+      <ion-option value="" selected disabled>కేటగిరీ ఎంచుకోండి</ion-option>
+      <ion-option value="0">అన్ని వార్తలు</ion-option>
+      <ion-option value="క్రైస్తవుల మీద దాడులు">క్రైస్తవుల మీద దాడులు సంబంధించిన న్యూస్</ion-option>
+      <ion-option value="గౌరవ వేతనం, ప్రభుత్వ పథకాలు సంబంధించిన న్యూస్">గౌరవ వేతనం, ప్రభుత్వ పథకాలు సంబంధించిన న్యూస్</ion-option>
+      <ion-option value="క్రైస్తవులకు సంబంధించిన న్యూస్">క్రైస్తవులకు సంబంధించిన న్యూస్</ion-option>
+      <ion-option value="జనరల్ న్యూస్">జనరల్ న్యూస్</ion-option>   
+      <ion-option value="దళిత్ క్రిస్టియన్స్ షెడ్యూల్ కాస్ట్ స్టేటస్ న్యూస్">దళిత్ క్రిస్టియన్స్ షెడ్యూల్ కాస్ట్ స్టేటస్ న్యూస్</ion-option>      
+      <ion-option value="చదువుకి సంబంధించి">చదువుకి సంబంధించి</ion-option>
+      <ion-option value="ట్రైనింగ్ కి సంబంధించి">ట్రైనింగ్ కి సంబంధించి</ion-option>
+      <ion-option value="ఉద్యోగాలకు సంబంధించి">ఉద్యోగాలకు సంబంధించి</ion-option>
+      <ion-option value="ఆరోగ్యం కి సంబంధించి">ఆరోగ్యం కి సంబంధించి</ion-option>
+      <ion-option value="సమాజం లోని సమస్యలు కి సంబంధించి న్యూస్">సమాజం లోని సమస్యలు కి సంబంధించి న్యూస్</ion-option>
+      <ion-option value="డా|| జోసెఫ్ గారి వార్తలు">డా|| జోసెఫ్ గారి వార్తలు</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-row class="card-row">
+
+    <ion-col col-12 *ngFor="let item of searchnews" class="card-col">
+      <ion-card class="custom-card" style="border-radius: 10px;">
+        <ion-card-header>
+          <div class="card-image">
+            <img style="border-radius: 8px;" *ngIf="item.image" [src]="item.image" alt="Image" class="card-img"
+              (click)="openImage(item.image)">
+          </div>
+        </ion-card-header>
+        <ion-card-content style="text-transform: capitalize;font-size: 20px;font-family:ramabhadra;">
+          <p style="font-size: 20px;font-family:ramabhadra;">వివరణ: <strong>
+              {{ showFullDescription ? item.description : (item.description | slice:0:100) }}
+              {{ item.description.length > 100 && !showFullDescription ? '...' : '' }}
+            </strong></p>
+          <p *ngIf="item.description.length > 100">
+            <button (click)="toggleDescription()">
+              {{ showFullDescription ? 'తక్కువ సమాచారం' : 'మరింత సమాచారం' }}
+            </button>
+          </p>
+
+          <p style="font-size: 20px;font-family:ramabhadra;">విభాగం: <strong>{{item.news}}</strong></p>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+
+  </ion-row>
+</ion-content>

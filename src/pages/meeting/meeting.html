@@ -1,0 +1,161 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button (click)="gotohome()">
+        <ion-icon style="font-size: 20px;" name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title style="font-family:ramabhadra ;text-align: center;"><b> ఆంధ్రలో జరగబోయే క్రైస్తవ మీటింగ్స్ </b></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="pagecss">
+  <!-- <h4 style="text-align:center;font-weight: 800;">ఆంధ్ర రాష్ట్రంలోని రాబోయే క్రైస్తవ మీటింగ్స్</h4> -->
+  <ion-searchbar (click)="onSearch()" *ngIf="fromshow==1"></ion-searchbar>
+
+  <form [formGroup]="meetingfrom" class="form-container" *ngIf="fromshow==2">
+    <ion-row>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>మీ కూటముల టైపు ఎంచుకోండి</ion-label>
+          <ion-select formControlName="mettingtype" >
+            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
+            <ion-option value="ఉజ్జీవ">ఉజ్జీవ కూటములు</ion-option>
+            <ion-option value="సువార్త కూటములు">సువార్త కూటములు</ion-option>
+            <ion-option value="ఉపవాస కూటములు">ఉపవాస కూటములు</ion-option>
+            <ion-option value="స్వస్థత కూటములు">స్వస్థత కూటములు</ion-option>
+            <ion-option value="ఉజ్జీవ స్వస్థత కూటములు">ఉజ్జీవ స్వస్థత కూటములు</ion-option>
+            <ion-option value="వార్షికోత్సవ కూటములు">వార్షికోత్సవ కూటములు</ion-option>
+            <ion-option value="కృతజ్ఞత స్తుతి కూటములు">కృతజ్ఞత స్తుతి కూటములు</ion-option>
+            <ion-option value="ప్రవచన విడుదల కూటములు">ప్రవచన విడుదల కూటములు</ion-option>
+            <ion-option value="యూత్ మీటింగ్స్">యూత్ మీటింగ్స్</ion-option>
+            <ion-option value="క్రైస్తవ నాయకుల కూటములు">క్రైస్తవ నాయకుల కూటములు</ion-option>
+            <ion-option value="స్త్రీల కూటములు">స్త్రీల కూటములు</ion-option>
+            <ion-option value="పాస్టర్ ఫెలోషిప్ కూటములు">పాస్టర్ ఫెలోషిప్ కూటములు</ion-option>
+            <ion-option value="క్రైస్తవ పిల్లల కూటములు">క్రైస్తవ పిల్లల కూటములు</ion-option>
+            <ion-option value="క్రైస్తవ బుక్స్ ఎక్సిబిషన్">క్రైస్తవ బుక్స్ ఎక్సిబిషన్</ion-option>
+            <ion-option value="క్రైస్తవ సంగీత కూటములు">క్రైస్తవ సంగీత కూటములు</ion-option>
+            <ion-option value="ఇతర కూటములు">ఇతర కూటములు</ion-option>
+            </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>మీ డినామినేషన్ మోడల్ ఎంచుకోండి</ion-label>
+          <ion-select formControlName="denomation_id" >
+            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
+            <ion-option value="{{item.id}}" *ngFor="let item of denomation">
+              {{item.denomation_name}}
+            </ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <!-- <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>సెలెక్ట్ మినిస్ట్రీ</ion-label>
+          <ion-select formControlName="ministry_id" >
+            <ion-option value="" disabled selected>సెలెక్ట్ మినిస్ట్రీ</ion-option>
+            <ion-option *ngFor="let i of ministryname" [value]="i.id">{{i.ministryname}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col> -->
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label> సమావేశం తేదీ</ion-label>
+          <ion-input type="date" formControlName="startdate" [min]="now" (ionChange)="onDateChange($event)"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>జిల్లాను ఎంచుకోండి</ion-label>
+          <ion-select formControlName="district_id" (ionChange)="getconstency($event)"
+            >
+            <ion-option value="" disabled selected>జిల్లాను ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>నియోజకవర్గంను ఎంచుకోండి</ion-label>
+          <ion-select formControlName="constenncy_id" (ionChange)="getmandals($event)">
+            <ion-option value="" disabled selected>నియోజకవర్గంను ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>మండలం / మున్సిపాలిటీని ఎంచుకోండి</ion-label>
+          <ion-select formControlName="mandal_id" (ionChange)="gepanchayati($event)" >
+            <ion-option value="" disabled selected>మండలం / మున్సిపాలిటీని ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked> పంచాయతీ / వార్డుని ఎంచుకోండి</ion-label>
+          <ion-select formControlName="panchayati_id">
+            <ion-option value="" disabled selected> పంచాయతీ / వార్డుని ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <button ion-button block (click)="search()">సెర్చ్ చేయండి</button>
+      </ion-col>
+      <ion-col col-6 style="text-align: center;">
+        <button ion-button block (click)="reset()">రీసెట్ సెర్చ్ ఆప్షన్స్</button>
+      </ion-col>
+      <ion-col col-6 style="text-align: center;">
+        <button ion-button block (click)="hidefrom()">క్లోజ్ సెర్చ్ ఆప్షన్</button>
+      </ion-col>
+      
+    </ion-row>
+  </form>
+
+  <ion-row class="card-row">
+    <ion-col col-12 *ngFor="let item of searchevents" class="card-col">
+      <ion-card class="custom-card">
+        <ion-card-header>
+          <div class="card-image" (click)="tester(item.image)"  >
+            <img *ngIf="item.image" [src]="item.image" alt="Image" class="card-img">
+          </div>
+        </ion-card-header>
+        <ion-card-content>
+          <p>మీటింగ్ ప్రారంభ తేదీ: <strong>{{ item.startdate | date }}</strong></p>
+          <p>మీటింగ్ చివర తేదీ: <strong>{{ item.enddate | date }}</strong></p>
+          <p><b>మీటింగ్ టైపు: {{ item.eventname }} </b></p>
+           <!-- <p><b>మీటింగ్ టైపు: {{ item.distrct_nm }} </b></p>  -->
+          <!-- <ion-option *ngFor="let item of districts" [value]="districts">{{item.distrct_nm}}</ion-option> -->
+
+          <ion-buttons class="card-buttons">
+            <ng-container >
+              <a ion-button *ngIf="item.location" [href]="item.location">
+                <ion-icon name="pin"></ion-icon>
+              </a>
+              <a ion-button *ngIf="item.youtube" [href]="item.youtube">
+                <ion-icon name="logo-youtube"></ion-icon>
+              </a>
+              <a ion-button *ngIf="item.facebook" [href]="item.facebook">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+              <a ion-button *ngIf="item.eventcontactnumber" [href]="'tel:+91' + item.eventcontactnumber">
+                <ion-icon name="call"></ion-icon>
+              </a>
+            </ng-container>
+          </ion-buttons>
+          <p *ngIf="item.showMore"><b>{{ item.description }}</b></p>
+          <button ion-button (click)="item.showMore = !item.showMore" color="danger" *ngIf="!item.showMore">
+            మరింత సమాచారం
+          </button>
+          <button ion-button (click)="item.showMore = !item.showMore" color="danger" *ngIf="item.showMore">
+            తక్కువ సమాచారం చూపించు
+          </button>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

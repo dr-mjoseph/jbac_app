@@ -1,0 +1,136 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button (click)="gotohome()">
+        <ion-icon style="font-size: 20px;" name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title style="text-align: center;"><b>ఇన్‌స్టిట్యూట్‌</b></ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content class="pagecss">
+
+  <ion-searchbar (click)="onSearch()" *ngIf="fromshow==1"></ion-searchbar>
+
+  <form [formGroup]="form" *ngIf="fromshow==2">
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>సెలెక్ట్ డినామినేషన్ మోడల్‌</ion-label>
+          <ion-select formControlName="denomination_id">
+            <ion-option value="" disabled selected>డినామినేషన్ ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of denomation" [value]="item.id">{{ item.denomation_name }}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>మంత్రిస్తానం ఎంచుకోండండి</ion-label>
+          <ion-select formControlName="ministry_id">
+            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let i of ministryname" [value]="i.id">{{ i.ministryname }}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>అంచును అంచని కోర్సులు</ion-label>
+          <ion-select formControlName="course_offered">
+            <ion-option value="" disabled selected>ఇన్స్టిట్యూట్‌ను ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of institutesdata" [value]="item.course_offered">{{ item.course_offered
+              }}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>కళాశాల రకం</ion-label>
+          <ion-select formControlName="college_type">
+            <ion-option value="" disabled selected>కళాశాల ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of institutesdata"
+              [value]="item.college_type">{{item.college_type}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>జిల్లాలను ఎంచుకోండండి</ion-label>
+          <ion-select formControlName="district_id" (ionChange)="getconstituency($event)">
+            <ion-option value="" disabled selected>జిల్లాలను ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>నియోజకవర్గం ఎంచుకోండండి</ion-label>
+          <ion-select formControlName="constenncy_id" (ionChange)="getmandals($event)">
+            <ion-option value="" disabled selected>నియోజకవర్గం ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>మండలాలను ఎంచుకోండండి</ion-label>
+          <ion-select formControlName="mandal_id" (ionChange)="getpanchayati($event)">
+            <ion-option value="" disabled selected>మండలాలను ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of mandals" [value]="item.id">{{ item.mndl_nm }}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>పంచాయతీ ఎంచుకోండండి</ion-label>
+          <ion-select formControlName="panchayati_id">
+            <ion-option value="" disabled selected>పంచాయతీ ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12 (click)="search()">
+        <button ion-button type="submit" block color="primary"><ion-icon name="search"></ion-icon>శోధించు</button>
+      </ion-col>
+    </ion-row>
+
+  </form>
+  <ion-grid>
+    <ion-row *ngIf="institutedata.length!=0">
+      <ion-col col-12 *ngFor="let item of institutedata" style="margin-bottom: 16px;">
+        <ion-card>
+          <ion-img *ngIf="!item.image || item.image === ''" src="assets/images/no.jpg"></ion-img>
+          <ion-img *ngIf="item.image" [src]="item.image"></ion-img>
+          <ion-card-content>
+            <p>ఇన్స్టిట్యూట్ పేరు: <strong>{{item.institutename}}</strong></p>
+            <p>అంచని అంచని కోర్సులు: <b>{{item.course_offered}}</b></p>
+            <p>కళాశాల రకం: <strong>{{item.college_type}}</strong></p>
+            <a (click)="toggleDisplayDiv()" style="color: rgb(175, 15, 15)">మరింత చదవండి</a>
+            <p [hidden]="isShowDiv">ఫోన్ నంబర్: <strong>{{item.phonenumber}}</strong></p>
+            <a href="{{item.location}}" [hidden]="isShowDiv"><ion-icon name="pin"></ion-icon></a>
+            <a href="{{item.youtube}}" [hidden]="isShowDiv"><ion-icon name="logo-youtube"></ion-icon></a>
+            <a href="{{item.facebook}}" [hidden]="isShowDiv"><ion-icon name="logo-facebook"></ion-icon></a>
+            <a href="tel:+91{{item.phonenumber}}" [hidden]="isShowDiv"><ion-icon name="call"></ion-icon></a>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="institutedata.length==0">
+      <h2 style="margin-top: 50%;color: white;margin-left: 25%;">
+        డేటా దొరకలేదు
+      </h2>
+    </ion-row>
+  </ion-grid>
+
+
+</ion-content>

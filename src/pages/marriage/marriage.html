@@ -1,0 +1,199 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button (click)="gotohome()">
+        <ion-icon style="font-size: 20px;" name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title style="text-align: center;"><b>Marriage</b></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="pagecss">
+  <ion-searchbar (click)="onSearch()" *ngIf="fromshow==1"></ion-searchbar>
+
+  <form [formGroup]="form" *ngIf="fromshow==2">
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked> సెలెక్ట్ డినామినేషన్ మోడల్</ion-label>
+          <ion-select formControlName="denomation_id" (ionChange)="serachgender($event, 1)">
+            <ion-option value="" disabled selected>డినామినేషన్  ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let i of denomation" [value]="i.id">{{ i.denomation_name }}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked> సేవలు</ion-label>
+          <ion-select formControlName="ministry_id" (ionChange)="serachgender($event, 2)">
+            <ion-option value="" disabled selected>సేవ ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let i of ministryname" [value]="i.id">{{ i.ministryname }}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked> జెండర్</ion-label>
+          <ion-select formControlName="gender" (ionChange)="serachgender($event, 3)">
+            <ion-option value="" disabled selected>జెండర్ ఎంచుకోండి</ion-option>
+            <ion-option value="Male">పురుషుడు</ion-option>
+            <ion-option value="Female">స్త్రీ</ion-option>
+
+            
+            <ion-option value="transgender">ట్రాన్స్ జెండర్</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>మీ వివాహ స్థితి</ion-label>
+          <ion-select formControlName="status" (ionChange)="serachcaste($event, 4)">
+            <ion-option value="" disabled selected>మీ వివాహ స్థితి ఎంచుకోండి</ion-option>
+            <ion-option value="వివాహం కాలేదు">వివాహం కాలేదు</ion-option>
+            <ion-option value="వివాహం అయినది">వివాహం అయినది</ion-option>
+            <ion-option value="విడాకులు అయినది">విడాకులు అయినది</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked> జాతి</ion-label>
+          <ion-select formControlName="caste" (ionChange)="serach($event, 5)">
+            <ion-option value="" disabled selected>జాతి ఎంచుకోండి</ion-option>
+            <ion-option value="SC">జాతి లేదు</ion-option>
+            <ion-option value="SC">ఎస్సి</ion-option>
+            <ion-option value="ST">ఎస్టి</ion-option>
+            <ion-option value="BC">బీసీ - ఏ</ion-option>
+            <ion-option value="BC">బీసీ - బీ</ion-option>
+            <ion-option value="BC">బీసీ - సీ</ion-option>
+            <ion-option value="BC">బీసీ - డీ</ion-option>
+            <ion-option value="BC">బీసీ - ఇ</ion-option>
+            <ion-option value="OC">ఒసీ</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked> ఆధ్యాత్మిక స్థితి</ion-label>
+          <ion-select formControlName="spirti" (ionChange)="spirit($event, 6)">
+            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
+            <ion-option value="practicingchristian">అభ్యాస చేసే క్రిస్తవుడు</ion-option>
+            <ion-option value="nominalchristian">పేరు కేవలం క్రిస్తవుడు</ion-option>
+            <ion-option value="festivalchristian">పండుగ క్రిస్తవుడు</ion-option>
+            <ion-option value="justbelievingjesus">కేవలం యేసుని నమ్మినట్లే</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked> జిల్లాలను ఎంచుకోండి</ion-label>
+          <ion-select formControlName="district_id" (ionChange)="getconstency($event)"
+            (ionChange)="searchdistric($event)">
+            <ion-option value="" disabled selected>జిల్లాలను ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of districts" [value]="item.id">{{ item.distrct_nm }}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked> ఎన్నికల మండలాను ఎంచుకోండి</ion-label>
+          <ion-select formControlName="constenncy_id" (ionChange)="getmandals($event)"
+            (ionChange)="searchconstenct($event)">
+            <ion-option value="" disabled selected>ఎన్నికల మండలాను ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of constituency" [value]="item.id">{{ item.const_nm }}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked> మండలాలను ఎంచుకోండి</ion-label>
+          <ion-select formControlName="mandal_id" (ionChange)="gepanchayati($event)"
+            (ionChange)="searchmandals($event)">
+            <ion-option value="" disabled selected>మండలాలను ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of mandals" [value]="item.id">{{ item.mndl_nm }}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked> పంచాయతీ ఎంచుకోండి</ion-label>
+          <ion-select formControlName="panchayati_id" (ionChange)="searchvillages($event)">
+            <ion-option value="" disabled selected>పంచాయతీ ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of panchayati" [value]="item.id">{{ item.pnchyt_nm }}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <button ion-button block color="secondary" (click)="search()">శోధించు</button>
+      </ion-col>
+    </ion-row>
+  </form>
+
+  <ion-row>
+    <ion-col col-12 *ngFor="let item of marriagedata">
+      <ion-card>
+        <img src="{{item.image}}" style="width:100%;height: 250px;"  onerror="this.onerror=null;this.src='assets/icon/svg/image.svg';">
+        <table class="styled-table" style="text-transform: capitalize;">
+          <tbody>
+            <tr>
+              <th>పేరు</th>
+              <td><strong>{{item.name}}</strong></td>
+            </tr>
+            <tr>
+              <th>పని</th>
+              <td><strong>{{item.work}}</strong></td>
+            </tr>
+            <tr>
+              <th>చిరునామా</th>
+              <td><strong>{{item.address}}</strong></td>
+            </tr>
+            <tr >
+              <th >రంగు</th>
+              <td ><strong>{{item.color}}</strong></td>
+            </tr>
+            <tr >
+              <th >ఎత్తు</th>
+              <td ><strong>{{item.height}}</strong></td>
+            </tr>
+            <tr >
+              <th >జెండర్</th>
+              <td ><strong>{{item.gender}}</strong></td>
+            </tr>
+            <tr >
+              <th >పుట్టిన తేదీ</th>
+              <td ><strong>{{item.dob}}</strong></td>
+            </tr>
+            <tr >
+              <th >మీ వివాహ స్థితి</th>
+              <td ><strong>{{item.status}}</strong></td>
+            </tr>
+            <tr >
+              <th >స్థలం</th>
+              <td ><strong>{{item.location}}</strong></td>
+            </tr>
+            <tr >
+              <th >వివరణ</th>
+              <td ><strong>{{item.description}}</strong></td>
+            </tr>
+            <tr >
+              <th >ఉప జాతి</th>
+              <td ><strong>{{item.subcaste}}</strong></td>
+            </tr>
+            <tr >
+              <th >చర్యలు</th>
+              <td >
+                <a href="{{item.location}}" class="icon-link"><ion-icon name="location"></ion-icon></a>
+                <a href="tel:+91{{item.phonenumber}}" class="icon-link"><ion-icon name="call"></ion-icon></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

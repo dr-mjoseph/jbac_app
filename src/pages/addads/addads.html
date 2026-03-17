@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button (click)="gotohome()">
+        <ion-icon style="font-size: 20px;" name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title style="text-align: center;"><b> ప్రకటనల సమాచారాన్ని</b></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="pagecss">
+  <form [formGroup]="addsadding">
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>జోడింపు రకం<span style="color:red; ">*</span></ion-label>
+          <ion-select formControlName="type">
+            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
+            <ion-option value="Meetings">మీటింగ్‌లు</ion-option>
+            <ion-option value="Church">చర్చి</ion-option>
+            <ion-option value="Jobs">ఉద్యోగాలు</ion-option>
+            <ion-option value="Marriages">ళ్లిలు</ion-option>
+            <ion-option value="Institutes">ఇన్స్టిట్యూట్లు</ion-option>
+            <ion-option value="Other">ఇతర</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>శీర్షిక<span style="color:red; ">*</span></ion-label>
+          <ion-input type="text" formControlName="title" placeholder="శీర్షిక నమోదు"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12  (click)="openphoto()" >
+        <div class="imgerdt">
+          <img src="assets/icon/Upload.svg"style="height:70px;width:70px;">
+          చిత్రం అప్‌లోడ్ చేయండి
+          <br>
+          <img *ngIf="imagesdata.length" style="width:200px;height:200px" src="{{imagesdata[0].reviewimg}}">
+        </div>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>విజ్ఞాపన వివరణ<span
+              style="color:red; ">*</span></ion-label>
+          <ion-textarea formControlName="description" placeholder="వివరణ నమోదు"></ion-textarea>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>సంప్రదించండి నంబర్<span
+              style="color:red; ">*</span></ion-label>
+          <ion-input type="text" formControlName="number" class="form-control" placeholder="సంప్రదించండి నంబర్"
+            maxlength="10" minlength="10" (keypress)="numericOnly($event)"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>షరతులు మరియు షరతులు <span style="color:red;">*</span></ion-label>
+          <ion-checkbox formControlName="term"></ion-checkbox>
+        </ion-item>
+      </ion-col>
+      <ion-col col-md-12 style="text-align: center;">
+        <button type="submit" color="secondary" ion-button class="default-btn user-all-btn"
+          (click)="postadds()">నమోదు</button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

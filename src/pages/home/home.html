@@ -1,0 +1,184 @@
+<ion-header>
+  <!-- <ion-navbar> -->
+  <ion-row>
+    <ion-col col-2>
+      <p style="text-align: center;" menuToggle>
+        <ion-icon style="color:white;font-size: 30px;" name="menu"></ion-icon>
+      </p>
+    </ion-col>
+    <ion-col col-8 style="font-weight: bolder;text-align: center;font-weight: 1000;color:white">
+      <h2>JBAC-AP</h2>
+    </ion-col>
+
+    <ion-col col-2 style="text-align: center;" (click)="logout()" *ngIf="maintrue">
+      <br>
+      <ion-icon style="color:white;font-size: 30px;" name="log-out"></ion-icon>
+    </ion-col>
+
+    <ion-col col-2 style="text-align: center;" (click)="login()" *ngIf="!maintrue">
+      <br>
+      <ion-icon style="color:white;font-size: 30px;" name="person"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <!-- </ion-navbar> -->
+</ion-header>
+
+<ion-content class="pagecss">
+  <div style="padding: 1%;">
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" *ngFor="let i of banners">
+          <img src="{{i.banner}}" style="width:100%;border-radius:10px;height: 195px;">
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+
+  <div class="marquee">
+    <h3>
+      <span style="color:red;font-weight:bolder;font-family: 'Ramabhadra', sans-serif;"> News </span>
+      : <span (click)="gotopage(12)">చర్చి పర్మిషన్ గవర్నమెంట్ ఆర్డర్స్ .</span>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <span (click)="gotopage(14)">మీ చర్చికి మా టెక్నికల్ సొల్లుషన్స్ .</span>
+
+    </h3>
+  </div>
+
+  <ion-row style="text-align: center;">
+    <ion-col col-3 class="made" (click)="gotopage(1)">
+      <img style="padding:3%;width:100%" src="assets/icon/svg/information.svg">
+      <b>నా గురించి</b>
+    </ion-col>
+
+    <ion-col col-3 class="made" (click)="gotopage(3)">
+      <img style="padding:3%;width:100%" src="assets/icon/svg/register.svg">
+      <b> రిజిస్ట్రేషన్ </b>
+    </ion-col>
+
+    <ion-col col-3 class="made" (click)="gotopage(10)">
+      <img style="padding:3%;width:100%" src="assets/icon/svg/helping-hand.svg">
+      <b>మా సహాయం </b>
+    </ion-col>
+
+
+    <ion-col col-3 class="made" (click)="gotopage(2)">
+      <img style="padding:3%;width:100%" src='assets/icon/meetview.png'>
+      <b>జరగబోయే మీటింగ్స్ </b>
+    </ion-col>
+
+    <ion-col col-3 class="made" (click)="gotopage(8)">
+      <img style="padding:3%;width:100%" src="assets/icon/meetsub.png">
+      <b>సబ్మిట్ మీటింగ్ పోస్టర్</b>
+    </ion-col>
+
+    <ion-col col-3 class="made" (click)="gotopage(14)">
+      <img style="padding:3%;width:100%" src="assets/icon/svg/employee.svg">
+      <b>టెక్నికల్<br> సోలుషన్స్ </b>
+    </ion-col>
+
+    <ion-col col-3 class="made" (click)="gotopage(17)">
+      <img style="padding:3%;width:100%" src="assets/icon/svg/news.svg">
+      <b> వార్తలు చుడానికి </b>
+    </ion-col>
+
+    <ion-col col-3 class="made" (click)="gotopage(7)">
+      <img style="padding:3%;width:100%" src="assets/icon/svg/tv.svg">
+      <b> వార్తలు నమోదు </b>
+    </ion-col>
+
+    <ion-col col-3 class="made" (click)="gotopage(15)">
+      <img style="padding:3%;width:100%" src="assets/icon/svg/picture.svg">
+      <b>ఫోటో గ్యాలరీ </b>
+    </ion-col>
+
+
+    <ion-col col-3 class="made" (click)="gotopage(11)">
+      <img style="padding:3%;width:100%" src="assets/icon/svg/contact-us.svg">
+      <b> మమ్మల్ని<br>సంప్రదించండి </b>
+    </ion-col>
+
+    <ion-col col-3 class="made" (click)="gotopage(9)">
+      <img style="padding:3%;width:100%" src=" assets/icon/download.png">
+      <b> చర్చి<br>సమయాలు </b>
+    </ion-col>
+
+    <ion-col col-3 class="made" (click)="gotopage(12)">
+      <img style="padding:3%;width:100%" src=" assets/icon/svg/permission.svg">
+      <b>చర్చి<br>పర్మిషన్</b>
+    </ion-col>
+    <ion-col col-3 class="made" (click)="gotopage(4)">
+      <img style="padding:3%;width:100%" src="assets/icon/svg/services.svg">
+      <b> ఇతర సర్వీసెస్ చుడానికి </b>
+    </ion-col>
+
+    <ion-col col-3 class="made" (click)="gotopage(5)">
+      <img style="padding:3%;width:100%" src="assets/icon/svg/myaccount.svg">
+      <b> ఇతర సర్వీసెస్ రిజిస్టర్</b>
+    </ion-col>
+
+    <ion-col col-3 class="made" (click)="gotopage(16)">
+      <img style="padding:3%;width:100%" src="assets/icon/svg/video.svg">
+      <b>వీడియో<br>గ్యాలరీ </b>
+    </ion-col>
+
+    <ion-col col-3 class="made" (click)="gotopage(6)">
+      <img style="padding:3%;width:100%" src="assets/icon/svg/project-manager.svg">
+      <b> లీడర్స్ </b>
+    </ion-col>
+
+    <ion-col col-3 class="made" (click)="gotopage(18)">
+      <img style="padding:3%;width:100%" src="assets/icon/svg/123.svg">
+      <b> దాడుల నమోదు </b>
+    </ion-col><br> 
+    <!-- <ion-col col-3 class="made" (click)="gotopage(13)">
+      <img style="padding:3%;width:100%" src="assets/icon/svg/cloud-computing.svg">
+      <b>వెబ్-సైట్ </b>
+    </ion-col> -->
+
+    <ion-col col-3 *ngIf="maintrue" class="made" (click)="logout()">
+      <img style="padding:3%;width:100%" src="assets/icon/svg/exit.svg">
+      <b> లాగ్ అవుట్ </b>
+    </ion-col>
+  </ion-row>
+  
+ <br>
+  <ion-row>
+    <ion-col col-2></ion-col>
+    <ion-col col-8 style="background-color: white;text-align: center;border-radius: 10px;">
+      Application Visitors Count : <b>{{count}}</b>
+    </ion-col>
+    <ion-col col-2></ion-col>
+  </ion-row>
+  <br>
+  <ion-row>
+    <ion-col col-2></ion-col>
+    <ion-col col-8 style="background-color: white;text-align: center;border-radius: 10px;">
+      <b> <a (click)="gotoprivacy()">Privacy Policy</a></b>
+    </ion-col>
+    <ion-col col-2></ion-col>
+  </ion-row>
+  <br><br>
+</ion-content>
+
+<ion-footer
+  style="background-color: white; border-radius: 15px 15px 0px 0px;font-family: 'Ramabhadra', sans-serif!important;">
+  <ion-row style="text-align: center;color:#1f376e">
+    <ion-col col-3>
+      <ion-icon style="font-size:34px;color:#1f376e" name="home"></ion-icon>
+      <br><b>హోమ్</b>
+    </ion-col>
+    <ion-col col-6>
+      <img style="margin-top:-18%;width:36%;" src="assets/icon/footer_logo.png">
+      <p style="font-size: 9px; font-weight: 1000; color: red;">
+        జీసస్ బిలీవర్స్ అసోసియేషన్, ఆంధ్ర ప్రదేశ్
+      </p>
+    </ion-col>
+    <ion-col col-3 (click)="gotoprofile()">
+      <ion-icon style="font-size:34px;color:#1f376e" name="person"></ion-icon>
+      <br>
+      <b *ngIf="maintrue">ప్రొఫైల్</b>
+      <b *ngIf="!maintrue">లాగిన్</b>
+    </ion-col>
+  </ion-row>
+</ion-footer>

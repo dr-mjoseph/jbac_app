@@ -1,0 +1,582 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button (click)="gotohome()">
+        <ion-icon style="font-size: 20px;" name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title style="text-align: center;"><b>విద్యార్థి రిజిస్ట్రేషన్</b></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="pagecss">
+  <form [formGroup]="studentform">
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>విద్యార్థి పేరు (ఇంటి పేరు తో సహా)<span
+              style="color:red; ">*</span></ion-label>
+          <ion-input formControlName="studentname" type="text" placeholder="మీ పేరు నమోదు చేయండి"></ion-input>
+        </ion-item>
+        <div *ngIf="submitted && studentform.get('studentname').errors" class="error-message"
+          style="color:red; font-family: 'ramabhardra', sans-serif!important;">
+          <div *ngIf="studentform.get('studentname').hasError('required')"
+            style="color:red; ">విద్యార్థి పేరు అవసరం
+          </div>
+        </div>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>జెండర్</ion-label>
+          <ion-select formControlName="gender" placeholder="జెండర్ ఎంచుకోండి">
+            <ion-option value="male">పురుషుడు</ion-option>
+            <ion-option value="female">స్త్రీ</ion-option>
+            <ion-option value="transgender">ట్రాన్స్ జెండర్</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>విద్యార్థి నెంబర్ <span
+              style="color:red; ">*</span></ion-label>
+          <ion-input formControlName="number" type="tel" placeholder="మీ నంబర్ నమోదు చేయండి" maxlength="10"
+            (keypress)="numericOnly($event)"></ion-input>
+        </ion-item>
+        <div *ngIf="submitted && studentform.get('number').errors" class="error-message"
+          style="color:red; font-family: 'ramabhardra', sans-serif!important;">
+          <div *ngIf="studentform.get('number').hasError('required')"
+            style="color:red; ">నెంబర్ అవసరం</div>
+          <div *ngIf="studentform.get('number').hasError('maxlength')"
+            style="color:red; ">10 అంకెల కన్నా తక్కువ</div>
+        </div>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>వాట్సాప్ నెంబర్</ion-label>
+          <ion-input formControlName="whatsappnumber" type="tel" placeholder="మీ వాట్సాప్ నెంబర్ నమోదు చేయండి"
+            maxlength="10" (keypress)="numericOnly($event)"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>పుట్టిన తేది</ion-label>
+          <ion-input type="date" formControlName="dob"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>తండ్రి పేరు(ఇంటి పేరు తో సహా) <span style="color:red; ">*</span></ion-label>
+          <ion-input type="text" formControlName="fathername" placeholder="మీ తండ్రి పేరు నమోదు చేయండి"></ion-input>
+        </ion-item>
+        <div *ngIf="submitted && studentform.get('fathername').errors" class="error-message"
+          style="color:red; font-family: 'ramabhardra', sans-serif!important;">
+          <div *ngIf="studentform.get('fathername').hasError('required')"
+            style="color:red; ">తండ్రి పేరు అవసరం</div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>మీరు దేవుని కోసం ఏమి చేస్తారు</ion-label>
+          <ion-select formControlName="god" placeholder="రకాన్ని ఎంచుకోండి">
+            <ion-option value="Singing">పాటలు పాడడం</ion-option>
+            <ion-option value="Music">సంగీతం</ion-option>
+            <ion-option value="Dance">నృత్యం</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>జీవిత లక్ష్యం</ion-label>
+          <ion-input type="text" formControlName="lifegoal" placeholder="మీ జీవిత లక్ష్యం నమోదు చేయండి"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>ఆసక్తులు</ion-label>
+          <ion-select formControlName="hobbies">
+            <ion-option value="" disabled selected>రకాన్ని ఎంచుకోండి</ion-option>
+            <ion-option value="Singing">పాటలు పాడడం</ion-option>
+            <ion-option value="Designing">డిజైనింగ్</ion-option>
+            <ion-option value="Writer">రచయిత</ion-option>
+            <ion-option value="readingbooks">పుస్తకాలు చదవడం</ion-option>
+            <ion-option value="servingpeople">జనులకు సేవ చేయడం</ion-option>
+            <ion-option value="music">సంగీతం</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>కళాశాల/పాఠశాల పేరు <span
+              style="color:red; ">*</span></ion-label>
+          <ion-input formControlName="schname" placeholder="మీ కళాశాల/పాఠశాల పేరు నమోదు చేయండి" type="text"></ion-input>
+          <div *ngIf="submitted && studentform.get('schname').errors" class="error-message"
+            style="color:red; font-family: 'ramabhardra', sans-serif!important;">
+            <div *ngIf="studentform.get('schname').hasError('required')"
+              style="color:red; ">కళాశాల/పాఠశాల పేరు అవసరం
+            </div>
+          </div>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>ప్రతిభ</ion-label>
+          <ion-select formControlName="talent">
+            <ion-option value="" disabled selected>రకాన్ని ఎంచుకోండి</ion-option>
+            <ion-option value="Speaker">వక్త</ion-option>
+            <ion-option value="Writer">రచయిత</ion-option>
+            <ion-option value="Singer">గాయకుడు</ion-option>
+            <ion-option value="Others">ఇతరులు</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>విద్య <span style="color:red; ">*</span></ion-label>
+          <ion-select formControlName="study">
+            <ion-option value="" disabled selected>రకాన్ని ఎంచుకోండి</ion-option>
+            <ion-option value="1-5">1-5</ion-option>
+            <ion-option value="6-10">6-10</ion-option>
+            <ion-option value="Diploma">డిప్లొమా</ion-option>
+            <ion-option value="Inter">ఇంటర్</ion-option>
+            <ion-option value="Degree">డిగ్రీ</ion-option>
+            <ion-option value="Medical">మెడికల్</ion-option>
+            <ion-option value="Engineering">ఇంజనీరింగ్</ion-option>
+            <ion-option value="PG">పీజీ</ion-option>
+            <ion-option value="PHD">పిహెచ్డి</ion-option>
+          </ion-select>
+          <div *ngIf="submitted && studentform.get('study').errors" class="error-message"
+            style="color:red; font-family: 'ramabhardra', sans-serif!important;">
+            <div *ngIf="studentform.get('study').hasError('required')"
+              style="color:red; ">విద్య అవసరం</div>
+          </div>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>ఆధ్యాత్మిక స్థితి</ion-label>
+          <ion-select formControlName="spirti">
+            <ion-option value="" disabled selected>రకాన్ని ఎంచుకోండి</ion-option>
+            <ion-option value="practicingchristian">ప్రాక్టిసింగ్ క్రిస్టియన్</ion-option>
+            <ion-option value="nominalchristian">నామమాత్ర క్రిస్టియన్</ion-option>
+            <ion-option value="festivalchristian">పండుగల క్రిస్టియన్</ion-option>
+            <ion-option value="justbelievingjesus">యేసును నమ్మడం మాత్రమే</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>సంఘం / చర్చి విధానం<span
+              style="color:red; ">*</span></ion-label>
+          <ion-select formControlName="denomination_id">
+            <ion-option value="" disabled selected>సంఘాన్ని ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let i of denomation" [value]="i.id">{{i.denomation_name}}</ion-option>
+          </ion-select>
+          <div *ngIf="submitted && studentform.get('denomination_id').errors" class="error-message"
+            style="color:red; font-family: 'ramabhardra', sans-serif!important;">
+            <div *ngIf="studentform.get('denomination_id').hasError('required')">సంఘం అవసరం</div>
+          </div>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-grid>
+      <h3 style="text-align: center;font-weight: 900;    color: white;">కళాశాల / పాఠశాల చిరునామా</h3>
+      <ion-row>
+        <ion-col col-12>
+          <ion-item>
+            <ion-label stacked>జిల్లాను ఎంచుకోండి<span
+                style="color:red; ">*</span></ion-label>
+            <ion-select formControlName="district_id" (ionChange)="getconstency($event);">
+              <ion-option value="" disabled selected>రకాన్ని ఎంచుకోండి</ion-option>
+              <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>
+            </ion-select>
+            <div *ngIf="submitted && studentform.get('district_id').errors" class="error-message"
+              style="color:red; font-family: 'ramabhardra', sans-serif!important;">
+              <div *ngIf="studentform.get('district_id').hasError('required')">జిల్లా అవసరం</div>
+            </div>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12>
+          <ion-item>
+            <ion-label stacked>నియోజకవర్గాన్ని ఎంచుకోండి<span
+                style="color:red; ">*</span></ion-label>
+            <ion-select formControlName="constituency_id" (ionChange)="getmandals($event);">
+              <ion-option value="" disabled selected>రకాన్ని ఎంచుకోండి</ion-option>
+              <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>
+            </ion-select>
+            <div *ngIf="submitted && studentform.get('constituency_id').errors" class="error-message"
+              style="color:red; font-family: 'ramabhardra', sans-serif!important;">
+              <div *ngIf="studentform.get('constituency_id').hasError('required')">నియోజకవర్గం అవసరం</div>
+            </div>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>మండలాలను ఎంచుకోండి<span
+              style="color:red; ">*</span></ion-label>
+          <ion-select formControlName="mandal_id" (ionChange)="gepanchayati($event);">
+            <ion-option value="" disabled selected>రకాన్ని ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>
+          </ion-select>
+          <div *ngIf="submitted && studentform.get('mandal_id').errors" class="error-message"
+            style="color:red; font-family: 'ramabhardra', sans-serif!important;">
+            <div *ngIf="studentform.get('mandal_id').hasError('required')">మండలం అవసరం</div>
+          </div>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>పంచాయతీని ఎంచుకోండి<span
+              style="color:red; ">*</span></ion-label>
+          <ion-select formControlName="village_id">
+            <ion-option value="" disabled selected>రకాన్ని ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>
+          </ion-select>
+          <div *ngIf="submitted && studentform.get('village_id').errors" class="error-message"
+            style="color:red; font-family: 'ramabhardra', sans-serif!important;">
+            <div *ngIf="studentform.get('village_id').hasError('required')">పంచాయతీ అవసరం</div>
+          </div>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-grid>
+      <h3 style="text-align: center;font-weight: 900;color: white;">నివాస చిరునామా</h3>
+      <ion-row>
+        <ion-col col-12>
+          <ion-item>
+            <ion-label stacked>జిల్లాలను ఎంచుకోండి<span style="color:red">*</span></ion-label>
+            <ion-select formControlName="resdistricts" (ionChange)="getconstency1($event)">
+              <ion-option value="" disabled selected>ఎంచుకోండి</ion-option>
+              <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <div *ngIf="submitted && studentform.get('resdistricts').errors" class="error-message"
+            style="color:red; font-family: 'ramabhardra', sans-serif!important;">
+            <div *ngIf="studentform.get('resdistricts').hasError('required')">జిల్లా అవసరం</div>
+          </div>
+        </ion-col>
+        <ion-col col-12>
+          <ion-item>
+            <ion-label stacked>నియోజకవర్గాన్ని ఎంచుకోండి<span style="color:red">*</span></ion-label>
+            <ion-select formControlName="resconstituencyname" (ionChange)="getmandals1($event)">
+              <ion-option value="" disabled selected>ఎంచుకోండి</ion-option>
+              <ion-option *ngFor="let item of constituency1" [value]="item.id">{{item.const_nm}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <div *ngIf="submitted && studentform.get('resconstituencyname').errors" class="error-message"
+            style="color:red; font-family: 'ramabhardra', sans-serif!important;">
+            <div *ngIf="studentform.get('resconstituencyname').hasError('required')">నియోజకవర్గం అవసరం</div>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12>
+          <ion-item>
+            <ion-label stacked>మండలాలను ఎంచుకోండి<span style="color:red">*</span></ion-label>
+            <ion-select formControlName="resmandals"
+              (ionChange)="gepanchayati1($event);getpastorssdata();getchurchesstudentdata()">
+              <ion-option value="" disabled selected>ఎంచుకోండి</ion-option>
+              <ion-option *ngFor="let item of mandals1" [value]="item.id">{{item.mndl_nm}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <div *ngIf="submitted && studentform.get('resmandals').errors" class="error-message"
+            style="color:red; font-family: 'ramabhardra', sans-serif!important;">
+            <div *ngIf="studentform.get('resmandals').hasError('required')">మండలం అవసరం</div>
+          </div>
+        </ion-col>
+        <ion-col col-12>
+          <ion-item>
+            <ion-label stacked>పంచాయతీని ఎంచుకోండి<span style="color:red">*</span></ion-label>
+            <ion-select formControlName="respanchayati">
+              <ion-option value="" disabled selected>ఎంచుకోండి</ion-option>
+              <ion-option *ngFor="let item of panchayati1" [value]="item.id">{{item.pnchyt_nm}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <div *ngIf="submitted && studentform.get('respanchayati').errors" class="error-message"
+            style="color:red; font-family: 'ramabhardra', sans-serif!important;">
+            <div *ngIf="studentform.get('respanchayati').hasError('required')">పంచాయతీ అవసరం</div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>గ్రామం పేరు / వీధి పేరు<span style="color:red">*</span></ion-label>
+          <ion-input formControlName="villagename" type="text"
+            placeholder="మీ గ్రామం / వీధి పేరు నమోదు చేయండి"></ion-input>
+        </ion-item>
+        <div *ngIf="submitted && studentform.get('villagename').errors" class="error-message"
+          style="color:red; font-family: 'ramabhardra', sans-serif!important;">
+          <div *ngIf="studentform.get('villagename').hasError('required')">గ్రామం పేరు / వీధి పేరు అవసరం</div>
+        </div>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>వార్డు నంబర్</ion-label>
+          <ion-input formControlName="wardnumber" type="text" placeholder="వార్డు నంబర్ నమోదు చేయండి"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>పాస్టర్ ని ఎంచుకోండి</ion-label>
+          <ion-select formControlName="pastor" (ionChange)="getpastorssdata()">
+            <ion-option value="" disabled selected>మీ పాస్టర్ ని ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of getstudentspastors" [value]="item.id">{{item.pastorname}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>చర్చి ని ఎంచుకోండి</ion-label>
+          <ion-select formControlName="church" (ionChange)="getchurchesstudentdata()">
+            <ion-option value="" disabled selected>చర్చి పేరు ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of getchurchstudentfilter" [value]="item.id">{{item.church_name}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>మీ స్థానిక చిరునామా / ఇల్లు నంబర్ నమోదు చేయండి<span style="color:red; ">*</span></ion-label>
+          <ion-input formControlName="ward" type="text" placeholder="మీ వీధి పేరు నమోదు చేయండి"></ion-input>
+        </ion-item>
+        <div *ngIf="submitted && studentform.get('ward').errors" class="error-message"
+          style="color:red; font-family: 'ramabhardra', sans-serif!important;">
+          <div *ngIf="studentform.get('ward').hasError('required')">స్థానిక చిరునామా / ఇల్లు నంబర్ అవసరం</div>
+        </div>
+      </ion-col>
+
+      <ion-col col-12 col-md-6>
+        <ion-list>
+          <ion-label stacked>ఎక్కడ నివసిస్తున్నారు? <span
+              style="color:red; ">*</span></ion-label>
+          <ion-item>
+            <input type="radio" value="YES" formControlName="nri">
+            <label> ఆంధ్ర ప్రదేశ్ లో నివసించరు </label>
+          </ion-item>
+          <ion-item>
+            <input type="radio" value="NO" formControlName="nri" />
+            <label> ఆంధ్ర ప్రదేశ్ లో నివసిస్తున్నారు </label>
+          </ion-item>
+        </ion-list>
+        <div *ngIf="submitted && studentform.get('nri').errors" class="error-message"
+          style="color:red; font-family: 'ramabhardra', sans-serif!important;">
+          <div *ngIf="studentform.get('nri').hasError('required')">ఎక్కడ నివసిస్తున్నారు అనేది అవసరం</div>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-col col-12>
+      <ion-list>
+        <ion-label stacked>నాయకుడిగా మారాలనుకుంటున్నారా? <span
+            style="color:red; ">*</span></ion-label>
+        <ion-item>
+          <input type="radio" value="YES" (click)="onradioleadertyperajkumar($event)" formControlName="leadership">
+          <label>అవును</label>
+        </ion-item>
+        <ion-item>
+          <input type="radio" value="NO" (click)="onradioleadertyperajkumar($event)" formControlName="leadership">
+          <label>కాదు</label>
+        </ion-item>
+      </ion-list>
+      <div *ngIf="submitted && studentform.get('leadership').errors" class="error-message"
+        style="color:red; font-family: 'ramabhardra', sans-serif!important;">
+        <div *ngIf="studentform.get('leadership').hasError('required')">నాయకత్వం అవసరం</div>
+      </div>
+    </ion-col>
+    <ion-col col-12 class="mb-4 pb-2" *ngIf="lead">
+      <ion-item>
+        <ion-label stacked>నాయకత్వం</ion-label>
+        <ion-radio formControlName="leadertype">
+          <ion-item>
+            <ion-label>జనరల్</ion-label>
+            <ion-radio slot="start" value="1" (ionChange)="onradioleadertype($event.target)"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>వింగ్</ion-label>
+            <ion-radio slot="start" value="2" (ionChange)="onradioleadertype($event.target)"></ion-radio>
+          </ion-item>
+        </ion-radio>
+      </ion-item>
+    </ion-col>
+
+    <ion-row *ngIf="leadtype">
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>జనరల్ నాయకత్వం స్థాయి</ion-label>
+          <ion-select formControlName="generaltype">
+            <ion-option value="">జనరల్ నాయకత్వం ఎంచుకోండి</ion-option>
+            <ion-option value="1">జిల్లా</ion-option>
+            <ion-option value="2">సంవిధానం</ion-option>
+            <ion-option value="3">మండలం</ion-option>
+            <ion-option value="4">గ్రామం</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="wingtype">
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>వింగ్ నాయకత్వం స్థాయి</ion-label>
+          <ion-select formControlName="wingtype">
+            <ion-option value="" disabled selected>వింగ్ నాయకత్వం ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of wings" [value]="item.id">{{item.position}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="wingtypes">
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>వింగ్ నాయకత్వం</ion-label>
+          <ion-select formControlName="wingtypes">
+            <ion-option value="">వింగ్ నాయకత్వం ఎంచుకోండి</ion-option>
+            <ion-option value="Driver">డ్రైవర్</ion-option>
+            <ion-option value="Socialmedia">సోషల్ మీడియా</ion-option>
+            <ion-option value="Papermedia">పేపర్ మీడియా</ion-option>
+            <ion-option value="MeadiaReporters">మీడియా రిపోర్టర్లు</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-12>
+        <ion-list>
+          <ion-label stacked>విద్యార్థి అనాథా? <span
+              style="color:red; ">*</span></ion-label>
+          <ion-item>
+            <input type="radio" value="YES" (click)="onparent($event)" formControlName="mother">
+            <label>అవును</label>
+          </ion-item>
+          <ion-item>
+            <input type="radio" value="NO" (click)="onparent($event)" formControlName="mother">
+            <label>కాదు</label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+      <ion-col col-12 *ngIf="father">
+        <ion-item>
+          <ion-label stacked>తండ్రి లేదా తల్లి పేరు(ఇంటి పేరు తో సహా)</ion-label>
+          <ion-input formControlName="orphon" type="text"
+            placeholder="మీ తండ్రి లేదా తల్లి పేరును నమోదు చేయండి"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>స్థానిక స్థలం</ion-label>
+          <ion-input formControlName="nativeplace" type="text"
+            placeholder="మీ స్థానిక స్థలాన్ని నమోదు చేయండి"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>మీ గురించి</ion-label>
+          <ion-input formControlName="aboutyourself" type="text" placeholder="మీ గురించి నమోదు చేయండి"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>మీ కులం</ion-label>
+          <ion-select formControlName="caste">
+            <ion-option value="" disabled selected>జాతిని ఎంచుకోండి</ion-option>
+            <ion-option value="No Caste">జాతి లేదు</ion-option>
+            <ion-option value="SC">ఎస్ఈ</ion-option>
+            <ion-option value="ST">ఎస్టీ</ion-option>
+            <ion-option value="BC-A">బీసీ-A</ion-option>
+            <ion-option value="BC-B">బీసీ-B</ion-option>
+            <ion-option value="BC-C">బీసీ-C</ion-option>
+            <ion-option value="BC-D">బీసీ-D</ion-option>
+            <ion-option value="BC-E">బీసీ-E</ion-option>
+            <ion-option value="OC">ఓసీ</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>ఉప జాతి</ion-label>
+          <ion-input formControlName="subcaste" type="text" placeholder="మీ ఉప జాతిని నమోదు చేయండి"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>పాస్వర్డ్<span style="color:red">*</span></ion-label>
+          <ion-input formControlName="password" type="password" placeholder="మీ పాస్వర్డ్ నమోదు చేయండి" maxlength="16"
+            minlength="6"></ion-input>
+        </ion-item>
+        <div *ngIf="submitted && studentform.get('password').errors" class="error-message"
+          style="color:red; font-family: 'ramabhardra', sans-serif!important;">
+          <div *ngIf="studentform.get('password').hasError('required')">పాస్వర్డ్ అవసరం</div>
+        </div>
+      </ion-col>
+    </ion-row>
+
+
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>పునః-పాస్వర్డ్<span style="color:red">*</span></ion-label>
+          <ion-input formControlName="retypepassword" type="password" placeholder="మీ పాస్వర్డ్ నమోదు చేయండి"
+            maxlength="16" minlength="6"></ion-input>
+        </ion-item>
+        <div *ngIf="submitted && studentform.get('retypepassword').errors" class="error-message"
+          style="color:red; font-family: 'ramabhardra', sans-serif!important;">
+          <div *ngIf="studentform.get('retypepassword').hasError('required')">పునః-పాస్వర్డ్ అవసరం</div>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <input type="checkbox" value="yes" formControlName="term">
+          <label stacked> &nbsp;&nbsp; నేను మరియు మీకు సమాచారం భద్రంగా ఉంచటంలో సమ్మతిస్తున్నాను</label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-12 col-md-6>
+        <div style="text-align: center;">
+          <button ion-button color="secondary" (click)="poststudentsignup()" style="letter-spacing: 1px;">నమోదు
+            చేయండి</button>
+        </div>
+      </ion-col>
+    </ion-row>
+
+  </form>
+</ion-content>

@@ -1,0 +1,86 @@
+page-home {
+
+  // @import "~swiper/swiper-bundle.css";
+
+
+
+  .made {
+    // text-align: center;
+    background-color: #fafafa;
+    border-radius: 9px;
+    color: rgb(0, 0, 0);
+    margin: 4%;
+    height: 100%;
+    font-family: 'Ramabhadra', sans-serif !important;
+  }
+
+  .afetr {
+    border-radius: 2px;
+    height: 3.6rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: black;
+    padding: 0 1.1em;
+  }
+
+  .custom-toolbar {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    background-color: #1f376e !important;
+  }
+
+  .marquee {
+    width: 100%;
+    white-space: nowrap;
+    font-family: 'Ramabhadra', sans-serif !important;
+    overflow: hidden;
+    background-color: #ffffff;
+  }
+
+  .marquee h3 {
+    display: inline-block;
+    font-size: 15px;
+    font-weight: bold;
+    color: #333333;
+    -webkit-animation: marquee 10s linear infinite;
+    animation: marquee 10s linear infinite;
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(100%);
+    }
+
+    /* Start off-screen */
+    100% {
+      transform: translateX(-100%);
+    }
+
+    /* Scroll to the left */
+  }
+
+
+
+  .center-alert {
+    .alert-md {
+
+      // For Android
+      .alert-wrapper {
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    .alert-ios {
+
+      // For iOS
+      .alert-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+  
+}

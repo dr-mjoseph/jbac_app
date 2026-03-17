@@ -1,0 +1,44 @@
+page-pastor {
+    form {
+        ion-list {
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        ion-item {
+            margin-bottom: 12px;
+        }
+
+        button[type="submit"] {
+            margin-top: 16px;
+            border-radius: 8px;
+        }
+    }
+
+
+  .label1 {
+    font-size: 19px; /* Adjusts font size */
+    color: #333; /* Sets a readable text color */
+    line-height: 1.5; /* Increases line height for better readability */
+  }
+  
+  .label1 br {
+    display: none; /* Prevents line break from affecting layout */
+  }
+  
+  .label1  {
+    white-space: pre-wrap; /* Allows line breaks in text */
+  }
+  
+  
+
+   
+}
+.wrap-title {
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  display: block;
+  word-wrap: break-word;
+}

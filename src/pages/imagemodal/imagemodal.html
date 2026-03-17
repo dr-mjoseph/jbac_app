@@ -1,0 +1,16 @@
+
+<ion-content style="margin-top: 40%;">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Image Viewer</ion-title>
+      <ion-buttons end>
+        <button ion-button icon-only (click)="dismiss()">
+          <ion-icon name="close"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <div class="image-container">
+    <img [src]="imageSrc">
+  </div>
+</ion-content>
