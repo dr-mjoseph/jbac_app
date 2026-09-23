@@ -43,6 +43,7 @@
     "cordova-plugin-ionic-webview": "^5.0.1",
     "cordova-plugin-splashscreen": "^5.0.4",
     "cordova-plugin-statusbar": "^2.4.3",
+    "sass": "^1.105.0",
     "typescript": "2.6.2"
   },
   "description": "An Ionic project",
