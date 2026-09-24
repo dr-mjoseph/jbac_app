@@ -18,7 +18,22 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Setup Java
+    - name: Setup Java 17 for SDK Manager
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Grant Android SDK Permissions & Install Build Tools
+      run: |
+        sudo chown -R $USER:$USER /usr/local/lib/android/sdk
+        sudo chmod -R a+rwx /usr/local/lib/android/sdk
+        yes | sdkmanager --licenses || true
+        yes | sdkmanager "build-tools;30.0.3"
+        echo "=== Installed Build Tools ==="
+        ls -la /usr/local/lib/android/sdk/build-tools
+
+    - name: Setup Java 11 for Cordova Build
       uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
@@ -29,14 +44,11 @@ jobs:
       with:
         gradle-version: '7.1.1'
 
-    - name: Grant Android SDK Permissions & Install Build Tools
+    - name: Verify Toolchain
       run: |
-        sudo chown -R $USER:$USER /usr/local/lib/android/sdk
-        sudo chmod -R a+rwx /usr/local/lib/android/sdk
-        yes | sdkmanager --licenses || true
-        yes | sdkmanager "build-tools;30.0.3"
-        echo "=== Installed Build Tools ==="
-        ls -la /usr/local/lib/android/sdk/build-tools
+        java -version
+        gradle -v
+        ls -la /usr/local/lib/android/sdk/build-tools/30.0.3
 
     - name: Setup Node.js
       uses: actions/setup-node@v4
