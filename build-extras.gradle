@@ -1,0 +1,12 @@
+android {
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            def ver = variant.versionName
+            if (ver != null && !ver.isEmpty()) {
+                outputFileName = "jbacApp-${ver}.apk"
+            } else {
+                outputFileName = "jbacApp-beta1.apk"
+            }
+        }
+    }
+}
