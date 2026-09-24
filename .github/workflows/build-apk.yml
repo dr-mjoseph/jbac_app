@@ -17,7 +17,7 @@ jobs:
       uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
-        java-version: '11'
+        java-version: '17'
 
     - name: Setup Node.js
       uses: actions/setup-node@v4
@@ -36,6 +36,9 @@ jobs:
         npm config set production false
         npm install --production=false
         npm ls @ionic/app-scripts typescript
+
+    - name: Accept Android SDK Licenses
+      run: yes | sdkmanager --licenses || true
 
     - name: Add Android Platform
       run: ionic cordova platform add android --no-interactive
