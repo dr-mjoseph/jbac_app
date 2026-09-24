@@ -34,7 +34,7 @@ jobs:
         sudo chown -R $USER:$USER /usr/local/lib/android/sdk
         sudo chmod -R a+rwx /usr/local/lib/android/sdk
         yes | sdkmanager --licenses || true
-        yes | sdkmanager --install "build-tools;30.0.3" "platforms;android-30" "platforms;android-34"
+        yes | sdkmanager "build-tools;30.0.3"
         echo "=== Installed Build Tools ==="
         ls -la /usr/local/lib/android/sdk/build-tools
 
