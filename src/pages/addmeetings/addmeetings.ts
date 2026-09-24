@@ -23,11 +23,6 @@ export class AddmeetingsPage {
   locationError: string = '';
   locationSuccess: string = '';
   locationName: string = '';
-  locationSourceMessage: string = '';;
-  locationLoading: boolean = false;
-  locationError: string = '';
-  locationSuccess: string = '';
-  locationName: string = '';
   locationSourceMessage: string = '';
   districts: any;
   mandals: any;
@@ -212,7 +207,7 @@ export class AddmeetingsPage {
         districtname: this.form.value.districtname,           //
         description: this.form.value.description,             //
         constituencyname: this.form.value.constituencyname,   //
-        mandals: this.form.value.mandals,                     // 
+        mandals: this.form.value.mandals,                     //
         village_name: this.form.value.village_name,           //
         fromtime: this.form.value.fromtime,
         totime: this.form.value.totime,
