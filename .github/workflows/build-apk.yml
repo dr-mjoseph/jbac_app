@@ -44,9 +44,18 @@ jobs:
       run: ionic cordova platform add android --no-interactive
 
     - name: Build Android Release APK
-      run: ionic cordova build android --prod --release --no-interactive --verbose
+      run: |
+        ionic cordova build android --prod --release --no-interactive --verbose 2>&1 | tee build.log
+
+    - name: Upload Build Log
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-log
+        path: build.log
 
     - name: Upload APK
+      if: success()
       uses: actions/upload-artifact@v4
       with:
         name: app-release-unsigned.apk
