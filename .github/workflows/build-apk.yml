@@ -43,9 +43,9 @@ jobs:
     - name: Add Android Platform
       run: ionic cordova platform add android --no-interactive
 
-    - name: Build Android Release APK
+    - name: Build Android Release Package
       run: |
-        ionic cordova build android --prod --release --no-interactive --verbose 2>&1 | tee build.log
+        ionic cordova build android --prod --release --no-interactive --verbose -- --packageType=apk 2>&1 | tee build.log
 
     - name: Upload Build Log
       if: always()
@@ -54,9 +54,10 @@ jobs:
         name: build-log
         path: build.log
 
-    - name: Upload APK
-      if: success()
+    - name: Upload APK & AAB
       uses: actions/upload-artifact@v4
       with:
-        name: app-release-unsigned.apk
-        path: platforms/android/app/build/outputs/apk/release/*.apk
+        name: app-release-unsigned
+        path: |
+          platforms/android/app/build/outputs/apk/release/*.apk
+          platforms/android/app/build/outputs/bundle/release/*.aab
