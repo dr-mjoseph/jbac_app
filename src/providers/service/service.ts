@@ -232,7 +232,7 @@ export class ServiceProvider {
   }
 
   editpastorsassociations(data: any) {
-    return this.http.post(this.testApi + 'editpastorsassociations', data);
+    return this.http.post(this.testApi + 'editpastororgainsation', data);
   }
 
   editchurch(data: any) {

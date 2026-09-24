@@ -719,14 +719,17 @@ export class ProfilePage {
   }
 
   editbeliver() {
-    this.beliverform.value.usr_id = localStorage.getItem('usr_id');
-    this.service.editbeliver(this.beliverform.value).subscribe((res: any) => {
+    const usr_id = localStorage.getItem('usr_id');
+    const data = Object.assign({}, this.beliverform.value, { usr_id });
+    this.service.editbeliver(data).subscribe((res: any) => {
       if (res.status == 200) {
-        alert('విజయవంతం గా అప్ డేట్ చేసినారు')
+        alert('విజయవంతంగా అప్డేట్ చేయబడింది / Updated Successfully');
       } else {
-        alert('server down')
+        alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
       }
-    })
+    }, () => {
+      alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
+    });
   }
 
   // Accept Input As a Number Only
@@ -737,72 +740,88 @@ export class ProfilePage {
   }
 
   editstudent() {
-    this.studentform.value.usr_id = localStorage.getItem('usr_id');
-    this.service.editstudent(this.studentform.value).subscribe((res: any) => {
+    const usr_id = localStorage.getItem('usr_id');
+    const data = Object.assign({}, this.studentform.value, { usr_id });
+    this.service.editstudent(data).subscribe((res: any) => {
       if (res.status == 200) {
-        alert('విజయవంతం గా అప్ డేట్ చేసినారు')
+        alert('విజయవంతంగా అప్డేట్ చేయబడింది / Updated Successfully');
       } else {
-        alert('server down')
+        alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
       }
-    })
+    }, () => {
+      alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
+    });
   }
 
   postministryupdate() {
-    this.ministryform.value.usr_id = localStorage.getItem('usr_id');
-    this.service.editministry(this.ministryform.value).subscribe((res: any) => {
+    const usr_id = localStorage.getItem('usr_id');
+    const sourceData = this.updateprofileministry ? this.updateprofileministry.value : this.ministryform.value;
+    const data = Object.assign({}, this.ministryform ? this.ministryform.value : {}, sourceData, { usr_id });
+    this.service.editministry(data).subscribe((res: any) => {
       if (res.status == 200) {
-        alert('విజయవంతం గా అప్ డేట్ చేసినారు')
+        alert('విజయవంతంగా అప్డేట్ చేయబడింది / Updated Successfully');
       } else {
-        alert('server down')
+        alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
       }
-    })
+    }, () => {
+      alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
+    });
   }
 
   editchurch() {
-    this.churchregsiterform.value.usr_id = localStorage.getItem('usr_id');
-    this.service.editchurch(this.churchregsiterform.value).subscribe((res: any) => {
+    const usr_id = localStorage.getItem('usr_id');
+    const data = Object.assign({}, this.churchregsiterform.value, { usr_id });
+    this.service.editchurch(data).subscribe((res: any) => {
       if (res.status == 200) {
-        alert('విజయవంతం గా అప్ డేట్ చేసినారు')
+        alert('విజయవంతంగా అప్డేట్ చేయబడింది / Updated Successfully');
       } else {
-        alert('server down')
+        alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
       }
-    })
+    }, () => {
+      alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
+    });
   }
 
   editpastor() {
-    this.pastorform.value.usr_id = localStorage.getItem('usr_id');
-    this.service.editpastor(this.pastorform.value).subscribe((res: any) => {
+    const usr_id = localStorage.getItem('usr_id');
+    const data = Object.assign({}, this.pastorform.value, { usr_id });
+    this.service.editpastor(data).subscribe((res: any) => {
       if (res.status == 200) {
-        alert('విజయవంతముగా సబ్మిట్ అయింది')
+        alert('విజయవంతముగా సబ్మిట్ అయింది / Submitted Successfully');
       } else {
-        alert('server down')
+        alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
       }
-    })
+    }, () => {
+      alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
+    });
   }
 
   editindependentorgainsation() {
-    this.independentorgainsationform.value.usr_id = localStorage.getItem('usr_id');
-    this.service.editindependentorgainsation(this.independentorgainsationform.value).subscribe((res: any) => {
-
-
+    const usr_id = localStorage.getItem('usr_id');
+    const data = Object.assign({}, this.independentorgainsationform.value, { usr_id });
+    this.service.editindependentorgainsation(data).subscribe((res: any) => {
       if (res.status == 200) {
-        alert('విజయవంతం గా అప్ డేట్ చేసినారు')
+        alert('విజయవంతంగా అప్డేట్ చేయబడింది / Updated Successfully');
       } else {
-        alert('server down')
+        alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
       }
-    })
+    }, () => {
+      alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
+    });
   }
 
   editassciation() {
-    this.pastorsassociations.value.usr_id = localStorage.getItem('usr_id');
-    this.service.editpastorsassociations(this.pastorsassociations.value).subscribe((res: any) => {
+    const usr_id = localStorage.getItem('usr_id');
+    const data = Object.assign({}, this.pastorsassociations.value, { usr_id });
+    this.service.editpastororgainsation(data).subscribe((res: any) => {
       if (res.status == 200) {
-        alert('విజయవంతం గా అప్ డేట్ చేసినారు')
+        alert('విజయవంతంగా అప్డేట్ చేయబడింది / Updated Successfully');
       } else {
-        alert('server down')
+        alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
       }
-    })
+    }, () => {
+      alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
+    });
   }
-
 
 }
