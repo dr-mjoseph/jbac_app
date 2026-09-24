@@ -22,7 +22,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '14'
+        node-version: '18'
 
     - name: Install Global Dependencies
       run: npm install -g cordova ionic
