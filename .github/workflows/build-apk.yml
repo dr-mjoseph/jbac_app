@@ -29,7 +29,7 @@ jobs:
       run: npm install -g npm@6
 
     - name: Install Global Dependencies
-      run: npm install -g ionic cordova
+      run: npm install -g ionic cordova@11.1.0
 
     - name: Install Project Dependencies
       run: npm install
