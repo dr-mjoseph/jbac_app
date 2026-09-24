@@ -44,7 +44,8 @@ jobs:
       run: cordova platform add android --no-interactive
 
     - name: Build Web Assets (AoT Production)
-      run: npm run build -- --prod
+      run: |
+        npm run build -- --prod > aot-build.log 2>&1 || (echo "### AoT Build Failed" >> $GITHUB_STEP_SUMMARY; echo "<pre>" >> $GITHUB_STEP_SUMMARY; tail -n 80 aot-build.log >> $GITHUB_STEP_SUMMARY; echo "</pre>" >> $GITHUB_STEP_SUMMARY; cat aot-build.log; exit 1)
 
     - name: Build Android Release APK
       run: |
