@@ -45,11 +45,19 @@ jobs:
 
     - name: Build Web Assets (AoT Production)
       run: |
-        npm run build -- --prod > aot-build.log 2>&1 || (echo "### AoT Build Failed" >> $GITHUB_STEP_SUMMARY; echo "<pre>" >> $GITHUB_STEP_SUMMARY; tail -n 80 aot-build.log >> $GITHUB_STEP_SUMMARY; echo "</pre>" >> $GITHUB_STEP_SUMMARY; cat aot-build.log; exit 1)
+        npm run build -- --prod 2>&1 | tee aot-build.log || {
+          ERR_MSG=$(tail -n 25 aot-build.log | tr -d '\r' | tr '\n' ' ' | sed 's/"//g')
+          echo "::error title=AoT Build Failure::$ERR_MSG"
+          exit 1
+        }
 
     - name: Build Android Release APK
       run: |
-        cordova build android --release -- --packageType=apk 2>&1 | tee cordova-build.log || (echo "### Cordova Build Failed" >> $GITHUB_STEP_SUMMARY; echo "<pre>" >> $GITHUB_STEP_SUMMARY; tail -n 80 cordova-build.log >> $GITHUB_STEP_SUMMARY; echo "</pre>" >> $GITHUB_STEP_SUMMARY; exit 1)
+        cordova build android --release -- --packageType=apk 2>&1 | tee cordova-build.log || {
+          CORDOVA_ERR=$(tail -n 25 cordova-build.log | tr -d '\r' | tr '\n' ' ' | sed 's/"//g')
+          echo "::error title=Cordova Build Failure::$CORDOVA_ERR"
+          exit 1
+        }
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
