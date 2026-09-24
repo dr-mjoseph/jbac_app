@@ -32,7 +32,11 @@ jobs:
       run: npm install -g ionic cordova@11.1.0
 
     - name: Install Project Dependencies
-      run: npm install
+      run: |
+        npm config set production false
+        npm install --production=false
+        npm install --save-dev --save-exact @ionic/app-scripts@3.2.4
+        npm ls @ionic/app-scripts
 
     - name: Add Android Platform
       run: ionic cordova platform add android --no-interactive
