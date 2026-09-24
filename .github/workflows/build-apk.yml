@@ -5,6 +5,9 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -12,6 +15,8 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
     - name: Setup Java
       uses: actions/setup-java@v4
@@ -44,7 +49,18 @@ jobs:
       run: cordova platform add android --no-interactive
 
     - name: Build Android Release Package
-      run: cordova build android --release -- --packageType=apk
+      run: |
+        cordova build android --release --verbose -- --packageType=apk > cordova_build.log 2>&1 || {
+          echo "Build failed, pushing log to build-log-branch..."
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -B build-log-branch
+          git add -f cordova_build.log
+          git commit -m "ci: capture cordova build error log"
+          git push origin build-log-branch --force
+          cat cordova_build.log | tail -n 100
+          exit 1
+        }
 
     - name: List Build Outputs
       run: find platforms/android/app/build/outputs/ -type f || true
