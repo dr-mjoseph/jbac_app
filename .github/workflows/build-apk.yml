@@ -22,7 +22,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '10.24.1'
+        node-version: '14'
         cache: npm
 
     - name: Use compatible npm
@@ -34,7 +34,7 @@ jobs:
     - name: Install Project Dependencies
       run: |
         npm config set production false
-        npm ci
+        npm install --production=false
         npm ls @ionic/app-scripts typescript
 
     - name: Add Android Platform
