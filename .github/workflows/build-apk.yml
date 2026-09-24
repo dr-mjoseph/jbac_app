@@ -22,26 +22,26 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '14'
+        node-version: '10.24.1'
         cache: npm
 
     - name: Use compatible npm
       run: npm install -g npm@6
 
     - name: Install Global Dependencies
-      run: npm install -g ionic cordova@11.1.0
+      run: npm install -g ionic@5.4.16 cordova@11.1.0
 
     - name: Install Project Dependencies
       run: |
         npm config set production false
-        npm install --production=false
-        npm ls @ionic/app-scripts
+        npm ci
+        npm ls @ionic/app-scripts typescript
 
     - name: Add Android Platform
       run: ionic cordova platform add android --no-interactive
 
     - name: Build Android Release APK
-      run: ionic cordova build android --prod --release --no-interactive
+      run: ionic cordova build android --prod --release --no-interactive --verbose
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
