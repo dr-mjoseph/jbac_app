@@ -43,10 +43,7 @@ jobs:
     - name: Add Android Platform
       run: cordova platform add android --no-interactive
 
-    - name: Build Web Assets (AoT Production)
-      run: npm run build -- --prod
-
-    - name: Build Android Release APK
+    - name: Build Android Release Package
       run: cordova build android --release -- --packageType=apk
 
     - name: List Build Outputs
