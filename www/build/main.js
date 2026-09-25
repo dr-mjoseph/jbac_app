@@ -1,4 +1,4 @@
-webpackJsonp([49],{
+﻿webpackJsonp([49],{
 
 /***/ 128:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -18,12 +18,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-var testApi = "https://jbac.in:9762/dashboardapi/";
+var testApi = "https://1a8kqxawxd.execute-api.ap-southeast-2.amazonaws.com/dashboardapi/";
 var ServiceProvider = /** @class */ (function () {
     // testApi = 'http://localhost:2303/dashboardapi/'
     function ServiceProvider(http) {
         this.http = http;
-        this.testApi = 'https://jbac.in:9762/dashboardapi/';
+        this.testApi = 'https://1a8kqxawxd.execute-api.ap-southeast-2.amazonaws.com/dashboardapi/';
         console.log('Hello ServiceProvider Provider');
     }
     // <-------------------------------------------------------Meeting start----------------------------------------------->
@@ -660,16 +660,16 @@ var MyApp = /** @class */ (function () {
         this.service = service;
         this.initializeApp();
         this.pages = [
-            { 'title': 'మీకు మా సహాయం', 'image': 'assets/icon/svg/helping-hand.svg', 'page': 'HelpinghandsPage' },
-            { 'title': 'చర్చి పర్మిషన్ గవర్నమెంట్ ఆర్డర్స్', 'image': 'assets/icon/svg/governmental.svg', 'page': 'ChurchgoPage' },
-            { 'title': 'వెబ్ సైట్ ఎలా ఉపయోగించాలి', 'image': 'assets/icon/svg/cloud-computing.svg', 'page': 'WebhelpPage' },
-            { 'title': 'మీ చర్చికి మా టెక్నికల్ పొల్లుషన్స్', 'image': 'assets/icon/svg/employee.svg', 'page': 'TechsolPage' },
-            { 'title': 'ఫోటో గ్యాలరీ', 'image': 'assets/icon/svg/picture.svg', 'page': 'GalleryPage' },
-            { 'title': 'వీడియో గ్యాలరీ', 'image': 'assets/icon/svg/video.svg', 'page': 'VideoGalleryPage' },
-            { 'title': 'క్రైస్తవులకు సంబందించిన వార్తలు పెట్టండి', 'image': 'assets/icon/svg/news.svg', 'page': 'NewsPage' },
-            { 'title': 'క్రైస్తవులపై దాడుల నమోదు', 'image': 'assets/icon/svg/organisation.svg', 'page': 'AddattacksPage' },
-            { 'title': 'JBAC వింగ్స్ సమాచారం', 'image': 'assets/icon/svg/project-manager.svg', 'page': 'WingPage' },
-            { 'title': 'మమ్మల్ని సంప్రదించండి', 'image': 'assets/icon/svg/contact-us.svg', 'page': 'ContactPage' },
+            { 'title': 'à°®à±€à°•à± à°®à°¾ à°¸à°¹à°¾à°¯à°‚', 'image': 'assets/icon/svg/helping-hand.svg', 'page': 'HelpinghandsPage' },
+            { 'title': 'à°šà°°à±à°šà°¿ à°ªà°°à±à°®à°¿à°·à°¨à± à°—à°µà°°à±à°¨à°®à±†à°‚à°Ÿà± à°†à°°à±à°¡à°°à±à°¸à±', 'image': 'assets/icon/svg/governmental.svg', 'page': 'ChurchgoPage' },
+            { 'title': 'à°µà±†à°¬à± à°¸à±ˆà°Ÿà± à°Žà°²à°¾ à°‰à°ªà°¯à±‹à°—à°¿à°‚à°šà°¾à°²à°¿', 'image': 'assets/icon/svg/cloud-computing.svg', 'page': 'WebhelpPage' },
+            { 'title': 'à°®à±€ à°šà°°à±à°šà°¿à°•à°¿ à°®à°¾ à°Ÿà±†à°•à±à°¨à°¿à°•à°²à± à°ªà±Šà°²à±à°²à±à°·à°¨à±à°¸à±', 'image': 'assets/icon/svg/employee.svg', 'page': 'TechsolPage' },
+            { 'title': 'à°«à±‹à°Ÿà±‹ à°—à±à°¯à°¾à°²à°°à±€', 'image': 'assets/icon/svg/picture.svg', 'page': 'GalleryPage' },
+            { 'title': 'à°µà±€à°¡à°¿à°¯à±‹ à°—à±à°¯à°¾à°²à°°à±€', 'image': 'assets/icon/svg/video.svg', 'page': 'VideoGalleryPage' },
+            { 'title': 'à°•à±à°°à±ˆà°¸à±à°¤à°µà±à°²à°•à± à°¸à°‚à°¬à°‚à°¦à°¿à°‚à°šà°¿à°¨ à°µà°¾à°°à±à°¤à°²à± à°ªà±†à°Ÿà±à°Ÿà°‚à°¡à°¿', 'image': 'assets/icon/svg/news.svg', 'page': 'NewsPage' },
+            { 'title': 'à°•à±à°°à±ˆà°¸à±à°¤à°µà±à°²à°ªà±ˆ à°¦à°¾à°¡à±à°² à°¨à°®à±‹à°¦à±', 'image': 'assets/icon/svg/organisation.svg', 'page': 'AddattacksPage' },
+            { 'title': 'JBAC à°µà°¿à°‚à°—à±à°¸à± à°¸à°®à°¾à°šà°¾à°°à°‚', 'image': 'assets/icon/svg/project-manager.svg', 'page': 'WingPage' },
+            { 'title': 'à°®à°®à±à°®à°²à±à°¨à°¿ à°¸à°‚à°ªà±à°°à°¦à°¿à°‚à°šà°‚à°¡à°¿', 'image': 'assets/icon/svg/contact-us.svg', 'page': 'ContactPage' },
         ];
         this.service.updatecount().subscribe(function (res) {
         });

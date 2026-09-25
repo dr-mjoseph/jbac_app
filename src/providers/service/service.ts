@@ -1,12 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+﻿import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-var testApi = "https://jbac.in:9762/dashboardapi/"
+var testApi = "https://1a8kqxawxd.execute-api.ap-southeast-2.amazonaws.com/dashboardapi/"
 
 @Injectable()
 export class ServiceProvider {
 
-  testApi = 'https://jbac.in:9762/dashboardapi/'
+  testApi = 'https://1a8kqxawxd.execute-api.ap-southeast-2.amazonaws.com/dashboardapi/'
 
   
   // testApi = 'http://localhost:2303/dashboardapi/'
