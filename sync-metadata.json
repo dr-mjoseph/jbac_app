@@ -1,5 +1,7 @@
 {
-  "lastSyncedAt": "2026-10-03T10:19:41.319Z",
+  "lastSyncedAt": "2026-10-03T16:33:35.688Z",
   "syncedFromRepo": "jbac_web",
+  "mobileAppId": "io.ionic.starterjbac",
+  "uiEngine": "Ionic 3 Native Mobile (Google Play Store compliant)",
   "webVersion": "0.0.0"
 }

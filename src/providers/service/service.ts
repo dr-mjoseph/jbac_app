@@ -1,7 +1,7 @@
 ﻿import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-var testApi = "https://1a8kqxawxd.execute-api.ap-southeast-2.amazonaws.com/dashboardapi/"
+var testApi = 'https://1a8kqxawxd.execute-api.ap-southeast-2.amazonaws.com/dashboardapi/'
 
 @Injectable()
 export class ServiceProvider {
@@ -36,16 +36,19 @@ export class ServiceProvider {
     return this.http.post(this.testApi + 'getdistricts', []);
   }
 
-  getconsistencys() {
-    return this.http.post(this.testApi + 'getconsistencys', []);
+  getconsistencys(districtId?: any) {
+    const payload = districtId ? { district_id: districtId } : {};
+    return this.http.post(this.testApi + 'getconsistencys', payload);
   }
 
-  getmandals() {
-    return this.http.post(this.testApi + 'getmandals', []);
+  getmandals(constId?: any) {
+    const payload = constId ? { const_id: constId } : {};
+    return this.http.post(this.testApi + 'getmandals', payload);
   }
 
-  gepanchayatis() {
-    return this.http.post(this.testApi + 'gepanchayati', []);
+  gepanchayatis(mandalId?: any) {
+    const payload = mandalId ? { mandal_id: mandalId } : {};
+    return this.http.post(this.testApi + 'gepanchayati', payload);
   }
 
   searchingdata(data: any) {
