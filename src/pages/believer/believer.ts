@@ -34,7 +34,7 @@ export class BelieverPage {
   // <span style="color:red;"> *</span>
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public service: ServiceProvider, public alertCtrl: AlertController) {
 
-    this.form = this.formBuilder.group({
+    this.beliverform = this.form = this.formBuilder.group({
       fname: ['', Validators.required], //
       whatsapp: [''],
       dob: [''],
@@ -85,6 +85,8 @@ export class BelieverPage {
   ionViewDidLoad() {
     this.getdistric();
     this.getdenomations();
+    this.getwing();
+    this.getchurchesdata();
   }
 
   getdistric() {
@@ -123,18 +125,42 @@ export class BelieverPage {
   getpastorsdatas: any;
 
   getpastorsdata() {
-    if (this.beliverform.value.districts == null || this.beliverform.value.constituencyname == null || this.beliverform.value.mandals == null) {
+    if (this.form.value.districts == null || this.form.value.constituencyname == null || this.form.value.mandals == null) {
       alert("Please Fill the Districts, Constituency & Mandal")
     } else {
       var data = {
-        districts: this.beliverform.value.districts,
-        constituencyname: this.beliverform.value.constituencyname,
-        mandal_id: this.beliverform.value.mandals,
+        districts: this.form.value.districts,
+        constituencyname: this.form.value.constituencyname,
+        mandal_id: this.form.value.mandals,
       }
       this.service.getpastorsfilters(data).subscribe((res: any) => {
         this.getpastorsdatas = res.data;
       })
     }
+  }
+
+  
+  getchurchfilter: any = [];
+  getchurchesdata() {
+    var d = this.form.value.districts;
+    var c = this.form.value.constituencyname;
+    var m = this.form.value.mandals;
+    if (!d || !c || !m) {
+      this.service.getchurch().subscribe((res: any) => {
+        this.getchurchfilter = res && res.data ? res.data : [];
+      });
+    } else {
+      var data = { districts: d, constituencyname: c, mandal_id: m };
+      this.service.getchurchesdatafilters(data).subscribe((res: any) => {
+        this.getchurchfilter = res && res.data ? res.data : [];
+      });
+    }
+  }
+
+  getwing() {
+    this.service.getwing().subscribe((res: any) => {
+      this.wings = res && res.data ? res.data : [];
+    });
   }
 
   lead: boolean = false;

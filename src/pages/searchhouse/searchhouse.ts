@@ -10,6 +10,13 @@ import { ServiceProvider } from '../../providers/service/service';
   templateUrl: 'searchhouse.html',
 })
 export class SearchhousePage {
+
+  callNumber(num: any) {
+    if (num) {
+      window.open('tel:' + num, '_system');
+    }
+  }
+
   serachMeetingform: FormGroup;
   searchdenomation: FormGroup;
   form_ind: any;

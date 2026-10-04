@@ -52,10 +52,19 @@ export class AddmarriagePage {
 
   get m() { return this.addingmarriages.controls; }
 
+  
+  pastoras: any = [];
+  pastorfilterdropdown() {
+    this.service.getpastor().subscribe((res: any) => {
+      this.pastoras = res && res.data ? res.data : [];
+    });
+  }
+
   ionViewDidLoad() {
     this.getdistric();
     this.getbeliver();
     this.getbelivers();
+    this.pastorfilterdropdown();
     this.getdenomations();
   }
 

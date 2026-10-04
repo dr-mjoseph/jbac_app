@@ -50,8 +50,17 @@ export class OrganisationPage {
     })
   }
 
+  
+  getorganizationpastors: any = [];
+  getorgnaziationpstorsget() {
+    this.service.getpastor().subscribe((res: any) => {
+      this.getorganizationpastors = res && res.data ? res.data : [];
+    });
+  }
+
   ionViewDidLoad() {
     this.getdistric();
+    this.getorgnaziationpstorsget();
     this.getdenomations();
     this.getbelivers();
     this.getbeliver();

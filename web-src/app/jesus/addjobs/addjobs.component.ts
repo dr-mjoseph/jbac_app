@@ -188,7 +188,7 @@ export class AddjobsComponent {
       mandals: ['', [Validators.required]],
       village_name: ['', [Validators.required]],
       google_location: [''],
-      term: [true],
+      term: [true, [Validators.required]],
     })
 
     this.addsadding = this.formBuilder.group({

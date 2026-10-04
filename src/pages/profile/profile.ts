@@ -17,6 +17,17 @@ import { ServiceProvider } from '../../providers/service/service';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
+
+  getpastorsdatas: any = [];
+  getchurchfilter: any = [];
+  getstudentspastors: any = [];
+  getchurchstudentfilter: any = [];
+  getministrypastors: any = [];
+  getchurchpastors: any = [];
+  getorganizationpastors: any = [];
+  getpastorassciationas: any = [];
+  ministryname: any = [];
+
   pastorform: FormGroup;
   churchregsiterform: FormGroup;
   updateprofileministry: FormGroup;
@@ -293,6 +304,9 @@ export class ProfilePage {
   }
 
   ionViewDidLoad() {
+    this.getpastorsdata();
+    this.getchurchesdata();
+    this.getministriesdata();
     console.log('ionViewDidLoad ProfilePage');
     this.geteditdtails()
     this.personaldata();
@@ -308,6 +322,34 @@ export class ProfilePage {
   }
 
   services: any;
+  
+  getpastorsdata() {
+    this.service.getpastor().subscribe((res: any) => {
+      this.getpastorsdatas = res && res.data ? res.data : [];
+      this.getstudentspastors = this.getpastorsdatas;
+      this.getministrypastors = this.getpastorsdatas;
+      this.getchurchpastors = this.getpastorsdatas;
+      this.getorganizationpastors = this.getpastorsdatas;
+      this.getpastorassciationas = this.getpastorsdatas;
+    });
+  }
+
+  getchurchesdata() {
+    this.service.getchurch().subscribe((res: any) => {
+      this.getchurchfilter = res && res.data ? res.data : [];
+      this.getchurchstudentfilter = this.getchurchfilter;
+    });
+  }
+
+  getpastorssdata() { this.getpastorsdata(); }
+  getchurchesstudentdata() { this.getchurchesdata(); }
+
+  getministriesdata() {
+    this.service.getministry().subscribe((res: any) => {
+      this.ministryname = res && res.data ? res.data : [];
+    });
+  }
+
   getservice() {
     this.service.getservices().subscribe((res: any) => {
       if (res.status == 202) {

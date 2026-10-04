@@ -57,10 +57,19 @@ export class AddinstitutePage {
   imagesdata: any = [];
   bliversdata: any
 
+  
+  getpastorassciationas: any = [];
+  pastorfilter() {
+    this.service.getpastor().subscribe((res: any) => {
+      this.getpastorassciationas = res && res.data ? res.data : [];
+    });
+  }
+
   ionViewDidLoad() {
     this.getdistric();
     this.getbeliver();
     this.getbelivers();
+    this.pastorfilter();
   }
 
   getbelivers() {

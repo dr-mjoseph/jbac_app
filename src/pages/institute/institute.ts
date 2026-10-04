@@ -18,6 +18,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class InstitutePage {
 
+  isShowDiv: boolean = true;
+  toggleDisplayDiv() {
+    this.isShowDiv = !this.isShowDiv;
+  }
+
+
   form: FormGroup
 
   districts: any;
