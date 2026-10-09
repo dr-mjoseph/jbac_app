@@ -36,6 +36,8 @@ export class FormsPage {
       this.navCtrl.push('OrganisationPage');
     } else if (id == 7) {
       this.navCtrl.push('AssociationPage');
+    } else if (id == 8) {
+      this.navCtrl.push('DoctorregisterPage');
     }
     else if (id == 27) {
       this.navCtrl.push('PrivacyPage');

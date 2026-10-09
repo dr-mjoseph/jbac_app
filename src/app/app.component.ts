@@ -19,17 +19,18 @@ export class MyApp {
     this.initializeApp();
 
     this.pages = [
+      { 'title': 'వివాహ & కుటుంబ కౌన్సిలింగ్ (Marriage Counselling)', 'image': 'assets/icon/svg/couple.svg', 'page': 'FamilyCouncellingPage' },
       { 'title': 'మీకు మా సహాయం', 'image': 'assets/icon/svg/helping-hand.svg', 'page': 'HelpinghandsPage' },
       { 'title': 'చర్చి పర్మిషన్ గవర్నమెంట్ ఆర్డర్స్', 'image': 'assets/icon/svg/governmental.svg', 'page': 'ChurchgoPage' },
       { 'title': 'వెబ్ సైట్ ఎలా ఉపయోగించాలి', 'image': 'assets/icon/svg/cloud-computing.svg', 'page': 'WebhelpPage' },
-      { 'title': 'మీ చర్చికి మా టెక్నికల్ పొల్లుషన్స్', 'image': 'assets/icon/svg/employee.svg', 'page': 'TechsolPage' },
+      { 'title': 'మీ చర్చికి మా టెక్నికల్ సొల్యూషన్స్', 'image': 'assets/icon/svg/employee.svg', 'page': 'TechsolPage' },
       { 'title': 'ఫోటో గ్యాలరీ', 'image': 'assets/icon/svg/picture.svg', 'page': 'GalleryPage' },
       { 'title': 'వీడియో గ్యాలరీ', 'image': 'assets/icon/svg/video.svg', 'page': 'VideoGalleryPage' },
-      { 'title': 'క్రైస్తవులకు సంబందించిన వార్తలు పెట్టండి', 'image': 'assets/icon/svg/news.svg', 'page': 'NewsPage' },
+      { 'title': 'క్రైస్తవులకు సంబంధించిన వార్తలు పెట్టండి', 'image': 'assets/icon/svg/news.svg', 'page': 'NewsPage' },
       { 'title': 'క్రైస్తవులపై దాడుల నమోదు', 'image': 'assets/icon/svg/organisation.svg', 'page': 'AddattacksPage' },
       { 'title': 'JBAC వింగ్స్ సమాచారం', 'image': 'assets/icon/svg/project-manager.svg', 'page': 'WingPage' },
       { 'title': 'మమ్మల్ని సంప్రదించండి', 'image': 'assets/icon/svg/contact-us.svg', 'page': 'ContactPage' },
-    ]
+    ];
 
     this.service.updatecount().subscribe((res: any) => {
     })

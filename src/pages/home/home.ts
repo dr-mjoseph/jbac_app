@@ -172,6 +172,8 @@ export class HomePage {
       this.navCtrl.push('NewsViewPage');
     } else if (id == 18) {
       this.navCtrl.push('AddattacksPage');
+    } else if (id == 19) {
+      this.navCtrl.push('FamilyCouncellingPage');
     }
    
   }

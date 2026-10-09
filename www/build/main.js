@@ -247,6 +247,33 @@ var ServiceProvider = /** @class */ (function () {
     ServiceProvider.prototype.upadtedpassword = function (data) {
         return this.http.post(this.testApi + 'upadtedpassword', data);
     };
+        ServiceProvider.prototype.getcouncellingdoctors = function () {
+        return this.http.post(this.testApi + 'getcouncellingdoctors', {});
+    };
+    ServiceProvider.prototype.savecouncellingdoctor = function (data) {
+        return this.http.post(this.testApi + 'savecouncellingdoctor', data);
+    };
+    ServiceProvider.prototype.deletecouncellingdoctor = function (data) {
+        return this.http.post(this.testApi + 'deletecouncellingdoctor', data);
+    };
+    ServiceProvider.prototype.getcouncellingappointments = function (data) {
+        return this.http.post(this.testApi + 'getcouncellingappointments', data);
+    };
+    ServiceProvider.prototype.bookcouncellingappointment = function (data) {
+        return this.http.post(this.testApi + 'bookcouncellingappointment', data);
+    };
+    ServiceProvider.prototype.updateappointmentstatus = function (data) {
+        return this.http.post(this.testApi + 'updateappointmentstatus', data);
+    };
+    ServiceProvider.prototype.registercouncellingdoctor = function (data) {
+        return this.http.post(this.testApi + 'registerdoctor', data);
+    };
+    ServiceProvider.prototype.doctorvoicereply = function (data) {
+        return this.http.post(this.testApi + 'doctorvoicereply', data);
+    };
+    ServiceProvider.prototype.getcouncellingvoicemessages = function (data) {
+        return this.http.post(this.testApi + 'getcouncellingvoicemessages', data);
+    };
     ServiceProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
@@ -279,6 +306,14 @@ webpackEmptyAsyncContext.id = 139;
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
+	"../pages/family-councelling/family-councelling.module": [
+		511,
+		49
+	],
+	"../pages/doctorregister/doctorregister.module": [
+		513,
+		50
+	],
 	"../pages/about/about.module": [
 		408,
 		48
@@ -564,6 +599,8 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/association/association.module#AssociationPageModule', name: 'AssociationPage', segment: 'association', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/church-timings/church-timings.module#ChurchTimingsPageModule', name: 'ChurchTimingsPage', segment: 'church-timings', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/contact/contact.module#ContactPageModule', name: 'ContactPage', segment: 'contact', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/family-councelling/family-councelling.module#FamilyCouncellingPageModule', name: 'FamilyCouncellingPage', segment: 'family-councelling', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/doctorregister/doctorregister.module#DoctorregisterPageModule', name: 'DoctorregisterPage', segment: 'doctorregister', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/churchgo/churchgo.module#ChurchgoPageModule', name: 'ChurchgoPage', segment: 'churchgo', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/church/church.module#ChurchPageModule', name: 'ChurchPage', segment: 'church', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/forgot-password/forgot-password.module#ForgotPasswordPageModule', name: 'ForgotPasswordPage', segment: 'forgot-password', priority: 'low', defaultHistory: [] },
@@ -659,17 +696,18 @@ var MyApp = /** @class */ (function () {
         this.splashScreen = splashScreen;
         this.service = service;
         this.initializeApp();
-        this.pages = [
-            { 'title': 'à°®à±€à°•à± à°®à°¾ à°¸à°¹à°¾à°¯à°‚', 'image': 'assets/icon/svg/helping-hand.svg', 'page': 'HelpinghandsPage' },
-            { 'title': 'à°šà°°à±à°šà°¿ à°ªà°°à±à°®à°¿à°·à°¨à± à°—à°µà°°à±à°¨à°®à±†à°‚à°Ÿà± à°†à°°à±à°¡à°°à±à°¸à±', 'image': 'assets/icon/svg/governmental.svg', 'page': 'ChurchgoPage' },
-            { 'title': 'à°µà±†à°¬à± à°¸à±ˆà°Ÿà± à°Žà°²à°¾ à°‰à°ªà°¯à±‹à°—à°¿à°‚à°šà°¾à°²à°¿', 'image': 'assets/icon/svg/cloud-computing.svg', 'page': 'WebhelpPage' },
-            { 'title': 'à°®à±€ à°šà°°à±à°šà°¿à°•à°¿ à°®à°¾ à°Ÿà±†à°•à±à°¨à°¿à°•à°²à± à°ªà±Šà°²à±à°²à±à°·à°¨à±à°¸à±', 'image': 'assets/icon/svg/employee.svg', 'page': 'TechsolPage' },
-            { 'title': 'à°«à±‹à°Ÿà±‹ à°—à±à°¯à°¾à°²à°°à±€', 'image': 'assets/icon/svg/picture.svg', 'page': 'GalleryPage' },
-            { 'title': 'à°µà±€à°¡à°¿à°¯à±‹ à°—à±à°¯à°¾à°²à°°à±€', 'image': 'assets/icon/svg/video.svg', 'page': 'VideoGalleryPage' },
-            { 'title': 'à°•à±à°°à±ˆà°¸à±à°¤à°µà±à°²à°•à± à°¸à°‚à°¬à°‚à°¦à°¿à°‚à°šà°¿à°¨ à°µà°¾à°°à±à°¤à°²à± à°ªà±†à°Ÿà±à°Ÿà°‚à°¡à°¿', 'image': 'assets/icon/svg/news.svg', 'page': 'NewsPage' },
-            { 'title': 'à°•à±à°°à±ˆà°¸à±à°¤à°µà±à°²à°ªà±ˆ à°¦à°¾à°¡à±à°² à°¨à°®à±‹à°¦à±', 'image': 'assets/icon/svg/organisation.svg', 'page': 'AddattacksPage' },
-            { 'title': 'JBAC à°µà°¿à°‚à°—à±à°¸à± à°¸à°®à°¾à°šà°¾à°°à°‚', 'image': 'assets/icon/svg/project-manager.svg', 'page': 'WingPage' },
-            { 'title': 'à°®à°®à±à°®à°²à±à°¨à°¿ à°¸à°‚à°ªà±à°°à°¦à°¿à°‚à°šà°‚à°¡à°¿', 'image': 'assets/icon/svg/contact-us.svg', 'page': 'ContactPage' },
+                this.pages = [
+            { 'title': 'వివాహ & కుటుంబ కౌన్సిలింగ్', 'image': 'assets/icon/svg/couple.svg', 'page': 'FamilyCouncellingPage' },
+            { 'title': 'మీకు మా సహాయం', 'image': 'assets/icon/svg/helping-hand.svg', 'page': 'HelpinghandsPage' },
+            { 'title': 'చర్చి పర్మిషన్ గవర్నమెంట్ ఆర్డర్స్', 'image': 'assets/icon/svg/governmental.svg', 'page': 'ChurchgoPage' },
+            { 'title': 'వెబ్ సైట్ ఎలా ఉపయోగించాలి', 'image': 'assets/icon/svg/cloud-computing.svg', 'page': 'WebhelpPage' },
+            { 'title': 'మీ చర్చికి మా టెక్నికల్ సొల్యూషన్స్', 'image': 'assets/icon/svg/employee.svg', 'page': 'TechsolPage' },
+            { 'title': 'ఫోటో గ్యాలరీ', 'image': 'assets/icon/svg/picture.svg', 'page': 'GalleryPage' },
+            { 'title': 'వీడియో గ్యాలరీ', 'image': 'assets/icon/svg/video.svg', 'page': 'VideoGalleryPage' },
+            { 'title': 'క్రైస్తవులకు సంబంధించిన వార్తలు పెట్టండి', 'image': 'assets/icon/svg/news.svg', 'page': 'NewsPage' },
+            { 'title': 'క్రైస్తవులపై దాడుల నమోదు', 'image': 'assets/icon/svg/organisation.svg', 'page': 'AddattacksPage' },
+            { 'title': 'JBAC వింగ్స్ సమాచారం', 'image': 'assets/icon/svg/project-manager.svg', 'page': 'WingPage' },
+            { 'title': 'మమ్మల్ని సంప్రదించండి', 'image': 'assets/icon/svg/contact-us.svg', 'page': 'ContactPage' }
         ];
         this.service.updatecount().subscribe(function (res) {
         });
@@ -695,7 +733,7 @@ var MyApp = /** @class */ (function () {
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Nav */])
     ], MyApp.prototype, "nav", void 0);
     MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\app\app.html"*/'<ion-menu [content]="content" type="overlay">\n\n  <!-- <ion-header>\n\n    <ion-navbar>\n\n      <ion-title style="text-align: center;"><b>Menu</b></ion-title>\n\n    </ion-navbar>\n\n  </ion-header> -->\n\n\n\n  <ion-content padding style="background-color: aliceblue;">\n\n\n\n    <h4 style="text-align: center;">\n\n      <b>Welcome to JBAC</b>\n\n    </h4>\n\n    <hr>\n\n\n\n    <ion-row style="text-align: center;">\n\n      <ion-col col-12 *ngFor="let a of pages;let i=index" (click)="openPage(a.page)" menuToggle>\n\n        <img class="made" style="width:80%;padding:15px" src="{{a.image}}">\n\n        <b>{{a.title}}</b>\n\n      </ion-col>\n\n    </ion-row>\n\n  </ion-content>\n\n\n\n</ion-menu>\n\n\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\app\app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\\Users\\rajes\\StudioProjects\\jbac_app\\src\\app\\app.html"*/'<ion-menu [content]="content" type="overlay">\n  <ion-header>\n    <ion-toolbar style="background-color: #00548F; color: white;">\n      <ion-title style="color: white; font-weight: bold; font-size: 17px; text-align: center;">\n        JBAC మెనూ (Menu)\n      </ion-title>\n    </ion-toolbar>\n  </ion-header>\n\n  <ion-content style="background-color: #f4f7fb;">\n    <div style="background: linear-gradient(135deg, #00548F, #19386d); padding: 18px 14px; color: white; text-align: center; margin-bottom: 6px;">\n      <h3 style="margin: 0; font-size: 18px; font-weight: bold; color: white;">Welcome to JBAC</h3>\n      <p style="margin: 4px 0 0; font-size: 11px; color: #dbeafe;">జీసస్ బిలీవర్స్ అసోసియేషన్, ఆంధ్ర ప్రదేశ్</p>\n    </div>\n\n    <ion-list no-lines style="margin: 0; padding: 0;">\n      <button ion-item *ngFor="let a of pages" (click)="openPage(a.page)" menuToggle style="background: white; border-bottom: 1px solid #e2e8f0; padding: 6px 12px; margin-bottom: 2px;">\n        <ion-avatar item-start style="min-width: 40px; width: 40px; height: 40px; margin: 4px 12px 4px 0; background: #eef5fb; border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 5px;">\n          <img [src]="a.image" style="width: 26px; height: 26px; object-fit: contain;">\n        </ion-avatar>\n        <span style="font-size: 13.5px; font-weight: bold; color: #1e293b; white-space: normal; line-height: 1.4; display: block;">\n          {{a.title}}\n        </span>\n        <ion-icon name="arrow-forward" item-end style="font-size: 15px; color: #94a3b8;"></ion-icon>\n      </button>\n    </ion-list>\n  </ion-content>\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>\n'/*ion-inline-end:"C:\\Users\\rajes\\StudioProjects\\jbac_app\\src\\app\\app.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["u" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */], __WEBPACK_IMPORTED_MODULE_4__providers_service_service__["a" /* ServiceProvider */]])
     ], MyApp);

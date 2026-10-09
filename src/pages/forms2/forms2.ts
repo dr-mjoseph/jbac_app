@@ -35,6 +35,8 @@ export class Forms2Page {
       this.navCtrl.push('WingPage');
     } else if (id == 7) {
       this.navCtrl.push('SearchorganisationPage');
+    } else if (id == 8) {
+      this.navCtrl.push('FamilyCouncellingPage');
     }
   }
 }

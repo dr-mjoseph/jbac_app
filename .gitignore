@@ -33,3 +33,7 @@ npm-debug.log*
 !www/**
 !www
 release-signing.properties
+
+build_temp/
+*.idsig
+

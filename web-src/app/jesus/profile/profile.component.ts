@@ -191,7 +191,7 @@ export class ProfileComponent {
       image: [''],
       facebook: [''],
       youtube: [''],
-      term: [true, [Validators.required]],
+      term: [true],
     })
 
     this.addsadding = this.formBuilder.group({

@@ -41,11 +41,42 @@
       : <span (click)="gotopage(12)">చర్చి పర్మిషన్ గవర్నమెంట్ ఆర్డర్స్ .</span>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <span (click)="gotopage(14)">మీ చర్చికి మా టెక్నికల్ సొల్లుషన్స్ .</span>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <span (click)="gotopage(19)" style="color:#00548F;font-weight:bolder;">✨ నూతన సేవ: ఫ్యామిలీ కౌన్సిలింగ్ & డాక్టర్ అపాయింట్‌మెంట్లు .</span>
 
     </h3>
   </div>
 
+  
+  
+  
+  <div style="margin: 8px 12px; padding: 12px 14px; background: linear-gradient(135deg, #00548F, #1f376e); border-radius: 12px; color: white; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 10px rgba(0,84,143,0.25); cursor: pointer;" (click)="gotopage(19)">
+    <div style="display: flex; align-items: center;">
+      <div style="background: rgba(255,255,255,0.2); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 22px;">
+        💍
+      </div>
+      <div>
+        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; color: #ffeb3b;">
+          📢 నూతన సేవ • NEW SERVICE
+        </div>
+        <div style="font-size: 14px; font-weight: bold; margin-top: 2px;">
+          వివాహ & కుటుంబ కౌన్సిలింగ్ (Marriage Counselling)
+        </div>
+      </div>
+    </div>
+    <div style="font-size: 20px; font-weight: bold; padding-left: 8px; color: #ffeb3b;">
+      ➔
+    </div>
+  </div>
+
   <ion-row style="text-align: center;">
+
+    <ion-col col-3 class="made" (click)="gotopage(19)">
+      <img style="padding:3%;width:100%" src="assets/icon/svg/couple.svg" onerror="this.onerror=null;this.src='assets/icon/svg/helping-hand.svg';">
+      <b>వివాహ & కుటుంబ<br>కౌన్సిలింగ్</b>
+    </ion-col>
+
+    
     <ion-col col-3 class="made" (click)="gotopage(1)">
       <img style="padding:3%;width:100%" src="assets/icon/svg/information.svg">
       <b>నా గురించి</b>
@@ -116,6 +147,9 @@
       <img style="padding:3%;width:100%" src="assets/icon/svg/myaccount.svg">
       <b> ఇతర సర్వీసెస్ రిజిస్టర్</b>
     </ion-col>
+
+    
+
 
     <ion-col col-3 class="made" (click)="gotopage(16)">
       <img style="padding:3%;width:100%" src="assets/icon/svg/video.svg">

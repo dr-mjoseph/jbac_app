@@ -92,6 +92,9 @@ export class LoginPage {
             localStorage.setItem('category', 'Independent Organization');
           } else if (this.passloginform.value.category == 7) {
             localStorage.setItem('category', 'Pastors Association ');
+          } else if (this.passloginform.value.category == 8) {
+            localStorage.setItem('category', 'Doctor');
+            localStorage.setItem('is_doctor', '1');
           }
           this.navCtrl.setRoot(HomePage);
         }

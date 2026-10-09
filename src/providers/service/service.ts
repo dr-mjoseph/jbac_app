@@ -1,4 +1,4 @@
-﻿import { HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 var testApi = 'https://1a8kqxawxd.execute-api.ap-southeast-2.amazonaws.com/dashboardapi/'
@@ -320,4 +320,43 @@ export class ServiceProvider {
   }
 
 
+
+  // <--------------------- Family Counselling Endpoints --------------------->
+  getcouncellingdoctors() {
+    return this.http.post(this.testApi + 'getcouncellingdoctors', {});
+  }
+
+  savecouncellingdoctor(data: any) {
+    return this.http.post(this.testApi + 'savecouncellingdoctor', data);
+  }
+
+  deletecouncellingdoctor(data: any) {
+    return this.http.post(this.testApi + 'deletecouncellingdoctor', data);
+  }
+
+  getcouncellingappointments(data: any) {
+    return this.http.post(this.testApi + 'getcouncellingappointments', data);
+  }
+
+  bookcouncellingappointment(data: any) {
+    return this.http.post(this.testApi + 'bookcouncellingappointment', data);
+  }
+
+  updateappointmentstatus(data: any) {
+    return this.http.post(this.testApi + 'updateappointmentstatus', data);
+  }
+
+
+  registercouncellingdoctor(data: any) {
+    return this.http.post(this.testApi + 'registerdoctor', data);
+  }
+
+
+  doctorvoicereply(data: any) {
+    return this.http.post(this.testApi + 'doctorvoicereply', data);
+  }
+
+  getcouncellingvoicemessages(data: any) {
+    return this.http.post(this.testApi + 'getcouncellingvoicemessages', data);
+  }
 }

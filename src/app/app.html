@@ -1,25 +1,30 @@
 <ion-menu [content]="content" type="overlay">
-  <!-- <ion-header>
-    <ion-navbar>
-      <ion-title style="text-align: center;"><b>Menu</b></ion-title>
-    </ion-navbar>
-  </ion-header> -->
+  <ion-header>
+    <ion-toolbar style="background-color: #00548F; color: white;">
+      <ion-title style="color: white; font-weight: bold; font-size: 17px; text-align: center;">
+        JBAC మెనూ (Menu)
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-  <ion-content padding style="background-color: aliceblue;">
+  <ion-content style="background-color: #f4f7fb;">
+    <div style="background: linear-gradient(135deg, #00548F, #19386d); padding: 18px 14px; color: white; text-align: center; margin-bottom: 6px;">
+      <h3 style="margin: 0; font-size: 18px; font-weight: bold; color: white;">Welcome to JBAC</h3>
+      <p style="margin: 4px 0 0; font-size: 11px; color: #dbeafe;">జీసస్ బిలీవర్స్ అసోసియేషన్, ఆంధ్ర ప్రదేశ్</p>
+    </div>
 
-    <h4 style="text-align: center;">
-      <b>Welcome to JBAC</b>
-    </h4>
-    <hr>
-
-    <ion-row style="text-align: center;">
-      <ion-col col-12 *ngFor="let a of pages;let i=index" (click)="openPage(a.page)" menuToggle>
-        <img class="made" style="width:80%;padding:15px" src="{{a.image}}">
-        <b>{{a.title}}</b>
-      </ion-col>
-    </ion-row>
+    <ion-list no-lines style="margin: 0; padding: 0;">
+      <button ion-item *ngFor="let a of pages" (click)="openPage(a.page)" menuToggle style="background: white; border-bottom: 1px solid #e2e8f0; padding: 6px 12px; margin-bottom: 2px;">
+        <ion-avatar item-start style="min-width: 40px; width: 40px; height: 40px; margin: 4px 12px 4px 0; background: #eef5fb; border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 5px;">
+          <img [src]="a.image" style="width: 26px; height: 26px; object-fit: contain;">
+        </ion-avatar>
+        <span style="font-size: 13.5px; font-weight: bold; color: #1e293b; white-space: normal; line-height: 1.4; display: block;">
+          {{a.title}}
+        </span>
+        <ion-icon name="arrow-forward" item-end style="font-size: 15px; color: #94a3b8;"></ion-icon>
+      </button>
+    </ion-list>
   </ion-content>
-
 </ion-menu>
 
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
