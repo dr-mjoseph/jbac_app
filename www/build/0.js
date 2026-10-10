@@ -364,6 +364,9 @@ var HomePage = /** @class */ (function () {
         else if (id == 19) {
             this.navCtrl.push('FamilyCouncellingPage');
         }
+        else if (id == 20) {
+            this.navCtrl.push('MarriagePage');
+        }
     };
     HomePage.prototype.logout = function () {
         return __awaiter(this, void 0, void 0, function () {

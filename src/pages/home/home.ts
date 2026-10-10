@@ -174,6 +174,8 @@ export class HomePage {
       this.navCtrl.push('AddattacksPage');
     } else if (id == 19) {
       this.navCtrl.push('FamilyCouncellingPage');
+    } else if (id == 20) {
+      this.navCtrl.push('MarriagePage');
     }
    
   }
