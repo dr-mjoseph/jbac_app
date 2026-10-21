@@ -3,7 +3,7 @@
 This repository contains the native hybrid Android mobile application for the **Jesus Believers Association Council (JBAC)**.
 
 - **Package Name**: `io.ionic.starterjbac`
-- **Current Version: `0.0.33` (`versionCode: `33``)
+- **Current Version**: `0.0.35` (`versionCode: 35`)
 - **Repository**: [`dr-mjoseph/jbac_app`](https://github.com/dr-mjoseph/jbac_app)
 - **Sibling Web Repository**: [`dr-mjoseph/jbac_web`](https://github.com/dr-mjoseph/jbac_web)
 
@@ -16,8 +16,8 @@ This repository contains the native hybrid Android mobile application for the **
 | **`minSdkVersion`** | `24` | Android 7.0 (Nougat) or higher — complies with Google Play automatic app protection |
 | **`targetSdkVersion`** | `36` | Android 16 preview / Android 15 ready — exceeds Google Play 2026 requirements |
 | **`compileSdkVersion`** | `34` | Android 14.0 API Level |
-| **`versionCode: `33`` | Incremented for Google Play Console Release 33 |
-| **`versionName: `0.0.33`` | Matching semantic release version |
+| **`versionCode`** | `35` | Incremented for Google Play Console Release 35 |
+| **`versionName`** | `0.0.35` | Matching semantic release version |
 | **Signing Keystore** | `Jbac.keystore` | Production release keystore (Alias: `jbac`, SHA-256 digest) |
 
 ---
@@ -31,11 +31,12 @@ This repository contains the native hybrid Android mobile application for the **
 
 ---
 
-## 🌟 Recent Updates (Release 0.0.33)
+## 🌟 Recent Updates (Release 0.0.35)
 
-- **Registration Unresponsiveness Fixed**: Resolved Angular runtime exceptions on Church (`35.js`), Ministry (`21.js`), and Organisation (`18.js`) pages caused by missing `term` and `retypepassword` form controls.
-- **Consecutive Multi-User Registration**: Fixed validation lock that previously blocked consecutive registrations with "all fields mandatory". All form states, touch states, and geographic dropdowns now reset cleanly.
-- **Edit Profile**: Added "Edit Profile" (ప్రొఫైల్‌ని సవరించండి) to side drawer menu with session login validation.
+- **Login Overlay Freeze Resolved**: Fixed uncaught `TypeError: Cannot read properties of undefined (reading 'dismiss')` on `LoginPage` (`0.js`), enforced immediate `localStorage` session commit (`user`, `role`, `mobile_number`), and guaranteed navigation to `HomePage` on alert OK tap or dismissal.
+- **Clean Registration Field Separation**: Primary mobile number is strictly stored in the intended phone field; eliminated contact bleed into secondary contact fields and prevented 32-bit integer overflow in `users.otp`.
+- **Telugu Wait Spinners (`దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...`)**: Integrated processing spinners and disabled submit buttons during 2-3 second request cycles to prevent accidental duplicate submissions.
+- **Edit Profile Pre-population**: Added phone-first pre-population across all 9 categories with automatic cascading dropdown hydration (`District ➔ Constituency ➔ Mandal ➔ Panchayat`).
 
 ---
 
@@ -61,7 +62,7 @@ This repository contains the native hybrid Android mobile application for the **
 
 A complete automated build and signing script is provided in the web repository:
 ```powershell
-powershell -ExecutionPolicy Bypass -File "C:\Users\rajes\Documents\jbac_web\scripts\build_and_sign_release_v33.ps1"
+powershell -ExecutionPolicy Bypass -File "C:\Users\rajes\Documents\jbac_web\scripts\build_and_sign_release_v35.ps1"
 ```
 
 The script executes the following automated pipeline:
@@ -72,7 +73,7 @@ The script executes the following automated pipeline:
    ```
 2. **Zipaligns & Signs APK** using `apksigner` with `Jbac.keystore`:
    ```bash
-   apksigner.bat sign --ks Jbac.keystore --ks-pass pass:123456 --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true jbacApp-0.0.33.apk
+   apksigner.bat sign --ks Jbac.keystore --ks-pass pass:123456 --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true jbacApp-0.0.35.apk
    ```
 3. **Signs AAB (Android App Bundle)** using `jarsigner` with `Jbac.keystore`:
    ```bash
@@ -82,11 +83,11 @@ The script executes the following automated pipeline:
 
 ---
 
-## 📦 Generated Release Artifacts (v0.0.33)
+## 📦 Generated Release Artifacts (v0.0.35)
 
-- **Test APK**: `C:\Users\rajes\StudioProjects\jbac_app\jbacApp-0.0.33.apk` *(118.68 MB)*
+- **Test APK**: `C:\Users\rajes\StudioProjects\jbac_app\jbacApp-0.0.35.apk` *(118.68 MB)*
   - Suitable for direct sideloading and testing on physical Android devices.
-- **Production AAB**: `C:\Users\rajes\StudioProjects\jbac_app\jbacApp-0.0.33.aab` *(115.81 MB)*
+- **Production AAB**: `C:\Users\rajes\StudioProjects\jbac_app\jbacApp-0.0.35.aab` *(115.81 MB)*
   - Ready for direct upload to the Google Play Console Production or Open Testing track.
 
 ---
