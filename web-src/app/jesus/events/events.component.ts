@@ -56,10 +56,10 @@ export class EventsComponent {
       panchayati_id: [''],
     })
   }
-  now: any;
+  now: string = new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd') || '';
   ngOnInit(): void {
     const datePipe = new DatePipe('en-US');
-    this.now = datePipe.transform(new Date(), 'yyyy-MM-dd') || '';
+    this.now = datePipe.transform(new Date(), 'yyyy-MM-dd') || this.now;
     this.getpastors();
     this.getyouth();
     this.getrevival();
@@ -69,7 +69,7 @@ export class EventsComponent {
     this.getmusical();
     this.getdistric();
     this.searechevents();
-    this.getadds();
+    this.getRibbonEvents();
     this.getdenomations();
     this.getbeliver();
   }
@@ -215,18 +215,46 @@ export class EventsComponent {
       this.showSpinner = false;
     })
   }
-  adds: any;
-  getadds() {
-    this.service.getadds().subscribe(res => {
-      if (res.status == 202) {
-        Swal.fire(res.message);
-      } else if (res.status == 200) {
-        this.adds = res.data;
+
+  ribbonEvents: any[] = [];
+  adds: any[] = [];
+
+  getRibbonEvents() {
+    this.service.getRibbonEvents().subscribe({
+      next: (res: any) => {
+        const raw = res && res.data ? res.data : (Array.isArray(res) ? res : []);
+        // Display if and only if there is 1 in d_in column AND meeting dates have not passed
+        this.ribbonEvents = (raw || []).filter((item: any) => item && (item.d_in == 1 || item.d_in === '1') && !this.isOldMeeting(item));
+      },
+      error: (err: any) => {
+        console.error('getRibbonEvents error:', err);
+        this.ribbonEvents = [];
       }
-      console.log(res.data), 'hhh';
-    }, error => {
-      this.showSpinner = false;
-    })
+    });
+  }
+
+  getSafeImageUrl(url: any): string {
+    if (!url || url === 'undefined' || url === 'null') {
+      return 'assets/images/no.jpg';
+    }
+    const trimmed = String(url).trim();
+    if (!trimmed || trimmed === 'undefined' || trimmed === 'null') {
+      return 'assets/images/no.jpg';
+    }
+    if (trimmed.startsWith('http://') || trimmed.startsWith('https://') || trimmed.startsWith('data:') || trimmed.startsWith('assets/')) {
+      return trimmed;
+    }
+    return `https://jbac.in/websiteimages/${trimmed}`;
+  }
+
+  onImageError(event: any): void {
+    if (event && event.target) {
+      event.target.src = 'assets/images/no.jpg';
+    }
+  }
+
+  getadds() {
+    this.getRibbonEvents();
   }
   getmandals(event: any) {
     var id = event.target.value;
@@ -249,6 +277,16 @@ export class EventsComponent {
 
   formatDateString(dateVal: any): string {
     if (!dateVal) return '';
+    if (typeof dateVal === 'string') {
+      const match = dateVal.trim().match(/^(\d{4})-(\d{2})-(\d{2})/);
+      if (match) {
+        return `${match[1]}-${match[2]}-${match[3]}`;
+      }
+      const ddmmyyyy = dateVal.trim().match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
+      if (ddmmyyyy) {
+        return `${ddmmyyyy[3]}-${ddmmyyyy[2].padStart(2, '0')}-${ddmmyyyy[1].padStart(2, '0')}`;
+      }
+    }
     try {
       const d = new Date(dateVal);
       if (isNaN(d.getTime())) return '';
@@ -262,9 +300,9 @@ export class EventsComponent {
   }
 
   isCurrentDateEvent(event: any): boolean {
-    const today = this.now;
-    if (!today) return true;
-    const start = this.formatDateString(event.startdate);
+    const today = this.now || this.formatDateString(new Date());
+    if (!today || !event) return true;
+    const start = this.formatDateString(event.startdate || event.event_date);
     const end = this.formatDateString(event.enddate);
     if (start && end) {
       return start <= today && end >= today;
@@ -279,10 +317,10 @@ export class EventsComponent {
   }
 
   isOldMeeting(event: any): boolean {
-    const today = this.now;
-    if (!today) return false;
+    const today = this.now || this.formatDateString(new Date());
+    if (!today || !event) return false;
     const end = this.formatDateString(event.enddate);
-    const start = this.formatDateString(event.startdate);
+    const start = this.formatDateString(event.startdate || event.event_date);
     if (end) {
       return end < today;
     }
@@ -327,6 +365,10 @@ export class EventsComponent {
           Swal.fire(res.message);
         } else if (res.status == 200) {
           const raw = res.data || [];
+          const dInItems = raw.filter((item: any) => item && (item.d_in == 1 || item.d_in === '1') && !this.isOldMeeting(item));
+          if (dInItems.length > 0 && this.ribbonEvents.length === 0) {
+            this.ribbonEvents = dInItems;
+          }
           // Exclude old meetings completely
           this.allEvents = raw
             .filter((item: any) => !this.isOldMeeting(item))
