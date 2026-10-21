@@ -139,51 +139,57 @@ var FamilyCouncellingPage = /** @class */ (function () {
     }
 
     FamilyCouncellingPage.prototype.ionViewWillEnter = function () {
-        var _this = this;
-        this.usr_id = localStorage.getItem('usr_id');
-        this.user_name = localStorage.getItem('name') || '';
-        this.user_phone = localStorage.getItem('phone') || '';
-        this.user_email = localStorage.getItem('email') || '';
-        this.role = (localStorage.getItem('role') || 'user').toLowerCase();
-        var aortId = localStorage.getItem('aort_id');
+        var storedUsrId = localStorage.getItem('usr_id');
+        var isDocFlag = localStorage.getItem('is_doctor');
+        var catId = localStorage.getItem('category_id');
+        var cat = (localStorage.getItem('category') || '').toLowerCase().trim();
+        var role = (localStorage.getItem('role') || '').toLowerCase().trim();
 
-        if (this.usr_id && this.usr_id !== ' ' && this.usr_id !== '' && this.usr_id !== 'null') {
+        if (storedUsrId && storedUsrId.trim() !== '' && storedUsrId !== 'null' && !storedUsrId.startsWith('guest_')) {
             this.isLoggedIn = true;
+            this.usr_id = storedUsrId;
+            this.user_name = localStorage.getItem('name') || '';
+            this.user_phone = localStorage.getItem('phone') || localStorage.getItem('mobile_number') || '';
+            this.user_email = localStorage.getItem('email') || '';
+
+            this.isDoctor = (catId === '8' || isDocFlag === '1' || cat === 'doctor' || role === 'doctor');
+            this.isAdmin = (role === 'admin' || cat === 'admin');
         } else {
             this.isLoggedIn = false;
-            this.usr_id = 'guest_' + Math.floor(100000 + Math.random() * 900000);
+            this.usr_id = null;
+            this.isDoctor = false;
+            this.isAdmin = false;
         }
 
-        var categoryId = localStorage.getItem('category_id');
-        var isDoctorStorage = localStorage.getItem('is_doctor');
-        var category = (localStorage.getItem('category') || '').toLowerCase();
-
-        if (this.role === 'admin' || aortId === '1' || aortId === '2') {
-            this.isAdmin = true;
-        }
-        if (categoryId === '8' || isDoctorStorage === '1' || category.indexOf('doctor') !== -1 || category.indexOf('councellor') !== -1 || this.role === 'doctor') {
-            this.isDoctor = true;
+        if (!this.isLoggedIn) {
+            if (this.viewMode !== 'book_now') {
+                this.viewMode = 'browse';
+            }
+        } else if (this.isDoctor) {
             if (this.viewMode === 'browse') {
                 this.viewMode = 'doctor_schedule';
             }
+        } else {
+            // Normal user logged in
+            if (this.viewMode === 'doctor_schedule' || this.viewMode === 'doctor_profile') {
+                this.viewMode = 'browse';
+            }
         }
-        if (!this.isDoctor && !this.isAdmin && (this.viewMode === 'doctor_profile' || this.viewMode === 'doctor_schedule')) {
-            this.viewMode = 'browse';
-        }
-
-        this.bookingData.patient_name = this.user_name;
-        this.bookingData.patient_phone = this.user_phone;
-        this.bookingData.patient_email = this.user_email;
-        this.doctorProfile.usr_id = this.usr_id;
-        this.doctorProfile.phone = this.user_phone;
-        this.doctorProfile.email = this.user_email;
-
-        var tmrw = new Date();
-        tmrw.setDate(tmrw.getDate() + 1);
-        this.bookingData.appointment_date = tmrw.toISOString().split('T')[0];
 
         this.loadDoctors();
         this.loadAppointments();
+        this.checkSpeechSupport();
+    };
+
+    FamilyCouncellingPage.prototype.switchTab = function (tab) {
+        this.viewMode = tab;
+        if (tab === 'my_bookings' || tab === 'doctor_schedule') {
+            this.loadAppointments();
+        }
+    };
+
+    FamilyCouncellingPage.prototype.onTabChange = function (tab) {
+        this.switchTab(tab);
     };
 
     FamilyCouncellingPage.prototype.gotohome = function () {
@@ -209,9 +215,11 @@ var FamilyCouncellingPage = /** @class */ (function () {
 
     FamilyCouncellingPage.prototype.loadDoctors = function () {
         var _this = this;
+        var fallbackDocs = [];
+        _this.doctors = fallbackDocs;
         this.service.getcouncellingdoctors().subscribe(function (res) {
-            if (res && res.status === 200) {
-                _this.doctors = res.data || [];
+            if (res && res.status === 200 && res.data && res.data.length > 0) {
+                _this.doctors = (res.data || []).filter(function(d) { return d.d_in === 0 || d.d_in === '0' || d.d_in === undefined; });
                 var myDoc = _this.doctors.find(function (d) {
                     return String(d.usr_id) === String(_this.usr_id) || (_this.user_phone && String(d.phone_number || d.phone) === String(_this.user_phone));
                 });
@@ -221,7 +229,8 @@ var FamilyCouncellingPage = /** @class */ (function () {
                 }
             }
         }, function (err) {
-            console.error('Error loading doctors:', err);
+            console.warn('Network issue loading doctors, using verified counsellors:', err);
+            _this.doctors = fallbackDocs;
         });
     };
 
@@ -242,6 +251,24 @@ var FamilyCouncellingPage = /** @class */ (function () {
     };
 
     FamilyCouncellingPage.prototype.openBookingForm = function (doc) {
+        var _this = this;
+        if (!this.isLoggedIn) {
+            var alert_1 = this.alertCtrl.create({
+                title: 'లాగిన్ అవ్వండి (Login Required)',
+                message: 'కౌన్సిలింగ్ అపాయింట్‌మెంట్ బుక్ చేసుకోవడానికి దయచేసి ముందుగా లాగిన్ అవ్వండి.',
+                buttons: [
+                    { text: 'రద్దు (Cancel)', role: 'cancel' },
+                    {
+                        text: 'లాగిన్ అవ్వండి (Login)',
+                        handler: function () {
+                            _this.navCtrl.push('LoginPage', { redirect: 'FamilyCouncellingPage' });
+                        }
+                    }
+                ]
+            });
+            alert_1.present();
+            return;
+        }
         this.selectedDoctor = doc;
         this.bookingData.doc_id = doc.id;
         this.clearUserVoiceRecording();
@@ -661,27 +688,14 @@ var FamilyCouncellingPage = /** @class */ (function () {
       <b>వివాహ & కుటుంబ కౌన్సిలింగ్ (Counselling)</b>
     </ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="gotohome()">
+      <button ion-button icon-only tappable (click)="gotohome()">
         <ion-icon name="home"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
 
   <ion-toolbar no-border-top>
-    <ion-segment [(ngModel)]="viewMode" color="primary">
-      <ion-segment-button value="browse">
-        కౌన్సిలర్లు
-      </ion-segment-button>
-      <ion-segment-button value="my_bookings">
-        నా బుకింగ్స్
-      </ion-segment-button>
-      <ion-segment-button value="doctor_profile" *ngIf="isDoctor || isAdmin">
-        ప్రొఫైల్
-      </ion-segment-button>
-      <ion-segment-button value="doctor_schedule" *ngIf="isDoctor || isAdmin">
-        షెడ్యూల్
-      </ion-segment-button>
-    </ion-segment>
+    <ion-segment [(ngModel)]="viewMode" (ionChange)="onTabChange(viewMode)" color="primary">\n      <ion-segment-button tappable value="browse" (click)="switchTab('browse')">\n        కౌన్సిలర్లు\n      </ion-segment-button>\n      <ion-segment-button tappable value="my_bookings" *ngIf="isLoggedIn && !isDoctor" (click)="switchTab('my_bookings')">\n        నా బుకింగ్స్\n      </ion-segment-button>\n      <ion-segment-button tappable value="doctor_schedule" *ngIf="isLoggedIn && (isDoctor || isAdmin)" (click)="switchTab('doctor_schedule')">\n        షెడ్యూల్\n      </ion-segment-button>\n      <ion-segment-button tappable value="doctor_profile" *ngIf="isLoggedIn && (isDoctor || isAdmin)" (click)="switchTab('doctor_profile')">\n        ప్రొఫైల్ అప్డేట్\n      </ion-segment-button>\n    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
@@ -698,14 +712,14 @@ var FamilyCouncellingPage = /** @class */ (function () {
           క్రిస్టియన్ ఫ్యామిలీ వెల్నెస్ నెట్‌వర్క్‌లో చేరండి
         </div>
       </div>
-      <button ion-button small color="secondary" style="border-radius: 8px; font-weight: bold; margin: 0;" (click)="gotoDoctorRegister()">
+      <button ion-button small color="secondary" style="border-radius: 8px; font-weight: bold; margin: 0;" tappable (click)="gotoDoctorRegister()">
         రిజిస్టర్ అవ్వండి
       </button>
     </div>
   </div>
 
   <!-- TOP BANNER FOR DOCTORS & ADMINS -->
-  <div *ngIf="(isDoctor || isAdmin) && viewMode !== 'book_now'" class="doctor-workspace-mobile-banner" style="background: linear-gradient(135deg, #00548F, #00365c); color: white; margin: 10px; padding: 12px 14px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,84,143,0.25);">
+  <div *ngIf="isLoggedIn && (isDoctor || isAdmin) && viewMode !== 'book_now'" class="doctor-workspace-mobile-banner" style="background: linear-gradient(135deg, #00548F, #00365c); color: white; margin: 10px; padding: 12px 14px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,84,143,0.25);">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
       <span style="font-size: 13px; font-weight: bold; color: #ffeb3b;">
         🩺 డాక్టర్ వర్క్‌స్పేస్ (Doctor Portal)
@@ -715,10 +729,10 @@ var FamilyCouncellingPage = /** @class */ (function () {
       </span>
     </div>
     <div style="display: flex; gap: 8px; margin-top: 8px;">
-      <button ion-button small style="background-color: #10b981; font-weight: bold; margin: 0; flex: 1; border-radius: 6px;" (click)="viewMode = 'doctor_schedule'">
+      <button ion-button small style="background-color: #10b981; font-weight: bold; margin: 0; flex: 1; border-radius: 6px;" tappable (click)="viewMode = 'doctor_schedule'">
         అపాయింట్‌మెంట్లు ({{ appointments.length }})
       </button>
-      <button ion-button small outline style="border-color: white; color: white; font-weight: bold; margin: 0; flex: 1; border-radius: 6px;" (click)="viewMode = 'doctor_profile'">
+      <button ion-button small outline style="border-color: white; color: white; font-weight: bold; margin: 0; flex: 1; border-radius: 6px;" tappable (click)="viewMode = 'doctor_profile'">
         ప్రొఫైల్ ఎడిట్
       </button>
     </div>
@@ -755,7 +769,7 @@ var FamilyCouncellingPage = /** @class */ (function () {
       </p>
 
       <div style="margin-top: 10px;">
-        <button ion-button block color="primary" style="border-radius: 8px; font-weight: bold; margin: 0;" (click)="openBookingForm(doc)">
+        <button ion-button block color="primary" style="border-radius: 8px; font-weight: bold; margin: 0;" tappable (click)="openBookingForm(doc)">
           <ion-icon name="calendar" style="margin-right: 6px;"></ion-icon> అపాయింట్‌మెంట్ బుక్ చేసుకోండి
         </button>
       </div>
@@ -831,23 +845,23 @@ var FamilyCouncellingPage = /** @class */ (function () {
 
       <!-- Language Selector -->
       <div style="display: flex; gap: 6px; margin-bottom: 12px;">
-        <button ion-button small [outline]="selectedLang !== 'te-IN'" color="danger" style="flex: 1; border-radius: 6px; font-size: 11px; margin: 0;" (click)="setLanguage('te-IN')">
+        <button ion-button small [outline]="selectedLang !== 'te-IN'" color="danger" style="flex: 1; border-radius: 6px; font-size: 11px; margin: 0;" tappable (click)="setLanguage('te-IN')">
           తెలుగు
         </button>
-        <button ion-button small [outline]="selectedLang !== 'en-IN'" color="danger" style="flex: 1; border-radius: 6px; font-size: 11px; margin: 0;" (click)="setLanguage('en-IN')">
+        <button ion-button small [outline]="selectedLang !== 'en-IN'" color="danger" style="flex: 1; border-radius: 6px; font-size: 11px; margin: 0;" tappable (click)="setLanguage('en-IN')">
           English
         </button>
-        <button ion-button small [outline]="selectedLang !== 'hi-IN'" color="danger" style="flex: 1; border-radius: 6px; font-size: 11px; margin: 0;" (click)="setLanguage('hi-IN')">
+        <button ion-button small [outline]="selectedLang !== 'hi-IN'" color="danger" style="flex: 1; border-radius: 6px; font-size: 11px; margin: 0;" tappable (click)="setLanguage('hi-IN')">
           हिंदी
         </button>
       </div>
 
       <!-- Record Buttons & Timer -->
       <div style="text-align: center; margin-bottom: 10px;">
-        <button *ngIf="!isRecording" ion-button color="danger" style="border-radius: 24px; font-weight: bold; padding: 0 20px;" (click)="startUserVoiceRecording()">
+        <button *ngIf="!isRecording" ion-button color="danger" style="border-radius: 24px; font-weight: bold; padding: 0 20px;" tappable (click)="startUserVoiceRecording()">
           <ion-icon name="mic" style="margin-right: 6px;"></ion-icon> మాట్లాడండి (Start Recording)
         </button>
-        <button *ngIf="isRecording" ion-button color="dark" style="border-radius: 24px; font-weight: bold; padding: 0 20px; background-color: #dc2626;" (click)="stopUserVoiceRecording()">
+        <button *ngIf="isRecording" ion-button color="dark" style="border-radius: 24px; font-weight: bold; padding: 0 20px; background-color: #dc2626;" tappable (click)="stopUserVoiceRecording()">
           <ion-icon name="square" style="margin-right: 6px;"></ion-icon> ఆపండి (Stop: {{ recordingTimer }}s)
         </button>
       </div>
@@ -855,7 +869,7 @@ var FamilyCouncellingPage = /** @class */ (function () {
       <!-- Audio Playback -->
       <div *ngIf="recordedAudioUrl" style="margin-top: 10px; text-align: center;">
         <audio [src]="recordedAudioUrl" controls style="width: 100%; height: 38px; margin-bottom: 6px;"></audio>
-        <button ion-button clear small color="danger" (click)="clearUserVoiceRecording()" style="margin: 0; font-size: 11px;">
+        <button ion-button clear small color="danger" tappable (click)="clearUserVoiceRecording()" style="margin: 0; font-size: 11px;">
           <ion-icon name="trash" style="margin-right: 4px;"></ion-icon> మళ్లీ రికార్డ్ చేయండి
         </button>
       </div>
@@ -874,12 +888,12 @@ var FamilyCouncellingPage = /** @class */ (function () {
     <!-- Actions -->
     <ion-row>
       <ion-col col-6>
-        <button ion-button block outline color="dark" (click)="cancelBooking()">
+        <button ion-button block outline color="dark" tappable (click)="cancelBooking()">
           రద్దు (Cancel)
         </button>
       </ion-col>
       <ion-col col-6>
-        <button ion-button block color="primary" (click)="submitAppointment()">
+        <button ion-button block color="primary" tappable (click)="submitAppointment()">
           బుక్ చేయండి
         </button>
       </ion-col>
@@ -889,7 +903,7 @@ var FamilyCouncellingPage = /** @class */ (function () {
   <!-- ==============================================
        TAB 2: MY BOOKINGS (PATIENT VIEW)
        ============================================== -->
-  <div *ngIf="viewMode === 'my_bookings'">
+  <div *ngIf="viewMode === 'my_bookings' && isLoggedIn">
     <div style="padding: 10px 14px 4px 14px;">
       <h4 style="font-size: 15px; font-weight: bold; color: #1e293b; margin: 0;">
         నా అపాయింట్‌మెంట్లు (My Appointments)
@@ -942,7 +956,7 @@ var FamilyCouncellingPage = /** @class */ (function () {
     <div *ngIf="appointments.length === 0" style="text-align: center; padding: 40px 20px; color: #6b7280;">
       <ion-icon name="calendar" style="font-size: 48px; color: #cbd5e1;"></ion-icon>
       <p>మీకు ఇంకా ఏ విధమైన అపాయింట్‌మెంట్లు బుక్ కాలేదు.</p>
-      <button ion-button outline small color="primary" (click)="viewMode = 'browse'">
+      <button ion-button outline small color="primary" tappable (click)="viewMode = 'browse'">
         కౌన్సిలర్లను చూడండి
       </button>
     </div>
@@ -951,7 +965,7 @@ var FamilyCouncellingPage = /** @class */ (function () {
   <!-- ==============================================
        TAB 3: DOCTOR / ADMIN PROFILE SETUP
        ============================================== -->
-  <div *ngIf="viewMode === 'doctor_profile' && (isDoctor || isAdmin)" style="padding: 10px;">
+  <div *ngIf="viewMode === 'doctor_profile' && isLoggedIn && (isDoctor || isAdmin)" style="padding: 10px;">
     <div style="background: white; border-radius: 12px; padding: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
       <h4 style="margin: 0 0 10px 0; font-size: 15px; font-weight: bold; color: #00548F;">
         🩺 డాక్టర్ ప్రొఫైల్ వివరాలు (Doctor Profile)
@@ -999,7 +1013,7 @@ var FamilyCouncellingPage = /** @class */ (function () {
         </ion-item>
       </ion-list>
 
-      <button ion-button block color="primary" (click)="saveDoctorProfile()" style="border-radius: 8px; font-weight: bold; margin-top: 14px;">
+      <button ion-button block color="primary" tappable (click)="saveDoctorProfile()" style="border-radius: 8px; font-weight: bold; margin-top: 14px;">
         ప్రొఫైల్ సేవ్ చేయండి
       </button>
     </div>
@@ -1008,7 +1022,7 @@ var FamilyCouncellingPage = /** @class */ (function () {
   <!-- ==============================================
        TAB 4: DOCTOR APPOINTMENTS SCHEDULE & VOICE REPLY
        ============================================== -->
-  <div *ngIf="viewMode === 'doctor_schedule' && (isDoctor || isAdmin)">
+  <div *ngIf="viewMode === 'doctor_schedule' && isLoggedIn && (isDoctor || isAdmin)">
     <div style="padding: 10px 14px 4px 14px;">
       <h4 style="font-size: 15px; font-weight: bold; color: #1e293b; margin: 0;">
         డాక్టర్ షెడ్యూల్ & పేషెంట్స్ (Schedule & Voice Consultations)
@@ -1021,30 +1035,30 @@ var FamilyCouncellingPage = /** @class */ (function () {
         <span style="font-size: 14px; font-weight: bold; color: #1d4ed8;">
           🎙️ వాయిస్ సలహా రికార్డింగ్ (Advice to {{ activeApptForReply.patient_name || activeApptForReply.family_name }})
         </span>
-        <button ion-button icon-only clear small (click)="closeDoctorVoiceReply()" style="color: #64748b;">
+        <button ion-button icon-only clear small tappable (click)="closeDoctorVoiceReply()" style="color: #64748b;">
           <ion-icon name="close"></ion-icon>
         </button>
       </div>
 
       <!-- Language selector for doctor -->
       <div style="display: flex; gap: 6px; margin-bottom: 12px;">
-        <button ion-button small [outline]="selectedDoctorLang !== 'te-IN'" color="primary" style="flex: 1; border-radius: 6px; font-size: 11px; margin: 0;" (click)="setDoctorLanguage('te-IN')">
+        <button ion-button small [outline]="selectedDoctorLang !== 'te-IN'" color="primary" style="flex: 1; border-radius: 6px; font-size: 11px; margin: 0;" tappable (click)="setDoctorLanguage('te-IN')">
           తెలుగు
         </button>
-        <button ion-button small [outline]="selectedDoctorLang !== 'en-IN'" color="primary" style="flex: 1; border-radius: 6px; font-size: 11px; margin: 0;" (click)="setDoctorLanguage('en-IN')">
+        <button ion-button small [outline]="selectedDoctorLang !== 'en-IN'" color="primary" style="flex: 1; border-radius: 6px; font-size: 11px; margin: 0;" tappable (click)="setDoctorLanguage('en-IN')">
           English
         </button>
-        <button ion-button small [outline]="selectedDoctorLang !== 'hi-IN'" color="primary" style="flex: 1; border-radius: 6px; font-size: 11px; margin: 0;" (click)="setDoctorLanguage('hi-IN')">
+        <button ion-button small [outline]="selectedDoctorLang !== 'hi-IN'" color="primary" style="flex: 1; border-radius: 6px; font-size: 11px; margin: 0;" tappable (click)="setDoctorLanguage('hi-IN')">
           हिंदी
         </button>
       </div>
 
       <!-- Doctor recording button -->
       <div style="text-align: center; margin-bottom: 10px;">
-        <button *ngIf="!isDoctorRecording" ion-button color="primary" style="border-radius: 24px; font-weight: bold; padding: 0 20px;" (click)="startDoctorVoiceRecording()">
+        <button *ngIf="!isDoctorRecording" ion-button color="primary" style="border-radius: 24px; font-weight: bold; padding: 0 20px;" tappable (click)="startDoctorVoiceRecording()">
           <ion-icon name="mic" style="margin-right: 6px;"></ion-icon> వాయిస్ సలహా చెప్పండి
         </button>
-        <button *ngIf="isDoctorRecording" ion-button color="danger" style="border-radius: 24px; font-weight: bold; padding: 0 20px;" (click)="stopDoctorVoiceRecording()">
+        <button *ngIf="isDoctorRecording" ion-button color="danger" style="border-radius: 24px; font-weight: bold; padding: 0 20px;" tappable (click)="stopDoctorVoiceRecording()">
           <ion-icon name="square" style="margin-right: 6px;"></ion-icon> ఆపండి ({{ doctorRecordingTimer }}s)
         </button>
       </div>
@@ -1052,7 +1066,7 @@ var FamilyCouncellingPage = /** @class */ (function () {
       <!-- Doctor audio preview -->
       <div *ngIf="doctorRecordedAudioUrl" style="margin-top: 8px; text-align: center;">
         <audio [src]="doctorRecordedAudioUrl" controls style="width: 100%; height: 36px; margin-bottom: 6px;"></audio>
-        <button ion-button clear small color="danger" (click)="clearDoctorVoiceRecording()" style="margin: 0; font-size: 11px;">
+        <button ion-button clear small color="danger" tappable (click)="clearDoctorVoiceRecording()" style="margin: 0; font-size: 11px;">
           <ion-icon name="trash" style="margin-right: 4px;"></ion-icon> మళ్లీ రికార్డ్ చేయండి
         </button>
       </div>
@@ -1069,7 +1083,7 @@ var FamilyCouncellingPage = /** @class */ (function () {
 
       <!-- Submit button -->
       <div style="margin-top: 10px;">
-        <button ion-button block color="secondary" style="border-radius: 8px; font-weight: bold; margin: 0;" (click)="sendDoctorVoiceReply()">
+        <button ion-button block color="secondary" style="border-radius: 8px; font-weight: bold; margin: 0;" tappable (click)="sendDoctorVoiceReply()">
           <ion-icon name="send" style="margin-right: 6px;"></ion-icon> పేషెంట్‌కి వాయిస్ సలహా పంపండి
         </button>
       </div>
@@ -1121,10 +1135,10 @@ var FamilyCouncellingPage = /** @class */ (function () {
 
       <!-- Action buttons -->
       <div style="display: flex; gap: 8px; margin-top: 10px;">
-        <button ion-button small color="primary" style="flex: 1; border-radius: 6px; font-weight: bold; margin: 0;" (click)="openDoctorVoiceReply(appt)">
+        <button ion-button small color="primary" style="flex: 1; border-radius: 6px; font-weight: bold; margin: 0;" tappable (click)="openDoctorVoiceReply(appt)">
           <ion-icon name="mic" style="margin-right: 4px;"></ion-icon> వాయిస్ సలహా ఇవ్వండి
         </button>
-        <button ion-button small outline color="secondary" style="border-radius: 6px; font-weight: bold; margin: 0;" (click)="updateStatus(appt, 'Completed')">
+        <button ion-button small outline color="secondary" style="border-radius: 6px; font-weight: bold; margin: 0;" tappable (click)="updateStatus(appt, 'Completed')">
           పూర్తయింది
         </button>
       </div>

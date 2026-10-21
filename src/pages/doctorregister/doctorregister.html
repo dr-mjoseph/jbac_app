@@ -23,18 +23,18 @@
 
     <form [formGroup]="doctorForm" (ngSubmit)="submitDoctor()">
       <ion-item class="custom-item">
-        <ion-label floating>డాక్టర్ పూర్తి పేరు (Doctor Full Name) *</ion-label>
+        <ion-label stacked>డాక్టర్ పూర్తి పేరు (Doctor Full Name) <span class="req">*</span></ion-label>
         <ion-input type="text" formControlName="doctor_name" placeholder="ఉదా: Dr. Mary Grace, M.D."></ion-input>
       </ion-item>
 
       <ion-item class="custom-item">
-        <ion-label floating>మెడికల్ కౌన్సిల్ లైసెన్స్ నంబర్ (License No) *</ion-label>
+        <ion-label stacked>మెడికల్ కౌన్సిల్ లైసెన్స్ నంబర్ (License No) <span class="req">*</span></ion-label>
         <ion-input type="text" formControlName="license_number" placeholder="ఉదా: APMC-2015-88421"></ion-input>
       </ion-item>
 
       <ion-item class="custom-item">
-        <ion-label floating>స్పెషలైజేషన్ (Specialization) *</ion-label>
-        <ion-select formControlName="specialization">
+        <ion-label stacked>స్పెషలైజేషన్ (Specialization) <span class="req">*</span></ion-label>
+        <ion-select formControlName="specialization" okText="ఎంచుకోండి" cancelText="రద్దు">
           <ion-option value="Family Counsellor & Clinical Psychologist">Family Counsellor & Clinical Psychologist</ion-option>
           <ion-option value="Marriage & Relationship Counsellor">Marriage & Relationship Counsellor</ion-option>
           <ion-option value="Youth & Family Mental Wellness Counsellor">Youth & Family Mental Wellness Counsellor</ion-option>
@@ -46,62 +46,62 @@
       </ion-item>
 
       <ion-item class="custom-item">
-        <ion-label floating>విద్యార్హతలు (Qualifications) *</ion-label>
+        <ion-label stacked>విద్యార్హతలు (Qualifications) <span class="req">*</span></ion-label>
         <ion-input type="text" formControlName="qualification" placeholder="ఉదా: MBBS, M.D., M.Sc Psychology"></ion-input>
       </ion-item>
 
       <ion-item class="custom-item">
-        <ion-label floating>అనుభవం (Years of Experience) *</ion-label>
+        <ion-label stacked>అనుభవం (Years of Experience) <span class="req">*</span></ion-label>
         <ion-input type="text" formControlName="experience_years" placeholder="ఉదా: 8 Years"></ion-input>
       </ion-item>
 
       <ion-item class="custom-item">
-        <ion-label floating>10 అంకెల మొబైల్ నంబర్ (Mobile Number) *</ion-label>
+        <ion-label stacked>10 అంకెల మొబైల్ నంబర్ (Mobile Number) <span class="req">*</span></ion-label>
         <ion-input type="tel" maxlength="10" formControlName="phone_number" placeholder="10-digit mobile"></ion-input>
       </ion-item>
 
       <ion-item class="custom-item">
-        <ion-label floating>ఈమెయిల్ (Email Address)</ion-label>
+        <ion-label stacked>ఈమెయిల్ (Email Address)</ion-label>
         <ion-input type="email" formControlName="email" placeholder="doctor@jbac.in"></ion-input>
       </ion-item>
 
       <ion-item class="custom-item">
-        <ion-label floating>పాస్‌వర్డ్ (Password - కనీసం 6 అక్షరాలు) *</ion-label>
+        <ion-label stacked>పాస్‌వర్డ్ (Password - కనీసం 6 అక్షరాలు) <span class="req">*</span></ion-label>
         <ion-input type="password" maxlength="16" formControlName="password" placeholder="లాగిన్ పాస్‌వర్డ్"></ion-input>
       </ion-item>
 
       <ion-item class="custom-item">
-        <ion-label floating>కన్సల్టేషన్ ఫీజు (Consultation Fee)</ion-label>
+        <ion-label stacked>కన్సల్టేషన్ ఫీజు (Consultation Fee)</ion-label>
         <ion-input type="text" formControlName="consultation_fee" placeholder="Free / Volunteer Service"></ion-input>
       </ion-item>
 
       <ion-item class="custom-item">
-        <ion-label floating>అందుబాటులో ఉండే రోజులు (Available Days) *</ion-label>
+        <ion-label stacked>అందుబాటులో ఉండే రోజులు (Available Days) <span class="req">*</span></ion-label>
         <ion-input type="text" formControlName="available_days" placeholder="Monday to Saturday"></ion-input>
       </ion-item>
 
       <ion-item class="custom-item">
-        <ion-label floating>ప్రారంభ సమయం (Start Time) *</ion-label>
+        <ion-label stacked>ప్రారంభ సమయం (Start Time) <span class="req">*</span></ion-label>
         <ion-input type="text" formControlName="available_time_start" placeholder="10:00 AM"></ion-input>
       </ion-item>
 
       <ion-item class="custom-item">
-        <ion-label floating>ముగింపు సమయం (End Time) *</ion-label>
+        <ion-label stacked>ముగింపు సమయం (End Time) <span class="req">*</span></ion-label>
         <ion-input type="text" formControlName="available_time_end" placeholder="05:00 PM"></ion-input>
       </ion-item>
 
       <ion-item class="custom-item">
-        <ion-label floating>ప్రాంతం & కౌన్సిలింగ్ విధానం (Location) *</ion-label>
+        <ion-label stacked>ప్రాంతం & కౌన్సిలింగ్ విధానం (Location) <span class="req">*</span></ion-label>
         <ion-input type="text" formControlName="location" placeholder="ఉదా: Vijayawada & Online"></ion-input>
       </ion-item>
 
       <ion-item class="custom-item">
-        <ion-label floating>పూర్తి క్లినిక్ / చర్చి చిరునామా (Address) *</ion-label>
+        <ion-label stacked>పూర్తి క్లినిక్ / చర్చి చిరునామా (Address) <span class="req">*</span></ion-label>
         <ion-input type="text" formControlName="address" placeholder="క్లినిక్ లేదా ఆసుపత్రి చిరునామా"></ion-input>
       </ion-item>
 
       <ion-item class="custom-item">
-        <ion-label floating>డాక్టర్ గురించిన సంక్షిప్త వివరణ (Bio) *</ion-label>
+        <ion-label stacked>డాక్టర్ గురించిన సంక్షిప్త వివరణ (Bio) <span class="req">*</span></ion-label>
         <ion-textarea rows="3" formControlName="bio" placeholder="మీ అనుభవం, కౌన్సిలింగ్ పద్ధతులు మరియు సేవా సంకల్పం..."></ion-textarea>
       </ion-item>
 

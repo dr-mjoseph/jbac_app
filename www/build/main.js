@@ -308,11 +308,11 @@ webpackEmptyAsyncContext.id = 139;
 var map = {
 	"../pages/family-councelling/family-councelling.module": [
 		511,
-		49
+		51
 	],
 	"../pages/doctorregister/doctorregister.module": [
 		513,
-		50
+		52
 	],
 	"../pages/about/about.module": [
 		408,
@@ -697,6 +697,7 @@ var MyApp = /** @class */ (function () {
         this.service = service;
         this.initializeApp();
                 this.pages = [
+            { 'title': 'ప్రొఫైల్‌ని సవరించండి', 'subtitle': 'Edit Profile & Details', 'image': 'assets/icon/svg/services.svg', 'page': 'ProfilePage' },
             { 'title': 'వివాహ & కుటుంబ కౌన్సిలింగ్', 'subtitle': 'Family & Marriage Counselling', 'image': 'assets/icon/svg/couple.svg', 'page': 'FamilyCouncellingPage' },
             { 'title': 'వివాహ సంబంధాలు', 'subtitle': 'Christian Marriage Alliances', 'image': 'assets/icon/svg/register.svg', 'page': 'MarriagePage' },
             { 'title': 'వివాహ సంబంధం నమోదు', 'subtitle': 'Register Marriage Profile', 'image': 'assets/icon/svg/register.svg', 'page': 'AddmarriagePage' },
@@ -729,6 +730,13 @@ var MyApp = /** @class */ (function () {
         });
     };
     MyApp.prototype.openPage = function (page) {
+        if (page === 'ProfilePage') {
+            var uid = localStorage.getItem('usr_id');
+            if (!uid || uid === ' ' || uid === 'null' || uid === 'undefined') {
+                this.nav.push('LoginPage');
+                return;
+            }
+        }
         this.nav.push(page);
     };
     __decorate([
@@ -736,7 +744,7 @@ var MyApp = /** @class */ (function () {
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Nav */])
     ], MyApp.prototype, "nav", void 0);
     MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\\Users\\rajes\\StudioProjects\\jbac_app\\src\\app\\app.html"*/'<ion-menu [content]="content" type="overlay">\n  <ion-header>\n    <ion-toolbar style="background-color: #00548F; color: white;">\n      <ion-title style="color: white; font-weight: bold; font-size: 17px; text-align: center;">\n        JBAC మెనూ (Menu)\n      </ion-title>\n    </ion-toolbar>\n  </ion-header>\n\n  <ion-content style="background-color: #f4f7fb;">\n    <div style="background: linear-gradient(135deg, #00548F, #19386d); padding: 18px 16px; color: white; text-align: left; margin-bottom: 8px;">\n      <h3 style="margin: 0; font-size: 18px; font-weight: bold; color: white;">Welcome to JBAC</h3>\n      <p style="margin: 4px 0 0; font-size: 12px; color: #dbeafe;">జీసస్ బిలీవర్స్ అసోసియేషన్, ఆంధ్ర ప్రదేశ్</p>\n    </div>\n\n    <ion-list no-lines style="margin: 0; padding: 0 4px 24px 4px;">\n      <button ion-item *ngFor="let a of pages" (click)="openPage(a.page)" menuToggle class="jbac-menu-item">\n        <ion-avatar item-start class="jbac-menu-avatar">\n          <img [src]="a.image">\n        </ion-avatar>\n        <ion-label class="jbac-menu-label">\n          <div class="jbac-menu-title">{{a.title}}</div>\n          <div *ngIf="a.subtitle" class="jbac-menu-sub">{{a.subtitle}}</div>\n        </ion-label>\n        <ion-icon name="ios-arrow-forward" item-end class="jbac-menu-arrow"></ion-icon>\n      </button>\n    </ion-list>\n  </ion-content>\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it is poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>\n'/*ion-inline-end:"C:\\Users\\rajes\\StudioProjects\\jbac_app\\src\\app\\app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\\Users\\rajes\\StudioProjects\\jbac_app\\src\\app\\app.html"*/'<ion-menu [content]="content" type="overlay">\n  <ion-header>\n    <ion-toolbar color="primary" style="background-color: #00548F; color: white;">\n      <ion-title style="color: white; font-weight: bold; font-size: 16px;">\n        JBAC మెనూ\n      </ion-title>\n      <ion-buttons end>\n        <button ion-button icon-only menuClose tappable style="color: white; font-size: 22px;">\n          <ion-icon name="close"></ion-icon>\n        </button>\n      </ion-buttons>\n    </ion-toolbar>\n  </ion-header>\n\n  <ion-content style="background-color: #f1f5f9;">\n    <div style="background: linear-gradient(135deg, #00548F, #19386d); padding: 16px 14px; color: white; margin-bottom: 8px;">\n      <div style="font-size: 16px; font-weight: bold; color: white;">Welcome to JBAC</div>\n      <div style="font-size: 11px; color: #dbeafe; margin-top: 3px;">జీసస్ బిలీవర్స్ అసోసియేషన్, ఆంధ్ర ప్రదేశ్</div>\n    </div>\n\n    <ion-list no-lines style="margin: 0; padding: 0 0 24px 0;">\n      <button ion-item *ngFor="let a of pages" (click)="openPage(a.page)" menuClose tappable class="jbac-menu-item">\n        <ion-avatar item-start class="jbac-menu-avatar">\n          <img [src]="a.image">\n        </ion-avatar>\n        <ion-label class="jbac-menu-label">\n          <div class="jbac-menu-title">{{a.title}}</div>\n          <div *ngIf="a.subtitle" class="jbac-menu-sub">{{a.subtitle}}</div>\n        </ion-label>\n        <ion-icon name="ios-arrow-forward" item-end class="jbac-menu-arrow"></ion-icon>\n      </button>\n    </ion-list>\n  </ion-content>\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it is poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>\n'/*ion-inline-end:"C:\\Users\\rajes\\StudioProjects\\jbac_app\\src\\app\\app.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["u" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */], __WEBPACK_IMPORTED_MODULE_4__providers_service_service__["a" /* ServiceProvider */]])
     ], MyApp);

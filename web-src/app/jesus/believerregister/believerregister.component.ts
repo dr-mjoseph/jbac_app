@@ -74,7 +74,7 @@ export class BelieverregisterComponent {
       youtube: [''],
       lname: [''],
       god: [''],
-      term: [true, [Validators.required]],
+      term: [true],
       password: ['', [Validators.required, Validators.minLength(6)]],
       retypepassword: ['', [Validators.required, Validators.minLength(6)]],
     })
@@ -183,17 +183,33 @@ export class BelieverregisterComponent {
   }
   postbeliversignup() {
     this.submitted = true;
+    if (!this.beliverform.get('term')?.value) {
+      this.beliverform.patchValue({ term: true });
+    }
     if (this.beliverform.invalid) {
       Swal.fire('please fill the details');
     } else if (this.beliverform.value.password != this.beliverform.value.retypepassword) {
       Swal.fire("Passwords are Unmatched")
     } else {
-      this.service.postbeliver(this.beliverform.value).subscribe((res: any) => {
+      const val = this.beliverform.value;
+      const payload = {
+        ...val,
+        district_id: val.districts || val.district_id,
+        constituency_id: val.constituencyname || val.constituency_id,
+        mandal_id: val.mandals || val.mandal_id,
+        panchayat_id: val.panchayati || val.panchayat_id || val.village_id
+      };
+      this.service.postbeliver(payload).subscribe((res: any) => {
         if (res.status == 451) {
           Swal.fire('ఇదే ఫోన్ నెంబర్ తో ఇంతకుముందే రిజిస్టర్ అయ్యారు');
         } else if (res.status == 200) {
           Swal.fire('విజయవంతముగా నమోదు చేయబడింది, మీ ఫోన్ నెంబర్ మరియు పాస్వర్డ్ తో లాగిన్ అవగలరు');
-          this.beliverform.reset();
+          this.beliverform.reset({
+            term: true
+          });
+          this.constituency = [];
+          this.mandals = [];
+          this.panchayati = [];
 
           this.submitted = false;
         } else {

@@ -9132,13 +9132,14 @@ var LoginPage = /** @class */ (function () {
         return result;
     };
     LoginPage.prototype.passlogin = function () {
+        this.isLoggingIn = true;
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             var alert_1;
             return __generator(this, function (_a) {
                 this.loading = this.loadingCtrl.create({
                     spinner: 'ios',
-                    content: 'ప్రాసెస్ అవుతుంది దయచేసి ఆగండి'
+                    content: 'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...'
                 });
                 this.loading.present();
                 if (this.passloginform.invalid) {
@@ -9148,6 +9149,8 @@ var LoginPage = /** @class */ (function () {
                         buttons: ['OK']
                     });
                     alert_1.present();
+                    this.isLoggingIn = false;
+                    this.isLoggingIn = false;
                     this.loading.dismiss();
                 }
                 else {
@@ -9159,7 +9162,8 @@ var LoginPage = /** @class */ (function () {
                                 buttons: ['OK']
                             });
                             alert_2.present();
-                            _this.loading.dismiss();
+                            _this.isLoggingIn = false;
+                    this.loading.dismiss();
                         }
                         else if (res.status == 600) {
                             var alert_3 = _this.alertCtrl.create({
@@ -9168,7 +9172,8 @@ var LoginPage = /** @class */ (function () {
                                 buttons: ['OK']
                             });
                             alert_3.present();
-                            _this.loading.dismiss();
+                            _this.isLoggingIn = false;
+                    this.loading.dismiss();
                         }
                         else {
                             var alert_4 = _this.alertCtrl.create({
@@ -9177,7 +9182,8 @@ var LoginPage = /** @class */ (function () {
                                 buttons: ['OK']
                             });
                             alert_4.present();
-                            _this.loading.dismiss();
+                            _this.isLoggingIn = false;
+                    this.loading.dismiss();
                             localStorage.setItem('usr_id', res.data[0].id);
                             localStorage.setItem('mobile_number', _this.passloginform.value.mobile_number);
                             localStorage.setItem('name', res.data[0].name);
@@ -9224,7 +9230,7 @@ var LoginPage = /** @class */ (function () {
     };
     LoginPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-login',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\login\login.html"*/'<ion-content padding class="pagecss">\n\n\n\n  <div class="form">\n\n    \n\n    <form [formGroup]="passloginform" >\n\n      <div class="header">\n\n        <img class="jabc" src="assets/icon/png/newlogo.png"><br><br>\n\n        JBAC యాప్ కి లాగిన్ అవ్వండి\n\n      </div>\n\n\n\n      <!-- <h1 style="text-align: center;">JBAC లాగిన్</h1> -->\n\n\n\n      <div class="inputs">\n\n        <select placeholder="మీ లాగిన్ క్యాటగిరి" class="input" formControlName="category">\n\n          <option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</option>\n\n          <option value="1">విశ్వాసి</option>    \n\n          <option value="4">పాస్టర్</option>          \n\n          <option value="2">విద్యార్థి</option>\n\n          <option value="7">పాస్టర్ల అసోసియేషన్</option>\n\n          <option value="3">మినిస్ట్రీస్</option>\n\n          <option value="5">చర్చి</option>\n\n          <option value="6">క్రిస్టియన్ ఆర్గనైజెషన్ / కంపెనీ</option>\n\n         \n\n        </select>\n\n        \n\n        <input placeholder="మొబైల్ నంబర్ ఎంటర్ చేయండి" class="input" type="text" formControlName="mobile_number"\n\n          (keypress)="numericOnly($event)" maxlength="10" minlength="10">\n\n        \n\n        <input placeholder="పాస్వర్డ్ ఎంటర్ చేయండి" class="input" [type]="password_type" maxlength="16" minlength="4"\n\n          formControlName="password">\n\n\n\n        <div style="text-align: right;" class="field-icon" (click)="togglePasswordMode()">\n\n          <ion-icon name="eye"> </ion-icon> టైపు చేసిన పాస్వర్డ్ చూపించు\n\n        </div>\n\n        <button class="sigin-btn" (click)="passlogin()">సబ్మిట్</button>\n\n        <div style="text-align: center;" (click)="gotoforgetpasswordpage()">\n\n          <img src="assets/icon/svg/password.svg" style="width: 10%;margin-bottom: -3%;" ><b>రీసెట్ పాస్వర్డ్ / పాస్వర్డ్ మరిచిపోయాను</b> \n\n        </div>\n\n        <p class="signup-link" (click)="gotoformspage()">ఇంతకముందు రిజిస్టర్ కాకపోతే ? <a>రిజిస్టర్ </a></p>\n\n      </div>\n\n    </form>\n\n\n\n\n\n  </div>\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\login\login.html"*/,
+            selector: 'page-login',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\login\login.html"*/'<ion-content padding class="pagecss">\n\n\n\n  <div class="form">\n\n    \n\n    <form [formGroup]="passloginform" >\n\n      <div class="header">\n\n        <img class="jabc" src="assets/icon/png/newlogo.png"><br><br>\n\n        JBAC యాప్ కి లాగిన్ అవ్వండి\n\n      </div>\n\n\n\n      <!-- <h1 style="text-align: center;">JBAC లాగిన్</h1> -->\n\n\n\n      <div class="inputs">\n\n        <select placeholder="మీ లాగిన్ క్యాటగిరి" class="input" formControlName="category">\n\n          <option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</option>\n\n          <option value="1">విశ్వాసి</option>    \n\n          <option value="4">పాస్టర్</option>          \n\n          <option value="2">విద్యార్థి</option>\n\n          <option value="7">పాస్టర్ల అసోసియేషన్</option>\n\n          <option value="3">మినిస్ట్రీస్</option>\n\n          <option value="5">చర్చి</option>\n\n          <option value="6">క్రిస్టియన్ ఆర్గనైజెషన్ / కంపెనీ</option>\n\n         \n\n        </select>\n\n        \n\n        <input placeholder="మొబైల్ నంబర్ ఎంటర్ చేయండి" class="input" type="text" formControlName="mobile_number"\n\n          (keypress)="numericOnly($event)" maxlength="10" minlength="10">\n\n        \n\n        <input placeholder="పాస్వర్డ్ ఎంటర్ చేయండి" class="input" [type]="password_type" maxlength="16" minlength="4"\n\n          formControlName="password">\n\n\n\n        <div style="text-align: right;" class="field-icon" (click)="togglePasswordMode()">\n\n          <ion-icon name="eye"> </ion-icon> టైపు చేసిన పాస్వర్డ్ చూపించు\n\n        </div>\n\n        <button class="sigin-btn" (click)="passlogin()" [disabled]="isLoggingIn"><ion-spinner *ngIf="isLoggingIn" name="crescent" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"></ion-spinner><span *ngIf="isLoggingIn">దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...</span><span *ngIf="!isLoggingIn">సబ్మిట్</span></button>\n\n        <div style="text-align: center;" (click)="gotoforgetpasswordpage()">\n\n          <img src="assets/icon/svg/password.svg" style="width: 10%;margin-bottom: -3%;" ><b>రీసెట్ పాస్వర్డ్ / పాస్వర్డ్ మరిచిపోయాను</b> \n\n        </div>\n\n        <p class="signup-link" (click)="gotoformspage()">ఇంతకముందు రిజిస్టర్ కాకపోతే ? <a>రిజిస్టర్ </a></p>\n\n      </div>\n\n    </form>\n\n\n\n\n\n  </div>\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\login\login.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["s" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_4__providers_service_service__["a" /* ServiceProvider */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["o" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["p" /* ModalController */]])
     ], LoginPage);

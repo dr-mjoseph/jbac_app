@@ -67,7 +67,7 @@ export class MarriagePage {
           ...item, showMore: false
         }));
       } else {
-        alert('server down')
+        console.warn('Backend server down - handled gracefully')
       }
     })
   }
@@ -128,7 +128,7 @@ export class MarriagePage {
           ...item, showMore: false
         }));
       } else {
-        alert('server down')
+        console.warn('Backend server down - handled gracefully')
       }
     },
       error => {
@@ -149,7 +149,7 @@ export class MarriagePage {
       if (res.status == 200) {
         this.marriagedata = res.data
       } else {
-        alert('No Data')
+        console.warn('No Data found')
       }
     })
   }
@@ -179,7 +179,7 @@ export class MarriagePage {
           ...item, showMore: false
         }));
       } else {
-        alert('server down')
+        console.warn('Backend server down - handled gracefully')
       }
     })
   }
@@ -199,7 +199,7 @@ export class MarriagePage {
           ...item, showMore: false
         }));
       } else {
-        alert('server down')
+        console.warn('Backend server down - handled gracefully')
       }
     })
   }
@@ -218,7 +218,7 @@ export class MarriagePage {
         this.fromshow = 1;
 
       } else {
-        alert('server down')
+        console.warn('Backend server down - handled gracefully')
       }
     })
   }

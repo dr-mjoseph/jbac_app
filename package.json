@@ -1,6 +1,6 @@
 {
     "name":  "JbacApp",
-    "version":  "0.0.1-beta.2",
+    "version": "0.0.34",
     "author":  "Ionic Framework",
     "homepage":  "http://ionicframework.com/",
     "private":  true,
@@ -37,7 +37,7 @@
                      },
     "devDependencies":  {
                             "@ionic/app-scripts":  "3.2.4",
-                            "cordova-android":  "^10.1.2",
+                            "cordova-android":  "^13.0.0",
                             "cordova-plugin-camera":  "^6.0.0",
                             "cordova-plugin-device":  "^2.1.0",
                             "cordova-plugin-ionic-keyboard":  "^2.2.0",

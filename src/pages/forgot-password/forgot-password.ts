@@ -16,6 +16,7 @@ export class ForgotPasswordPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public formbuilder: FormBuilder, public alertCtrl: AlertController, private service: ServiceProvider, private loadingCtrl: LoadingController) {
     this.passloginform = this.formbuilder.group({
       category: ['', [Validators.required]],
+      member_id: [''],
       number: ['', [Validators.required]],
       password: [''],
       repassword: ['']
@@ -42,7 +43,8 @@ export class ForgotPasswordPage {
     this.navCtrl.push('LoginPage')
   }
 
-  shoepass: boolean = false
+  shoepass: boolean = false;
+  familyMembers: any[] = [];
 
   checknumber() {
 
@@ -95,6 +97,8 @@ export class ForgotPasswordPage {
         this.category = 'క్రిస్టియన్ ఆర్గనైజెషన్ / కంపెనీ';
       } else if (this.passloginform.value.category == 7) {
         this.category = 'పాస్టర్ల అసోసియేషన్';
+      } else if (this.passloginform.value.category == 8) {
+        this.category = 'డాక్టర్ / కౌన్సిలర్';
       }
 
       this.service.checknumberpassword(this.passloginform.value).subscribe((res: any) => {

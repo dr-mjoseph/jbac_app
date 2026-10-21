@@ -24601,71 +24601,7 @@ image-viewer.ion-page img {
   box-shadow: 4px 0 24px rgba(0, 0, 0, 0.25) !important;
 }
 
-.jbac-menu-item {
-  background: #ffffff !important;
-  border-radius: 10px !important;
-  margin: 5px 8px !important;
-  padding: 6px 12px !important;
-  border: 1px solid #e2e8f0 !important;
-  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
-}
 
-.jbac-menu-avatar {
-  min-width: 40px !important;
-  width: 40px !important;
-  height: 40px !important;
-  margin: 4px 12px 4px 0 !important;
-  background: #eef5fb !important;
-  border-radius: 10px !important;
-  display: -webkit-box !important;
-  display: -webkit-flex !important;
-  display: -ms-flexbox !important;
-  display: flex !important;
-  -webkit-box-align: center !important;
-  -webkit-align-items: center !important;
-  -ms-flex-align: center !important;
-  align-items: center !important;
-  -webkit-box-pack: center !important;
-  -webkit-justify-content: center !important;
-  -ms-flex-pack: center !important;
-  justify-content: center !important;
-  padding: 6px !important;
-}
-
-.jbac-menu-avatar img {
-  width: 26px !important;
-  height: 26px !important;
-  object-fit: contain !important;
-}
-
-.jbac-menu-label {
-  margin: 6px 0 !important;
-  white-space: normal !important;
-  overflow: visible !important;
-}
-
-.jbac-menu-title {
-  font-size: 14px !important;
-  font-weight: 700 !important;
-  color: #1e293b !important;
-  line-height: 1.4 !important;
-  word-break: break-word !important;
-  font-family: "Ramabhadra", sans-serif !important;
-}
-
-.jbac-menu-sub {
-  font-size: 11.5px !important;
-  color: #64748b !important;
-  margin-top: 2px !important;
-  line-height: 1.25 !important;
-}
-
-.jbac-menu-arrow {
-  font-size: 16px !important;
-  color: #94a3b8 !important;
-  margin-left: 6px !important;
-}
 
 body,
 ion-title,
@@ -25701,11 +25637,127 @@ page-family-councelling .form-card { border-radius: 12px; background: white; pad
 page-family-councelling .form-title { font-size: 16px; font-weight: bold; color: #00548F; margin-bottom: 12px; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px; }
 page-family-councelling .custom-item { border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 10px; padding: 0 8px; }
 
+
+/* DOCTOR REGISTER FORM STYLES */
 page-doctorregister .pagecss { background-color: #f1f5f9; }
 page-doctorregister .form-card { background: #ffffff; border-radius: 12px; padding: 16px; margin: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
 page-doctorregister .header-box { text-align: center; padding: 16px 12px 10px 12px; background: linear-gradient(135deg, #00548F, #00365c); color: white; border-radius: 12px; margin-bottom: 16px; }
-page-doctorregister .custom-item { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 10px; padding-left: 8px; }
-page-doctorregister .custom-item ion-label { font-size: 13px !important; font-weight: bold; color: #475569; }
+page-doctorregister .custom-item { background: transparent !important; border: none !important; padding: 0 !important; margin-bottom: 14px !important; }
+page-doctorregister .custom-item .item-inner { border-bottom: none !important; box-shadow: none !important; padding: 0 !important; }
+page-doctorregister .custom-item ion-label,
+page-doctorregister .custom-item .label-md,
+page-doctorregister .custom-item .label-ios {
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  color: #1e293b !important;
+  margin-bottom: 6px !important;
+  white-space: normal !important;
+}
+page-doctorregister .custom-item .req { color: #ef4444 !important; font-weight: bold; margin-left: 2px; }
 page-doctorregister .custom-item ion-input,
 page-doctorregister .custom-item ion-select,
-page-doctorregister .custom-item ion-textarea { font-size: 14px; color: #0f172a; }
+page-doctorregister .custom-item ion-textarea {
+  background: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  font-size: 14px !important;
+  color: #0f172a !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+page-doctorregister .custom-item ion-input:focus-within,
+page-doctorregister .custom-item ion-select:focus-within,
+page-doctorregister .custom-item ion-textarea:focus-within {
+  border-color: #00548F !important;
+  box-shadow: 0 0 0 3px rgba(0,84,143,0.15) !important;
+}
+
+/* JBAC Side Panel and Menu Styles */
+.menu-inner {
+  border-radius: 0px 18px 18px 0px !important;
+  width: 290px !important;
+  max-width: 82vw !important;
+  overflow: hidden !important;
+  -webkit-box-shadow: 4px 0 24px rgba(0, 0, 0, 0.25) !important;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.25) !important;
+}
+
+.jbac-menu-item {
+  background: #ffffff !important;
+  border-radius: 10px !important;
+  width: calc(100% - 16px) !important;
+  max-width: calc(100% - 16px) !important;
+  margin: 5px 8px !important;
+  padding: 6px 10px !important;
+  border: 1px solid #e2e8f0 !important;
+  box-sizing: border-box !important;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+}
+
+.jbac-menu-item .item-inner {
+  padding-right: 4px !important;
+  border-bottom: none !important;
+}
+
+.jbac-menu-avatar {
+  min-width: 38px !important;
+  width: 38px !important;
+  height: 38px !important;
+  margin: 2px 10px 2px 0 !important;
+  background: #eef5fb !important;
+  border-radius: 8px !important;
+  display: -webkit-box !important;
+  display: -webkit-flex !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-align: center !important;
+  -webkit-align-items: center !important;
+  -ms-flex-align: center !important;
+  align-items: center !important;
+  -webkit-box-pack: center !important;
+  -webkit-justify-content: center !important;
+  -ms-flex-pack: center !important;
+  justify-content: center !important;
+  padding: 5px !important;
+}
+
+.jbac-menu-avatar img {
+  width: 24px !important;
+  height: 24px !important;
+  object-fit: contain !important;
+}
+
+.jbac-menu-label {
+  margin: 4px 0 !important;
+  white-space: normal !important;
+  overflow: visible !important;
+}
+
+.jbac-menu-title {
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  color: #1e293b !important;
+  line-height: 1.35 !important;
+  word-break: break-word !important;
+  font-family: "Ramabhadra", sans-serif !important;
+}
+
+.jbac-menu-sub {
+  font-size: 11px !important;
+  color: #64748b !important;
+  margin-top: 2px !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.jbac-menu-arrow {
+  font-size: 16px !important;
+  color: #94a3b8 !important;
+  margin-left: 4px !important;
+}
+
+
+ion-segment-button[hidden] { display: none !important; }

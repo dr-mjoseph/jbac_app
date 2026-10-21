@@ -9,6 +9,7 @@ import { ServiceProvider } from '../../providers/service/service';
   templateUrl: 'church.html',
 })
 export class ChurchPage {
+  showSpinner: boolean = false;
   form: FormGroup
 
   districts: any;
@@ -36,12 +37,12 @@ export class ChurchPage {
       ministry_id: [''],
       churchtype: [''],
       password: ['', [Validators.required, Validators.minLength(6)]],
-     // retypepassword: ['', [Validators.required, Validators.minLength(6)]],
+     retypepassword: ['', [Validators.required, Validators.minLength(6)]],
       facebook: [''],
       youtube: [''],
       remarks: [''],
       village_name: ['', [Validators.required]],
-       // term: ['', [Validators.required]],
+       term: [true],],
     })
   }
 
@@ -94,13 +95,18 @@ export class ChurchPage {
     this.service.getbeliversdata().subscribe((res: any) => {
       if (res.status == 202) {
         alert(res.message);
-      } else if (res.status == 200) {
+      } else this.showSpinner = false;
+          if (res.status == 200) {
         this.ministryname = res.data;
       }
     })
   }
 
   postchurchregister() {
+    this.showSpinner = true;
+    if (!this.form.get('term') || !this.form.get('term').value) {
+      this.form.patchValue({ term: true });
+    }
     this.submitted = true;
     console.log(this.form.value);
     if (this.form.invalid) {
@@ -111,12 +117,17 @@ export class ChurchPage {
     } else {
       console.log(this.form.value);
       this.service.postchurchregister(this.form.value).subscribe((res: any) => {
-        if (res.status == 451) {
+        this.showSpinner = false;
+          if (res.status == 451) {
           alert('ఇదే ఫోన్ నెంబర్ తో ఇంతకుముందే రిజిస్టర్ అయ్యారు')
-        } else if (res.status == 200) {
+        } else this.showSpinner = false;
+          if (res.status == 200) {
           alert('Your Church is Submited Successfully,Please Submit your Church Service Timings')
           // this.router.navigate(['/profile'], { queryParams: { id: "1" } });
           this.form.reset();
+          this.mandals = [];
+          this.constituency = [];
+          this.panchayati = [];
           this.submitted = false;
         }
       })

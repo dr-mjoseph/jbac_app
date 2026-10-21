@@ -1,20 +1,25 @@
 <ion-menu [content]="content" type="overlay">
   <ion-header>
-    <ion-toolbar style="background-color: #00548F; color: white;">
-      <ion-title style="color: white; font-weight: bold; font-size: 17px; text-align: center;">
-        JBAC మెనూ (Menu)
+    <ion-toolbar color="primary" style="background-color: #00548F; color: white;">
+      <ion-title style="color: white; font-weight: bold; font-size: 16px;">
+        JBAC మెనూ
       </ion-title>
+      <ion-buttons end>
+        <button ion-button icon-only menuClose tappable style="color: white; font-size: 22px;">
+          <ion-icon name="close"></ion-icon>
+        </button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
-  <ion-content style="background-color: #f4f7fb;">
-    <div style="background: linear-gradient(135deg, #00548F, #19386d); padding: 18px 16px; color: white; text-align: left; margin-bottom: 8px;">
-      <h3 style="margin: 0; font-size: 18px; font-weight: bold; color: white;">Welcome to JBAC</h3>
-      <p style="margin: 4px 0 0; font-size: 12px; color: #dbeafe;">జీసస్ బిలీవర్స్ అసోసియేషన్, ఆంధ్ర ప్రదేశ్</p>
+  <ion-content style="background-color: #f1f5f9;">
+    <div style="background: linear-gradient(135deg, #00548F, #19386d); padding: 16px 14px; color: white; margin-bottom: 8px;">
+      <div style="font-size: 16px; font-weight: bold; color: white;">Welcome to JBAC</div>
+      <div style="font-size: 11px; color: #dbeafe; margin-top: 3px;">జీసస్ బిలీవర్స్ అసోసియేషన్, ఆంధ్ర ప్రదేశ్</div>
     </div>
 
-    <ion-list no-lines style="margin: 0; padding: 0 4px 24px 4px;">
-      <button ion-item *ngFor="let a of pages" (click)="openPage(a.page)" menuToggle class="jbac-menu-item">
+    <ion-list no-lines style="margin: 0; padding: 0 0 24px 0;">
+      <button ion-item *ngFor="let a of pages" (click)="openPage(a.page)" menuClose tappable class="jbac-menu-item">
         <ion-avatar item-start class="jbac-menu-avatar">
           <img [src]="a.image">
         </ion-avatar>

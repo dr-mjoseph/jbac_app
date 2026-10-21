@@ -16,6 +16,7 @@ import { ServiceProvider } from '../../providers/service/service';
   templateUrl: 'student.html',
 })
 export class StudentPage {
+  showSpinner: boolean = false;
 
   now: any;
   denomation: any = []
@@ -73,14 +74,14 @@ export class StudentPage {
       resconstituencyname: ['', [Validators.required]],
       resdistricts: ['', [Validators.required]],
       god: [''],
-      term: [''],
+      term: [true],
       mother: [''],
       orphon: [''],
       subcaste: [''],
       gender: ['']
     })
 
-    this.studentform.reset();
+    this.studentform.reset({ term: true });
 
     const datePipe = new DatePipe('en-Us');
     this.now = datePipe.transform(new Date(), 'yyyy-MM-dd');
@@ -188,7 +189,11 @@ export class StudentPage {
   }
 
   poststudentsignup() {
+    this.showSpinner = true;
     this.submitted = true;
+    if (!this.studentform.get('term') || !this.studentform.get('term').value) {
+      this.studentform.patchValue({ term: true });
+    }
     if (this.studentform.invalid) {
       const confirm = this.alertCtrl.create({
         mode: 'ios',
@@ -205,11 +210,18 @@ export class StudentPage {
       setTimeout(() => { confirm.dismiss(); }, 2000);
     } else {
       this.service.poststudentsignup(this.studentform.value).subscribe((res: any) => {
-        if (res.status == 451) {
+        this.showSpinner = false;
+          if (res.status == 451) {
           alert('ఇదే ఫోన్ నెంబర్ తో ఇంతకుముందే రిజిస్టర్ అయ్యారు')
-        } else if (res.status == 200) {
+        } else this.showSpinner = false;
+          if (res.status == 200) {
           alert('విజయవంతముగా సబ్మిట్ అయింది')
-          this.studentform.reset();
+          this.studentform.reset({
+            term: true
+          });
+          this.mandals = [];
+          this.constituency = [];
+          this.panchayati = [];
           this.submitted = false;
         } else {
           alert('server down')
@@ -225,7 +237,8 @@ export class StudentPage {
     this.service.getchurch().subscribe((res: any) => {
       if (res.status == 202) {
         alert(res.message);
-      } else if (res.status == 200) {
+      } else this.showSpinner = false;
+          if (res.status == 200) {
         this.church = res.data;
       }
     })

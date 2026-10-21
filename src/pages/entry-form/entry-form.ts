@@ -10,7 +10,8 @@ import { ServiceProvider } from '../../providers/service/service';
   templateUrl: 'entry-form.html',
 })
 export class EntryFormPage {
-  loading: any
+  loading: any;
+  isSubmitting: boolean = false;
 
   form: FormGroup
 
@@ -57,7 +58,7 @@ export class EntryFormPage {
   getmandals(event: any) {
     this.loading = this.loadingCtrl.create({
       spinner: 'ios',
-      content: 'ప్రాసెస్ అవుతుంది దయచేసి లాగండి'
+      content: 'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...'
     });
     this.loading.present();
     var id = event;
@@ -65,6 +66,7 @@ export class EntryFormPage {
       this.mandals = res.data.filter((data: any) => data.const_id == id);
       if (this.mandals.length) {
         this.loading.dismiss();
+      this.isSubmitting = false;
       }
     })
   }
@@ -72,7 +74,7 @@ export class EntryFormPage {
   getconstency(event: any) {
     this.loading = this.loadingCtrl.create({
       spinner: 'ios',
-      content: 'ప్రాసెస్ అవుతుంది దయచేసి ఆగండి'
+      content: 'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...'
     });
     this.loading.present();
     var id = event;
@@ -80,6 +82,7 @@ export class EntryFormPage {
       this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
       if (this.constituency.length) {
         this.loading.dismiss();
+      this.isSubmitting = false;
       }
     })
   }
@@ -87,7 +90,7 @@ export class EntryFormPage {
   gepanchayati(event: any) {
     this.loading = this.loadingCtrl.create({
       spinner: 'ios',
-      content: 'ప్రాసెస్ అవుతుంది దయచేసి ఆగండి'
+      content: 'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...'
     });
     this.loading.present();
     var id = event;
@@ -95,6 +98,7 @@ export class EntryFormPage {
       this.getvillages = res.data.filter((data: any) => data.mndl_id == id);
       if (this.getvillages.length) {
         this.loading.dismiss();
+      this.isSubmitting = false;
       }
     })
   }
@@ -108,6 +112,10 @@ export class EntryFormPage {
           buttons: ['Ok']
         });
         toast.present();
+          this.form.reset({ name: '', number: '', category: '', district_id: '', constituency_id: '', mandal_id: '', village_id: '', password: '' });
+          this.mandals = [];
+          this.constituency = [];
+          this.getvillages = [];
       }
     } else if (id == 2) {
       if (this.form.value.district_id == '') {
@@ -152,9 +160,10 @@ export class EntryFormPage {
   }
 
   async submit() {
+    this.isSubmitting = true;
     this.loading = this.loadingCtrl.create({
       spinner: 'ios',
-      content: 'ప్రాసెస్ అవుతుంది దయచేసి లాగండి'
+      content: 'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...'
     });
     this.loading.present();
     if (this.form.invalid) {
@@ -165,6 +174,7 @@ export class EntryFormPage {
       });
       await confirm.present();
       this.loading.dismiss();
+      this.isSubmitting = false;
     } else if (this.form.value.password.length < 4 || this.form.value.password.length > 16) {
       const confirm = await this.alertCtrl.create({
         mode: 'ios',
@@ -173,13 +183,15 @@ export class EntryFormPage {
       });
       await confirm.present();
       this.loading.dismiss();
+      this.isSubmitting = false;
     } else {
 
       
       this.service.postinfo(this.form.value).subscribe((res: any) => {
         if (res.status == 200) {
           const toast = this.alertCtrl.create({
-            message: 'యాప్ ఆక్టివేట్ అయినది, ఫోన్ నెంబర్ పాస్వర్డ్ తో లాగిన్ అవ్వండి',
+            title: 'రిజిస్ట్రేషన్ విజయవంతం! (Registration Successful)',
+            message: 'registered successfully, you can login with username and password with the same mobile number and if you want to change you can change while login or by clicking forgot password.\n\nనమోదు విజయవంతంగా పూర్తయింది. మీరు అదే మొబైల్ నంబరును యూజర్‌నేమ్ మరియు పాస్‌వర్డ్‌గా ఉపయోగించి లాగిన్ అవ్వవచ్చు. పాస్‌వర్డ్ మార్చుకోవాలనుకుంటే లాగిన్ సమయంలో లేదా Forgot Password ద్వారా మార్చుకోవచ్చు.',
             mode: 'ios',
             buttons: [
               {
@@ -192,6 +204,7 @@ export class EntryFormPage {
           });
           toast.present();
           this.loading.dismiss();
+      this.isSubmitting = false;
 
         } else if (res.status == 606) {
           const confirm = this.alertCtrl.create({
@@ -208,6 +221,7 @@ export class EntryFormPage {
           })
           confirm.present();
           this.loading.dismiss();
+      this.isSubmitting = false;
         } else {
           const toast = this.alertCtrl.create({
             message: 'Server Error',
@@ -216,6 +230,7 @@ export class EntryFormPage {
           });
           toast.present();
           this.loading.dismiss();
+      this.isSubmitting = false;
         }
       })
     }

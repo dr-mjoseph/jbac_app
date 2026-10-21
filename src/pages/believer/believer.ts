@@ -71,11 +71,11 @@ export class BelieverPage {
       youtube: [''], 
       lname: [''],
       god: [''],
-      term: ['', Validators.required], //
+      term: [true], //
       password: ['', Validators.required],
       retypepassword: ['', Validators.required],
     });
-    this.form.reset();
+    this.form.reset({ term: true });
   }
 
   gotohome() {
@@ -214,13 +214,18 @@ export class BelieverPage {
   }
 
   postbeliversignup() {
+    this.showSpinner = true;
     this.submitted = true;
+    if (!this.form.get('term') || !this.form.get('term').value) {
+      this.form.patchValue({ term: true });
+    }
     if (this.form.invalid) {
       const confirm = this.alertCtrl.create({
         mode: 'ios',
         title: 'దయచేసి ఖాళీ ఫీల్డ్‌లను పూరించండి.!'
       })
       confirm.present();
+      this.showSpinner = false;
       setTimeout(() => { confirm.dismiss(); }, 2000);
     } else  if (this.form.value.password != this.form.value.retypepassword) {
       alert("Passwords are Unmatched")
@@ -229,11 +234,18 @@ export class BelieverPage {
       console.log(this.form.value);
       
       this.service.postbeliver(this.form.value).subscribe((res: any) => {
-        if (res.status == 451) {
+        this.showSpinner = false;
+          if (res.status == 451) {
           alert('ఇదే ఫోన్ నెంబర్ తో ఇంతకుముందే రిజిస్టర్ అయ్యారు');
-        } else if (res.status == 200) {
+        } else this.showSpinner = false;
+          if (res.status == 200) {
           alert('విజయవంతముగా సబ్మిట్ అయింది');
-          this.form.reset();
+          this.form.reset({
+            term: true
+          });
+          this.mandals = [];
+          this.constituency = [];
+          this.panchayati = [];
           this.submitted = false;
         } else {
           alert('server down');

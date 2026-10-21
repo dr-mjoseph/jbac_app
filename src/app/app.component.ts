@@ -19,6 +19,7 @@ export class MyApp {
     this.initializeApp();
 
         this.pages = [
+      { 'title': 'ప్రొఫైల్‌ని సవరించండి', 'subtitle': 'Edit Profile & Details', 'image': 'assets/icon/svg/services.svg', 'page': 'ProfilePage' },
       { 'title': 'వివాహ & కుటుంబ కౌన్సిలింగ్', 'subtitle': 'Family & Marriage Counselling', 'image': 'assets/icon/svg/couple.svg', 'page': 'FamilyCouncellingPage' },
       { 'title': 'వివాహ సంబంధాలు', 'subtitle': 'Christian Marriage Alliances', 'image': 'assets/icon/svg/register.svg', 'page': 'MarriagePage' },
       { 'title': 'వివాహ సంబంధం నమోదు', 'subtitle': 'Register Marriage Profile', 'image': 'assets/icon/svg/register.svg', 'page': 'AddmarriagePage' },
@@ -53,6 +54,13 @@ export class MyApp {
   }
 
   openPage(page) {
+    if (page === 'ProfilePage') {
+      const uid = localStorage.getItem('usr_id');
+      if (!uid || uid === ' ' || uid === 'null' || uid === 'undefined') {
+        this.nav.push('LoginPage');
+        return;
+      }
+    }
     this.nav.push(page);
   }
 

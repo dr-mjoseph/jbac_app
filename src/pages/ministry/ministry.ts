@@ -16,12 +16,15 @@ import { ServiceProvider } from '../../providers/service/service';
   templateUrl: 'ministry.html',
 })
 export class MinistryPage {
+  showSpinner: boolean = false;
   ministryform: FormGroup
   districts: any;
   mandals: any;
   panchayati: any;
   constituency: any;
   denomation: any
+  get r() { return this.ministryform ? this.ministryform.controls : {}; }
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public service: ServiceProvider) {
     this.ministryform = this.formBuilder.group({
       firstname: ['', [Validators.required]],
@@ -36,10 +39,10 @@ export class MinistryPage {
       mandal_id: ['', [Validators.required]],
       panchayat_id: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-     // retypepassword: ['', [Validators.required, Validators.minLength(6)]],
+     retypepassword: ['', [Validators.required, Validators.minLength(6)]],
       pastor: [''],
       description: [''],
-       // term: ['', [Validators.required]],
+       term: [true],],
     });
     this.ministryform.reset();
   }
@@ -83,17 +86,24 @@ export class MinistryPage {
   }
 
   postministrysignup() {
+    this.showSpinner = true;
     if (this.ministryform.invalid) {
       alert('దయచేసి ఖాళీ ఫీల్డ్‌లను పూరించండి ');
     } else if (this.ministryform.value.password != this.ministryform.value.retypepassword) {
       alert("Passwords are Unmatched");
     } else {
       this.service.postministrysignup(this.ministryform.value).subscribe((res: any) => {
-        if (res.status == 451) {
+        this.showSpinner = false;
+          if (res.status == 451) {
           alert('ఇదే ఫోన్ నెంబర్ తో ఇంతకుముందే రిజిస్టర్ అయ్యారు');
-        } else if (res.status == 200) {
+        } else this.showSpinner = false;
+          if (res.status == 200) {
           alert('విజయవంతముగా సబ్మిట్ అయింది');
           this.ministryform.reset();
+          this.mandals = [];
+          this.constituency = [];
+          this.panchayati = [];
+          this.submitted = false;
         } else {
           alert('server down');
         }

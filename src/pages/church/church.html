@@ -243,8 +243,10 @@
     <ion-row>
       <ion-col col-12>
         <div style="text-align: center;">
-          <button ion-button color="secondary" (click)="postchurchregister()" style="letter-spacing: 1px;">నమోదు
-            చేయండి</button>
+          <button ion-button color="secondary" (click)="postchurchregister()" [disabled]="showSpinner" style="letter-spacing: 1px;">
+            <ion-spinner *ngIf="showSpinner" name="crescent" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"></ion-spinner>
+            {{ showSpinner ? 'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...' : 'నమోదు' }}
+          </button>
         </div>
       </ion-col>
     </ion-row>

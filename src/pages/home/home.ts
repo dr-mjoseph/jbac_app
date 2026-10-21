@@ -11,13 +11,14 @@ import { ServiceProvider } from '../../providers/service/service';
 })
 export class HomePage {
   banners = [
-    { id: '1', banner: 'https://jbac.in/baneers/Banner01.png' },
-   // { id: '2', banner: 'https://jbac.in/baneers/Banner02.png' },
-    { id: '3', banner: 'https://jbac.in/baneers/Banner03.png' },
-    { id: '4', banner: 'https://jbac.in/baneers/Banner04.png' },
-    { id: '5', banner: 'https://jbac.in/baneers/Banner05.png' },
-    { id: '6', banner: 'https://jbac.in/baneers/Banner06.png' },
-    { id: '7', banner: 'https://jbac.in/baneers/Banner07.png' },
+    { id: '1', banner: 'assets/images/Banner01.png' },
+    { id: '2', banner: 'assets/images/Banner02.png' },
+    { id: '3', banner: 'assets/images/Banner03.png' },
+    { id: '4', banner: 'assets/images/Banner04.png' },
+    { id: '5', banner: 'assets/images/Banner05.png' },
+    { id: '6', banner: 'assets/images/Banner06.png' },
+    { id: '7', banner: 'assets/images/Banner07.png' },
+    { id: '8', banner: 'assets/images/Banner08.png' }
   ]
   main: any = 0
   count: any

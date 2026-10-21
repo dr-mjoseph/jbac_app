@@ -4,25 +4,25 @@
       <b>వివాహ & కుటుంబ కౌన్సిలింగ్ (Counselling)</b>
     </ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="gotohome()">
+      <button ion-button tappable icon-only (click)="gotohome()">
         <ion-icon name="home"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
 
   <ion-toolbar no-border-top>
-    <ion-segment [(ngModel)]="viewMode" color="primary">
-      <ion-segment-button value="browse">
+    <ion-segment [(ngModel)]="viewMode" (ionChange)="onTabChange(viewMode)" color="primary">
+      <ion-segment-button tappable value="browse" (click)="switchTab('browse')">
         కౌన్సిలర్లు
       </ion-segment-button>
-      <ion-segment-button value="my_bookings">
+      <ion-segment-button tappable value="my_bookings" *ngIf="isLoggedIn && !isDoctor" (click)="switchTab('my_bookings')">
         నా బుకింగ్స్
       </ion-segment-button>
-      <ion-segment-button value="doctor_profile" *ngIf="isDoctor || isAdmin">
-        ప్రొఫైల్
-      </ion-segment-button>
-      <ion-segment-button value="doctor_schedule" *ngIf="isDoctor || isAdmin">
+      <ion-segment-button tappable value="doctor_schedule" *ngIf="isLoggedIn && (isDoctor || isAdmin)" (click)="switchTab('doctor_schedule')">
         షెడ్యూల్
+      </ion-segment-button>
+      <ion-segment-button tappable value="doctor_profile" *ngIf="isLoggedIn && (isDoctor || isAdmin)" (click)="switchTab('doctor_profile')">
+        ప్రొఫైల్ అప్డేట్
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -41,14 +41,14 @@
           క్రిస్టియన్ ఫ్యామిలీ వెల్నెస్ నెట్‌వర్క్‌లో చేరండి
         </div>
       </div>
-      <button ion-button small color="secondary" style="border-radius: 8px; font-weight: bold; margin: 0;" (click)="gotoDoctorRegister()">
+      <button ion-button tappable small color="secondary" style="border-radius: 8px; font-weight: bold; margin: 0;" (click)="gotoDoctorRegister()">
         రిజిస్టర్ అవ్వండి
       </button>
     </div>
   </div>
 
   <!-- TOP BANNER FOR DOCTORS & ADMINS -->
-  <div *ngIf="(isDoctor || isAdmin) && viewMode !== 'book_now'" class="doctor-workspace-mobile-banner" style="background: linear-gradient(135deg, #00548F, #00365c); color: white; margin: 10px; padding: 12px 14px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,84,143,0.25);">
+  <div *ngIf="isLoggedIn && (isDoctor || isAdmin) && viewMode !== 'book_now'" class="doctor-workspace-mobile-banner" style="background: linear-gradient(135deg, #00548F, #00365c); color: white; margin: 10px; padding: 12px 14px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,84,143,0.25);">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
       <span style="font-size: 13px; font-weight: bold; color: #ffeb3b;">
         🩺 డాక్టర్ వర్క్‌స్పేస్ (Doctor Portal)
@@ -58,10 +58,10 @@
       </span>
     </div>
     <div style="display: flex; gap: 8px; margin-top: 8px;">
-      <button ion-button small style="background-color: #10b981; font-weight: bold; margin: 0; flex: 1; border-radius: 6px;" (click)="viewMode = 'doctor_schedule'">
+      <button ion-button tappable small style="background-color: #10b981; font-weight: bold; margin: 0; flex: 1; border-radius: 6px;" (click)="viewMode = 'doctor_schedule'">
         అపాయింట్‌మెంట్లు ({{ appointments.length }})
       </button>
-      <button ion-button small outline style="border-color: white; color: white; font-weight: bold; margin: 0; flex: 1; border-radius: 6px;" (click)="viewMode = 'doctor_profile'">
+      <button ion-button tappable small outline style="border-color: white; color: white; font-weight: bold; margin: 0; flex: 1; border-radius: 6px;" (click)="viewMode = 'doctor_profile'">
         ప్రొఫైల్ ఎడిట్
       </button>
     </div>
@@ -98,7 +98,7 @@
       </p>
 
       <div style="margin-top: 10px;">
-        <button ion-button block color="primary" style="border-radius: 8px; font-weight: bold; margin: 0;" (click)="openBookingForm(doc)">
+        <button ion-button tappable block color="primary" style="border-radius: 8px; font-weight: bold; margin: 0;" (click)="openBookingForm(doc)">
           <ion-icon name="calendar" style="margin-right: 6px;"></ion-icon> అపాయింట్‌మెంట్ బుక్ చేసుకోండి
         </button>
       </div>
@@ -174,13 +174,13 @@
 
       <!-- Language Selector -->
       <div style="display: flex; gap: 6px; margin-bottom: 12px;">
-        <button ion-button small [outline]="selectedLang !== 'te-IN'" color="danger" style="flex: 1; border-radius: 6px; font-size: 11px; margin: 0;" (click)="setLanguage('te-IN')">
+        <button ion-button tappable small [outline]="selectedLang !== 'te-IN'" color="danger" style="flex: 1; border-radius: 6px; font-size: 11px; margin: 0;" (click)="setLanguage('te-IN')">
           తెలుగు
         </button>
-        <button ion-button small [outline]="selectedLang !== 'en-IN'" color="danger" style="flex: 1; border-radius: 6px; font-size: 11px; margin: 0;" (click)="setLanguage('en-IN')">
+        <button ion-button tappable small [outline]="selectedLang !== 'en-IN'" color="danger" style="flex: 1; border-radius: 6px; font-size: 11px; margin: 0;" (click)="setLanguage('en-IN')">
           English
         </button>
-        <button ion-button small [outline]="selectedLang !== 'hi-IN'" color="danger" style="flex: 1; border-radius: 6px; font-size: 11px; margin: 0;" (click)="setLanguage('hi-IN')">
+        <button ion-button tappable small [outline]="selectedLang !== 'hi-IN'" color="danger" style="flex: 1; border-radius: 6px; font-size: 11px; margin: 0;" (click)="setLanguage('hi-IN')">
           हिंदी
         </button>
       </div>
@@ -198,7 +198,7 @@
       <!-- Audio Playback -->
       <div *ngIf="recordedAudioUrl" style="margin-top: 10px; text-align: center;">
         <audio [src]="recordedAudioUrl" controls style="width: 100%; height: 38px; margin-bottom: 6px;"></audio>
-        <button ion-button clear small color="danger" (click)="clearUserVoiceRecording()" style="margin: 0; font-size: 11px;">
+        <button ion-button tappable clear small color="danger" (click)="clearUserVoiceRecording()" style="margin: 0; font-size: 11px;">
           <ion-icon name="trash" style="margin-right: 4px;"></ion-icon> మళ్లీ రికార్డ్ చేయండి
         </button>
       </div>
@@ -217,12 +217,12 @@
     <!-- Actions -->
     <ion-row>
       <ion-col col-6>
-        <button ion-button block outline color="dark" (click)="cancelBooking()">
+        <button ion-button tappable block outline color="dark" (click)="cancelBooking()">
           రద్దు (Cancel)
         </button>
       </ion-col>
       <ion-col col-6>
-        <button ion-button block color="primary" (click)="submitAppointment()">
+        <button ion-button tappable block color="primary" (click)="submitAppointment()">
           బుక్ చేయండి
         </button>
       </ion-col>
@@ -232,7 +232,7 @@
   <!-- ==============================================
        TAB 2: MY BOOKINGS (PATIENT VIEW)
        ============================================== -->
-  <div *ngIf="viewMode === 'my_bookings'">
+  <div *ngIf="viewMode === 'my_bookings' && isLoggedIn">
     <div style="padding: 10px 14px 4px 14px;">
       <h4 style="font-size: 15px; font-weight: bold; color: #1e293b; margin: 0;">
         నా అపాయింట్‌మెంట్లు (My Appointments)
@@ -285,7 +285,7 @@
     <div *ngIf="appointments.length === 0" style="text-align: center; padding: 40px 20px; color: #6b7280;">
       <ion-icon name="calendar" style="font-size: 48px; color: #cbd5e1;"></ion-icon>
       <p>మీకు ఇంకా ఏ విధమైన అపాయింట్‌మెంట్లు బుక్ కాలేదు.</p>
-      <button ion-button outline small color="primary" (click)="viewMode = 'browse'">
+      <button ion-button tappable outline small color="primary" (click)="viewMode = 'browse'">
         కౌన్సిలర్లను చూడండి
       </button>
     </div>
@@ -294,7 +294,7 @@
   <!-- ==============================================
        TAB 3: DOCTOR / ADMIN PROFILE SETUP
        ============================================== -->
-  <div *ngIf="viewMode === 'doctor_profile' && (isDoctor || isAdmin)" style="padding: 10px;">
+  <div *ngIf="viewMode === 'doctor_profile' && isLoggedIn && (isDoctor || isAdmin)" style="padding: 10px;">
     <div style="background: white; border-radius: 12px; padding: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
       <h4 style="margin: 0 0 10px 0; font-size: 15px; font-weight: bold; color: #00548F;">
         🩺 డాక్టర్ ప్రొఫైల్ వివరాలు (Doctor Profile)
@@ -342,7 +342,7 @@
         </ion-item>
       </ion-list>
 
-      <button ion-button block color="primary" (click)="saveDoctorProfile()" style="border-radius: 8px; font-weight: bold; margin-top: 14px;">
+      <button ion-button tappable block color="primary" (click)="saveDoctorProfile()" style="border-radius: 8px; font-weight: bold; margin-top: 14px;">
         ప్రొఫైల్ సేవ్ చేయండి
       </button>
     </div>
@@ -351,7 +351,7 @@
   <!-- ==============================================
        TAB 4: DOCTOR APPOINTMENTS SCHEDULE & VOICE REPLY
        ============================================== -->
-  <div *ngIf="viewMode === 'doctor_schedule' && (isDoctor || isAdmin)">
+  <div *ngIf="viewMode === 'doctor_schedule' && isLoggedIn && (isDoctor || isAdmin)">
     <div style="padding: 10px 14px 4px 14px;">
       <h4 style="font-size: 15px; font-weight: bold; color: #1e293b; margin: 0;">
         డాక్టర్ షెడ్యూల్ & పేషెంట్స్ (Schedule & Voice Consultations)
@@ -364,20 +364,20 @@
         <span style="font-size: 14px; font-weight: bold; color: #1d4ed8;">
           🎙️ వాయిస్ సలహా రికార్డింగ్ (Advice to {{ activeApptForReply.patient_name || activeApptForReply.family_name }})
         </span>
-        <button ion-button icon-only clear small (click)="closeDoctorVoiceReply()" style="color: #64748b;">
+        <button ion-button tappable icon-only clear small (click)="closeDoctorVoiceReply()" style="color: #64748b;">
           <ion-icon name="close"></ion-icon>
         </button>
       </div>
 
       <!-- Language selector for doctor -->
       <div style="display: flex; gap: 6px; margin-bottom: 12px;">
-        <button ion-button small [outline]="selectedDoctorLang !== 'te-IN'" color="primary" style="flex: 1; border-radius: 6px; font-size: 11px; margin: 0;" (click)="setDoctorLanguage('te-IN')">
+        <button ion-button tappable small [outline]="selectedDoctorLang !== 'te-IN'" color="primary" style="flex: 1; border-radius: 6px; font-size: 11px; margin: 0;" (click)="setDoctorLanguage('te-IN')">
           తెలుగు
         </button>
-        <button ion-button small [outline]="selectedDoctorLang !== 'en-IN'" color="primary" style="flex: 1; border-radius: 6px; font-size: 11px; margin: 0;" (click)="setDoctorLanguage('en-IN')">
+        <button ion-button tappable small [outline]="selectedDoctorLang !== 'en-IN'" color="primary" style="flex: 1; border-radius: 6px; font-size: 11px; margin: 0;" (click)="setDoctorLanguage('en-IN')">
           English
         </button>
-        <button ion-button small [outline]="selectedDoctorLang !== 'hi-IN'" color="primary" style="flex: 1; border-radius: 6px; font-size: 11px; margin: 0;" (click)="setDoctorLanguage('hi-IN')">
+        <button ion-button tappable small [outline]="selectedDoctorLang !== 'hi-IN'" color="primary" style="flex: 1; border-radius: 6px; font-size: 11px; margin: 0;" (click)="setDoctorLanguage('hi-IN')">
           हिंदी
         </button>
       </div>
@@ -395,7 +395,7 @@
       <!-- Doctor audio preview -->
       <div *ngIf="doctorRecordedAudioUrl" style="margin-top: 8px; text-align: center;">
         <audio [src]="doctorRecordedAudioUrl" controls style="width: 100%; height: 36px; margin-bottom: 6px;"></audio>
-        <button ion-button clear small color="danger" (click)="clearDoctorVoiceRecording()" style="margin: 0; font-size: 11px;">
+        <button ion-button tappable clear small color="danger" (click)="clearDoctorVoiceRecording()" style="margin: 0; font-size: 11px;">
           <ion-icon name="trash" style="margin-right: 4px;"></ion-icon> మళ్లీ రికార్డ్ చేయండి
         </button>
       </div>
@@ -412,7 +412,7 @@
 
       <!-- Submit button -->
       <div style="margin-top: 10px;">
-        <button ion-button block color="secondary" style="border-radius: 8px; font-weight: bold; margin: 0;" (click)="sendDoctorVoiceReply()">
+        <button ion-button tappable block color="secondary" style="border-radius: 8px; font-weight: bold; margin: 0;" (click)="sendDoctorVoiceReply()">
           <ion-icon name="send" style="margin-right: 6px;"></ion-icon> పేషెంట్‌కి వాయిస్ సలహా పంపండి
         </button>
       </div>
@@ -464,10 +464,10 @@
 
       <!-- Action buttons -->
       <div style="display: flex; gap: 8px; margin-top: 10px;">
-        <button ion-button small color="primary" style="flex: 1; border-radius: 6px; font-weight: bold; margin: 0;" (click)="openDoctorVoiceReply(appt)">
+        <button ion-button tappable small color="primary" style="flex: 1; border-radius: 6px; font-weight: bold; margin: 0;" (click)="openDoctorVoiceReply(appt)">
           <ion-icon name="mic" style="margin-right: 4px;"></ion-icon> వాయిస్ సలహా ఇవ్వండి
         </button>
-        <button ion-button small outline color="secondary" style="border-radius: 6px; font-weight: bold; margin: 0;" (click)="updateStatus(appt, 'Completed')">
+        <button ion-button tappable small outline color="secondary" style="border-radius: 6px; font-weight: bold; margin: 0;" (click)="updateStatus(appt, 'Completed')">
           పూర్తయింది
         </button>
       </div>

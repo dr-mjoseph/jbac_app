@@ -50,7 +50,7 @@
   
   
   
-  <div style="margin: 8px 12px; padding: 12px 14px; background: linear-gradient(135deg, #00548F, #1f376e); border-radius: 12px; color: white; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 10px rgba(0,84,143,0.25); cursor: pointer;" (click)="gotopage(19)">
+  <div tappable style="margin: 8px 12px; padding: 12px 14px; background: linear-gradient(135deg, #00548F, #1f376e); border-radius: 12px; color: white; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 10px rgba(0,84,143,0.25); cursor: pointer;" (click)="gotopage(19)">
     <div style="display: flex; align-items: center;">
       <div style="background: rgba(255,255,255,0.2); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 22px;">
         💍
@@ -71,12 +71,12 @@
 
   <ion-row style="text-align: center;">
 
-    <ion-col col-3 class="made" (click)="gotopage(19)">
+    <ion-col col-3 class="made" tappable (click)="gotopage(19)">
       <img style="padding:3%;width:100%" src="assets/icon/svg/couple.svg" onerror="this.onerror=null;this.src='assets/icon/svg/helping-hand.svg';">
       <b>వివాహ & కుటుంబ<br>కౌన్సిలింగ్</b>
     </ion-col>
 
-    <ion-col col-3 class="made" (click)="gotopage(20)">
+    <ion-col col-3 class="made" tappable (click)="gotopage(20)">
       <img style="padding:3%;width:100%" src="assets/icon/svg/register.svg" onerror="this.onerror=null;this.src='assets/icon/svg/services.svg';">
       <b>వివాహ<br>సంబంధాలు</b>
     </ion-col>

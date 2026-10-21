@@ -37,3 +37,6 @@ release-signing.properties
 build_temp/
 *.idsig
 
+# Versioned release artifacts (keep canonical app-release.aab and appreleasesigned.aab tracked)
+jbacApp-*.apk
+jbacApp-*.aab

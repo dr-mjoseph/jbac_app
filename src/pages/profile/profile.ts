@@ -536,14 +536,20 @@ export class ProfilePage {
 
   geteditdtails() {
     var data = {
-      category_id: this.categoryid,
-      usr_id: localStorage.getItem('usr_id')
+      category_id: this.categoryid || localStorage.getItem('category_id'),
+      usr_id: localStorage.getItem('usr_id'),
+      mobile_number: localStorage.getItem('mobile_number')
     }
     this.service.geteditdtails(data).subscribe((res: any) => {
+      if (!res || !res.data || res.data.length === 0) return;
+      this.details = res.data[0];
+      if (this.details.category_id) {
+        this.categoryid = String(this.details.category_id);
+      }
       this.details = res.data[0];
       this.pastorform.patchValue({
-        pastorname: this.details.pastorname,
-        phonenumber: this.details.phonenumber,
+        pastorname: this.details.pastorname || this.details.name,
+        phonenumber: this.details.phonenumber || this.details.mobile_number,
         dob: this.details.dob,
         gender: this.details.gender,
         designation: this.details.designation,
@@ -575,11 +581,11 @@ export class ProfilePage {
       })
 
       this.churchregsiterform.patchValue({
-        church_name: this.details.church_name,
+        church_name: this.details.church_name || this.details.name,
         denomination_id: this.details.denomination_id,
         pastor_id: this.details.pastor_id,
         total_members: this.details.total_members,
-        contactnumber: this.details.contactnumber,
+        contactnumber: this.details.contactnumber || this.details.mobile_number,
         description: this.details.description,
         district_id: this.details.district_id,
         constituency_id: this.details.constituency_id,
@@ -596,8 +602,8 @@ export class ProfilePage {
       })
 
       this.updateprofileministry.patchValue({
-        ministryname: this.details.ministryname,
-        headnmber: this.details.headnmber,
+        ministryname: this.details.ministryname || this.details.headname || this.details.name,
+        headnmber: this.details.headnmber || this.details.mobile_number,
         denomation: this.details.denomation,
         ministryemail: this.details.ministryemail,
         ministrywebsite: this.details.ministrywebsite,
@@ -614,7 +620,7 @@ export class ProfilePage {
       })
 
       this.beliverform.patchValue({
-        fname: this.details.fname,
+        fname: this.details.fname || this.details.name,
         whatsapp: this.details.whatsapp,
         dob: this.details.dob,
         gender: this.details.gender,
@@ -655,7 +661,7 @@ export class ProfilePage {
       })
 
       this.studentform.patchValue({
-        studentname: this.details.studentname,
+        studentname: this.details.studentname || this.details.name,
         gender: this.details.gender,
         number: this.details.number,
         study: this.details.study,
@@ -699,14 +705,14 @@ export class ProfilePage {
       })
 
       this.independentorgainsationform.patchValue({
-        organisation_name: this.details.organisation_name,
+        organisation_name: this.details.organisation_name || this.details.name,
         checkbox: this.details.organizationtype,
         believer_id: this.details.believer_id,
         pastor_id: this.details.pastor_id,
         denomation: this.details.denomation,
         org_address: this.details.org_address,
         location: this.details.location,
-        contact_num: this.details.contact_num,
+        contact_num: this.details.contact_num || this.details.mobile_number,
         email: this.details.email,
         website: this.details.website,
         service_name: this.details.service_name,
@@ -723,10 +729,10 @@ export class ProfilePage {
       })
 
       this.pastorsassociations.patchValue({
-        pa_name: this.details.paname,
+        pa_name: this.details.paname || this.details.pa_name || this.details.name,
         pastor_id: this.details.headname,
         level: this.details.level,
-        phonenumber: this.details.phonenumber,
+        phonenumber: this.details.phonenumber || this.details.mobile_number,
         whatsapp_number: this.details.whatsapp_number,
         totalleadrs: this.details.totalleadrs,
         address: this.details.address,
@@ -739,13 +745,21 @@ export class ProfilePage {
         description: this.details.description,
       })
 
+            // Pre-populate cascading location dropdowns
+      const distId = this.details.district_id || this.details.districts || this.details.districtname;
+      const constId = this.details.constituency_id || this.details.constituencyname;
+      const mandalId = this.details.mandal_id || this.details.mandals;
+      if (distId) this.getconstency(distId);
+      if (constId) this.getmandals(constId);
+      if (mandalId) this.gepanchayati(mandalId);
+
       this.ministryform.patchValue({
-        ministryname: this.details.ministryname,
+        ministryname: this.details.ministryname || this.details.headname || this.details.name,
         denomation_id: this.details.denomation_id,
         headname: this.details.headname,
         ministryemail: this.details.ministryemail,
         ministrywebsite: this.details.ministrywebsite,
-        headnmber: this.details.headnmber,
+        headnmber: this.details.headnmber || this.details.mobile_number,
         number_ofchurches: this.details.number_ofchurches,
         number_ofmembers: this.details.number_ofmembers,
         district_id: this.details.district_id,

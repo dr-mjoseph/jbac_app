@@ -506,14 +506,25 @@ var ProfilePage = /** @class */ (function () {
     ProfilePage.prototype.geteditdtails = function () {
         var _this = this;
         var data = {
-            category_id: this.categoryid,
-            usr_id: localStorage.getItem('usr_id')
+            category_id: this.categoryid || localStorage.getItem('category_id'),
+            usr_id: localStorage.getItem('usr_id'),
+            mobile_number: localStorage.getItem('mobile_number')
         };
         this.service.geteditdtails(data).subscribe(function (res) {
+            if (!res || !res.data || res.data.length === 0) return;
             _this.details = res.data[0];
+            if (_this.details.category_id) {
+                _this.categoryid = String(_this.details.category_id);
+            }
+            var distId = _this.details.district_id || _this.details.districts || _this.details.districtname;
+            var constId = _this.details.constituency_id || _this.details.constituencyname;
+            var mandalId = _this.details.mandal_id || _this.details.mandals;
+            if (distId) _this.getconstency(distId);
+            if (constId) _this.getmandals(constId);
+            if (mandalId) _this.gepanchayati(mandalId);
             _this.pastorform.patchValue({
-                pastorname: _this.details.pastorname,
-                phonenumber: _this.details.phonenumber,
+                pastorname: _this.details.pastorname || _this.details.name,
+                phonenumber: _this.details.phonenumber || _this.details.mobile_number,
                 dob: _this.details.dob,
                 gender: _this.details.gender,
                 designation: _this.details.designation,
@@ -544,11 +555,11 @@ var ProfilePage = /** @class */ (function () {
                 phonenumber2: _this.details.phonenumber2
             });
             _this.churchregsiterform.patchValue({
-                church_name: _this.details.church_name,
+                church_name: _this.details.church_name || _this.details.name,
                 denomination_id: _this.details.denomination_id,
                 pastor_id: _this.details.pastor_id,
                 total_members: _this.details.total_members,
-                contactnumber: _this.details.contactnumber,
+                contactnumber: _this.details.contactnumber || _this.details.mobile_number,
                 description: _this.details.description,
                 district_id: _this.details.district_id,
                 constituency_id: _this.details.constituency_id,
@@ -564,8 +575,8 @@ var ProfilePage = /** @class */ (function () {
                 facebook: _this.details.facebook
             });
             _this.updateprofileministry.patchValue({
-                ministryname: _this.details.ministryname,
-                headnmber: _this.details.headnmber,
+                ministryname: _this.details.ministryname || _this.details.headname || _this.details.name,
+                headnmber: _this.details.headnmber || _this.details.mobile_number,
                 denomation: _this.details.denomation,
                 ministryemail: _this.details.ministryemail,
                 ministrywebsite: _this.details.ministrywebsite,
@@ -581,7 +592,7 @@ var ProfilePage = /** @class */ (function () {
                 term: _this.details.term
             });
             _this.beliverform.patchValue({
-                fname: _this.details.fname,
+                fname: _this.details.fname || _this.details.name,
                 whatsapp: _this.details.whatsapp,
                 dob: _this.details.dob,
                 gender: _this.details.gender,
@@ -621,7 +632,7 @@ var ProfilePage = /** @class */ (function () {
                 god: _this.details.god,
             });
             _this.studentform.patchValue({
-                studentname: _this.details.studentname,
+                studentname: _this.details.studentname || _this.details.name,
                 gender: _this.details.gender,
                 number: _this.details.number,
                 study: _this.details.study,
@@ -664,14 +675,14 @@ var ProfilePage = /** @class */ (function () {
                 subcaste: _this.details.subcaste,
             });
             _this.independentorgainsationform.patchValue({
-                organisation_name: _this.details.organisation_name,
+                organisation_name: _this.details.organisation_name || _this.details.name,
                 checkbox: _this.details.organizationtype,
                 believer_id: _this.details.believer_id,
                 pastor_id: _this.details.pastor_id,
                 denomation: _this.details.denomation,
                 org_address: _this.details.org_address,
                 location: _this.details.location,
-                contact_num: _this.details.contact_num,
+                contact_num: _this.details.contact_num || _this.details.mobile_number,
                 email: _this.details.email,
                 website: _this.details.website,
                 service_name: _this.details.service_name,
@@ -687,10 +698,10 @@ var ProfilePage = /** @class */ (function () {
                 term: _this.details.term,
             });
             _this.pastorsassociations.patchValue({
-                pa_name: _this.details.paname,
+                pa_name: _this.details.paname || _this.details.pa_name || _this.details.name,
                 pastor_id: _this.details.headname,
                 level: _this.details.level,
-                phonenumber: _this.details.phonenumber,
+                phonenumber: _this.details.phonenumber || _this.details.mobile_number,
                 whatsapp_number: _this.details.whatsapp_number,
                 totalleadrs: _this.details.totalleadrs,
                 address: _this.details.address,
@@ -703,12 +714,12 @@ var ProfilePage = /** @class */ (function () {
                 description: _this.details.description,
             });
             _this.ministryform.patchValue({
-                ministryname: _this.details.ministryname,
+                ministryname: _this.details.ministryname || _this.details.headname || _this.details.name,
                 denomation_id: _this.details.denomation_id,
                 headname: _this.details.headname,
                 ministryemail: _this.details.ministryemail,
                 ministrywebsite: _this.details.ministrywebsite,
-                headnmber: _this.details.headnmber,
+                headnmber: _this.details.headnmber || _this.details.mobile_number,
                 number_ofchurches: _this.details.number_ofchurches,
                 number_ofmembers: _this.details.number_ofmembers,
                 district_id: _this.details.district_id,

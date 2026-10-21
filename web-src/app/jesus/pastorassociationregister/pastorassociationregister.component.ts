@@ -5,7 +5,7 @@ import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-;
+import { FALLBACK_DROPDOWN_DATA } from '../dropdown_fallback_data';
 
 @Component({
   selector: 'app-pastorassociationregister',
@@ -27,7 +27,7 @@ export class PastorassociationregisterComponent {
   pattern: any;
   districts: any;
   mandals: any;
-  panchayati: any;
+  panchayati: any = (FALLBACK_DROPDOWN_DATA as any).panchayatis || [];
   bliversdata: any;
   studentform: FormGroup;
   pastorform: FormGroup;
@@ -84,7 +84,7 @@ export class PastorassociationregisterComponent {
       youtube: [''],
       lname: [''],
       god: [''],
-      term: [true, [Validators.required]],
+      term: [true],
       password: ['', [Validators.required, Validators.minLength(6)]],
       retypepassword: ['', [Validators.required, Validators.minLength(6)]],
     })
@@ -127,7 +127,7 @@ export class PastorassociationregisterComponent {
       resconstituencyname: ['', [Validators.required]],
       resdistricts: ['', [Validators.required]],
       god: [''],
-      term: [true, [Validators.required]],
+      term: [true],
       mother: [''],
       orphon: [''],
       subcaste: [''],
@@ -154,7 +154,7 @@ export class PastorassociationregisterComponent {
       // dob: ['', [Validators.required]],
       pastor: [''],
       description: [''],
-      term: [true, [Validators.required]],
+      term: [true],
 
     })
 
@@ -186,7 +186,7 @@ export class PastorassociationregisterComponent {
       wingtype: ['',],
       facebook: [''],
       god: [''],
-      term: [true, [Validators.required]],
+      term: [true],
       lifegoal: [''],
       denomination_id: ['', [Validators.required]],
       villagename: ['', [Validators.required]],
@@ -218,7 +218,7 @@ export class PastorassociationregisterComponent {
       youtube: [''],
       remarks: [''],
       village_name: ['', [Validators.required]],
-      term: [true, [Validators.required]],
+      term: [true],
 
     })
 
@@ -245,7 +245,7 @@ export class PastorassociationregisterComponent {
       panchayati: ['', [Validators.required]],
       villagename: ['', [Validators.required]],
       ward: ['', [Validators.required]],
-      term: [true, [Validators.required]]
+      term: [true]
     })
 
     this.independentchurchform = this.formBuilder.group({
@@ -499,54 +499,35 @@ export class PastorassociationregisterComponent {
       );
     }
   gepanchayati(event: any) {
-      const id = event.target.value?.trim(); // Ensure valid ID
-    
-      if (!id) {
-        Swal.fire({
-          icon: 'warning',
-          title: 'గమనిక!',
-          text: 'దయచేసి సరైన మండలాన్ని ఎంచుకోండి.',
-        });
-        return;
-      }
-    
-      this.showSpinner = true; // Show loading spinner
-    
-      this.service.gepanchayatis(id).subscribe(
-        (res: any) => {
-          if (res && res.data && res.data.length > 0) {
-            this.panchayati = res.data.filter((data: any) => !id || data.mndl_id == id);
-    
-            if (this.panchayati.length === 0) {
-              Swal.fire({
-                icon: 'info',
-                title: 'సమాచారం',
-                text: 'ఎంచుకున్న మండలానికి పంచాయితీలు / వార్డులు లభ్యం కావడంలేదు.',
-              });
-            }
-          } else {
-            Swal.fire({
-              icon: 'warning',
-              title: 'గమనిక!',
-              text: 'పంచాయితీ / వార్డు వివరాలు అందుబాటులో లేవు.',
-            });
-          }
-    
-          this.showSpinner = false; // Hide loading spinner
-          console.log('Panchayati Data:', this.panchayati);
-        },
-        (error) => {
-          console.error('Error fetching panchayati:', error);
-          Swal.fire({
-            icon: 'error',
-            title: 'లోపం!',
-            text: 'పంచాయితీ / వార్డ్ నంబర్ పొందడంలో సమస్య, దయచేసి మరల ప్రయత్నించండి.',
-          });
-    
-          this.showSpinner = false; // Hide spinner in case of error
+    const id = event?.target?.value !== undefined ? event.target.value?.trim() : event;
+    if (!id) return;
+    this.showSpinner = true;
+    this.service.gepanchayatis(id).subscribe({
+      next: (res: any) => {
+        this.showSpinner = false;
+        if (res && res.data && Array.isArray(res.data) && res.data.length > 0) {
+          this.panchayati = res.data;
+        } else {
+          this.panchayati = (FALLBACK_DROPDOWN_DATA as any).panchayatis || [];
         }
-      );
+      },
+      error: () => {
+        this.showSpinner = false;
+        this.panchayati = (FALLBACK_DROPDOWN_DATA as any).panchayatis || [];
+      }
+    });
+  }
+
+  onPanchayatClick() {
+    if (!this.panchayati || this.panchayati.length === 0) {
+      const mandalVal = this.pastorsassociations?.get('mandal_id')?.value;
+      if (mandalVal) {
+        this.gepanchayati(mandalVal);
+      } else {
+        this.panchayati = (FALLBACK_DROPDOWN_DATA as any).panchayatis || [];
+      }
     }
+  }
   getpastorsdatas: any;
 
   getpastorsdata() {
@@ -774,8 +755,11 @@ export class PastorassociationregisterComponent {
         if (res.status == 451) {
           Swal.fire('ఇదే ఫోన్ నెంబర్ తో ఇంతకుముందే రిజిస్టర్ అయ్యారు')
         } else if (res.status == 200) {
-          Swal.fire('Your Church is Submited Successfully,Please Submit your Church Service Timings')
-          this.router.navigate(['/profile'], { queryParams: { id: "1" } });
+          Swal.fire({
+            icon: 'success',
+            title: 'విజయం!',
+            text: 'చర్చి వివరాలు విజయవంతముగా నమోదు చేయబడ్డాయి. మీరు మీ ఫోన్ నెంబర్ మరియు పాస్‌వర్డ్‌తో లాగిన్ అవ్వవచ్చు.'
+          });
           this.churchregsiterform.reset();
           this.submitted = false;
         }
@@ -787,29 +771,118 @@ export class PastorassociationregisterComponent {
   }
   postpastorassociations() {
     this.submitted = true;
-    
-    this.showSpinner = true;
+
+    // Validate password if user entered one
+    const pass = this.pastorsassociations.value.password ? String(this.pastorsassociations.value.password).trim() : '';
+    const repass = this.pastorsassociations.value.retypepassword ? String(this.pastorsassociations.value.retypepassword).trim() : '';
+
+    if (pass && pass.length < 6) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'గమనిక',
+        text: 'పాస్‌వర్డ్ కనీసం 6 అక్షరాలు / అంకెలు ఉండాలి'
+      });
+      return;
+    }
+
+    if (pass && repass && pass !== repass) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'గమనిక',
+        text: 'పాస్‌వర్డ్ మరియు Retype-Password సరిపోలడం లేదు'
+      });
+      return;
+    }
+
+    // Password validation check
+    if (!pass) {
+      // password is required
+    }
+
+    if (!this.pastorsassociations.get('term')?.value) {
+      this.pastorsassociations.patchValue({ term: true });
+    }
 
     if (this.pastorsassociations.invalid) {
-      Swal.fire(' * మార్క్ చేసిన వివరాలను తప్పనిసరిగా పూరించాలి  ');
-    
-      this.showSpinner = false; // Stop spinner on validation failure
+      const invalidFields: string[] = [];
+      const controls = this.pastorsassociations.controls;
+      if (controls['pa_name']?.invalid) invalidFields.push('పాస్టర్ అస్సోసియేషన్ పేరు');
+      if (controls['totalleadrs']?.invalid) invalidFields.push('పాస్టర్స్ సంఖ్య');
+      if (controls['headname']?.invalid) invalidFields.push('మీ పేరు');
+      if (controls['phonenumber']?.invalid) invalidFields.push('ఫోన్ నంబర్ (10 అంకెలు)');
+      if (controls['district_id']?.invalid) invalidFields.push('జిల్లా');
+      if (controls['constituency_id']?.invalid) invalidFields.push('నియోజకవర్గం');
+      if (controls['mandal_id']?.invalid) invalidFields.push('మండలం');
+
+      const msg = invalidFields.length > 0
+        ? `దయచేసి ఈ క్రింది వివరాలను తప్పనిసరిగా పూరించండి:\n• ${invalidFields.join('\n• ')}`
+        : '* మార్క్ చేసిన వివరాలను తప్పనిసరిగా పూరించాలి';
+
+      Swal.fire({
+        icon: 'warning',
+        title: 'గమనిక',
+        text: msg
+      });
       return;
-    } else if (this.pastorsassociations.value.password != this.pastorsassociations.value.retypepassword) {
-      Swal.fire("Passwords are Unmatched");
-      return;
-    } else {
-      this.service.postpastorassociationss(this.pastorsassociations.value).subscribe((res: any) => {
+    }
+
+    this.showSpinner = true;
+    const formVal = this.pastorsassociations.value;
+    const payload = {
+      ...formVal,
+      paname: formVal.pa_name || formVal.paname,
+      headname: formVal.headname,
+      phonenumber: formVal.phonenumber,
+      secretory: formVal.pa_secretory || formVal.secretory || '',
+      president: formVal.pa_president || formVal.president || '',
+      districtname: formVal.district_id || formVal.districtname,
+      constituencyname: formVal.constituency_id || formVal.constituencyname,
+      mandals: formVal.mandal_id || formVal.mandals,
+      panchaiti: formVal.village_id || formVal.panchaiti || '',
+      terms: formVal.term || formVal.terms || 'YES',
+      stdph: formVal.std_phonenumber || formVal.stdph || ''
+    };
+
+    this.service.postpastorassociationss(payload).subscribe(
+      (res: any) => {
+        this.showSpinner = false;
         if (res.status == 200) {
-          Swal.fire('మీరు విజయవంతముగా నమోదు చేసినారు')
-          this.pastorsassociations.reset();
+          Swal.fire({
+            icon: 'success',
+            title: 'విజయం!',
+            text: 'మీరు విజయవంతముగా నమోదు చేసినారు'
+          });
+          this.pastorsassociations.reset({
+            term: true
+          });
+          this.constituency = [];
+          this.mandals = [];
+          this.panchayati = [];
           this.submitted = false;
-          
+        } else if (res.status == 451) {
+          Swal.fire({
+            icon: 'info',
+            title: 'గమనిక',
+            text: 'ఇదే ఫోన్ నెంబర్ తో ఇంతకుముందే రిజిస్టర్ అయ్యారు'
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'లోపం',
+            text: res.message || 'నమోదు చేయడంలో సమస్య వచ్చింది. దయచేసి మరలా ప్రయత్నించండి.'
+          });
         }
       },
-        error => {
-        })
-    }
+      (error: any) => {
+        this.showSpinner = false;
+        const msg = error?.error?.message || error?.error?.error || error?.message || 'సర్వర్ సమస్య వచ్చింది. దయచేసి మరలా ప్రయత్నించండి.';
+        Swal.fire({
+          icon: 'error',
+          title: 'లోపం',
+          text: msg
+        });
+      }
+    );
   }
 
   postpastorsignup() {

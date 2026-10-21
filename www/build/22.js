@@ -115,7 +115,7 @@ var MarriagePage = /** @class */ (function () {
                 _this.marriagedata = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
             }
             else {
-                alert('server down');
+                console.warn('Marriage server response not 200');
             }
         });
     };
@@ -178,7 +178,7 @@ var MarriagePage = /** @class */ (function () {
                 _this.marriagedata = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
             }
             else {
-                alert('server down');
+                console.warn('Marriage server response not 200');
             }
         }, function (error) {
         });
@@ -198,7 +198,7 @@ var MarriagePage = /** @class */ (function () {
                 _this.marriagedata = res.data;
             }
             else {
-                alert('No Data');
+                console.warn('No marriage records found');
             }
         });
     };
@@ -225,7 +225,7 @@ var MarriagePage = /** @class */ (function () {
                 _this.marriagedata = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
             }
             else {
-                alert('server down');
+                console.warn('Marriage server response not 200');
             }
         });
     };
@@ -244,7 +244,7 @@ var MarriagePage = /** @class */ (function () {
                 _this.marriagedata = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
             }
             else {
-                alert('server down');
+                console.warn('Marriage server response not 200');
             }
         });
     };
@@ -261,7 +261,7 @@ var MarriagePage = /** @class */ (function () {
                 _this.fromshow = 1;
             }
             else {
-                alert('server down');
+                console.warn('Marriage server response not 200');
             }
         });
     };

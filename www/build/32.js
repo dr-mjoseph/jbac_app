@@ -136,14 +136,15 @@ var EntryFormPage = /** @class */ (function () {
         var _this = this;
         this.loading = this.loadingCtrl.create({
             spinner: 'ios',
-            content: 'ప్రాసెస్ అవుతుంది దయచేసి లాగండి'
+                            content: 'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...'
         });
         this.loading.present();
         var id = event;
         this.service.getmandals().subscribe(function (res) {
             _this.mandals = res.data.filter(function (data) { return data.const_id == id; });
             if (_this.mandals.length) {
-                _this.loading.dismiss();
+                _this.isSubmitting = false;
+                        this.loading.dismiss();
             }
         });
     };
@@ -151,14 +152,15 @@ var EntryFormPage = /** @class */ (function () {
         var _this = this;
         this.loading = this.loadingCtrl.create({
             spinner: 'ios',
-            content: 'ప్రాసెస్ అవుతుంది దయచేసి ఆగండి'
+                            content: 'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...'
         });
         this.loading.present();
         var id = event;
         this.service.getconsistencys().subscribe(function (res) {
             _this.constituency = res.data.filter(function (data) { return data.dstrct_id == id; });
             if (_this.constituency.length) {
-                _this.loading.dismiss();
+                _this.isSubmitting = false;
+                        this.loading.dismiss();
             }
         });
     };
@@ -166,14 +168,15 @@ var EntryFormPage = /** @class */ (function () {
         var _this = this;
         this.loading = this.loadingCtrl.create({
             spinner: 'ios',
-            content: 'ప్రాసెస్ అవుతుంది దయచేసి ఆగండి'
+                            content: 'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...'
         });
         this.loading.present();
         var id = event;
         this.service.gepanchayatis().subscribe(function (res) {
             _this.getvillages = res.data.filter(function (data) { return data.mndl_id == id; });
             if (_this.getvillages.length) {
-                _this.loading.dismiss();
+                _this.isSubmitting = false;
+                        this.loading.dismiss();
             }
         });
     };
@@ -234,6 +237,7 @@ var EntryFormPage = /** @class */ (function () {
         }
     };
     EntryFormPage.prototype.submit = function () {
+        this.isSubmitting = true;
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             var confirm_1, confirm_2;
@@ -242,7 +246,7 @@ var EntryFormPage = /** @class */ (function () {
                     case 0:
                         this.loading = this.loadingCtrl.create({
                             spinner: 'ios',
-                            content: 'ప్రాసెస్ అవుతుంది దయచేసి లాగండి'
+                            content: 'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...'
                         });
                         this.loading.present();
                         if (!this.form.invalid) return [3 /*break*/, 3];
@@ -256,6 +260,7 @@ var EntryFormPage = /** @class */ (function () {
                         return [4 /*yield*/, confirm_1.present()];
                     case 2:
                         _a.sent();
+                        this.isSubmitting = false;
                         this.loading.dismiss();
                         return [3 /*break*/, 7];
                     case 3:
@@ -270,6 +275,7 @@ var EntryFormPage = /** @class */ (function () {
                         return [4 /*yield*/, confirm_2.present()];
                     case 5:
                         _a.sent();
+                        this.isSubmitting = false;
                         this.loading.dismiss();
                         return [3 /*break*/, 7];
                     case 6:
@@ -288,7 +294,8 @@ var EntryFormPage = /** @class */ (function () {
                                     ]
                                 });
                                 toast.present();
-                                _this.loading.dismiss();
+                                _this.isSubmitting = false;
+                        this.loading.dismiss();
                             }
                             else if (res.status == 606) {
                                 var confirm_3 = _this.alertCtrl.create({
@@ -304,7 +311,8 @@ var EntryFormPage = /** @class */ (function () {
                                     ]
                                 });
                                 confirm_3.present();
-                                _this.loading.dismiss();
+                                _this.isSubmitting = false;
+                        this.loading.dismiss();
                             }
                             else {
                                 var toast = _this.alertCtrl.create({
@@ -313,7 +321,8 @@ var EntryFormPage = /** @class */ (function () {
                                     buttons: ['OK']
                                 });
                                 toast.present();
-                                _this.loading.dismiss();
+                                _this.isSubmitting = false;
+                        this.loading.dismiss();
                             }
                         });
                         _a.label = 7;
@@ -330,7 +339,7 @@ var EntryFormPage = /** @class */ (function () {
     };
     EntryFormPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-entry-form',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\entry-form\entry-form.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-row style="background-color: #f8f8f8;">\n\n      <ion-col col-11\n\n        style="text-align: center;font-weight: 900;color: #1f376e;">\n\n        JBAC యాప్ యాక్టివేషన్ ఫారమ్\n\n      </ion-col>\n\n      <!-- <ion-col col-1 (click)="closeModal()">\n\n        <ion-icon style="color:1f376e" name="home"></ion-icon>\n\n      </ion-col> -->\n\n    </ion-row>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="content">\n\n  <form [formGroup]="form" class="form" style="background-color: #1f376e;">\n\n    <ion-row>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked >మీ క్యాటగిరి ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="category">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option value="1">విశ్వాసి</ion-option>\n\n            <ion-option value="2">విద్యార్థి</ion-option>\n\n            <ion-option value="3">మినిస్ట్రీస్ (ఎక్కువ చర్చిలు ఉంటే)</ion-option>\n\n            <ion-option value="4">పాస్టర్</ion-option>\n\n            <ion-option value="5">చర్చి</ion-option>\n\n            <ion-option value="6">క్రిస్టియన్ ఆర్గనైజెషన్ / కంపెనీ</ion-option>\n\n             <ion-option value="7">పాస్టర్ల అసోసియేషన్</ion-option> \n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మీ పేరు(ఇంటి పేరు తో సహా) </ion-label>\n\n          <ion-input type="text" placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి" formControlName="name"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మీ ఫోన్ నంబర్ (10 అంకెలు మాత్రమే, లాగిన్ కు ఫోన్ నెంబర్ & పాస్వర్డ్ అవసరము)</ion-label>\n\n          <ion-input type="tel" placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి" formControlName="number" maxlength="10"\n\n            minlength="10"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>సెట్ పాస్వర్డ్ (కనీసము 4 నుంచి గరిష్టం 16 నెంబర్, అక్షరాల వరకు పెట్టుకోవచ్చు)</ion-label>\n\n          <ion-input type="password" placeholder="ఇక్కడ క్లిక్ చేసి పాస్‌వర్డ్ సెట్ చేసుకోండి" formControlName="password" maxlength="16"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <h4 Style="color:whitesmoke;text-align: center;font-weight: 600;">మీ అడ్రస్</h4>\n\n        <ion-item>\n\n          <ion-label stacked>జిల్లా</ion-label>\n\n          <ion-select formControlName="district_id" (ionChange)="getconstency($event)" >\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి జిల్లా ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>నియోజకవర్గం</ion-label>\n\n          <ion-select formControlName="constituency_id" (ionChange)="getmandals($event)" (click)="poorp(1)">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి నియోజకవర్గం ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మండలం / మున్సిపాలిటీ</ion-label>\n\n          <ion-select formControlName="mandal_id" (ionChange)="gepanchayati($event);" (click)="poorp(2)">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి మండలం ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>పంచాయితీ / వార్డ్ నంబర్</ion-label>\n\n          <ion-select formControlName="village_id" (click)="poorp(3)">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి పంచాయితీ ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of getvillages" [value]="item.id">{{item.pnchyt_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n    </ion-row>\n\n\n\n    \n\n     \n\n      <ion-row class="button">\n\n      \n\n        <button ion-button color="secondary" (click)="submit()"><b>సబ్మిట్</b></button>\n\n      \n\n    </ion-row>\n\n    \n\n      <p >ఇంతకుముందే రిజిస్టర్ ఐతే <a (click)="gotologin()">లాగిన్  కొరకు క్లిక్</a></p>\n\n     \n\n       <p > <a (click)="gotoprivacy()">Privacy Policy</a></p> \n\n       <br><br>\n\n  </form>\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\entry-form\entry-form.html"*/,
+            selector: 'page-entry-form',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\entry-form\entry-form.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-row style="background-color: #f8f8f8;">\n\n      <ion-col col-11\n\n        style="text-align: center;font-weight: 900;color: #1f376e;">\n\n        JBAC యాప్ యాక్టివేషన్ ఫారమ్\n\n      </ion-col>\n\n      <!-- <ion-col col-1 (click)="closeModal()">\n\n        <ion-icon style="color:1f376e" name="home"></ion-icon>\n\n      </ion-col> -->\n\n    </ion-row>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="content">\n\n  <form [formGroup]="form" class="form" style="background-color: #1f376e;">\n\n    <ion-row>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked >మీ క్యాటగిరి ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="category">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option value="1">విశ్వాసి</ion-option>\n\n            <ion-option value="2">విద్యార్థి</ion-option>\n\n            <ion-option value="3">మినిస్ట్రీస్ (ఎక్కువ చర్చిలు ఉంటే)</ion-option>\n\n            <ion-option value="4">పాస్టర్</ion-option>\n\n            <ion-option value="5">చర్చి</ion-option>\n\n            <ion-option value="6">క్రిస్టియన్ ఆర్గనైజెషన్ / కంపెనీ</ion-option>\n\n             <ion-option value="7">పాస్టర్ల అసోసియేషన్</ion-option> \n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మీ పేరు(ఇంటి పేరు తో సహా) </ion-label>\n\n          <ion-input type="text" placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి" formControlName="name"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మీ ఫోన్ నంబర్ (10 అంకెలు మాత్రమే, లాగిన్ కు ఫోన్ నెంబర్ & పాస్వర్డ్ అవసరము)</ion-label>\n\n          <ion-input type="tel" placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి" formControlName="number" maxlength="10"\n\n            minlength="10"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>సెట్ పాస్వర్డ్ (కనీసము 4 నుంచి గరిష్టం 16 నెంబర్, అక్షరాల వరకు పెట్టుకోవచ్చు)</ion-label>\n\n          <ion-input type="password" placeholder="ఇక్కడ క్లిక్ చేసి పాస్‌వర్డ్ సెట్ చేసుకోండి" formControlName="password" maxlength="16"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <h4 Style="color:whitesmoke;text-align: center;font-weight: 600;">మీ అడ్రస్</h4>\n\n        <ion-item>\n\n          <ion-label stacked>జిల్లా</ion-label>\n\n          <ion-select formControlName="district_id" (ionChange)="getconstency($event)" >\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి జిల్లా ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>నియోజకవర్గం</ion-label>\n\n          <ion-select formControlName="constituency_id" (ionChange)="getmandals($event)" (click)="poorp(1)">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి నియోజకవర్గం ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మండలం / మున్సిపాలిటీ</ion-label>\n\n          <ion-select formControlName="mandal_id" (ionChange)="gepanchayati($event);" (click)="poorp(2)">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి మండలం ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>పంచాయితీ / వార్డ్ నంబర్</ion-label>\n\n          <ion-select formControlName="village_id" (click)="poorp(3)">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి పంచాయితీ ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of getvillages" [value]="item.id">{{item.pnchyt_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n    </ion-row>\n\n\n\n    \n\n     \n\n      <ion-row class="button">\n\n      \n\n        <button ion-button color="secondary" (click)="submit()" [disabled]="isSubmitting"><ion-spinner *ngIf="isSubmitting" name="crescent" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"></ion-spinner><b><span *ngIf="isSubmitting">దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...</span><span *ngIf="!isSubmitting">సబ్మిట్</span></b></button>\n\n      \n\n    </ion-row>\n\n    \n\n      <p >ఇంతకుముందే రిజిస్టర్ ఐతే <a (click)="gotologin()">లాగిన్  కొరకు క్లిక్</a></p>\n\n     \n\n       <p > <a (click)="gotoprivacy()">Privacy Policy</a></p> \n\n       <br><br>\n\n  </form>\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\entry-form\entry-form.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["x" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
             __WEBPACK_IMPORTED_MODULE_3__providers_service_service__["a" /* ServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["v" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */]])

@@ -16,6 +16,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: 'pastor.html',
 })
 export class PastorPage {
+  showSpinner: boolean = false;
   form: FormGroup
   districts: any;
   mandals: any;
@@ -49,14 +50,14 @@ export class PastorPage {
       ward: [''],
       youtubechanel: [''],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      //// retypepassword: ['', [Validators.required, Validators.minLength(6)]],
+      retypepassword: [''],],
       leaders: ['', [Validators.required]],
       leadertype: [''],
       generaltype: ['',],
       wingtype: ['',],
       facebook: [''],
       god: [''],
-      //  // term: ['', [Validators.required]],
+      //  // term: [true],
       lifegoal: [''],
       denomination_id: ['', [Validators.required]],
       villagename: ['', [Validators.required]],
@@ -192,6 +193,7 @@ export class PastorPage {
   }
   submitted: boolean = false
   postchurchregister() {
+    this.showSpinner = true;
 
     this.submitted = true;
     if (this.form.invalid) {
@@ -204,16 +206,22 @@ export class PastorPage {
 
     else {
       this.service.postpastor(this.form.value).subscribe((res: any) => {
-        if (res.status == 451) {
+        this.showSpinner = false;
+          if (res.status == 451) {
           alert('ఇదే ఫోన్ నెంబర్ తో ఇంతకుముందే రిజిస్టర్ అయ్యారు')
-        } else if (res.status == 200) {
+        } else this.showSpinner = false;
+          if (res.status == 200) {
           alert(' విజయవంతముగా నమోదు చేయబడింది, మీ ఫోన్ నెంబర్ మరియు పాస్వర్డ్ తో లాగిన్ అవగలరు ')
           // this.router.navigate(['/profile'], { queryParams: { id: "1" } });
           this.form.reset();
+          this.mandals = [];
+          this.constituency = [];
+          this.panchayati = [];
           this.submitted = false;
         }
       },
         error => {
+          this.showSpinner = false;
         })
     }
   }

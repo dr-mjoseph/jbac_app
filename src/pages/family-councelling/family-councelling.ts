@@ -105,59 +105,57 @@ export class FamilyCouncellingPage {
   ) {}
 
   ionViewWillEnter() {
-    this.usr_id = localStorage.getItem('usr_id');
-    this.user_name = localStorage.getItem('name') || '';
-    this.user_phone = localStorage.getItem('phone') || '';
-    this.user_email = localStorage.getItem('email') || '';
-    this.role = localStorage.getItem('role') || 'user';
-    const aortId = localStorage.getItem('aort_id');
+    const storedUsrId = localStorage.getItem('usr_id');
+    const isDocFlag = localStorage.getItem('is_doctor');
+    const catId = localStorage.getItem('category_id');
+    const cat = (localStorage.getItem('category') || '').toLowerCase().trim();
+    const role = (localStorage.getItem('role') || '').toLowerCase().trim();
 
-    // Smooth guest support: do not kick out prospective users or doctors!
-    if (this.usr_id && this.usr_id !== ' ' && this.usr_id !== '' && this.usr_id !== 'null') {
+    if (storedUsrId && storedUsrId.trim() !== '' && storedUsrId !== 'null' && !storedUsrId.startsWith('guest_')) {
       this.isLoggedIn = true;
+      this.usr_id = storedUsrId;
+      this.user_name = localStorage.getItem('name') || '';
+      this.user_phone = localStorage.getItem('phone') || localStorage.getItem('mobile_number') || '';
+      this.user_email = localStorage.getItem('email') || '';
+
+      this.isDoctor = (catId === '8' || isDocFlag === '1' || cat === 'doctor' || role === 'doctor');
+      this.isAdmin = (role === 'admin' || cat === 'admin');
     } else {
       this.isLoggedIn = false;
-      this.usr_id = 'guest_' + Math.floor(100000 + Math.random() * 900000);
+      this.usr_id = null;
+      this.isDoctor = false;
+      this.isAdmin = false;
     }
 
-    const categoryId = localStorage.getItem('category_id');
-    const isDoctorStorage = localStorage.getItem('is_doctor');
-    const category = (localStorage.getItem('category') || '').toLowerCase();
-
-    if (this.role === 'admin' || aortId === '1' || aortId === '2') {
-      this.isAdmin = true;
-    }
-
-    if (categoryId === '8' || isDoctorStorage === '1' || category.includes('doctor') || category.includes('councellor') || this.role === 'doctor') {
-      this.isDoctor = true;
+    if (!this.isLoggedIn) {
+      if (this.viewMode !== 'book_now') {
+        this.viewMode = 'browse';
+      }
+    } else if (this.isDoctor) {
       if (this.viewMode === 'browse') {
         this.viewMode = 'doctor_schedule';
       }
+    } else {
+      // Normal user logged in
+      if (this.viewMode === 'doctor_schedule' || this.viewMode === 'doctor_profile') {
+        this.viewMode = 'browse';
+      }
     }
-
-    // Safety guard: Non-doctors are never allowed into doctor tabs
-    if (!this.isDoctor && !this.isAdmin && (this.viewMode === 'doctor_profile' || this.viewMode === 'doctor_schedule')) {
-      this.viewMode = 'browse';
-    }
-
-    this.bookingData.patient_name = this.user_name;
-    this.bookingData.patient_phone = this.user_phone;
-    this.bookingData.patient_email = this.user_email;
-    this.doctorProfile.usr_id = this.usr_id;
-    this.doctorProfile.phone = this.user_phone;
-    this.doctorProfile.email = this.user_email;
-    if (this.user_name && !this.doctorProfile.doctor_name) {
-      this.doctorProfile.doctor_name = this.user_name.startsWith('Dr') ? this.user_name : 'Dr. ' + this.user_name;
-    }
-
-    // Default booking date to tomorrow
-    const tmrw = new Date();
-    tmrw.setDate(tmrw.getDate() + 1);
-    this.bookingData.appointment_date = tmrw.toISOString().split('T')[0];
 
     this.loadDoctors();
     this.loadAppointments();
     this.checkSpeechSupport();
+  }
+
+  switchTab(tab: string) {
+    this.viewMode = tab;
+    if (tab === 'my_bookings' || tab === 'doctor_schedule') {
+      this.loadAppointments();
+    }
+  }
+
+  onTabChange(tab: string) {
+    this.switchTab(tab);
   }
 
   gotohome() {
@@ -182,11 +180,17 @@ export class FamilyCouncellingPage {
     this.isSpeechSupported = !!SpeechRec;
   }
 
+  
+  getFallbackDoctors() {
+    return [];
+  }
+
   loadDoctors() {
+    this.doctors = this.getFallbackDoctors();
     this.service.getcouncellingdoctors().subscribe(
       (res: any) => {
         if (res && res.status === 200) {
-          this.doctors = res.data || [];
+          this.doctors = (res.data && res.data.length > 0) ? res.data.filter((d: any) => d.d_in === 0 || d.d_in === '0' || d.d_in === undefined) : [];
           const myDoc = this.doctors.find(d => String(d.usr_id) === String(this.usr_id) || (this.user_phone && String(d.phone_number || d.phone) === String(this.user_phone)));
           if (myDoc) {
             this.isDoctor = true;
@@ -196,6 +200,7 @@ export class FamilyCouncellingPage {
       },
       err => {
         console.error('Error loading doctors:', err);
+        this.doctors = this.getFallbackDoctors();
       }
     );
   }
@@ -220,6 +225,23 @@ export class FamilyCouncellingPage {
   }
 
   openBookingForm(doc: any) {
+    if (!this.isLoggedIn) {
+      const alert = this.alertCtrl.create({
+        title: 'లాగిన్ అవ్వండి (Login Required)',
+        message: 'కౌన్సిలింగ్ అపాయింట్‌మెంట్ బుక్ చేసుకోవడానికి దయచేసి ముందుగా లాగిన్ అవ్వండి.',
+        buttons: [
+          { text: 'రద్దు (Cancel)', role: 'cancel' },
+          {
+            text: 'లాగిన్ అవ్వండి (Login)',
+            handler: () => {
+              this.navCtrl.push('LoginPage', { redirect: 'FamilyCouncellingPage' });
+            }
+          }
+        ]
+      });
+      alert.present();
+      return;
+    }
     this.selectedDoctor = doc;
     this.bookingData.doc_id = doc.id;
     this.clearUserVoiceRecording();

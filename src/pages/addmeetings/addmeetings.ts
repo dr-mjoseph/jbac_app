@@ -78,6 +78,16 @@ export class AddmeetingsPage {
   locationError: string = '';
   locationSuccess: string = '';
   locationName: string = '';
+  locationSourceMessage: string = '';;
+  locationLoading: boolean = false;
+  locationError: string = '';
+  locationSuccess: string = '';
+  locationName: string = '';
+  locationSourceMessage: string = '';;
+  locationLoading: boolean = false;
+  locationError: string = '';
+  locationSuccess: string = '';
+  locationName: string = '';
   locationSourceMessage: string = '';
   districts: any;
   mandals: any;

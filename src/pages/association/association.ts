@@ -16,6 +16,7 @@ import { ServiceProvider } from '../../providers/service/service';
   templateUrl: 'association.html',
 })
 export class AssociationPage {
+  showSpinner: boolean = false;
   form: FormGroup
   districts: any;
   mandals: any;
@@ -45,8 +46,8 @@ export class AssociationPage {
       workingareas: [''],
       description: [''],
       password: [''],
-      //retypepassword: ['', [Validators.required, Validators.minLength(6)]],
-      term: [''],
+      retypepassword: [''],],
+      term: [true],
 
     })
   }
@@ -115,11 +116,16 @@ export class AssociationPage {
     // }
     else {
       this.service.postpastorassociationss(this.form.value).subscribe((res: any) => {
-        if (res.status == 451) {
+        this.showSpinner = false;
+          if (res.status == 451) {
           alert('ఇదే ఫోన్ నెంబర్ తో ఇంతకుముందే రిజిస్టర్ అయ్యారు')
-        } else if (res.status == 200) {
+        } else this.showSpinner = false;
+          if (res.status == 200) {
           alert('Submited Successfully')
           this.form.reset();
+          this.mandals = [];
+          this.constituency = [];
+          this.panchayati = [];
           this.submitted = false;
         }
       })

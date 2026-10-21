@@ -10,6 +10,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 
 export class OrganisationPage {
+  showSpinner: boolean = false;
 
   districts: any;
   mandals: any;
@@ -39,14 +40,14 @@ export class OrganisationPage {
       organizationtype: ['', [Validators.required]],
       ministry_id: [''],
       password: ['', [Validators.required, Validators.minLength(6)]],
-     // retypepassword: ['', [Validators.required, Validators.minLength(6)]],
+     retypepassword: ['', [Validators.required, Validators.minLength(6)]],
       districts: ['', [Validators.required]],
       constituencyname: ['', [Validators.required]],
       mandals: ['', [Validators.required]],
       panchayati: ['', [Validators.required]],
       villagename: ['', [Validators.required]],
       ward: ['', [Validators.required]],
-      term: ['', [Validators.required]]
+      term: [true]
     })
   }
 
@@ -134,7 +135,8 @@ export class OrganisationPage {
     this.service.getservices().subscribe((res: any) => {
       if (res.status == 202) {
         alert(res.message);
-      } else if (res.status == 200) {
+      } else this.showSpinner = false;
+          if (res.status == 200) {
         this.services = res.data;
       }
     })
@@ -144,14 +146,19 @@ export class OrganisationPage {
     this.service.getbeliversdata().subscribe((res: any) => {
       if (res.status == 202) {
         alert(res.message);
-      } else if (res.status == 200) {
+      } else this.showSpinner = false;
+          if (res.status == 200) {
         this.ministryname = res.data;
       }
     })
   }
 
   postindepedentorganisation() {
+    this.showSpinner = true;
     this.submitted = true;
+    if (!this.form.get('term') || !this.form.get('term').value) {
+      this.form.patchValue({ term: true });
+    }
     if (this.form.invalid) {
       alert('please fiil the details ');
       return;
@@ -159,11 +166,18 @@ export class OrganisationPage {
       alert("Passwords are Unmatched");
     } else {
       this.service.postindepedentorganisation(this.form.value).subscribe((res: any) => {
-        if (res.status == 451) {
+        this.showSpinner = false;
+          if (res.status == 451) {
           alert('ఇదే ఫోన్ నెంబర్ తో ఇంతకుముందే రిజిస్టర్ అయ్యారు');
-        } else if (res.status == 200) {
+        } else this.showSpinner = false;
+          if (res.status == 200) {
           alert('విజయవంతముగా సబ్మిట్ అయింది');
-          this.form.reset();
+          this.form.reset({
+            term: true
+          });
+          this.mandals = [];
+          this.constituency = [];
+          this.panchayati = [];
           this.submitted = false;
         } else {
           alert('Error');

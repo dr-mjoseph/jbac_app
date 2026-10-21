@@ -96,6 +96,9 @@ export class FamilyCouncellingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // 0. Purge any dummy simulated seed data
+    this.cleanupDummyData();
+
     // 1. Check Login Status (allows guest browsing, prompts on action)
     const authInd = sessionStorage.getItem('auth_ind');
     const storedUsrId = sessionStorage.getItem('usr_id');
@@ -107,8 +110,8 @@ export class FamilyCouncellingComponent implements OnInit {
       this.userCategory = sessionStorage.getItem('category') || '';
     } else {
       this.isLoggedIn = false;
-      this.usr_id = 'guest_' + Math.floor(100000 + Math.random() * 900000);
-      this.userName = 'Guest Visitor';
+      this.usr_id = '';
+      this.userName = '';
       this.userMobile = '';
       this.userCategory = '';
     }
@@ -140,8 +143,18 @@ export class FamilyCouncellingComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       const requestedTab = params['tab'];
       if (requestedTab) {
-        if ((requestedTab === 'doctor_profile' || requestedTab === 'doctor_schedule') && !this.isDoctor && !this.isAdmin) {
-          this.activeTab = 'browse';
+        if (requestedTab === 'doctor_profile' || requestedTab === 'doctor_schedule') {
+          if (!this.isLoggedIn) {
+            this.activeTab = 'browse';
+            this.promptDoctorProfileSetup();
+          } else if (!this.isDoctor && !this.isAdmin) {
+            this.activeTab = 'browse';
+            this.promptNotDoctorAccount();
+          } else {
+            this.activeTab = requestedTab;
+          }
+        } else if (requestedTab === 'my_bookings') {
+          this.activeTab = 'my_bookings';
         } else {
           this.activeTab = requestedTab;
         }
@@ -157,8 +170,12 @@ export class FamilyCouncellingComponent implements OnInit {
 
     // Fetch initial datasets
     this.loadDoctors();
-    this.loadMyAppointments();
-    this.loadDoctorSchedule();
+    if (this.isLoggedIn) {
+      this.loadMyAppointments();
+    }
+    if (this.isDoctor || this.isAdmin) {
+      this.loadDoctorSchedule();
+    }
   }
 
   initForms(): void {
@@ -175,7 +192,7 @@ export class FamilyCouncellingComponent implements OnInit {
       members_count: [1, [Validators.required, Validators.min(1)]],
       counselling_type: ['General Family Counselling', [Validators.required]],
       notes: ['', [Validators.required]],
-      term: [true, [Validators.requiredTrue]]
+      term: [true]
     });
 
     // Doctor Profile Form
@@ -209,24 +226,28 @@ export class FamilyCouncellingComponent implements OnInit {
   }
 
   switchTab(tab: string): void {
-    // Security check: Only doctors and admins can access doctor profile setup and appointment schedule
-    if ((tab === 'doctor_profile' || tab === 'doctor_schedule') && !this.isDoctor && !this.isAdmin) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'అనుమతి లేదు (Access Restricted)',
-        text: 'ఈ విభాగం కేవలం నమోదిత డాక్టర్లకు మరియు కౌన్సిలర్లకు మాత్రమే అందుబాటులో ఉంటుంది. (This section is accessible only to registered doctors and counsellors).',
-        confirmButtonColor: '#00548F'
-      });
-      this.activeTab = 'browse';
-      this.loadDoctors();
+    if (tab === 'doctor_profile' || tab === 'doctor_schedule') {
+      if (!this.isLoggedIn) {
+        this.promptDoctorProfileSetup();
+        return;
+      }
+      if (!this.isDoctor && !this.isAdmin) {
+        this.promptNotDoctorAccount();
+        return;
+      }
+    }
+
+    if (tab === 'my_bookings') {
+      this.activeTab = tab;
+      if (this.isLoggedIn) {
+        this.loadMyAppointments();
+      }
       return;
     }
 
     this.activeTab = tab;
     if (tab === 'browse') {
       this.loadDoctors();
-    } else if (tab === 'my_bookings') {
-      this.loadMyAppointments();
     } else if (tab === 'doctor_schedule') {
       this.loadDoctorSchedule();
     } else if (tab === 'doctor_profile') {
@@ -242,19 +263,32 @@ export class FamilyCouncellingComponent implements OnInit {
     this.service.getcouncellingdoctors({}).subscribe(
       (res: any) => {
         this.isLoadingDoctors = false;
-        if (res && res.data && Array.isArray(res.data)) {
-          this.doctors = res.data;
+        if (res && res.data && Array.isArray(res.data) && res.data.length > 0) {
+          // Remove any dummy simulated seeds from remote data
+          const cleanDocs = res.data.filter((d: any) =>
+            d && d.id !== 1 && d.id !== 2 && d.id !== 3 &&
+            !String(d.doctor_name).includes('Sarah John') &&
+            !String(d.doctor_name).includes('David Paul') &&
+            !String(d.doctor_name).includes('Grace Varghese')
+          );
+          if (cleanDocs.length > 0) {
+            this.doctors = cleanDocs;
+          } else {
+            this.doctors = this.getLocalFallbackDoctors();
+          }
         } else {
           this.doctors = this.getLocalFallbackDoctors();
         }
         this.applyFilters();
         this.checkIfUserIsDoctor();
+        this.checkPendingBookingAfterLogin();
       },
       (error: any) => {
         this.isLoadingDoctors = false;
         this.doctors = this.getLocalFallbackDoctors();
         this.applyFilters();
         this.checkIfUserIsDoctor();
+        this.checkPendingBookingAfterLogin();
       }
     );
   }
@@ -317,6 +351,10 @@ export class FamilyCouncellingComponent implements OnInit {
   // APPOINTMENT BOOKING (For Families / Users)
   // -------------------------------------------------------------
   openBookingModal(doctor: any, modalContent: any): void {
+    if (!this.isLoggedIn) {
+      this.promptLoginToBook(doctor);
+      return;
+    }
     this.selectedDoctor = doctor;
     this.clearUserVoiceRecording();
     this.bookingForm.patchValue({
@@ -328,7 +366,7 @@ export class FamilyCouncellingComponent implements OnInit {
       appointment_date: this.todayDate,
       appointment_time: '10:00 AM - 11:00 AM',
       members_count: 1,
-      counselling_type: doctor.specialization.includes('Marriage')
+      counselling_type: (doctor.specialization && doctor.specialization.includes('Marriage'))
         ? 'Marriage & Relationship Counselling'
         : 'General Family Counselling',
       notes: '',
@@ -347,50 +385,33 @@ export class FamilyCouncellingComponent implements OnInit {
     }
   }
 
-  startUserVoiceRecording(): void {
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      Swal.fire('Error', 'మీ బ్రౌజర్‌లో మైక్రోఫోన్ సౌకర్యం అందుబాటులో లేదు (Microphone not supported).', 'warning');
-      return;
+  // Helper to safely obtain microphone stream across modern and legacy browsers
+  private getMicrophoneStream(): Promise<MediaStream> {
+    const nav: any = navigator;
+    if (nav.mediaDevices && nav.mediaDevices.getUserMedia) {
+      return nav.mediaDevices.getUserMedia({ audio: true });
     }
+    const legacyGUM = nav.getUserMedia || nav.webkitGetUserMedia || nav.mozGetUserMedia || nav.msGetUserMedia;
+    if (legacyGUM) {
+      return new Promise<MediaStream>((resolve, reject) => {
+        legacyGUM.call(nav, { audio: true }, resolve, reject);
+      });
+    }
+    return Promise.reject(new Error('GETUSERMEDIA_NOT_SUPPORTED'));
+  }
 
-    this.userAudioChunks = [];
-    this.isRecordingUserVoice = true;
-    this.userVoiceSeconds = 0;
-    this.userVoiceTimer = setInterval(() => {
-      this.userVoiceSeconds++;
-    }, 1000);
+  startUserVoiceRecording(): void {
+    const SpeechRec = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    let speechActive = false;
 
-    // 1. Audio MediaRecorder
-    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-      this.userMediaRecorder = new (window as any).MediaRecorder(stream);
-      this.userMediaRecorder.ondataavailable = (e: any) => {
-        if (e.data && e.data.size > 0) {
-          this.userAudioChunks.push(e.data);
-        }
-      };
-      this.userMediaRecorder.onstop = () => {
-        const audioBlob = new Blob(this.userAudioChunks, { type: 'audio/webm' });
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          this.userVoiceAudio = reader.result as string;
-        };
-        reader.readAsDataURL(audioBlob);
-        stream.getTracks().forEach(t => t.stop());
-      };
-      this.userMediaRecorder.start();
-    }).catch(err => {
-      console.warn('Microphone error:', err);
-      this.isRecordingUserVoice = false;
-      if (this.userVoiceTimer) clearInterval(this.userVoiceTimer);
-      Swal.fire('Microphone Permission', 'దయచేసి మైక్రోఫోన్ అనుమతి (Permission) ఇవ్వండి.', 'info');
-    });
-
-    // 2. Speech-to-Text Recognition (Web Speech API)
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    if (SpeechRecognition) {
+    // 1. Start Speech-to-Text Recognition first so speech is captured immediately
+    if (SpeechRec) {
       try {
-        this.userSpeechRecognition = new SpeechRecognition();
-        this.userSpeechRecognition.lang = this.userLanguage;
+        if (this.userSpeechRecognition) {
+          try { this.userSpeechRecognition.abort(); } catch (_) {}
+        }
+        this.userSpeechRecognition = new SpeechRec();
+        this.userSpeechRecognition.lang = this.userLanguage || 'te-IN';
         this.userSpeechRecognition.continuous = true;
         this.userSpeechRecognition.interimResults = true;
 
@@ -410,14 +431,114 @@ export class FamilyCouncellingComponent implements OnInit {
         };
 
         this.userSpeechRecognition.onerror = (e: any) => {
-          console.warn('Speech recognition error:', e);
+          console.warn('Speech recognition warning:', e);
         };
 
         this.userSpeechRecognition.start();
+        speechActive = true;
       } catch (e) {
         console.warn('Speech recognition start failed:', e);
       }
     }
+
+    // 2. Initialize Recording State & Timer
+    this.userAudioChunks = [];
+    this.isRecordingUserVoice = true;
+    this.userVoiceSeconds = 0;
+    if (this.userVoiceTimer) clearInterval(this.userVoiceTimer);
+    this.userVoiceTimer = setInterval(() => {
+      this.userVoiceSeconds++;
+    }, 1000);
+
+    // 3. Audio MediaRecorder Stream Capture
+    this.getMicrophoneStream().then(stream => {
+      try {
+        const MediaRec = (window as any).MediaRecorder;
+        if (MediaRec) {
+          let options: any;
+          if (typeof MediaRec.isTypeSupported === 'function') {
+            if (MediaRec.isTypeSupported('audio/webm')) options = { mimeType: 'audio/webm' };
+            else if (MediaRec.isTypeSupported('audio/mp4')) options = { mimeType: 'audio/mp4' };
+          }
+          this.userMediaRecorder = options ? new MediaRec(stream, options) : new MediaRec(stream);
+          this.userMediaRecorder.ondataavailable = (e: any) => {
+            if (e.data && e.data.size > 0) {
+              this.userAudioChunks.push(e.data);
+            }
+          };
+          this.userMediaRecorder.onstop = () => {
+            const mime = this.userMediaRecorder?.mimeType || 'audio/webm';
+            const audioBlob = new Blob(this.userAudioChunks, { type: mime });
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              this.userVoiceAudio = reader.result as string;
+            };
+            reader.readAsDataURL(audioBlob);
+            stream.getTracks().forEach(t => t.stop());
+          };
+          this.userMediaRecorder.start();
+        }
+      } catch (err) {
+        console.warn('MediaRecorder recording error:', err);
+      }
+    }).catch(err => {
+      console.warn('Microphone stream capture error:', err);
+      if (speechActive) {
+        Swal.fire({
+          icon: 'info',
+          title: 'స్పీచ్-టు-టెక్స్ట్ ప్రారంభమైంది!',
+          text: 'మీరు మాట్లాడవచ్చు. మీ మాటలు నేరుగా టెక్స్ట్‌గా నమోదవుతాయి (Speech recognition is active, you can speak now).',
+          timer: 3000,
+          showConfirmButton: false
+        });
+      } else {
+        this.isRecordingUserVoice = false;
+        if (this.userVoiceTimer) clearInterval(this.userVoiceTimer);
+        const isHttp = !window.isSecureContext && location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1';
+        Swal.fire({
+          icon: 'info',
+          title: 'మైక్రోఫోన్ సౌకర్యం (Microphone)',
+          html: isHttp
+            ? 'బ్రౌజర్‌లో నేరుగా మైక్రోఫోన్ ఉపయోగించడానికి <b>HTTPS</b> లేదా <b>localhost</b> అవసరం.<br><br><b>మీరు సమస్య వివరాలను క్రింద బాక్స్‌లో నేరుగా టైప్ చేయవచ్చు</b> లేదా మీ మొబైల్ కీబోర్డ్‌లోని మైక్రోఫోన్ (🎙) నొక్కి మాట్లాడవచ్చు లేదా రికార్డ్ చేసిన ఆడియో ఫైల్ అప్‌లోడ్ చేయవచ్చు.'
+            : 'దయచేసి బ్రౌజర్ అడ్రస్ బార్‌లో 🔒 ఐకాన్ క్లిక్ చేసి <b>మైక్రోఫోన్ అనుమతి (Allow Microphone)</b> ఇవ్వండి, లేదా సమస్యను క్రింద నేరుగా టైప్ చేయండి.',
+          showCancelButton: true,
+          confirmButtonColor: '#00548F',
+          confirmButtonText: '<i class="fa fa-pencil"></i> నేరుగా టైప్ చేస్తాను',
+          cancelButtonText: '<i class="fa fa-upload"></i> ఆడియో ఫైల్ ఎంచుకోండి',
+          cancelButtonColor: '#6c757d'
+        }).then(res => {
+          if (res.dismiss === Swal.DismissReason.cancel) {
+            this.triggerUserAudioUpload();
+          } else if (res.isConfirmed) {
+            const textarea = document.querySelector('textarea[formcontrolname="notes"]') as HTMLElement;
+            if (textarea) textarea.focus();
+          }
+        });
+      }
+    });
+  }
+
+  triggerUserAudioUpload(): void {
+    const input = document.getElementById('userAudioFileInput') as HTMLInputElement;
+    if (input) input.click();
+  }
+
+  onUserAudioFileSelected(event: any): void {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.userVoiceAudio = reader.result as string;
+      this.userVoiceSeconds = 30;
+      Swal.fire({
+        icon: 'success',
+        title: 'ఆడియో ఫైల్ జతచేయబడింది!',
+        text: file.name,
+        timer: 2000,
+        showConfirmButton: false
+      });
+    };
+    reader.readAsDataURL(file);
   }
 
   stopUserVoiceRecording(): void {
@@ -448,6 +569,12 @@ export class FamilyCouncellingComponent implements OnInit {
   }
 
   submitBooking(): void {
+    if (!this.isLoggedIn) {
+      this.modalService.dismissAll();
+      this.promptLoginToBook(this.selectedDoctor);
+      return;
+    }
+
     if (this.bookingForm.invalid) {
       Swal.fire({
         icon: 'error',
@@ -546,45 +673,16 @@ export class FamilyCouncellingComponent implements OnInit {
   }
 
   startDoctorVoiceRecording(): void {
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      Swal.fire('Error', 'Microphone not supported in browser.', 'warning');
-      return;
-    }
+    const SpeechRec = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    let speechActive = false;
 
-    this.doctorAudioChunks = [];
-    this.isRecordingDoctorVoice = true;
-    this.doctorVoiceSeconds = 0;
-    this.doctorVoiceTimer = setInterval(() => {
-      this.doctorVoiceSeconds++;
-    }, 1000);
-
-    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-      this.doctorMediaRecorder = new (window as any).MediaRecorder(stream);
-      this.doctorMediaRecorder.ondataavailable = (e: any) => {
-        if (e.data && e.data.size > 0) {
-          this.doctorAudioChunks.push(e.data);
-        }
-      };
-      this.doctorMediaRecorder.onstop = () => {
-        const audioBlob = new Blob(this.doctorAudioChunks, { type: 'audio/webm' });
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          this.doctorVoiceAudio = reader.result as string;
-        };
-        reader.readAsDataURL(audioBlob);
-        stream.getTracks().forEach(t => t.stop());
-      };
-      this.doctorMediaRecorder.start();
-    }).catch(err => {
-      this.isRecordingDoctorVoice = false;
-      if (this.doctorVoiceTimer) clearInterval(this.doctorVoiceTimer);
-      Swal.fire('Permission Required', 'దయచేసి మైక్రోఫోన్ అనుమతి ఇవ్వండి.', 'info');
-    });
-
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    if (SpeechRecognition) {
+    // 1. Start Speech-to-Text Recognition for Doctor
+    if (SpeechRec) {
       try {
-        this.doctorSpeechRecognition = new SpeechRecognition();
+        if (this.doctorSpeechRecognition) {
+          try { this.doctorSpeechRecognition.abort(); } catch (_) {}
+        }
+        this.doctorSpeechRecognition = new SpeechRec();
         this.doctorSpeechRecognition.lang = this.doctorReplyLanguage;
         this.doctorSpeechRecognition.continuous = true;
         this.doctorSpeechRecognition.interimResults = true;
@@ -599,8 +697,107 @@ export class FamilyCouncellingComponent implements OnInit {
         };
 
         this.doctorSpeechRecognition.start();
-      } catch (_) {}
+        speechActive = true;
+      } catch (e) {
+        console.warn('Doctor speech recognition start failed:', e);
+      }
     }
+
+    // 2. Initialize Doctor Recording State & Timer
+    this.doctorAudioChunks = [];
+    this.isRecordingDoctorVoice = true;
+    this.doctorVoiceSeconds = 0;
+    if (this.doctorVoiceTimer) clearInterval(this.doctorVoiceTimer);
+    this.doctorVoiceTimer = setInterval(() => {
+      this.doctorVoiceSeconds++;
+    }, 1000);
+
+    // 3. Audio MediaRecorder Stream Capture
+    this.getMicrophoneStream().then(stream => {
+      try {
+        const MediaRec = (window as any).MediaRecorder;
+        if (MediaRec) {
+          let options: any;
+          if (typeof MediaRec.isTypeSupported === 'function') {
+            if (MediaRec.isTypeSupported('audio/webm')) options = { mimeType: 'audio/webm' };
+            else if (MediaRec.isTypeSupported('audio/mp4')) options = { mimeType: 'audio/mp4' };
+          }
+          this.doctorMediaRecorder = options ? new MediaRec(stream, options) : new MediaRec(stream);
+          this.doctorMediaRecorder.ondataavailable = (e: any) => {
+            if (e.data && e.data.size > 0) {
+              this.doctorAudioChunks.push(e.data);
+            }
+          };
+          this.doctorMediaRecorder.onstop = () => {
+            const mime = this.doctorMediaRecorder?.mimeType || 'audio/webm';
+            const audioBlob = new Blob(this.doctorAudioChunks, { type: mime });
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              this.doctorVoiceAudio = reader.result as string;
+            };
+            reader.readAsDataURL(audioBlob);
+            stream.getTracks().forEach(t => t.stop());
+          };
+          this.doctorMediaRecorder.start();
+        }
+      } catch (err) {
+        console.warn('Doctor MediaRecorder error:', err);
+      }
+    }).catch(err => {
+      console.warn('Doctor microphone stream error:', err);
+      if (speechActive) {
+        Swal.fire({
+          icon: 'info',
+          title: 'స్పీచ్-టు-టెక్స్ట్ ప్రారంభమైంది!',
+          text: 'డాక్టర్ గారూ, మీరు మాట్లాడవచ్చు. మీ మాటలు నేరుగా టెక్స్ట్‌గా నమోదవుతాయి.',
+          timer: 3000,
+          showConfirmButton: false
+        });
+      } else {
+        this.isRecordingDoctorVoice = false;
+        if (this.doctorVoiceTimer) clearInterval(this.doctorVoiceTimer);
+        const isHttp = !window.isSecureContext && location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1';
+        Swal.fire({
+          icon: 'info',
+          title: 'మైక్రోఫోన్ సౌకర్యం (Microphone)',
+          html: isHttp
+            ? 'బ్రౌజర్‌లో మైక్రోఫోన్ నేరుగా ఉపయోగించడానికి <b>HTTPS</b> అవసరం.<br><br>మీరు సలహాను క్రింద నేరుగా టైప్ చేయవచ్చు లేదా ఆడియో ఫైల్ అప్‌లోడ్ చేయవచ్చు.'
+            : 'దయచేసి మైక్రోఫోన్ అనుమతి ఇవ్వండి లేదా మీ సలహాను క్రింద నేరుగా టైప్ చేయండి.',
+          showCancelButton: true,
+          confirmButtonColor: '#00548F',
+          confirmButtonText: '<i class="fa fa-pencil"></i> సలహాను టైప్ చేస్తాను',
+          cancelButtonText: '<i class="fa fa-upload"></i> ఆడియో ఫైల్ ఎంచుకోండి',
+          cancelButtonColor: '#6c757d'
+        }).then(res => {
+          if (res.dismiss === Swal.DismissReason.cancel) {
+            this.triggerDoctorAudioUpload();
+          }
+        });
+      }
+    });
+  }
+
+  triggerDoctorAudioUpload(): void {
+    const input = document.getElementById('doctorAudioFileInput') as HTMLInputElement;
+    if (input) input.click();
+  }
+
+  onDoctorAudioFileSelected(event: any): void {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.doctorVoiceAudio = reader.result as string;
+      this.doctorVoiceSeconds = 30;
+      Swal.fire({
+        icon: 'success',
+        title: 'ఆడియో ఫైల్ జతచేయబడింది!',
+        text: file.name,
+        timer: 2000,
+        showConfirmButton: false
+      });
+    };
+    reader.readAsDataURL(file);
   }
 
   stopDoctorVoiceRecording(): void {
@@ -688,12 +885,16 @@ export class FamilyCouncellingComponent implements OnInit {
   // MY APPOINTMENTS (Family View)
   // -------------------------------------------------------------
   loadMyAppointments(): void {
+    if (!this.isLoggedIn) {
+      this.myAppointments = [];
+      return;
+    }
     this.isLoadingAppointments = true;
     this.service.getcouncellingappointments({ user_id: this.usr_id, phone_number: this.userMobile }).subscribe(
       (res: any) => {
         this.isLoadingAppointments = false;
         if (res && res.data && Array.isArray(res.data) && res.data.length > 0) {
-          this.myAppointments = res.data;
+          this.myAppointments = res.data.filter((a: any) => a && a.id !== 101);
         } else {
           this.myAppointments = this.getMyAppointmentsFromStorage();
         }
@@ -832,6 +1033,11 @@ export class FamilyCouncellingComponent implements OnInit {
   }
 
   saveDoctorProfile(): void {
+    if (!this.isLoggedIn) {
+      this.promptDoctorProfileSetup();
+      return;
+    }
+
     if (this.doctorProfileForm.invalid) {
       Swal.fire({
         icon: 'error',
@@ -845,6 +1051,8 @@ export class FamilyCouncellingComponent implements OnInit {
     const formValue = this.doctorProfileForm.value;
     const payload = {
       ...formValue,
+      user_id: this.usr_id || formValue.user_id,
+      phone_number: formValue.phone_number || this.userMobile,
       image: this.imagePreview || formValue.image || 'assets/images/pastor.png',
       is_active: formValue.is_active ? 1 : 0
     };
@@ -852,14 +1060,26 @@ export class FamilyCouncellingComponent implements OnInit {
     this.service.savecouncellingdoctor(payload).subscribe(
       (res: any) => {
         this.isSavingProfile = false;
+        const updatedDoc = {
+          id: (res && res.id) ? res.id : (payload.id || Date.now()),
+          ...payload
+        };
+        const existingIdx = this.doctors.findIndex(d => d.id == updatedDoc.id || (d.phone_number && d.phone_number === updatedDoc.phone_number));
+        if (existingIdx !== -1) {
+          this.doctors[existingIdx] = updatedDoc;
+        } else {
+          this.doctors.unshift(updatedDoc);
+        }
+        this.saveDoctorsToStorage();
+        this.applyFilters();
+        this.isDoctor = true;
+
         Swal.fire({
           icon: 'success',
           title: 'డాక్టర్ ప్రొఫైల్ విజయవంతంగా సేవ్ అయింది!',
-          text: 'డాక్టర్ వివరాలు కౌన్సిలింగ్ పేజీలో కనిపించుటకు అప్డేట్ అయ్యాయి.',
+          text: 'మీ ప్రొఫైల్ ఇప్పుడు అందుబాటులో ఉన్న కౌన్సిలర్ డాక్టర్ల జాబితాలో కనిపిస్తుంది.',
           confirmButtonColor: '#00548F'
         }).then(() => {
-          this.isDoctor = true;
-          this.loadDoctors();
           this.switchTab('browse');
         });
       },
@@ -870,7 +1090,7 @@ export class FamilyCouncellingComponent implements OnInit {
           id: payload.id || Date.now(),
           ...payload
         };
-        const existingIdx = this.doctors.findIndex(d => d.id == updatedDoc.id);
+        const existingIdx = this.doctors.findIndex(d => d.id == updatedDoc.id || (d.phone_number && d.phone_number === updatedDoc.phone_number));
         if (existingIdx !== -1) {
           this.doctors[existingIdx] = updatedDoc;
         } else {
@@ -883,7 +1103,7 @@ export class FamilyCouncellingComponent implements OnInit {
         Swal.fire({
           icon: 'success',
           title: 'డాక్టర్ ప్రొఫైల్ సేవ్ అయింది!',
-          text: 'డాక్టర్ వివరాలు భద్రపరచబడ్డాయి.',
+          text: 'మీ ప్రొఫైల్ ఇప్పుడు అందుబాటులో ఉన్న కౌన్సిలర్ డాక్టర్ల జాబితాలో కనిపిస్తుంది.',
           confirmButtonColor: '#00548F'
         }).then(() => {
           this.switchTab('browse');
@@ -970,71 +1190,63 @@ export class FamilyCouncellingComponent implements OnInit {
   }
 
   // -------------------------------------------------------------
-  // FALLBACK STORAGE & INITIAL SEEDS
+  // FALLBACK STORAGE, PURGE & PERSISTENCE
   // -------------------------------------------------------------
+  cleanupDummyData(): void {
+    try {
+      // 1. Purge dummy simulated doctors (id: 1, 2, 3 or dummy names)
+      const cachedDocs = localStorage.getItem('jbac_councelling_doctors');
+      if (cachedDocs) {
+        const list = JSON.parse(cachedDocs);
+        if (Array.isArray(list)) {
+          const clean = list.filter(d => 
+            d && d.id !== 1 && d.id !== 2 && d.id !== 3 &&
+            !String(d.doctor_name).includes('Sarah John') &&
+            !String(d.doctor_name).includes('David Paul') &&
+            !String(d.doctor_name).includes('Grace Varghese')
+          );
+          localStorage.setItem('jbac_councelling_doctors', JSON.stringify(clean));
+        }
+      }
+
+      // 2. Purge dummy appointments from storage
+      const myAppts = localStorage.getItem('jbac_my_councelling_appts');
+      if (myAppts) {
+        const list = JSON.parse(myAppts);
+        if (Array.isArray(list)) {
+          const clean = list.filter(a => a && a.id !== 101 && !String(a.doctor_name).includes('Sarah John'));
+          localStorage.setItem('jbac_my_councelling_appts', JSON.stringify(clean));
+        }
+      }
+
+      const docAppts = localStorage.getItem('jbac_doc_councelling_appts');
+      if (docAppts) {
+        const list = JSON.parse(docAppts);
+        if (Array.isArray(list)) {
+          const clean = list.filter(a => a && a.id !== 201 && a.id !== 202 && !String(a.doctor_name).includes('Sarah John'));
+          localStorage.setItem('jbac_doc_councelling_appts', JSON.stringify(clean));
+        }
+      }
+    } catch (_) {}
+  }
+
   getLocalFallbackDoctors(): any[] {
     const cached = localStorage.getItem('jbac_councelling_doctors');
     if (cached) {
       try {
-        return JSON.parse(cached);
+        const list = JSON.parse(cached);
+        if (Array.isArray(list)) {
+          // Return only genuine registered/saved doctors
+          return list.filter(d => 
+            d && d.id !== 1 && d.id !== 2 && d.id !== 3 &&
+            !String(d.doctor_name).includes('Sarah John') &&
+            !String(d.doctor_name).includes('David Paul') &&
+            !String(d.doctor_name).includes('Grace Varghese')
+          );
+        }
       } catch (_) {}
     }
-    return [
-      {
-        id: 1,
-        doctor_name: 'Dr. Sarah John, M.D.',
-        specialization: 'Family Counsellor & Clinical Psychologist',
-        qualification: 'MBBS, M.D. (Psychiatry), Certified Family Therapist',
-        experience_years: '12 Years',
-        phone_number: '9848012345',
-        email: 'dr.sarah@jbac.in',
-        consultation_fee: 'Free / Volunteer Service',
-        available_days: 'Monday to Saturday',
-        available_time_start: '10:00 AM',
-        available_time_end: '05:00 PM',
-        location: 'Vijayawada & Online Consultation',
-        address: 'JBAC Family Care Center, MG Road, Vijayawada',
-        bio: 'Dedicated Christian psychiatrist specializing in family healing, parent-child dynamics, and adolescent guidance.',
-        image: 'assets/images/pastor.png',
-        is_active: 1
-      },
-      {
-        id: 2,
-        doctor_name: 'Dr. P. David Paul, Ph.D.',
-        specialization: 'Marriage & Relationship Counsellor',
-        qualification: 'M.Sc Psychology, Ph.D. in Family Studies',
-        experience_years: '15 Years',
-        phone_number: '9440123456',
-        email: 'dr.davidpaul@jbac.in',
-        consultation_fee: 'Free / Volunteer Service',
-        available_days: 'Tuesday to Sunday',
-        available_time_start: '02:00 PM',
-        available_time_end: '08:00 PM',
-        location: 'Guntur & Tele-consultation',
-        address: 'Christian Counselling & Wellness Clinic, Brodipet, Guntur',
-        bio: 'Over 15 years experience resolving marital conflicts, pre-marital counselling, and restoring Christian household peace.',
-        image: 'assets/images/pastor.png',
-        is_active: 1
-      },
-      {
-        id: 3,
-        doctor_name: 'Dr. Grace Varghese, M.Phil',
-        specialization: 'Youth & Family Mental Wellness Counsellor',
-        qualification: 'M.Phil Clinical Psychology, PGD Family Health',
-        experience_years: '8 Years',
-        phone_number: '9849234567',
-        email: 'dr.grace@jbac.in',
-        consultation_fee: 'Free / Volunteer Service',
-        available_days: 'Monday, Wednesday, Friday, Saturday',
-        available_time_start: '11:00 AM',
-        available_time_end: '06:00 PM',
-        location: 'Visakhapatnam & Online Video Call',
-        address: 'Grace Healing Centre, Asilmetta, Visakhapatnam',
-        bio: 'Empathetic guidance for youth dealing with anxiety, depression, career confusion, and spiritual challenges.',
-        image: 'assets/images/pastor.png',
-        is_active: 1
-      }
-    ];
+    return [];
   }
 
   saveDoctorsToStorage(): void {
@@ -1044,27 +1256,22 @@ export class FamilyCouncellingComponent implements OnInit {
   }
 
   getMyAppointmentsFromStorage(): any[] {
+    if (!this.isLoggedIn) {
+      return [];
+    }
     const cached = localStorage.getItem('jbac_my_councelling_appts');
     if (cached) {
       try {
-        return JSON.parse(cached);
+        const list = JSON.parse(cached);
+        if (Array.isArray(list)) {
+          return list.filter(appt => 
+            appt && appt.id !== 101 && 
+            (appt.user_id == this.usr_id || (this.userMobile && appt.phone_number === this.userMobile))
+          );
+        }
       } catch (_) {}
     }
-    return [
-      {
-        id: 101,
-        doctor_name: 'Dr. Sarah John, M.D.',
-        family_name: this.userName || 'Devadas Family',
-        contact_person: this.userName || 'Devadas',
-        phone_number: this.userMobile || '9848012345',
-        appointment_date: this.todayDate,
-        appointment_time: '10:00 AM - 11:00 AM',
-        members_count: 2,
-        counselling_type: 'General Family Counselling',
-        notes: 'Discussion regarding adolescent child guidance and family prayer harmony.',
-        status: 'Confirmed'
-      }
-    ];
+    return [];
   }
 
   saveMyAppointmentsToStorage(): void {
@@ -1074,51 +1281,141 @@ export class FamilyCouncellingComponent implements OnInit {
   }
 
   getDoctorAppointmentsFromStorage(): any[] {
+    if (!this.isDoctor && !this.isAdmin) {
+      return [];
+    }
     const cached = localStorage.getItem('jbac_doc_councelling_appts');
     if (cached) {
       try {
-        return JSON.parse(cached);
+        const list = JSON.parse(cached);
+        if (Array.isArray(list)) {
+          return list.filter(appt => appt && appt.id !== 201 && appt.id !== 202);
+        }
       } catch (_) {}
     }
-    return [
-      {
-        id: 201,
-        doctor_id: 1,
-        doctor_name: 'Dr. Sarah John, M.D.',
-        family_name: 'Prasad & Sunitha Family',
-        contact_person: 'Prasad Rao',
-        phone_number: '9848123456',
-        email: 'prasad@gmail.com',
-        appointment_date: this.todayDate,
-        appointment_time: '11:00 AM - 12:00 PM',
-        members_count: 2,
-        counselling_type: 'Marriage & Relationship Counselling',
-        notes: 'Marital communication improvement and resolving recurring misunderstandings.',
-        status: 'Confirmed',
-        doctor_notes: 'Initial session confirmed via phone. Zoom link sent.'
-      },
-      {
-        id: 202,
-        doctor_id: 1,
-        doctor_name: 'Dr. Sarah John, M.D.',
-        family_name: 'Samuel & Mary Family',
-        contact_person: 'Mary Samuel',
-        phone_number: '9988776655',
-        email: 'mary@gmail.com',
-        appointment_date: this.todayDate,
-        appointment_time: '03:00 PM - 04:00 PM',
-        members_count: 3,
-        counselling_type: 'Parent-Child Dynamics',
-        notes: 'Counseling support for teenage son regarding studies and mobile screen habit.',
-        status: 'Confirmed',
-        doctor_notes: 'Both parents requested to attend along with the student.'
-      }
-    ];
+    return [];
   }
 
   saveDoctorAppointmentsToStorage(): void {
     try {
       localStorage.setItem('jbac_doc_councelling_appts', JSON.stringify(this.doctorAppointments));
     } catch (_) {}
+  }
+
+  // -------------------------------------------------------------
+  // CONVINCING AUTHENTICATION & LOGIN PROMPT MODALS
+  // -------------------------------------------------------------
+  promptLoginToBook(doctor: any): void {
+    const docName = doctor?.doctor_name ? `డాక్టర్ ${doctor.doctor_name}` : 'కౌన్సిలర్ డాక్టర్';
+    Swal.fire({
+      icon: 'info',
+      title: 'లాగిన్ అవ్వండి • Login to Book Slot',
+      html: `
+        <div class="text-start p-2" style="font-size: 14px; line-height: 1.6;">
+          <p class="mb-2">
+            <b>${docName}</b> గారితో అపాయింట్‌మెంట్ బుక్ చేసుకోవడానికి దయచేసి లాగిన్ అవ్వండి.
+          </p>
+          <p class="text-muted mb-2">
+            క్రైస్తవ కుటుంబ కౌన్సిలింగ్ సంప్రదింపులు, మీ కుటుంబ వివరాలు మరియు డాక్టర్ అందించే మార్గదర్శకత్వం అత్యంత గోప్యంగా ఉంచబడతాయి. మీ అకౌంట్ ద్వారా అపాయింట్‌మెంట్‌లు మరియు డాక్టర్ వాయిస్ సలహాలు భద్రంగా నిర్వహించవచ్చు.
+          </p>
+          <div class="p-2 bg-light rounded text-center small text-secondary">
+            ఖాతా లేదా? కేవలం 1 నిమిషంలో ఉచితంగా రిజిస్టర్ అవ్వండి!
+          </div>
+        </div>
+      `,
+      showCancelButton: true,
+      confirmButtonColor: '#00548F',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: '<i class="fa fa-sign-in"></i> ఇప్పుడే లాగిన్ అవ్వండి (Login Now)',
+      cancelButtonText: 'తర్వాత చేస్తాను (Cancel)'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (doctor && doctor.id) {
+          sessionStorage.setItem('pending_booking_doc_id', String(doctor.id));
+          sessionStorage.setItem('pending_booking_doc_name', doctor.doctor_name);
+        }
+        this.router.navigate(['/login'], { queryParams: { redirect: '/family-councelling' } });
+      }
+    });
+  }
+
+  promptDoctorProfileSetup(): void {
+    Swal.fire({
+      icon: 'info',
+      title: 'డాక్టర్ లాగిన్ & ప్రొఫైల్ సెటప్ • Doctor Login',
+      html: `
+        <div class="text-start p-2" style="font-size: 14px; line-height: 1.6;">
+          <p class="mb-2">
+            <b>మీరు అర్హత కలిగిన క్రైస్తవ వైద్యులా లేదా కౌన్సిలరా?</b>
+          </p>
+          <p class="text-muted mb-2">
+            కౌన్సిలింగ్ బోర్డులో మీ ప్రొఫైల్ వివరాలను సెటప్ చేసుకోవడానికి, అందుబాటులో ఉండే రోజులు/సమయాలు నిర్ణయించడానికి మరియు రోగుల అపాయింట్‌మెంట్లను స్వీకరించడానికి దయచేసి మీ డాక్టర్ ఖాతాలో లాగిన్ అవ్వండి.
+          </p>
+          <p class="small text-secondary mb-0">
+            ఇంకా ఖాతా లేదా? ఉచిత డాక్టర్ రిజిస్ట్రేషన్ ద్వారా మీ వివరాలు నమోదు చేసుకోండి.
+          </p>
+        </div>
+      `,
+      showCancelButton: true,
+      showDenyButton: true,
+      confirmButtonColor: '#00548F',
+      denyButtonColor: '#28a745',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: '<i class="fa fa-sign-in"></i> డాక్టర్ లాగిన్ (Doctor Login)',
+      denyButtonText: '<i class="fa fa-user-md"></i> డాక్టర్ రిజిస్ట్రేషన్ (Register as Doctor)',
+      cancelButtonText: 'రద్దు (Cancel)'
+    }).then((res) => {
+      if (res.isConfirmed) {
+        this.router.navigate(['/login'], { queryParams: { cat: '8', redirect: '/family-councelling?tab=doctor_profile' } });
+      } else if (res.isDenied) {
+        this.router.navigate(['/doctorregister']);
+      }
+    });
+  }
+
+  promptNotDoctorAccount(): void {
+    Swal.fire({
+      icon: 'warning',
+      title: 'డాక్టర్ ఖాతా అవసరం (Doctor Account Required)',
+      html: `
+        <div class="text-start p-2" style="font-size: 14px; line-height: 1.6;">
+          <p class="mb-2">
+            స్వాగతం <b>${this.userName}</b>! మీరు ప్రస్తుతం సాధారణ సభ్యులుగా లాగిన్ అయ్యారు.
+          </p>
+          <p class="text-muted mb-2">
+            కౌన్సిలింగ్ బోర్డులో డాక్టర్ ప్రొఫైల్ సెటప్ చేయడానికి మరియు రోగుల అపాయింట్‌మెంట్లు నిర్వహించడానికి డాక్టర్‌గా నమోదు కావలెను.
+          </p>
+        </div>
+      `,
+      showCancelButton: true,
+      confirmButtonColor: '#00548F',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: '<i class="fa fa-user-md"></i> డాక్టర్‌గా నమోదు అవ్వండి (Register as Doctor)',
+      cancelButtonText: 'సరే (OK)'
+    }).then((res) => {
+      if (res.isConfirmed) {
+        this.router.navigate(['/doctorregister']);
+      }
+    });
+  }
+
+  checkPendingBookingAfterLogin(): void {
+    if (!this.isLoggedIn) return;
+    const pendingDocId = sessionStorage.getItem('pending_booking_doc_id');
+    const pendingDocName = sessionStorage.getItem('pending_booking_doc_name');
+    if (pendingDocId) {
+      sessionStorage.removeItem('pending_booking_doc_id');
+      sessionStorage.removeItem('pending_booking_doc_name');
+      const doc = this.doctors.find(d => d.id == pendingDocId);
+      if (doc) {
+        Swal.fire({
+          icon: 'success',
+          title: 'లాగిన్ విజయవంతమైంది!',
+          text: `స్వాగతం ${this.userName}! మీరు డాక్టర్ ${doc.doctor_name} గారితో అపాయింట్‌మెంట్ బుక్ చేసుకోవడం కొనసాగించవచ్చు.`,
+          confirmButtonColor: '#00548F',
+          confirmButtonText: '<i class="fa fa-calendar-plus-o"></i> అపాయింట్‌మెంట్ బుక్ చేయండి'
+        });
+      }
+    }
   }
 }

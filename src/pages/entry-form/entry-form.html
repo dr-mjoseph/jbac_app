@@ -100,7 +100,10 @@
      
       <ion-row class="button">
       
-        <button ion-button color="secondary" (click)="submit()"><b>సబ్మిట్</b></button>
+        <button ion-button color="secondary" (click)="submit()" [disabled]="isSubmitting">
+          <ion-spinner *ngIf="isSubmitting" name="crescent" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"></ion-spinner>
+          <b>{{ isSubmitting ? 'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...' : 'సబ్మిట్' }}</b>
+        </button>
       
     </ion-row>
     

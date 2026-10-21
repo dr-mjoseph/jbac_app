@@ -18,21 +18,43 @@ page-doctorregister {
     margin-bottom: 16px;
   }
   .custom-item {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    padding-left: 8px;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin-bottom: 14px !important;
+  }
+  .custom-item .item-inner {
+    border-bottom: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
   }
   .custom-item ion-label {
-    font-size: 13px !important;
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+    color: #1e293b !important;
+    margin-bottom: 6px !important;
+    white-space: normal !important;
+  }
+  .custom-item .req {
+    color: #ef4444 !important;
     font-weight: bold;
-    color: #475569;
+    margin-left: 2px;
   }
   .custom-item ion-input,
   .custom-item ion-select,
   .custom-item ion-textarea {
-    font-size: 14px;
-    color: #0f172a;
+    background: #ffffff !important;
+    border: 1.5px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+    color: #0f172a !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .custom-item ion-input:focus-within,
+  .custom-item ion-select:focus-within,
+  .custom-item ion-textarea:focus-within {
+    border-color: #00548F !important;
+    box-shadow: 0 0 0 3px rgba(0,84,143,0.15) !important;
   }
 }

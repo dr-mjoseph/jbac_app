@@ -13,6 +13,7 @@ import { ServiceProvider } from '../../providers/service/service';
 export class LoginPage {
   passloginform: FormGroup
   loading: any;
+  isLoggingIn: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formbuilder: FormBuilder, public alertCtrl: AlertController, private service: ServiceProvider, private loadingCtrl: LoadingController, private modalCtrl: ModalController) {
     this.passloginform = this.formbuilder.group({
@@ -34,9 +35,10 @@ export class LoginPage {
   }
 
   async passlogin() {
+    this.isLoggingIn = true;
     this.loading = this.loadingCtrl.create({
       spinner: 'ios',
-      content: 'ప్రాసెస్ అవుతుంది దయచేసి ఆగండి'
+      content: 'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...'
     });
     this.loading.present();
     if (this.passloginform.invalid) {
@@ -47,6 +49,7 @@ export class LoginPage {
       });
       alert.present();
       this.loading.dismiss();
+      this.isLoggingIn = false;
     } else {
       this.service.passwordlogin(this.passloginform.value).subscribe((res: any) => {
         if (res.status == 250) {
@@ -57,6 +60,7 @@ export class LoginPage {
           });
           alert.present();
           this.loading.dismiss();
+      this.isLoggingIn = false;
         } else if (res.status == 600) {
           const alert = this.alertCtrl.create({
             mode: 'ios',
@@ -65,6 +69,7 @@ export class LoginPage {
           });
           alert.present();
           this.loading.dismiss();
+      this.isLoggingIn = false;
         } else {
           const alert = this.alertCtrl.create({
             mode: 'ios',
@@ -73,6 +78,7 @@ export class LoginPage {
           });
           alert.present();
           this.loading.dismiss();
+      this.isLoggingIn = false;
           localStorage.setItem('usr_id', res.data[0].id);
           localStorage.setItem('mobile_number', this.passloginform.value.mobile_number);
           localStorage.setItem('name', res.data[0].name);
@@ -96,11 +102,20 @@ export class LoginPage {
             localStorage.setItem('category', 'Doctor');
             localStorage.setItem('is_doctor', '1');
           }
-          this.navCtrl.setRoot(HomePage);
+          const redirect = this.navParams.get('redirect');
+          if (redirect === 'FamilyCouncellingPage' || redirect === 'family-councelling') {
+            this.navCtrl.setRoot('FamilyCouncellingPage');
+          } else {
+            this.navCtrl.setRoot(HomePage);
+          }
         }
       });
     }
 
+  }
+
+  gotodoctorregister() {
+    this.navCtrl.push('DoctorregisterPage');
   }
 
   gotoformspage() {

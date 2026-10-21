@@ -90,8 +90,7 @@ export class EntryComponent {
       village_id: ['', [Validators.required]],
       address: [''],
       description:[''],
-      term: [true, [Validators.required]],
-
+      term: [true],
     })
 
   }
@@ -409,6 +408,10 @@ getmandals(event: any) {
     this.submitted = true;
     this.showSpinner = true;
 
+    if (!this.entryform.get('term')?.value) {
+      this.entryform.patchValue({ term: true });
+    }
+
     if (this.entryform.invalid) {
       this.showAlert(
         'warning',
@@ -422,11 +425,56 @@ getmandals(event: any) {
       return;
     }
 
+    const submittedPhone = this.entryform.value?.phnumber || this.entryform.value?.phonenum || '';
     this.service.postregform(this.entryform.value).subscribe(
       (res: any) => {
         if (res.status === 200) {
-          this.showAlert('success', 'నమోదు విజయవంతం', 'మీ ఫోన్ నంబర్ కు సామాచారం పంపిస్తాము.');
-          this.entryform.reset();
+          Swal.fire({
+            icon: 'success',
+            title: 'నమోదు విజయవంతమైంది! (Registered Successfully)',
+            html: `
+              <div style="font-size: 14.5px; line-height: 1.6; text-align: left; padding: 6px;">
+                <p style="margin-bottom: 8px; color: #155724; font-weight: bold;">
+                  ✅ మీ వివరాలు విజయవంతంగా నమోదయ్యాయి!
+                </p>
+                <p style="margin-bottom: 8px;">
+                  మీరు మీ <b>మొబైల్ నంబర్‌ను యూజర్‌నేమ్ మరియు పాస్‌వర్డ్</b> రెండూగా ఉపయోగించి లాగిన్ అవ్వవచ్చు.
+                </p>
+                <p style="margin-bottom: 8px; color: #00548F;">
+                  మీరు పాస్‌వర్డ్ మార్చుకోవాలనుకుంటే లాగిన్ సమయంలో లేదా <b>'Forgot Password'</b> క్లిక్ చేసి మార్చుకోవచ్చు.
+                </p>
+                <div style="background: #f0fdf4; border: 1px dashed #22c55e; padding: 8px 10px; border-radius: 6px; font-size: 12.5px; color: #166534;">
+                  registered successfully, you can login with username and password with the same mobile number and if you want to change you can change while login or by clicking forgot password.
+                </div>
+              </div>
+            `,
+            confirmButtonText: 'లాగిన్ పేజీకి వెళ్లండి (Login Now)',
+            confirmButtonColor: '#00548F',
+            showCancelButton: true,
+            cancelButtonText: 'సరే (OK)',
+            cancelButtonColor: '#6c757d'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.router.navigate(['/login'], { queryParams: { phone: submittedPhone } });
+            }
+          });
+          this.entryform.reset({
+            category: '',
+            name: '',
+            phnumber: '',
+            whatsapnum: '',
+            denomation: '',
+            district_id: '',
+            constituency_id: '',
+            mandal_id: '',
+            village_id: '',
+            address: '',
+            description: '',
+            term: true
+          });
+          this.constituency = [];
+          this.mandals = [];
+          this.panchayati = [];
           this.submitted = false;
         } else {
           this.showAlert('error', 'లోపం!', 'సర్వర్ లో సమస్య ఉంది. దయచేసి మరల ప్రయత్నించండి.');
