@@ -41,17 +41,27 @@ export class LoginPage {
       content: 'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...'
     });
     this.loading.present();
+
+    const dismissLoadingSafely = () => {
+      this.isLoggingIn = false;
+      if (this.loading) {
+        try {
+          this.loading.dismiss().catch(() => {});
+        } catch (_) {}
+      }
+    };
+
     if (this.passloginform.invalid) {
+      dismissLoadingSafely();
       const alert = this.alertCtrl.create({
         mode: 'ios',
         title: 'మీ వివరాలు తప్పు, సరి చుడండి',
         buttons: ['OK']
       });
       alert.present();
-      this.loading.dismiss();
-      this.isLoggingIn = false;
     } else {
       this.service.passwordlogin(this.passloginform.value).subscribe((res: any) => {
+        dismissLoadingSafely();
         if (res.status == 250) {
           const alert = this.alertCtrl.create({
             mode: 'ios',
@@ -59,8 +69,6 @@ export class LoginPage {
             buttons: ['OK']
           });
           alert.present();
-          this.loading.dismiss();
-      this.isLoggingIn = false;
         } else if (res.status == 600) {
           const alert = this.alertCtrl.create({
             mode: 'ios',
@@ -68,50 +76,77 @@ export class LoginPage {
             buttons: ['OK']
           });
           alert.present();
-          this.loading.dismiss();
-      this.isLoggingIn = false;
-        } else {
+        } else if (res.status == 200 || res.status == 201) {
+          if (res.data && res.data.length > 0) {
+            localStorage.setItem('usr_id', res.data[0].id);
+            localStorage.setItem('mobile_number', this.passloginform.value.mobile_number);
+            localStorage.setItem('name', res.data[0].name);
+            localStorage.setItem('category_id', this.passloginform.value.category);
+            localStorage.setItem('auth_ind', "1");
+            if (this.passloginform.value.category == 1) {
+              localStorage.setItem('category', 'Believer');
+            } else if (this.passloginform.value.category == 2) {
+              localStorage.setItem('category', 'Student');
+            } else if (this.passloginform.value.category == 3) {
+              localStorage.setItem('category', 'Ministry');
+            } else if (this.passloginform.value.category == 4) {
+              localStorage.setItem('category', 'Pastor');
+            } else if (this.passloginform.value.category == 5) {
+              localStorage.setItem('category', 'Church');
+            } else if (this.passloginform.value.category == 6) {
+              localStorage.setItem('category', 'Independent Organization');
+            } else if (this.passloginform.value.category == 7) {
+              localStorage.setItem('category', 'Pastors Association ');
+            } else if (this.passloginform.value.category == 8) {
+              localStorage.setItem('category', 'Doctor');
+              localStorage.setItem('is_doctor', '1');
+            }
+          }
+
+          let navigated = false;
+          const doNavigate = () => {
+            if (navigated) return;
+            navigated = true;
+            const redirect = this.navParams.get('redirect');
+            if (redirect === 'FamilyCouncellingPage' || redirect === 'family-councelling') {
+              this.navCtrl.setRoot('FamilyCouncellingPage');
+            } else {
+              this.navCtrl.setRoot(HomePage);
+            }
+          };
+
           const alert = this.alertCtrl.create({
             mode: 'ios',
             title: 'విజయ వంతం గా లాగిన్ అయ్యారు',
+            buttons: [{
+              text: 'OK',
+              handler: () => {
+                doNavigate();
+              }
+            }]
+          });
+          alert.onDidDismiss(() => {
+            doNavigate();
+          });
+          alert.present();
+        } else {
+          const alert = this.alertCtrl.create({
+            mode: 'ios',
+            title: res.message || 'లాగిన్ విఫలమైంది',
             buttons: ['OK']
           });
           alert.present();
-          this.loading.dismiss();
-      this.isLoggingIn = false;
-          localStorage.setItem('usr_id', res.data[0].id);
-          localStorage.setItem('mobile_number', this.passloginform.value.mobile_number);
-          localStorage.setItem('name', res.data[0].name);
-          localStorage.setItem('category_id', this.passloginform.value.category);
-          localStorage.setItem('auth_ind', "1");
-          if (this.passloginform.value.category == 1) {
-            localStorage.setItem('category', 'Believer');
-          } else if (this.passloginform.value.category == 2) {
-            localStorage.setItem('category', 'Student');
-          } else if (this.passloginform.value.category == 3) {
-            localStorage.setItem('category', 'Ministry');
-          } else if (this.passloginform.value.category == 4) {
-            localStorage.setItem('category', 'Pastor');
-          } else if (this.passloginform.value.category == 5) {
-            localStorage.setItem('category', 'Church');
-          } else if (this.passloginform.value.category == 6) {
-            localStorage.setItem('category', 'Independent Organization');
-          } else if (this.passloginform.value.category == 7) {
-            localStorage.setItem('category', 'Pastors Association ');
-          } else if (this.passloginform.value.category == 8) {
-            localStorage.setItem('category', 'Doctor');
-            localStorage.setItem('is_doctor', '1');
-          }
-          const redirect = this.navParams.get('redirect');
-          if (redirect === 'FamilyCouncellingPage' || redirect === 'family-councelling') {
-            this.navCtrl.setRoot('FamilyCouncellingPage');
-          } else {
-            this.navCtrl.setRoot(HomePage);
-          }
         }
+      }, (_err: any) => {
+        dismissLoadingSafely();
+        const alert = this.alertCtrl.create({
+          mode: 'ios',
+          title: 'సర్వర్ సమస్య ఉంది, దయచేసి మళ్లీ ప్రయత్నించండి',
+          buttons: ['OK']
+        });
+        alert.present();
       });
     }
-
   }
 
   gotodoctorregister() {

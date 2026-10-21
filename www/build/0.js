@@ -9136,6 +9136,14 @@ var LoginPage = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             var alert_1;
+            var dismissLoadingSafely = function () {
+                _this.isLoggingIn = false;
+                if (_this.loading) {
+                    try {
+                        _this.loading.dismiss().catch(function () {});
+                    } catch (e) {}
+                }
+            };
             return __generator(this, function (_a) {
                 this.loading = this.loadingCtrl.create({
                     spinner: 'ios',
@@ -9143,18 +9151,17 @@ var LoginPage = /** @class */ (function () {
                 });
                 this.loading.present();
                 if (this.passloginform.invalid) {
+                    dismissLoadingSafely();
                     alert_1 = this.alertCtrl.create({
                         mode: 'ios',
                         title: 'మీ వివరాలు తప్పు, సరి చుడండి',
                         buttons: ['OK']
                     });
                     alert_1.present();
-                    this.isLoggingIn = false;
-                    this.isLoggingIn = false;
-                    this.loading.dismiss();
                 }
                 else {
                     this.service.passwordlogin(this.passloginform.value).subscribe(function (res) {
+                        dismissLoadingSafely();
                         if (res.status == 250) {
                             var alert_2 = _this.alertCtrl.create({
                                 mode: 'ios',
@@ -9162,8 +9169,6 @@ var LoginPage = /** @class */ (function () {
                                 buttons: ['OK']
                             });
                             alert_2.present();
-                            _this.isLoggingIn = false;
-                    this.loading.dismiss();
                         }
                         else if (res.status == 600) {
                             var alert_3 = _this.alertCtrl.create({
@@ -9172,46 +9177,84 @@ var LoginPage = /** @class */ (function () {
                                 buttons: ['OK']
                             });
                             alert_3.present();
-                            _this.isLoggingIn = false;
-                    this.loading.dismiss();
                         }
-                        else {
+                        else if (res.status == 200 || res.status == 201) {
+                            if (res.data && res.data.length > 0) {
+                                localStorage.setItem('usr_id', res.data[0].id);
+                                localStorage.setItem('mobile_number', _this.passloginform.value.mobile_number);
+                                localStorage.setItem('name', res.data[0].name);
+                                localStorage.setItem('category_id', _this.passloginform.value.category);
+                                localStorage.setItem('auth_ind', "1");
+                                if (_this.passloginform.value.category == 1) {
+                                    localStorage.setItem('category', 'Believer');
+                                }
+                                else if (_this.passloginform.value.category == 2) {
+                                    localStorage.setItem('category', 'Student');
+                                }
+                                else if (_this.passloginform.value.category == 3) {
+                                    localStorage.setItem('category', 'Ministry');
+                                }
+                                else if (_this.passloginform.value.category == 4) {
+                                    localStorage.setItem('category', 'Pastor');
+                                }
+                                else if (_this.passloginform.value.category == 5) {
+                                    localStorage.setItem('category', 'Church');
+                                }
+                                else if (_this.passloginform.value.category == 6) {
+                                    localStorage.setItem('category', 'Independent Organization');
+                                }
+                                else if (_this.passloginform.value.category == 7) {
+                                    localStorage.setItem('category', 'Pastors Association ');
+                                }
+                                else if (_this.passloginform.value.category == 8) {
+                                    localStorage.setItem('category', 'Doctor');
+                                    localStorage.setItem('is_doctor', '1');
+                                }
+                            }
+
+                            var navigated = false;
+                            var doNavigate = function () {
+                                if (navigated) return;
+                                navigated = true;
+                                var redirect = _this.navParams.get('redirect');
+                                if (redirect === 'FamilyCouncellingPage' || redirect === 'family-councelling') {
+                                    _this.navCtrl.setRoot('FamilyCouncellingPage');
+                                } else {
+                                    _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__home_home__["a" /* HomePage */]);
+                                }
+                            };
+
                             var alert_4 = _this.alertCtrl.create({
                                 mode: 'ios',
                                 title: 'విజయ వంతం గా లాగిన్ అయ్యారు',
-                                buttons: ['OK']
+                                buttons: [{
+                                    text: 'OK',
+                                    handler: function () {
+                                        doNavigate();
+                                    }
+                                }]
+                            });
+                            alert_4.onDidDismiss(function () {
+                                doNavigate();
                             });
                             alert_4.present();
-                            _this.isLoggingIn = false;
-                    this.loading.dismiss();
-                            localStorage.setItem('usr_id', res.data[0].id);
-                            localStorage.setItem('mobile_number', _this.passloginform.value.mobile_number);
-                            localStorage.setItem('name', res.data[0].name);
-                            localStorage.setItem('category_id', _this.passloginform.value.category);
-                            localStorage.setItem('auth_ind', "1");
-                            if (_this.passloginform.value.category == 1) {
-                                localStorage.setItem('category', 'Believer');
-                            }
-                            else if (_this.passloginform.value.category == 2) {
-                                localStorage.setItem('category', 'Student');
-                            }
-                            else if (_this.passloginform.value.category == 3) {
-                                localStorage.setItem('category', 'Ministry');
-                            }
-                            else if (_this.passloginform.value.category == 4) {
-                                localStorage.setItem('category', 'Pastor');
-                            }
-                            else if (_this.passloginform.value.category == 5) {
-                                localStorage.setItem('category', 'Church');
-                            }
-                            else if (_this.passloginform.value.category == 6) {
-                                localStorage.setItem('category', 'Independent Organization');
-                            }
-                            else if (_this.passloginform.value.category == 7) {
-                                localStorage.setItem('category', 'Pastors Association ');
-                            }
-                            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__home_home__["a" /* HomePage */]);
                         }
+                        else {
+                            var alert_other = _this.alertCtrl.create({
+                                mode: 'ios',
+                                title: res.message || 'లాగిన్ విఫలమైంది',
+                                buttons: ['OK']
+                            });
+                            alert_other.present();
+                        }
+                    }, function (err) {
+                        dismissLoadingSafely();
+                        var alert_err = _this.alertCtrl.create({
+                            mode: 'ios',
+                            title: 'సర్వర్ సమస్య ఉంది, దయచేసి మళ్లీ ప్రయత్నించండి',
+                            buttons: ['OK']
+                        });
+                        alert_err.present();
                     });
                 }
                 return [2 /*return*/];
