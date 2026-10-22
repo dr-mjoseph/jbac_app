@@ -233,6 +233,15 @@ export class StudentPage {
     }
   }
 
+  numericOnly(event: any): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    return charCode >= 48 && charCode <= 57;
+  }
+
+  gotohome() {
+    this.navCtrl.push('FormsPage');
+  }
+
   church: any;
   pastor: any;
 

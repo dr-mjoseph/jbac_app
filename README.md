@@ -3,7 +3,7 @@
 This repository contains the native hybrid Android mobile application for the **Jesus Believers Association Council (JBAC)**.
 
 - **Package Name**: `io.ionic.starterjbac`
-- **Current Version**: `0.0.36` (`versionCode: 36`)
+- **Current Version**: `0.0.37` (`versionCode: 37`)
 - **Repository**: [`dr-mjoseph/jbac_app`](https://github.com/dr-mjoseph/jbac_app)
 - **Sibling Web Repository**: [`dr-mjoseph/jbac_web`](https://github.com/dr-mjoseph/jbac_web)
 
@@ -16,8 +16,8 @@ This repository contains the native hybrid Android mobile application for the **
 | **`minSdkVersion`** | `24` | Android 7.0 (Nougat) or higher — complies with Google Play automatic app protection |
 | **`targetSdkVersion`** | `36` | Android 16 preview / Android 15 ready — exceeds Google Play 2026 requirements |
 | **`compileSdkVersion`** | `34` | Android 14.0 API Level |
-| **`versionCode`** | `36` | Incremented for Google Play Console Release 36 |
-| **`versionName`** | `0.0.36` | Matching semantic release version |
+| **`versionCode`** | `37` | Incremented for Google Play Console Release 37 |
+| **`versionName`** | `0.0.37` | Matching semantic release version |
 | **Signing Keystore** | `Jbac.keystore` | Production release keystore (Alias: `jbac`, SHA-256 digest) |
 
 ---
@@ -31,8 +31,12 @@ This repository contains the native hybrid Android mobile application for the **
 
 ---
 
-## 🌟 Recent Updates (Release 0.0.36)
+## 🌟 Recent Updates (Release 0.0.37)
 
+- **Student Registration Page Navigation Fixed (`StudentPage`)**:
+  - **Issue**: Tapping "విద్యార్థుల రిజిస్టర్" (Student Registrations) on the Registrations page (`FormsPage`) was unresponsive.
+  - **Root Cause**: An unclosed `<ion-col col-12>` without an opening `<ion-row>` on line 175 of `student.html` caused an Angular `TemplateParseError`, resulting in silent navigation promise rejection.
+  - **Resolution**: Replaced with clean, balanced `<ion-row>` tagging, added missing `gotohome()` and `numericOnly()` handlers in `StudentPage`, and recompiled chunk `12.js`.
 - **Automatic Meeting Expiration (`isOldMeeting`)**:
   - Implemented exact meeting date filter: meetings are displayed only from today's date through the meeting end date (`enddate >= today`).
   - As soon as a meeting's end date has passed, its poster automatically disappears across all search queries and event feeds.
@@ -71,7 +75,7 @@ This repository contains the native hybrid Android mobile application for the **
 
 A complete automated build and signing script is provided in the web repository:
 ```powershell
-powershell -ExecutionPolicy Bypass -File "C:\Users\rajes\Documents\jbac_web\scripts\build_and_sign_release_v36.ps1"
+powershell -ExecutionPolicy Bypass -File "C:\Users\rajes\Documents\jbac_web\scripts\build_and_sign_release_v37.ps1"
 ```
 
 The script executes the following automated pipeline:
@@ -82,7 +86,7 @@ The script executes the following automated pipeline:
    ```
 2. **Zipaligns & Signs APK** using `apksigner` with `Jbac.keystore`:
    ```bash
-   apksigner.bat sign --ks Jbac.keystore --ks-pass pass:123456 --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true jbacApp-0.0.36.apk
+   apksigner.bat sign --ks Jbac.keystore --ks-pass pass:123456 --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true jbacApp-0.0.37.apk
    ```
 3. **Signs AAB (Android App Bundle)** using `jarsigner` with `Jbac.keystore`:
    ```bash
@@ -92,11 +96,11 @@ The script executes the following automated pipeline:
 
 ---
 
-## 📦 Generated Release Artifacts (v0.0.36)
+## 📦 Generated Release Artifacts (v0.0.37)
 
-- **Test APK**: `C:\Users\rajes\StudioProjects\jbac_app\jbacApp-0.0.36.apk` *(118.68 MB)*
+- **Test APK**: `C:\Users\rajes\StudioProjects\jbac_app\jbacApp-0.0.37.apk` *(118.68 MB)*
   - Suitable for direct sideloading and testing on physical Android devices.
-- **Production AAB**: `C:\Users\rajes\StudioProjects\jbac_app\jbacApp-0.0.36.aab` *(115.81 MB)*
+- **Production AAB**: `C:\Users\rajes\StudioProjects\jbac_app\jbacApp-0.0.37.aab` *(115.81 MB)*
   - Ready for direct upload to the Google Play Console Production or Open Testing track.
 - **Upload Bundle Alias**: `C:\Users\rajes\StudioProjects\jbac_app\appreleasesigned.aab` *(115.81 MB)*
 
