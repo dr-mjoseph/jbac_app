@@ -129,16 +129,49 @@
     <ion-row>
       <ion-col col-12>
         <ion-item>
-          <ion-label stacked>ప్రతిభ</ion-label>
-          <ion-select formControlName="talent">
-            <ion-option value="" disabled selected>రకాన్ని ఎంచుకోండి</ion-option>
-            <ion-option value="Speaker">వక్త</ion-option>
-            <ion-option value="Writer">రచయిత</ion-option>
-            <ion-option value="Singer">గాయకుడు</ion-option>
-            <ion-option value="Others">ఇతరులు</ion-option>
+          <ion-label stacked>ప్రతిభ (Talent)</ion-label>
+          <ion-select formControlName="talent" placeholder="మీ ప్రతిభను ఎంచుకోండి">
+            <ion-option value="" disabled selected>మీ ప్రతిభను ఎంచుకోండి</ion-option>
+            <ion-option value="Video editing">Video editing</ion-option>
+            <ion-option value="Photo Graphy">Photo Graphy</ion-option>
+            <ion-option value="Using Social Meadia">Social Meadia</ion-option>
+            <ion-option value="Organiser">Organiser</ion-option>
+            <ion-option value="Sound Management">Sound Management</ion-option>
+            <ion-option value="Drumist">Drumist</ion-option>
+            <ion-option value="Keyboard Player">Keyboard Player</ion-option>
+            <ion-option value="Giving Gospel">Giving Gospel</ion-option>
+            <ion-option value="Singer">Singer</ion-option>
+            <ion-option value="Songs Writer">Songs Writer</ion-option>
+            <ion-option value="Social Service">Social Service</ion-option>
+            <ion-option value="Good in Studies">Good in Studies</ion-option>
+            <ion-option value="Multy Talent">Multy Talent</ion-option>
+            <ion-option value="Speaker">Speaker</ion-option>
+            <ion-option value="Writer">Writer</ion-option>
+            <ion-option value="Others">Others</ion-option>
           </ion-select>
         </ion-item>
       </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>గ్రూప్ / బ్రాంచ్ (Group / Branch)</ion-label>
+          <ion-input type="text" formControlName="branch" placeholder="ఉదా: MPC, BiPC, CSE, ECE"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
+          <ion-label stacked>పరీక్షలో మీరు సాధించిన మార్కులు (Total Marks Secured)</ion-label>
+          <ion-input type="text" formControlName="tmarks" placeholder="సాధించిన మార్కులు" (keypress)="numericOnly($event)"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>బోర్డు / యూనివర్సిటీ గరిష్ట మార్కులు (Maximum Marks Conducted)</ion-label>
+          <ion-input type="text" formControlName="mmarks" placeholder="గరిష్ట మార్కులు" (keypress)="numericOnly($event)"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>విద్య <span style="color:red; ">*</span></ion-label>
@@ -427,12 +460,19 @@
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>జనరల్ నాయకత్వం స్థాయి</ion-label>
-          <ion-select formControlName="generaltype">
-            <ion-option value="">జనరల్ నాయకత్వం ఎంచుకోండి</ion-option>
-            <ion-option value="1">జిల్లా</ion-option>
-            <ion-option value="2">సంవిధానం</ion-option>
-            <ion-option value="3">మండలం</ion-option>
-            <ion-option value="4">గ్రామం</ion-option>
+          <ion-select formControlName="generaltype" placeholder="జనరల్ నాయకత్వం ఎంచుకోండి">
+            <ion-option value="" selected disabled>జనరల్ నాయకత్వం ఎంచుకోండి</ion-option>
+            <ion-option value="State Level">రాష్ట్ర స్థాయి (State Level)</ion-option>
+            <ion-option value="District Level">జిల్లా స్థాయి (District Level)</ion-option>
+            <ion-option value="Constituency Level">నియోజకవర్గ స్థాయి (Constituency Level)</ion-option>
+            <ion-option value="Mandal Level">మండల స్థాయి (Mandal Level)</ion-option>
+            <ion-option value="Ward / Panchayati Level">వార్డు / పంచాయతీ స్థాయి (Ward / Panchayati Level)</ion-option>
+            <ion-option value="Church Level">చర్చి స్థాయి (Church Level)</ion-option>
+            <ion-option value="College Level">కాలేజీ స్థాయి (College Level)</ion-option>
+            <ion-option value="Branch Level">బ్రాంచ్ స్థాయి (Branch Level)</ion-option>
+            <ion-option value="Branch / Group Level">బ్రాంచ్ / గ్రూప్ స్థాయి (Branch / Group Level)</ion-option>
+            <ion-option value="Branch / Group Year Level">బ్రాంచ్ / గ్రూప్ ఇయర్ స్థాయి (Branch / Group Year Level)</ion-option>
+            <ion-option value="Section / Class Level">సెక్షన్ / క్లాస్ స్థాయి (Section / Class Level)</ion-option>
           </ion-select>
         </ion-item>
       </ion-col>

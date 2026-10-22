@@ -179,6 +179,72 @@ var MeetingPage = /** @class */ (function () {
         this.getdistric();
         this.searechevents();
     }
+    
+    MeetingPage.prototype.formatDateString = function (dateVal) {
+        if (!dateVal) return '';
+        if (typeof dateVal === 'string') {
+            var match = dateVal.trim().match(/^(\d{4})-(\d{2})-(\d{2})/);
+            if (match) {
+                return match[1] + '-' + match[2] + '-' + match[3];
+            }
+            var ddmmyyyy = dateVal.trim().match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
+            if (ddmmyyyy) {
+                return ddmmyyyy[3] + '-' + ('0' + ddmmyyyy[2]).slice(-2) + '-' + ('0' + ddmmyyyy[1]).slice(-2);
+            }
+        }
+        try {
+            var d = new Date(dateVal);
+            if (isNaN(d.getTime())) return '';
+            var year = d.getFullYear();
+            var month = ('0' + (d.getMonth() + 1)).slice(-2);
+            var day = ('0' + d.getDate()).slice(-2);
+            return year + '-' + month + '-' + day;
+        } catch (e) {
+            return '';
+        }
+    };
+    MeetingPage.prototype.isOldMeeting = function (event) {
+        var today = this.formatDateString(new Date());
+        if (!today || !event) return false;
+        var end = this.formatDateString(event.enddate);
+        var start = this.formatDateString(event.startdate || event.event_date);
+        if (end) {
+            return end < today;
+        }
+        if (start) {
+            return start < today;
+        }
+        return false;
+    };
+    MeetingPage.prototype.sortEventsAscending = function (list) {
+        var _this = this;
+        var today = this.formatDateString(new Date());
+        return list.sort(function (a, b) {
+            var startA = _this.formatDateString(a.startdate || a.event_date);
+            var startB = _this.formatDateString(b.startdate || b.event_date);
+            var effA = (startA && startA < today) ? today : (startA || '9999-99-99');
+            var effB = (startB && startB < today) ? today : (startB || '9999-99-99');
+            if (effA !== effB) {
+                return effA.localeCompare(effB);
+            }
+            if (startA !== startB) {
+                return (startA || '').localeCompare(startB || '');
+            }
+            return Number(a.id || 0) - Number(b.id || 0);
+        });
+    };
+    MeetingPage.prototype.setFilteredEvents = function (rawData) {
+        var _this = this;
+        if (!Array.isArray(rawData)) {
+            this.searchevents = [];
+            return;
+        }
+        var nonExpired = rawData
+            .filter(function (item) { return item && !_this.isOldMeeting(item); })
+            .map(function (item) { return (__assign({}, item, { showMore: false })); });
+        this.searchevents = this.sortEventsAscending(nonExpired);
+    };
+
     MeetingPage.prototype.getdenomations = function () {
         var _this = this;
         this.service.getdenomation().subscribe(function (res) {
@@ -220,7 +286,7 @@ var MeetingPage = /** @class */ (function () {
         this.service.searchingdata(data).subscribe(function (res) {
             _this.searchevents = [];
             if (res.status == 200) {
-                _this.searchevents = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
+                _this.setFilteredEvents(res.data);
                 console.log(_this.searchevents);
             }
             else {
@@ -240,7 +306,7 @@ var MeetingPage = /** @class */ (function () {
         this.service.searchingdata(data).subscribe(function (res) {
             _this.searchevents = [];
             if (res.status == 200) {
-                _this.searchevents = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
+                _this.setFilteredEvents(res.data);
             }
             else {
                 alert('No Data');
@@ -285,7 +351,7 @@ var MeetingPage = /** @class */ (function () {
         this.service.searchingdemonationdata(data).subscribe(function (res) {
             _this.searchevents = [];
             if (res.status == 200) {
-                _this.searchevents = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
+                _this.setFilteredEvents(res.data);
             }
             else {
                 alert('server down');
@@ -304,7 +370,7 @@ var MeetingPage = /** @class */ (function () {
         this.service.searchingdemonationdata(data).subscribe(function (res) {
             _this.searchevents = [];
             if (res.status == 200) {
-                _this.searchevents = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
+                _this.setFilteredEvents(res.data);
             }
             else {
                 alert('server down');
@@ -322,7 +388,7 @@ var MeetingPage = /** @class */ (function () {
         this.service.searchingdemonationdata(data).subscribe(function (res) {
             _this.searchevents = [];
             if (res.status == 200) {
-                _this.searchevents = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
+                _this.setFilteredEvents(res.data);
             }
             else {
                 alert('server down');
@@ -340,7 +406,7 @@ var MeetingPage = /** @class */ (function () {
         this.service.searchingdata(data).subscribe(function (res) {
             _this.searchevents = [];
             if (res.status == 200) {
-                _this.searchevents = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
+                _this.setFilteredEvents(res.data);
             }
             else {
                 alert('server down');
@@ -365,7 +431,7 @@ var MeetingPage = /** @class */ (function () {
         this.service.searchingdemonationdata(data).subscribe(function (res) {
             _this.searchevents = [];
             if (res.status == 200) {
-                _this.searchevents = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
+                _this.setFilteredEvents(res.data);
             }
             else {
                 alert('server down');
@@ -379,7 +445,7 @@ var MeetingPage = /** @class */ (function () {
         this.service.searchingdata(this.meetingfrom.value).subscribe(function (res) {
             _this.searchevents = [];
             if (res.status == 200) {
-                _this.searchevents = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
+                _this.setFilteredEvents(res.data);
                 if (_this.searchevents.length == 0) {
                     alert('ఈ క్యాటగిరీకి సంబంధించిన డేటా లేదు');
                 }
@@ -397,7 +463,7 @@ var MeetingPage = /** @class */ (function () {
                 alert(res.message);
             }
             else if (res.status == 200) {
-                _this.searchevents = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
+                _this.setFilteredEvents(res.data);
                 if (_this.searchevents.length == 0) {
                     alert('No Data Found');
                 }

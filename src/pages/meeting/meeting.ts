@@ -88,6 +88,72 @@ export class MeetingPage {
     });
   }
 
+  formatDateString(dateVal: any): string {
+    if (!dateVal) return '';
+    if (typeof dateVal === 'string') {
+      const match = dateVal.trim().match(/^(\d{4})-(\d{2})-(\d{2})/);
+      if (match) {
+        return `${match[1]}-${match[2]}-${match[3]}`;
+      }
+      const ddmmyyyy = dateVal.trim().match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
+      if (ddmmyyyy) {
+        return `${ddmmyyyy[3]}-${ddmmyyyy[2].padStart(2, '0')}-${ddmmyyyy[1].padStart(2, '0')}`;
+      }
+    }
+    try {
+      const d = new Date(dateVal);
+      if (isNaN(d.getTime())) return '';
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    } catch {
+      return '';
+    }
+  }
+
+  isOldMeeting(event: any): boolean {
+    const today = this.formatDateString(new Date());
+    if (!today || !event) return false;
+    const end = this.formatDateString(event.enddate);
+    const start = this.formatDateString(event.startdate || event.event_date);
+    if (end) {
+      return end < today;
+    }
+    if (start) {
+      return start < today;
+    }
+    return false;
+  }
+
+  sortEventsAscending(list: any[]): any[] {
+    const today = this.formatDateString(new Date());
+    return list.sort((a, b) => {
+      const startA = this.formatDateString(a.startdate || a.event_date);
+      const startB = this.formatDateString(b.startdate || b.event_date);
+      const effA = (startA && startA < today) ? today : (startA || '9999-99-99');
+      const effB = (startB && startB < today) ? today : (startB || '9999-99-99');
+      if (effA !== effB) {
+        return effA.localeCompare(effB);
+      }
+      if (startA !== startB) {
+        return (startA || '').localeCompare(startB || '');
+      }
+      return Number(a.id || 0) - Number(b.id || 0);
+    });
+  }
+
+  setFilteredEvents(rawData: any[]) {
+    if (!Array.isArray(rawData)) {
+      this.searchevents = [];
+      return;
+    }
+    const nonExpired = rawData
+      .filter((item: any) => item && !this.isOldMeeting(item))
+      .map((item: any) => ({ ...item, showMore: false }));
+    this.searchevents = this.sortEventsAscending(nonExpired);
+  }
+
   searchdistric(event: any) {
     this.searchdist = event
     var data = {
@@ -97,10 +163,7 @@ export class MeetingPage {
     this.service.searchingdata(data).subscribe((res: any) => {
       this.searchevents = [];
       if (res.status == 200) {
-        this.searchevents = res.data.map((item: any) => ({
-          ...item, showMore: false
-        }));
-        console.log(this.searchevents);
+        this.setFilteredEvents(res.data);
       } else {
         alert('server down')
       }
@@ -119,9 +182,7 @@ export class MeetingPage {
     this.service.searchingdata(data).subscribe((res: any) => {
       this.searchevents = [];
       if (res.status == 200) {
-        this.searchevents = res.data.map((item: any) => ({
-          ...item, showMore: false
-        }));
+        this.setFilteredEvents(res.data);
       } else {
         alert('No Data')
       }
@@ -164,9 +225,7 @@ export class MeetingPage {
     this.service.searchingdemonationdata(data).subscribe((res: any) => {
       this.searchevents = [];
       if (res.status == 200) {
-        this.searchevents = res.data.map((item: any) => ({
-          ...item, showMore: false
-        }));
+        this.setFilteredEvents(res.data);
       } else {
         alert('server down')
       }
@@ -186,9 +245,7 @@ export class MeetingPage {
     this.service.searchingdemonationdata(data).subscribe((res: any) => {
       this.searchevents = [];
       if (res.status == 200) {
-        this.searchevents = res.data.map((item: any) => ({
-          ...item, showMore: false
-        }));
+        this.setFilteredEvents(res.data);
       } else {
         alert('server down')
       }
@@ -206,9 +263,7 @@ export class MeetingPage {
     this.service.searchingdemonationdata(data).subscribe((res: any) => {
       this.searchevents = [];
       if (res.status == 200) {
-        this.searchevents = res.data.map((item: any) => ({
-          ...item, showMore: false
-        }));
+        this.setFilteredEvents(res.data);
       } else {
         alert('server down')
       }
@@ -225,9 +280,7 @@ export class MeetingPage {
     this.service.searchingdata(data).subscribe((res: any) => {
       this.searchevents = [];
       if (res.status == 200) {
-        this.searchevents = res.data.map((item: any) => ({
-          ...item, showMore: false
-        }));
+        this.setFilteredEvents(res.data);
       } else {
         alert('server down')
       }
@@ -252,9 +305,7 @@ export class MeetingPage {
     this.service.searchingdemonationdata(data).subscribe((res: any) => {
       this.searchevents = [];
       if (res.status == 200) {
-        this.searchevents = res.data.map((item: any) => ({
-          ...item, showMore: false
-        }));
+        this.setFilteredEvents(res.data);
       } else {
         alert('server down')
       }
@@ -270,9 +321,7 @@ export class MeetingPage {
     this.service.searchingdata(this.meetingfrom.value).subscribe((res: any) => {
       this.searchevents = [];
       if (res.status == 200) {
-        this.searchevents = res.data.map((item: any) => ({
-          ...item, showMore: false
-        }));
+        this.setFilteredEvents(res.data);
         if (this.searchevents.length == 0) {
           alert('ఈ క్యాటగిరీకి సంబంధించిన డేటా లేదు')
         }
@@ -288,9 +337,7 @@ export class MeetingPage {
       if (res.status == 202) {
         alert(res.message);
       } else if (res.status == 200) {
-        this.searchevents = res.data.map((item: any) => ({
-          ...item, showMore: false
-        }));
+        this.setFilteredEvents(res.data);
         if (this.searchevents.length == 0) {
           alert('No Data Found')
         }
