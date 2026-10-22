@@ -84,11 +84,12 @@ var ChurchPage = /** @class */ (function () {
             ministry_id: [''],
             churchtype: [''],
             password: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].minLength(6)]],
-            // retypepassword: ['', [Validators.required, Validators.minLength(6)]],
+            retypepassword: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].minLength(6)]],
             facebook: [''],
             youtube: [''],
             remarks: [''],
             village_name: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
+            term: [true]
         });
     }
     ChurchPage.prototype.gotohome = function () {
@@ -189,6 +190,7 @@ ChurchPage.prototype.ionViewDidLoad = function () {
     };
     ChurchPage.prototype.postchurchregister = function () {
         this.showSpinner = true;
+        this.submitted = true;
         var _this = this;
         this.submitted = true;
         console.log(this.form.value);

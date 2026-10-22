@@ -43,9 +43,9 @@ export class MinistryPage {
      retypepassword: ['', [Validators.required, Validators.minLength(6)]],
       pastor: [''],
       description: [''],
-       term: [true],],
+       term: [true]
     });
-    this.ministryform.reset();
+    this.r = this.ministryform.controls;
   }
 
   ionViewDidLoad() {
@@ -118,7 +118,7 @@ export class MinistryPage {
         } else this.showSpinner = false;
           if (res.status == 200) {
           alert('విజయవంతముగా సబ్మిట్ అయింది');
-          this.ministryform.reset();
+          this.r = this.ministryform.controls;
           this.mandals = [];
           this.constituency = [];
           this.panchayati = [];

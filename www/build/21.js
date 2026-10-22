@@ -72,6 +72,7 @@ var MinistryPage = /** @class */ (function () {
         this.navParams = navParams;
         this.formBuilder = formBuilder;
         this.service = service;
+        this.submitted = false;
         this.ministryform = this.formBuilder.group({
             firstname: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
             denomation: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
@@ -86,13 +87,19 @@ var MinistryPage = /** @class */ (function () {
             mandal_id: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
             panchayat_id: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
             password: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].minLength(6)]],
-            // retypepassword: ['', [Validators.required, Validators.minLength(6)]],
+            retypepassword: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].minLength(6)]],
             pastor: [''],
             description: [''],
+            term: [true]
         });
-        this.ministryform.reset();
+        this.r = this.ministryform.controls;
     }
-        MinistryPage.prototype.onStateChange = function (event) {
+        Object.defineProperty(MinistryPage.prototype, "r", {
+        get: function () { return this.ministryform ? this.ministryform.controls : {}; },
+        enumerable: true,
+        configurable: true
+    });
+MinistryPage.prototype.onStateChange = function (event) {
         var stateId = (event && event.target) ? event.target.value : event;
         if (this.searchdist !== undefined) this.searchdist = '';
         if (this.searchconts !== undefined) this.searchconts = '';
@@ -174,6 +181,7 @@ MinistryPage.prototype.ionViewDidLoad = function () {
     };
     MinistryPage.prototype.postministrysignup = function () {
         this.showSpinner = true;
+        this.submitted = true;
         var _this = this;
         if (this.ministryform.invalid) {
             alert('దయచేసి ఖాళీ ఫీల్డ్‌లను పూరించండి ');

@@ -43,7 +43,7 @@ export class ChurchPage {
       youtube: [''],
       remarks: [''],
       village_name: ['', [Validators.required]],
-       term: [true],],
+       term: [true]
     })
   }
 
