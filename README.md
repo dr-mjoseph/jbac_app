@@ -3,7 +3,7 @@
 This repository contains the native hybrid Android mobile application for the **Jesus Believers Association Council (JBAC)**.
 
 - **Package Name**: `io.ionic.starterjbac`
-- **Current Version**: `0.0.37` (`versionCode: 37`)
+- **Current Version**: `0.0.38` (`versionCode: 38`)
 - **Repository**: [`dr-mjoseph/jbac_app`](https://github.com/dr-mjoseph/jbac_app)
 - **Sibling Web Repository**: [`dr-mjoseph/jbac_web`](https://github.com/dr-mjoseph/jbac_web)
 
@@ -16,8 +16,8 @@ This repository contains the native hybrid Android mobile application for the **
 | **`minSdkVersion`** | `24` | Android 7.0 (Nougat) or higher — complies with Google Play automatic app protection |
 | **`targetSdkVersion`** | `34` | Android 14.0 API Level — aligned with compileSdkVersion for Cordova Gradle compatibility |
 | **`compileSdkVersion`** | `34` | Android 14.0 API Level |
-| **`versionCode`** | `37` | Incremented for Google Play Console Release 37 |
-| **`versionName`** | `0.0.37` | Matching semantic release version |
+| **`versionCode`** | `38` | Incremented for Google Play Console Release 38 |
+| **`versionName`** | `0.0.38` | Matching semantic release version |
 | **Signing Keystore** | `Jbac.keystore` | Production release keystore (Alias: `jbac`, SHA-256 digest) |
 
 ---
@@ -80,34 +80,34 @@ This repository contains the native hybrid Android mobile application for the **
 
 A complete automated build and signing script is provided in the web repository:
 ```powershell
-powershell -ExecutionPolicy Bypass -File "C:\Users\rajes\Documents\jbac_web\scripts\build_and_sign_release_v37.ps1"
+powershell -ExecutionPolicy Bypass -File "C:\Users\rajes\Documents\jbac_web\scripts\build_and_sign_release_v38.ps1"
 ```
 
 The script executes the following automated pipeline:
 1. **Compiles Gradle release binaries**:
    ```bash
    cd platforms/android
-   gradlew.bat assembleRelease bundleRelease --stacktrace
+   gradlew.bat clean assembleRelease bundleRelease -PcdvBuildToolsVersion=30.0.3 --stacktrace
    ```
 2. **Zipaligns & Signs APK** using `apksigner` with `Jbac.keystore`:
    ```bash
-   apksigner.bat sign --ks Jbac.keystore --ks-pass pass:123456 --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true jbacApp-0.0.37.apk
+   apksigner sign --ks Jbac.keystore --ks-pass pass:123456 --v1-signing-enabled true --v2-signing-enabled true jbacApp-0.0.38.apk
    ```
 3. **Signs AAB (Android App Bundle)** using `jarsigner` with `Jbac.keystore`:
    ```bash
-   jarsigner -sigalg SHA256withRSA -digestalg SHA-256 -keystore Jbac.keystore -storepass 123456 app-release.aab jbac
+   jarsigner -sigalg SHA256withRSA -digestalg SHA-256 -keystore Jbac.keystore -storepass 123456 jbacApp-0.0.38.aab jbac
    ```
-4. **Validates APK badging** using Android `aapt` to verify `minSdkVersion 24` and `targetSdkVersion 36`.
+4. **Validates APK badging** using Android `aapt` to verify `minSdkVersion 24`, `targetSdkVersion 34`, and `versionCode 38`.
 
 ---
 
-## 📦 Generated Release Artifacts (v0.0.37)
+## 📦 Generated Release Artifacts (v0.0.38)
 
-- **Test APK**: `C:\Users\rajes\StudioProjects\jbac_app\jbacApp-0.0.37.apk` *(118.68 MB)*
+- **Test APK**: `C:\Users\rajes\StudioProjects\jbac_app\jbacApp-0.0.38.apk` *(118.7 MB)*
   - Suitable for direct sideloading and testing on physical Android devices.
-- **Production AAB**: `C:\Users\rajes\StudioProjects\jbac_app\jbacApp-0.0.37.aab` *(115.81 MB)*
+- **Production AAB**: `C:\Users\rajes\StudioProjects\jbac_app\jbacApp-0.0.38.aab` *(115.84 MB)*
   - Ready for direct upload to the Google Play Console Production or Open Testing track.
-- **Upload Bundle Alias**: `C:\Users\rajes\StudioProjects\jbac_app\appreleasesigned.aab` *(115.81 MB)*
+- **Upload Bundle Alias**: `C:\Users\rajes\StudioProjects\jbac_app\appreleasesigned.aab` *(115.84 MB)*
 
 ---
 
