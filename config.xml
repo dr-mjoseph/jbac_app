@@ -21,7 +21,7 @@
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="FadeSplashScreen" value="true" />
     <preference name="android-minSdkVersion" value="24" />
-    <preference name="android-targetSdkVersion" value="36" />
+    <preference name="android-targetSdkVersion" value="34" />
     <preference name="android-compileSdkVersion" value="34" />
         <platform name="android">
         <config-file file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest" xmlns:android="http://schemas.android.com/apk/res/android">

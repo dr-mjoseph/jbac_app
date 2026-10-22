@@ -57,6 +57,15 @@
       <ion-col col-12>
         <h4 Style="color:whitesmoke;text-align: center;font-weight: 600;">మీ అడ్రస్</h4>
         <ion-item>
+          <ion-label stacked>రాష్ట్రం / State</ion-label>
+          <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">
+            <ion-option *ngFor="let s of states" [value]="s.id">{{s.state_name}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <ion-item>
           <ion-label stacked>జిల్లా</ion-label>
           <ion-select formControlName="district_id" (ionChange)="getconstency($event)" >
             <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి జిల్లా ఎంచుకోండి</ion-option>

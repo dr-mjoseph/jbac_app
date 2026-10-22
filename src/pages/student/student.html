@@ -230,6 +230,14 @@
       <ion-row>
         <ion-col col-12>
           <ion-item>
+            <ion-label stacked>రాష్ట్రం / State (కళాశాల/పాఠశాల) <span style="color:red; ">*</span></ion-label>
+            <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">
+              <ion-option *ngFor="let s of states" [value]="s.id">{{s.state_name}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12>
+          <ion-item>
             <ion-label stacked>జిల్లాను ఎంచుకోండి<span
                 style="color:red; ">*</span></ion-label>
             <ion-select formControlName="district_id" (ionChange)="getconstency($event);">
@@ -292,6 +300,14 @@
     <ion-grid>
       <h3 style="text-align: center;font-weight: 900;color: white;">నివాస చిరునామా</h3>
       <ion-row>
+        <ion-col col-12>
+          <ion-item>
+            <ion-label stacked>రాష్ట్రం / State (నివాసం) <span style="color:red">*</span></ion-label>
+            <ion-select formControlName="res_state_id" (ionChange)="onResStateChange($event)">
+              <ion-option *ngFor="let s of states" [value]="s.id">{{s.state_name}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
         <ion-col col-12>
           <ion-item>
             <ion-label stacked>జిల్లాలను ఎంచుకోండి<span style="color:red">*</span></ion-label>

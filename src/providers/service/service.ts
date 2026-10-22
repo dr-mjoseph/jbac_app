@@ -32,8 +32,13 @@ export class ServiceProvider {
     return this.http.post(this.testApi + 'searchingdemonation', data);
   }
 
-  getdistrict() {
-    return this.http.post(this.testApi + 'getdistricts', []);
+  getstates() {
+    return this.http.post(this.testApi + 'getstates', {});
+  }
+
+  getdistrict(stateId?: any) {
+    const payload = (stateId !== undefined && stateId !== null && stateId !== '' && stateId !== 'all') ? { state_id: stateId } : {};
+    return this.http.post(this.testApi + 'getdistricts', payload);
   }
 
   getconsistencys(districtId?: any) {

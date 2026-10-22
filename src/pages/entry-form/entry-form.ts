@@ -15,6 +15,10 @@ export class EntryFormPage {
 
   form: FormGroup
 
+  states: any = [
+    { id: 1, state_name: 'ఆంధ్రప్రదేశ్ (Andhra Pradesh - AP)' },
+    { id: 2, state_name: 'తెలంగాణ (Telangana - TG)' }
+  ];
   districts: any;
   mandals: any = [];
   constituency: any = [];
@@ -29,6 +33,7 @@ export class EntryFormPage {
       name: ['', Validators.required],
       number: ['', Validators.required],
       category: ['', Validators.required],
+      state_id: ['1', Validators.required],
       district_id: ['', Validators.required],
       constituency_id: ['', Validators.required],
       mandal_id: ['', Validators.required],
@@ -38,7 +43,8 @@ export class EntryFormPage {
 
 
 
-    this.getdistric();
+    this.getstates();
+    this.getdistric(1);
   }
   gotoprivacy() {
     this.navCtrl.push('PagesPrivacyPage')
@@ -49,10 +55,32 @@ export class EntryFormPage {
     this.viewCtrl.dismiss();
   }
 
-  getdistric() {
-    this.service.getdistrict().subscribe((res: any) => {
+    getstates() {
+    this.service.getstates().subscribe((res: any) => {
+      if (res && res.data) {
+        this.states = res.data;
+      }
+    });
+  }
+
+  onStateChange(event: any) {
+    this.form.patchValue({
+      district_id: '',
+      constituency_id: '',
+      mandal_id: '',
+      village_id: ''
+    });
+    this.constituency = [];
+    this.mandals = [];
+    this.getvillages = [];
+    this.getdistric(event);
+  }
+
+  getdistric(stateId?: any) {
+    const sid = stateId || this.form.get('state_id')?.value || 1;
+    this.service.getdistrict(sid).subscribe((res: any) => {
       this.districts = res.data;
-    })
+    });
   }
 
   getmandals(event: any) {

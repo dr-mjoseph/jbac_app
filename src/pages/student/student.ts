@@ -26,6 +26,10 @@ export class StudentPage {
   constituency1:any=[];
   mandals1:any=[];
   panchayati1:any=[];
+  states: any = [
+    { id: 1, state_name: 'ఆంధ్రప్రదేశ్ (Andhra Pradesh - AP)' },
+    { id: 2, state_name: 'తెలంగాణ (Telangana - TG)' }
+  ];
   districts: any;
   mandals: any;
   panchayati: any;
@@ -49,6 +53,7 @@ export class StudentPage {
       tmarks: [''],
       mmarks: [''],
       branch: [''],
+      state_id: ['1'],
       district_id: ['', [Validators.required]],
       constituency_id: ['', [Validators.required]],
       mandal_id: ['', [Validators.required]],
@@ -75,6 +80,7 @@ export class StudentPage {
       respanchayati: ['', [Validators.required]],
       resmandals: ['', [Validators.required]],
       resconstituencyname: ['', [Validators.required]],
+      res_state_id: ['1'],
       resdistricts: ['', [Validators.required]],
       god: [''],
       term: [true],
@@ -102,10 +108,45 @@ export class StudentPage {
       this.denomation = res.data;
     })
   }
-  getdistric() {
-    this.service.getdistrict().subscribe((res: any) => {
+    getstates() {
+    this.service.getstates().subscribe((res: any) => {
+      if (res && res.data) {
+        this.states = res.data;
+      }
+    });
+  }
+
+  onStateChange(event: any) {
+    this.studentform.patchValue({
+      district_id: '',
+      constituency_id: '',
+      mandal_id: '',
+      village_id: ''
+    });
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    this.getdistric(event);
+  }
+
+  onResStateChange(event: any) {
+    this.studentform.patchValue({
+      resdistricts: '',
+      resconstituencyname: '',
+      resmandals: '',
+      respanchayati: ''
+    });
+    this.constituency1 = [];
+    this.mandals1 = [];
+    this.panchayati1 = [];
+    this.getdistric(event);
+  }
+
+  getdistric(stateId?: any) {
+    const sid = stateId || this.studentform.get('state_id')?.value || 1;
+    this.service.getdistrict(sid).subscribe((res: any) => {
       this.districts = res.data;
-    })
+    });
   }
 
   
