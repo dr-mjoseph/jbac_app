@@ -14,7 +14,7 @@ This repository contains the native hybrid Android mobile application for the **
 | Parameter | Value | Details |
 | :--- | :--- | :--- |
 | **`minSdkVersion`** | `24` | Android 7.0 (Nougat) or higher — complies with Google Play automatic app protection |
-| **`targetSdkVersion`** | `36` | Android 16 preview / Android 15 ready — exceeds Google Play 2026 requirements |
+| **`targetSdkVersion`** | `34` | Android 14.0 API Level — aligned with compileSdkVersion for Cordova Gradle compatibility |
 | **`compileSdkVersion`** | `34` | Android 14.0 API Level |
 | **`versionCode`** | `37` | Incremented for Google Play Console Release 37 |
 | **`versionName`** | `0.0.37` | Matching semantic release version |
@@ -33,23 +33,26 @@ This repository contains the native hybrid Android mobile application for the **
 
 ## 🌟 Recent Updates (Release 0.0.37)
 
-- **Student Registration Page Navigation Fixed (`StudentPage`)**:
-  - **Issue**: Tapping "విద్యార్థుల రిజిస్టర్" (Student Registrations) on the Registrations page (`FormsPage`) was unresponsive.
-  - **Root Cause**: An unclosed `<ion-col col-12>` without an opening `<ion-row>` on line 175 of `student.html` caused an Angular `TemplateParseError`, resulting in silent navigation promise rejection.
-  - **Resolution**: Replaced with clean, balanced `<ion-row>` tagging, added missing `gotohome()` and `numericOnly()` handlers in `StudentPage`, and recompiled chunk `12.js`.
-- **Automatic Meeting Expiration (`isOldMeeting`)**:
+- **Registration Forms Navigation Failure Fixed (`FormsPage` / All Registration Chunks)**:
+  - **Issue**: Tapping any registration form card on `FormsPage` (`బిలీవర్`, `విద్యార్థుల`, `మినిస్ట్రీ`, `పాస్టర్`, `చర్చి`, `సంస్థ`, `పాస్టర్ అసోసియేషన్`, `డాక్టర్`) produced no response; the app remained on the forms screen.
+  - **Root Cause**: In compiled Webpack bundle chunks, `template: '...'` is an inline single-quoted JavaScript string literal. The previous patching formatted snippets with `f'<{col_tag}>\n\n'`, inserting raw `0x0A`/`0x0D` bytes into the string literal. Per ECMA-262, raw line terminators inside single-quoted strings throw `SyntaxError: Invalid or unexpected token` upon dynamic chunk evaluation. This crashed Webpack's module loading promise, silently blocking Ionic's `this.navCtrl.push(...)`. Card 1 was also missing the `tappable` attribute.
+  - **Resolution**:
+    - Re-patched all chunk templates strictly using raw string `r'\n\n'` (escaped `\n`), ensuring zero raw CR/LF bytes inside string literals.
+    - Used executable JavaScript newlines (`0x0A`) for FormBuilder controls and prototype methods.
+    - Added `tappable` attribute to all cards in `src/pages/forms/forms.html` and `www/build/29.js`.
+    - Automated Node.js syntax verification (`node -c`) across **all 57 JavaScript chunk files**: 0 errors.
+- **Universal State (`రాష్ట్రం / State`) Cascading Support**:
+  - Full State dropdown (`ఆంధ్రప్రదేశ్ (AP)` / `తెలంగాణ (TG)`) and cascading district loading enabled across:
+    - **Search Modules**: Jobs (`23.js`), Organisations (`13.js`), Church/House (`14.js`), Marriage (`22.js`).
+    - **All 9 Registration Forms**: Believer (`37.js`), Student (`12.js`), Ministry (`21.js`), Pastor (`16.js`), Church (`35.js`), Organisation (`18.js`), Pastor Association (`38.js`), Add Jobs (`41.js`), Entry Form (`32.js`).
+  - Set initial district fetch on registration forms to AP via `this.service.getdistrict(1)`, allowing immediate district selection upon opening.
+- **Ministry Registration State Parity (`MinistryPage`)**:
+  - Added State selection (`రాష్ట్రం / State`) and `onStateChange()` cascading logic to `MinistryPage` (`21.js`, `src/pages/ministry/ministry.html`, `src/pages/ministry/ministry.ts`).
+- **Automatic Meeting Expiration (`isOldMeeting`) & Ascending Chronological Sort (`sortEventsAscending`)**:
   - Implemented exact meeting date filter: meetings are displayed only from today's date through the meeting end date (`enddate >= today`).
-  - As soon as a meeting's end date has passed, its poster automatically disappears across all search queries and event feeds.
-- **Ascending Chronological Meeting Order (`sortEventsAscending`)**:
-  - All meetings are presented in ascending date order (`today ➔ tomorrow ➔ day after tomorrow ➔ future`), ensuring users see immediate upcoming events first.
+  - All meetings are presented in ascending date order (`today ➔ tomorrow ➔ day after tomorrow ➔ future`).
 - **Student Registration Feature Parity (Commit `ed77502` - "student")**:
-  - **14 Talent Options**: Added comprehensive talent options including Video Editing, Photography, Social Media, Organiser, Sound Management, Drummer, Keyboard Player, Giving Gospel, Singer, Song Writer, Social Service, Good in Studies, Multi Talent, Speaker, Writer, and Others.
-  - **Academic Marks & Group Fields**: Added `Group / Branch` (`branch`), `Total Marks Secured` (`tmarks`), and `Maximum Marks Conducted` (`mmarks`) with numeric-only validation.
-  - **11 General Leadership Levels**: Expanded general leadership hierarchy from State Level, District Level, Constituency Level, Mandal Level, Ward/Panchayati Level, Church Level, College Level, Branch Level, Branch/Group Level, Branch/Group Year Level, to Section/Class Level.
-- **Live AWS RDS MySQL Database Schema Parity (`student_reg`)**:
-  - All new student fields (`study`, `tmarks`, `mmarks`, `branch`, `talent`, `fathername`, `mother`, `orphon`, `passexam`, `whatsappnumber`) are now fully reflected into the live AWS RDS MySQL database (`student_reg` table) and synchronized with backend API alias handlers.
-- **Runtime WebPack Bundle Synchronization**:
-  - Re-synchronized both `www/build/` and `platforms/android/app/src/main/assets/www/build/` chunks (`5.js` for MeetingPage and `12.js` for StudentPage).
+  - Added 14 Talent options, academic marks (`tmarks`, `mmarks`), `branch`, and 11 leadership levels with full live RDS MySQL schema parity (`student_reg`).
 
 ---
 

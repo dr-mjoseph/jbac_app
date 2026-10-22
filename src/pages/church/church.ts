@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+﻿import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
@@ -25,6 +25,7 @@ export class ChurchPage {
       church_name: ['', [Validators.required]],
       denomination_id: ['', [Validators.required]],
       total_members: ['', [Validators.required]],
+      state_id: ['1', [Validators.required]],
       district_id: ['', [Validators.required]],
       constituency_id: ['', [Validators.required]],
       mandal_id: ['', [Validators.required]],
@@ -49,6 +50,26 @@ export class ChurchPage {
 
   gotohome() {
     this.navCtrl.push('FormsPage');
+  }
+  
+  onStateChange(event: any) {
+    var stateId = event;
+    this.form.patchValue({
+      state_id: stateId,
+      district_id: '',
+      constituency_id: '',
+      mandal_id: '',
+      panchayati_id: ''
+    });
+    this.districts = [];
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    this.service.getdistrict(stateId).subscribe((res: any) => {
+      if (res && res.status == 200) {
+        this.districts = res.data;
+      }
+    });
   }
   ionViewDidLoad() {
     this.getdistric();

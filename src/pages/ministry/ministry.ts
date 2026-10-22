@@ -34,6 +34,7 @@ export class MinistryPage {
       headnmber: ['', [Validators.required, Validators.maxLength(10)]],
       number_ofchurches: ['', [Validators.required]],
       number_ofmembers: ['', [Validators.required]],
+      state_id: ['1'],
       district_id: ['', [Validators.required]],
       constituency_id: ['', [Validators.required]],
       mandal_id: ['', [Validators.required]],
@@ -52,8 +53,26 @@ export class MinistryPage {
     this.getdenomations();
   }
 
+  onStateChange(event: any) {
+    const stateId = (event && event.target) ? event.target.value : event;
+    if (this.ministryform) {
+      this.ministryform.patchValue({ state_id: stateId, district_id: '' });
+    }
+    this.districts = [];
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    this.service.getdistrict(stateId).subscribe((res: any) => {
+      if (res && res.status == 200) {
+        this.districts = res.data;
+      }
+    }, (error: any) => {
+      console.log(error);
+    });
+  }
+
   getdistric() {
-    this.service.getdistrict().subscribe((res: any) => {
+    this.service.getdistrict(1).subscribe((res: any) => {
       this.districts = res.data;
     })
   }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+﻿import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -41,6 +41,7 @@ export class OrganisationPage {
       ministry_id: [''],
       password: ['', [Validators.required, Validators.minLength(6)]],
      retypepassword: ['', [Validators.required, Validators.minLength(6)]],
+      state_id: ['1', [Validators.required]],
       districts: ['', [Validators.required]],
       constituencyname: ['', [Validators.required]],
       mandals: ['', [Validators.required]],
@@ -53,6 +54,26 @@ export class OrganisationPage {
 
   
   getorganizationpastors: any = [];
+  
+  onStateChange(event: any) {
+    var stateId = event;
+    this.form.patchValue({
+      state_id: stateId,
+      districts: '',
+      constituencyname: '',
+      mandals: '',
+      panchayati: ''
+    });
+    this.districts = [];
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    this.service.getdistrict(stateId).subscribe((res: any) => {
+      if (res && res.status == 200) {
+        this.districts = res.data;
+      }
+    });
+  }
   getorgnaziationpstorsget() {
     this.service.getpastor().subscribe((res: any) => {
       this.getorganizationpastors = res && res.data ? res.data : [];

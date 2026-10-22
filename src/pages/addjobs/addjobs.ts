@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+﻿import { Component } from '@angular/core';
 import { ActionSheetController, IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -32,6 +32,7 @@ export class AddjobsPage {
       description: ['', [Validators.required]],
       number1: ['', [Validators.required, Validators.minLength(10)]],
       number2: [''],
+      state_id: ['1', [Validators.required]],
       districtname: ['', [Validators.required]],
       constituencyname: ['', [Validators.required]],
       mandals: ['', [Validators.required]],
@@ -47,6 +48,26 @@ export class AddjobsPage {
 
   get a() { return this.jobsadding.controls; }
 
+  
+  onStateChange(event: any) {
+    var stateId = event;
+    this.jobsadding.patchValue({
+      state_id: stateId,
+      districtname: '',
+      constituencyname: '',
+      mandals: '',
+      panchayati: ''
+    });
+    this.districts = [];
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    this.service.getdistrict(stateId).subscribe((res: any) => {
+      if (res && res.status == 200) {
+        this.districts = res.data;
+      }
+    });
+  }
   ionViewDidLoad() {
     this.getdistric();
     this.getbeliver();

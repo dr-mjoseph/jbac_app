@@ -1,4 +1,4 @@
-﻿webpackJsonp([49],{
+webpackJsonp([49],{
 
 /***/ 128:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -36,8 +36,12 @@ var ServiceProvider = /** @class */ (function () {
     ServiceProvider.prototype.searchingdemonationdata = function (data) {
         return this.http.post(this.testApi + 'searchingdemonation', data);
     };
-    ServiceProvider.prototype.getdistrict = function () {
-        return this.http.post(this.testApi + 'getdistricts', []);
+    ServiceProvider.prototype.getstates = function () {
+        return this.http.post(this.testApi + 'getstates', {});
+    };
+    ServiceProvider.prototype.getdistrict = function (stateId) {
+        var payload = (stateId !== undefined && stateId !== null && stateId !== '' && stateId !== 'all') ? { state_id: stateId } : {};
+        return this.http.post(this.testApi + 'getdistricts', payload);
     };
     ServiceProvider.prototype.getconsistencys = function () {
         return this.http.post(this.testApi + 'getconsistencys', []);

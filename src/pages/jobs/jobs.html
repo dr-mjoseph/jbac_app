@@ -1,4 +1,4 @@
-<ion-header>
+﻿<ion-header>
   <ion-navbar>
     <ion-buttons end>
       <button ion-button (click)="gotohome()">
@@ -53,6 +53,17 @@
       </ion-row>
 
       <ion-row>
+        <ion-col col-12 col-md-3>
+          <ion-item>
+            <ion-label stacked>à°°à°¾à°·à±à°Ÿà±à°°à°‚ / State</ion-label>
+            <ion-select formControlName="state_id" interface="popover" style="width: 273px;"
+              (ionChange)="onStateChange($event)">
+              <ion-option value="">à°…à°¨à±à°¨à±€ (All States)</ion-option>
+              <ion-option value="1">à°†à°‚à°§à±à°°à°ªà±à°°à°¦à±‡à°¶à± (AP)</ion-option>
+              <ion-option value="2">à°¤à±†à°²à°‚à°—à°¾à°£ (TG)</option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
         <ion-col col-12 col-md-3>
           <ion-item>
             <ion-label stacked>జిల్లాలను ఎంచుకోండండి</ion-label>

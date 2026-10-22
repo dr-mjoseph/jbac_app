@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+﻿import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 // import { HomePage } from '../home/home';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -22,6 +22,7 @@ export class JobsPage {
   fromshow: any = 1
   constructor(public navCtrl: NavController, public navParams: NavParams, public formbuilder: FormBuilder, private service: ServiceProvider) {
     this.form = this.formbuilder.group({
+      state_id: [''],
       jobtile: ['', [Validators.required]],
       qual: ['', [Validators.required]],
       experience: ['', [Validators.required]],
@@ -30,6 +31,39 @@ export class JobsPage {
       mandal_id: ['', [Validators.required]],
       panchayati_id: ['', [Validators.required]],
     })
+  }
+  
+  onStateChange(event: any) {
+    var stateId = event;
+    this.searchdist = '';
+    this.searchconts = '';
+    this.form.patchValue({
+      state_id: stateId,
+      district_id: '',
+      constenncy_id: '',
+      mandal_id: '',
+      panchayati_id: ''
+    });
+    this.districts = [];
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    this.service.getdistrict(stateId).subscribe((res: any) => {
+      if (res && res.status == 200) {
+        this.districts = res.data;
+      }
+    }, (error: any) => {
+      console.log(error);
+    });
+    if (stateId) {
+      this.service.searchjobswise({ state_id: stateId }).subscribe((res: any) => {
+        if (res && res.status == 200 && Array.isArray(res.data)) {
+          this.jobs = res.data;
+        }
+      });
+    } else {
+      this.getjobs();
+    }
   }
   gotohome() {
     this.navCtrl.push('HomePage');

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+﻿import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
@@ -45,6 +45,7 @@ export class SearchhousePage {
       ministry_id: ['', [Validators.required]],
     })
     this.serachMeetingform = this.formBuilder.group({
+      state_id: [''],
       district_id: ['', [Validators.required]],
       constenncy_id: ['', [Validators.required]],
       mandal_id: ['', [Validators.required]],
@@ -52,6 +53,26 @@ export class SearchhousePage {
     })
   }
 
+  
+  onStateChange(event: any) {
+    var stateId = event;
+    this.serachMeetingform.patchValue({
+      state_id: stateId,
+      district_id: '',
+      constenncy_id: '',
+      mandal_id: '',
+      panchayati_id: ''
+    });
+    this.districts = [];
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    this.service.getdistrict(stateId).subscribe((res: any) => {
+      if (res && res.status == 200) {
+        this.districts = res.data;
+      }
+    });
+  }
   ionViewDidLoad() {
     this.getdistric();
     this.searechevents();

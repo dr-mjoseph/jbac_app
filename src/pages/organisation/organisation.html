@@ -1,4 +1,4 @@
-<ion-header>
+﻿<ion-header>
   <ion-navbar>
     <ion-buttons end>
       <button ion-button (click)="gotohome()">
@@ -138,6 +138,15 @@
     <ion-card>
       <p>చిరునామా</p>
       <ion-row>
+        <ion-col col-12>
+          <ion-item>
+            <ion-label stacked>రాష్ట్రం / State <span style="color:red; ">*</span></ion-label>
+            <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">
+              <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>
+              <ion-option value="2">తెలంగాణ (TG)</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
         <ion-col col-12>
           <ion-item>
             <ion-label stacked>జిల్లాలను ఎంచుకోండి <span

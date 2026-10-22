@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+﻿import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
@@ -49,6 +49,7 @@ export class BelieverPage {
       education: ['', Validators.required], //
       designation: ['', Validators.required], //
       dpartment: ['', Validators.required], //
+      state_id: ['1', Validators.required],
       districts: ['', Validators.required], //
       mandals: ['', Validators.required], //
       panchayati: ['', Validators.required], //
@@ -82,6 +83,26 @@ export class BelieverPage {
     this.navCtrl.push('FormsPage');
   }
 
+  
+  onStateChange(event: any) {
+    var stateId = event;
+    this.form.patchValue({
+      state_id: stateId,
+      districts: '',
+      constituencyname: '',
+      mandals: '',
+      panchayati: ''
+    });
+    this.districts = [];
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    this.service.getdistrict(stateId).subscribe((res: any) => {
+      if (res && res.status == 200) {
+        this.districts = res.data;
+      }
+    });
+  }
   ionViewDidLoad() {
     this.getdistric();
     this.getdenomations();

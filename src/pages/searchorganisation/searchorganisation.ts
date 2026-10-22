@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+﻿import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
@@ -30,6 +30,7 @@ export class SearchorganisationPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public service: ServiceProvider) {
 
     this.serachMeetingform = this.formBuilder.group({
+      state_id: [''],
       denomation_id: [''],
       ministry_id: [''],
       service_name: [''],
@@ -40,6 +41,35 @@ export class SearchorganisationPage {
     })
   }
 
+  
+  onStateChange(event: any) {
+    var stateId = event;
+    this.serachMeetingform.patchValue({
+      state_id: stateId,
+      district_id: '',
+      constenncy_id: '',
+      mandal_id: '',
+      panchayati_id: ''
+    });
+    this.districts = [];
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    this.service.getdistrict(stateId).subscribe((res: any) => {
+      if (res && res.status == 200) {
+        this.districts = res.data;
+      }
+    });
+    if (stateId) {
+      this.service.getorganizations({ state_id: stateId }).subscribe((res: any) => {
+        if (res && res.status == 200 && Array.isArray(res.data)) {
+          this.marriagedata = res.data.map((item: any) => ({ ...item, showMore: false }));
+        }
+      });
+    } else {
+      this.defaultdata();
+    }
+  }
   defaultdata() {
     this.service.getorganizations().subscribe((res: any) => {
       console.log(res.data);
