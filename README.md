@@ -46,6 +46,8 @@ This repository contains the native hybrid Android mobile application for the **
   - **14 Talent Options**: Added comprehensive talent options including Video Editing, Photography, Social Media, Organiser, Sound Management, Drummer, Keyboard Player, Giving Gospel, Singer, Song Writer, Social Service, Good in Studies, Multi Talent, Speaker, Writer, and Others.
   - **Academic Marks & Group Fields**: Added `Group / Branch` (`branch`), `Total Marks Secured` (`tmarks`), and `Maximum Marks Conducted` (`mmarks`) with numeric-only validation.
   - **11 General Leadership Levels**: Expanded general leadership hierarchy from State Level, District Level, Constituency Level, Mandal Level, Ward/Panchayati Level, Church Level, College Level, Branch Level, Branch/Group Level, Branch/Group Year Level, to Section/Class Level.
+- **Live AWS RDS MySQL Database Schema Parity (`student_reg`)**:
+  - All new student fields (`study`, `tmarks`, `mmarks`, `branch`, `talent`, `fathername`, `mother`, `orphon`, `passexam`, `whatsappnumber`) are now fully reflected into the live AWS RDS MySQL database (`student_reg` table) and synchronized with backend API alias handlers.
 - **Runtime WebPack Bundle Synchronization**:
   - Re-synchronized both `www/build/` and `platforms/android/app/src/main/assets/www/build/` chunks (`5.js` for MeetingPage and `12.js` for StudentPage).
 
