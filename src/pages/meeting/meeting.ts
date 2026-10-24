@@ -55,7 +55,6 @@ export class MeetingPage {
 
     this.getdenomations();
     this.getbeliver();
-    this.getdistric();
     this.searechevents();
   }
 
@@ -72,11 +71,13 @@ export class MeetingPage {
     this.constituency = [];
     this.mandals = [];
     this.panchayati = [];
-    this.service.getdistrict(stateId).subscribe((res: any) => {
-      if (res && res.status == 200) {
-        this.districts = res.data;
-      }
-    });
+    if (stateId) {
+      this.service.getdistrict(stateId).subscribe((res: any) => {
+        if (res && res.status == 200) {
+          this.districts = res.data;
+        }
+      });
+    }
   }
 
   getdenomations() {
@@ -103,10 +104,21 @@ export class MeetingPage {
 
   getconstency(event: any) {
     var id = event;
-    this.service.getconsistencys().subscribe((res: any) => {
-      this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
-      console.log(this.constituency);
+    this.meetingfrom.patchValue({
+      constenncy_id: '',
+      mandal_id: '',
+      panchayati_id: ''
     });
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    if (id) {
+      this.service.getconsistencys().subscribe((res: any) => {
+        if (res && res.data) {
+          this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
+        }
+      });
+    }
   }
 
   formatDateString(dateVal: any): string {
@@ -215,25 +227,34 @@ export class MeetingPage {
 
   getmandals(event: any) {
     var id = event;
-    this.service.getmandals().subscribe((res: any) => {
-      if (res.status == 202) {
-        alert(res.message);
-      } else if (res.status == 200) {
-        this.mandals = res.data.filter((data: any) => data.const_id == id);
-      }
+    this.meetingfrom.patchValue({
+      mandal_id: '',
+      panchayati_id: ''
     });
+    this.mandals = [];
+    this.panchayati = [];
+    if (id) {
+      this.service.getmandals().subscribe((res: any) => {
+        if (res && res.data) {
+          this.mandals = res.data.filter((data: any) => data.const_id == id);
+        }
+      });
+    }
   }
 
   gepanchayati(event: any) {
     var id = event;
-    console.log(id);
-    this.service.gepanchayatis().subscribe((res: any) => {
-      if (res.status == 202) {
-        alert(res.message);
-      } else if (res.status == 200) {
-        this.panchayati = res.data.filter((data: any) => data.mndl_id == id);
-      }
-    })
+    this.meetingfrom.patchValue({
+      panchayati_id: ''
+    });
+    this.panchayati = [];
+    if (id) {
+      this.service.gepanchayatis().subscribe((res: any) => {
+        if (res && res.data) {
+          this.panchayati = res.data.filter((data: any) => data.mndl_id == id);
+        }
+      });
+    }
   }
 
   ministry(event: any) {

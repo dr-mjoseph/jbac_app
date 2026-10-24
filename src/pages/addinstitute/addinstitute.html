@@ -127,13 +127,24 @@
           <div *ngIf="i['phonenumber'].errors['minlength']">10 అంకెల కనీసం ఉండాలి</div>
         </div>
       </ion-col>
-      <ion-col col-12 (click)="openphoto()">
-        <ion-item>
-          <input type="file" id="instituteFileInput" (change)="onFileSelected($event)" accept="image/*" style="display:none">
-          <input type="file" id="instituteCameraInput" (change)="onFileSelected($event)" accept="image/*" capture="camera" style="display:none">
-          <img src="assets/icon/upload.svg" style="height:70px;width:70px;">
-          చిత్రం అప్‌లోడ్ చేయండి<br>
-          <img *ngIf="imagesdata.length" style="width:200px;height:200px" src="{{imagesdata[0].reviewimg}}">
+      <ion-col col-12>
+        <ion-item style="border: 1px dashed #488aff; border-radius: 8px; padding: 10px; margin-bottom: 10px; background: #f9fbfd;">
+          <ion-label stacked style="font-weight: bold; color: #222; font-size: 15px;">
+            చిత్రం అప్‌లోడ్ చేయండి (Upload Institute Image)
+          </ion-label>
+          <div style="margin-top: 10px; margin-bottom: 10px;">
+            <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: block; width: 100%; padding: 6px; font-size: 14px;">
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
+            <button ion-button small icon-start type="button" (click)="openphoto()" color="secondary">
+              <ion-icon name="camera"></ion-icon>
+              Camera / Gallery
+            </button>
+            <span *ngIf="imagesdata.length" style="color: green; font-size: 13px; font-weight: bold;">✓ ఫోటో ఎంచుకోబడింది</span>
+          </div>
+          <div *ngIf="imagesdata.length" style="text-align: center; margin-top: 12px;">
+            <img [src]="imagesdata[0].reviewimg" style="max-width: 100%; max-height: 220px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+          </div>
         </ion-item>
       </ion-col>
       <ion-col col-12>

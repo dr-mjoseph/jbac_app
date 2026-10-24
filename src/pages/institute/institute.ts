@@ -39,7 +39,7 @@ export class InstitutePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public service: ServiceProvider, public frombuilder: FormBuilder) {
     this.form = this.frombuilder.group({
-      state_id: ['1'],
+      state_id: [''],
       denomination_id: [''],
       ministry_id: [''],
       district_id: [''],
@@ -64,15 +64,16 @@ export class InstitutePage {
     this.constituency = [];
     this.mandals = [];
     this.panchayati = [];
-    this.service.getdistrict(stateId).subscribe((res: any) => {
-      if (res && res.status == 200) {
-        this.districts = res.data;
-      }
-    });
+    if (stateId) {
+      this.service.getdistrict(stateId).subscribe((res: any) => {
+        if (res && res.status == 200) {
+          this.districts = res.data;
+        }
+      });
+    }
   }
 
   ionViewDidLoad() {
-    this.getdistric();
     this.getbeliver();
     this.getinstitutes();
   }

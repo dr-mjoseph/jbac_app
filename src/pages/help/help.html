@@ -35,13 +35,17 @@
           </ion-select>
         </ion-item>
       </ion-col>
-      <ion-col col-12 (click)="openphoto()">
-        <div class="imgerdt">
-          <input type="file" id="helpFileInput" (change)="onFileSelected($event)" accept="image/*" style="display:none">
-          <input type="file" id="helpCameraInput" (change)="onFileSelected($event)" accept="image/*" capture="camera" style="display:none">
-          <img src="assets/icon/upload.svg" style="height:70px;width:70px;">
-          చిత్రం అప్‌లోడ్ చేయండి<br><br>
-          <img *ngIf="imagesdata.length" style="width:200px;height:200px" src="{{imagesdata[0].reviewimg}}">
+      <ion-col col-12>
+        <div class="imgerdt" style="padding: 12px; text-align: center; border: 2px dashed #00548F; border-radius: 8px; background: #fafafa;">
+          <img src="assets/icon/upload.svg" style="height: 60px; width: 60px; display: block; margin: 0 auto 6px;">
+          <p style="margin: 4px 0 10px; font-weight: bold; color: #00548F; font-size: 14px;">చిత్రం అప్‌లోడ్ చేయండి (Choose File / Camera)</p>
+          <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: block; width: 100%; max-width: 290px; margin: 0 auto 10px; padding: 6px; background: #fff; border: 1px solid #ccc; border-radius: 4px;">
+          <button ion-button small outline icon-start type="button" (click)="openphoto()" style="margin: 0 auto; display: inline-block;">
+            <ion-icon name="camera"></ion-icon> Camera / Gallery
+          </button>
+          <div *ngIf="imagesdata.length" style="margin-top: 12px;">
+            <img style="max-height: 200px; max-width: 100%; border-radius: 8px; border: 1px solid #00548F;" [src]="imagesdata[0].reviewimg || imagesdata[0].reviewImg">
+          </div>
         </div>
       </ion-col>
       <ion-col col-12 style="text-align: center;">

@@ -44,15 +44,25 @@
     </ion-row>
 
     <ion-row>
-      <ion-col col-12  (click)="openphoto()">
-        <div class="imgerdt" >
-          <input type="file" id="businessFileInput" (change)="onFileSelected($event)" accept="image/*" style="display:none">
-          <input type="file" id="businessCameraInput" (change)="onFileSelected($event)" accept="image/*" capture="camera" style="display:none">
-          <img src="assets/icon/upload.svg"  style="height:70px;width:70px;">అప్‌లోడ్ చేయించుకోండి
-          బ్రాచ్యాల్‌ను
-          <img *ngIf="imagesdata.length" [src]="imagesdata[0].reviewimg" alt="" height="100px" width="100px">
-
-       </div>
+      <ion-col col-12>
+        <ion-item style="border: 1px dashed #488aff; border-radius: 8px; padding: 10px; margin-bottom: 10px; background: #f9fbfd;">
+          <ion-label stacked style="font-weight: bold; color: #222; font-size: 15px;">
+            బ్రాచ్యాల్‌ను అప్‌లోడ్ చేయండి (Upload Business Brochure / Photo)
+          </ion-label>
+          <div style="margin-top: 10px; margin-bottom: 10px;">
+            <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: block; width: 100%; padding: 6px; font-size: 14px;">
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
+            <button ion-button small icon-start type="button" (click)="openphoto()" color="secondary">
+              <ion-icon name="camera"></ion-icon>
+              Camera / Gallery
+            </button>
+            <span *ngIf="imagesdata.length" style="color: green; font-size: 13px; font-weight: bold;">✓ ఫోటో ఎంచుకోబడింది</span>
+          </div>
+          <div *ngIf="imagesdata.length" style="text-align: center; margin-top: 12px;">
+            <img [src]="imagesdata[0].reviewimg" style="max-width: 100%; max-height: 220px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+          </div>
+        </ion-item>
       </ion-col>
 
       <ion-col col-12>

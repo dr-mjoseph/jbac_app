@@ -1,4 +1,4 @@
-﻿<ion-header>
+<ion-header>
   <ion-navbar>
     <ion-buttons end>
       <button ion-button (click)="gotohome()">
@@ -58,7 +58,7 @@
             <ion-label stacked>రాష్ట్రం / State</ion-label>
             <ion-select formControlName="state_id" interface="popover" style="width: 273px;"
               (ionChange)="onStateChange($event)">
-              <ion-option value="">అన్నీ (All States)</ion-option>
+              <ion-option value="" disabled selected>రాష్ట్రం ఎంచుకోండి</ion-option>
               <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>
               <ion-option value="2">తెలంగాణ (TG)</ion-option>
             </ion-select>
@@ -67,8 +67,8 @@
         <ion-col col-12 col-md-3>
           <ion-item>
             <ion-label stacked>జిల్లాలను ఎంచుకోండండి</ion-label>
-            <ion-select formControlName="district_id" interface="popover" style="width: 273px;"
-              (ionChange)="getconstency($event)" (ionChange)="searchdistric($event)">
+            <ion-select formControlName="district_id" [disabled]="!form.get('state_id').value" interface="popover" style="width: 273px;"
+              (ionChange)="getconstency($event)">
               <ion-option value="" disabled selected>జిల్లా ఎంచుకోండి</ion-option>
               <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>
             </ion-select>
@@ -77,8 +77,8 @@
         <ion-col col-12 col-md-2>
           <ion-item>
             <ion-label stacked>నియోజకవర్గం ఎంచుకోండండి</ion-label>
-            <ion-select formControlName="constenncy_id" interface="popover" style="width: 273px;"
-              (ionChange)="getmandals($event)" (ionChange)="searchconstenct($event)">
+            <ion-select formControlName="constenncy_id" [disabled]="!form.get('district_id').value" interface="popover" style="width: 273px;"
+              (ionChange)="getmandals($event)">
               <ion-option value="" disabled selected>నియోజకవర్గం ఎంచుకోండి</ion-option>
               <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>
             </ion-select>
@@ -87,8 +87,8 @@
         <ion-col col-12 col-md-2>
           <ion-item>
             <ion-label stacked>మండలాలను ఎంచుకోండండి</ion-label>
-            <ion-select formControlName="mandal_id" interface="popover" style="width: 273px;"
-              (ionChange)="gepanchayati($event)" (ionChange)="searchmandals($event)">
+            <ion-select formControlName="mandal_id" [disabled]="!form.get('constenncy_id').value" interface="popover" style="width: 273px;"
+              (ionChange)="gepanchayati($event)">
               <ion-option value="" disabled selected>మండల ఎంచుకోండి</ion-option>
               <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>
             </ion-select>
@@ -97,7 +97,7 @@
         <ion-col col-12 col-md-2>
           <ion-item>
             <ion-label stacked>పంచాయతీ ఎంచుకోండండి</ion-label>
-            <ion-select formControlName="panchayati_id" interface="popover" style="width: 273px;">
+            <ion-select formControlName="panchayati_id" [disabled]="!form.get('mandal_id').value" interface="popover" style="width: 273px;">
               <ion-option value="" disabled selected>పంచాయతీ ఎంచుకోండి</ion-option>
               <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>
             </ion-select>

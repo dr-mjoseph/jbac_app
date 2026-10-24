@@ -75,12 +75,16 @@
       </ion-col>
 
       <ion-col col-12>
-        <div class="imgerdt" (click)="openphoto()">
-          <input type="file" id="meetingFileInput" (change)="onFileSelected($event)" accept="image/*" style="display:none">
-          <input type="file" id="meetingCameraInput" (change)="onFileSelected($event)" accept="image/*" capture="camera" style="display:none">
-          <img src="assets/icon/upload.svg" style="height:70px;width:70px;">అప్‌లోడ్ కూటముల పోస్టర్‌
-          <br>
-          <img *ngIf="imagesData.length" [src]="imagesData[0].reviewimg" alt="" height="200px" width="200px">
+        <div class="imgerdt" style="padding: 12px; text-align: center; border: 2px dashed #00548F; border-radius: 8px; background: #fafafa;">
+          <img src="assets/icon/upload.svg" style="height: 60px; width: 60px; display: block; margin: 0 auto 6px;">
+          <p style="margin: 4px 0 10px; font-weight: bold; color: #00548F; font-size: 14px;">అప్‌లోడ్ కూటముల పోస్టర్‌ (Choose File / Camera)</p>
+          <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: block; width: 100%; max-width: 290px; margin: 0 auto 10px; padding: 6px; background: #fff; border: 1px solid #ccc; border-radius: 4px;">
+          <button ion-button small outline icon-start type="button" (click)="openphoto()" style="margin: 0 auto; display: inline-block;">
+            <ion-icon name="camera"></ion-icon> Camera / Gallery
+          </button>
+          <div *ngIf="imagesData.length" style="margin-top: 12px;">
+            <img [src]="imagesData[0].reviewimg" alt="" height="200px" width="200px" style="border-radius: 8px; border: 1px solid #00548F;">
+          </div>
           <div *ngIf="submitted && t['image'].errors" class="invalid-feedback">
             <div *ngIf="t['image'].errors['required']">ఇక్కడ క్లిక్ చేసి అప్‌లోడ్ కూటముల పోస్టర్‌</div>
           </div>
