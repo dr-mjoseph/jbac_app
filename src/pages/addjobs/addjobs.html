@@ -74,24 +74,17 @@
         </ion-item>
       </ion-col>
       <ion-col col-12>
-        <ion-item style="border: 1px dashed #488aff; border-radius: 8px; padding: 10px; margin-bottom: 10px; background: #f9fbfd;">
-          <ion-label stacked style="font-weight: bold; color: #222; font-size: 15px;">
-            చిత్రం అప్‌లోడ్ చేయండి (Upload Job Poster / Image)
-          </ion-label>
-          <div style="margin-top: 10px; margin-bottom: 10px;">
-            <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: block; width: 100%; padding: 6px; font-size: 14px;">
+        <div class="imgerdt" style="padding: 12px; text-align: center; border: 2px dashed #00548F; border-radius: 8px; background: #fafafa;">
+          <img src="assets/icon/upload.svg" style="height: 60px; width: 60px; display: block; margin: 0 auto 6px;">
+          <p style="margin: 4px 0 10px; font-weight: bold; color: #00548F; font-size: 14px;">ఉద్యోగ పోస్టర్ అప్‌లోడ్ చేయండి (Choose File / Camera)</p>
+          <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: block; width: 100%; max-width: 290px; margin: 0 auto 10px; padding: 6px; background: #fff; border: 1px solid #ccc; border-radius: 4px;">
+          <button ion-button small outline icon-start type="button" (click)="openphoto()" style="margin: 0 auto; display: inline-block;">
+            <ion-icon name="camera"></ion-icon> Camera / Gallery
+          </button>
+          <div *ngIf="imagesdata.length" style="margin-top: 12px;">
+            <img [src]="imagesdata[0].reviewimg" alt="" height="200px" width="200px" style="border-radius: 8px; border: 1px solid #00548F;">
           </div>
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
-            <button ion-button small icon-start type="button" (click)="openphoto()" color="secondary">
-              <ion-icon name="camera"></ion-icon>
-              Camera / Gallery
-            </button>
-            <span *ngIf="imagesdata.length" style="color: green; font-size: 13px; font-weight: bold;">✓ ఫోటో ఎంచుకోబడింది</span>
-          </div>
-          <div *ngIf="imagesdata.length" style="text-align: center; margin-top: 12px;">
-            <img [src]="imagesdata[0].reviewimg" style="max-width: 100%; max-height: 220px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
-          </div>
-        </ion-item>
+        </div>
       </ion-col>
       <ion-col col-12>
         <ion-item>
