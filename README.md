@@ -3,7 +3,7 @@
 This repository contains the native hybrid Android mobile application for the **Jesus Believers Association Council (JBAC)**.
 
 - **Package Name**: `io.ionic.starterjbac`
-- **Current Version**: `0.0.40` (`versionCode: 40`)
+- **Current Version**: `0.0.43` (`versionCode: 43`)
 - **Repository**: [`dr-mjoseph/jbac_app`](https://github.com/dr-mjoseph/jbac_app)
 - **Sibling Web Repository**: [`dr-mjoseph/jbac_web`](https://github.com/dr-mjoseph/jbac_web)
 
@@ -14,14 +14,14 @@ This repository contains the native hybrid Android mobile application for the **
 | Parameter | Value | Details |
 | :--- | :--- | :--- |
 | **`minSdkVersion`** | `24` | Android 7.0 (Nougat) or higher — complies with Google Play automatic app protection |
-| **`targetSdkVersion`** | `34` | Android 14.0 API Level |
+| **`targetSdkVersion`** | `36` | Android API Level 36 |
 | **`compileSdkVersion`** | `28` | Android 9.0 (Pie) aligned with Cordova Android 8.1.0 |
-| **`versionCode`** | `40` | Incremented for Google Play Console Release 40 |
-| **`versionName`** | `0.0.40` | Matching semantic release version |
+| **`versionCode`** | `43` | Incremented for Google Play Console Release 43 (above published 42) |
+| **`versionName`** | `0.0.43` | Matching semantic release version |
 | **Signing Keystore** | `Jbac.keystore` | Production release keystore (Alias: `jbac`, SHA-256 digest) |
-| **Release APK** | `jbacApp-0.0.40.apk` | Signed with v2 & v3 schemes (121.2 MB) |
-| **Release AAB** | `jbacApp-0.0.40.aab` | Signed with jarsigner (118.5 MB) |
-| **Play Store Bundle** | `appreleasesigned.aab` | Play Console ready bundle (118.5 MB) |
+| **Release APK** | `jbacApp-0.0.43.apk` | Signed with v1 JAR + v2 & v3 schemes (121.28 MB) |
+| **Release AAB** | `jbacApp-0.0.43.aab` | Signed with jarsigner (118.48 MB) |
+| **Play Store Bundle** | `appreleasesigned.aab` | Play Console ready bundle (118.48 MB) |
 
 ---
 

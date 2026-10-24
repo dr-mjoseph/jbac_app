@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="40" id="io.ionic.starterjbac" version="0.0.40" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="43" id="io.ionic.starterjbac" version="0.0.43" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>jbacApp-beta2</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
@@ -21,8 +21,8 @@
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="FadeSplashScreen" value="true" />
     <preference name="android-minSdkVersion" value="24" />
-    <preference name="android-targetSdkVersion" value="34" />
-    <preference name="android-compileSdkVersion" value="34" />
+    <preference name="android-targetSdkVersion" value="36" />
+    <preference name="android-compileSdkVersion" value="36" />
     <platform name="android">
         <config-file file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest" xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.CAMERA" />
