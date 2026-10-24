@@ -1,4 +1,4 @@
-webpackJsonp([49],{
+webpackJsonp([51],{
 
 /***/ 128:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -18,7 +18,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-var testApi = "https://1a8kqxawxd.execute-api.ap-southeast-2.amazonaws.com/dashboardapi/";
+var testApi = 'https://1a8kqxawxd.execute-api.ap-southeast-2.amazonaws.com/dashboardapi/';
 var ServiceProvider = /** @class */ (function () {
     // testApi = 'http://localhost:2303/dashboardapi/'
     function ServiceProvider(http) {
@@ -43,14 +43,17 @@ var ServiceProvider = /** @class */ (function () {
         var payload = (stateId !== undefined && stateId !== null && stateId !== '' && stateId !== 'all') ? { state_id: stateId } : {};
         return this.http.post(this.testApi + 'getdistricts', payload);
     };
-    ServiceProvider.prototype.getconsistencys = function () {
-        return this.http.post(this.testApi + 'getconsistencys', []);
+    ServiceProvider.prototype.getconsistencys = function (districtId) {
+        var payload = districtId ? { district_id: districtId } : {};
+        return this.http.post(this.testApi + 'getconsistencys', payload);
     };
-    ServiceProvider.prototype.getmandals = function () {
-        return this.http.post(this.testApi + 'getmandals', []);
+    ServiceProvider.prototype.getmandals = function (constId) {
+        var payload = constId ? { const_id: constId } : {};
+        return this.http.post(this.testApi + 'getmandals', payload);
     };
-    ServiceProvider.prototype.gepanchayatis = function () {
-        return this.http.post(this.testApi + 'gepanchayati', []);
+    ServiceProvider.prototype.gepanchayatis = function (mandalId) {
+        var payload = mandalId ? { mandal_id: mandalId } : {};
+        return this.http.post(this.testApi + 'gepanchayati', payload);
     };
     ServiceProvider.prototype.searchingdata = function (data) {
         return this.http.post(this.testApi + 'searchingdata', data);
@@ -98,7 +101,7 @@ var ServiceProvider = /** @class */ (function () {
         return this.http.post(this.testApi + 'postpastorassociations', data);
     };
     ServiceProvider.prototype.getimages = function () {
-        return this.http.post(this.testApi + 'getwebsitegallery', []);
+        return this.http.get(this.testApi + 'getcatewebsitegallery');
     };
     ServiceProvider.prototype.postupdatenews = function (data) {
         return this.http.post(this.testApi + 'postnews', data);
@@ -141,9 +144,6 @@ var ServiceProvider = /** @class */ (function () {
     };
     ServiceProvider.prototype.searchinorganizations = function (data) {
         return this.http.post(this.testApi + 'searchinorganizations', data);
-    };
-    ServiceProvider.prototype.getorganizations = function () {
-        return this.http.post(this.testApi + 'getorganizations', []);
     };
     ServiceProvider.prototype.postchurchmeetings = function (data) {
         return this.http.post(this.testApi + 'postchuechmeetings', data);
@@ -191,13 +191,22 @@ var ServiceProvider = /** @class */ (function () {
         return this.http.post(this.testApi + 'editpastororgainsation', data);
     };
     ServiceProvider.prototype.editpastorsassociations = function (data) {
-        return this.http.post(this.testApi + 'editpastorsassociations', data);
+        return this.http.post(this.testApi + 'editpastororgainsation', data);
     };
     ServiceProvider.prototype.editchurch = function (data) {
         return this.http.post(this.testApi + 'editchurch', data);
     };
     ServiceProvider.prototype.editpastor = function (data) {
         return this.http.post(this.testApi + 'editpastor', data);
+    };
+    ServiceProvider.prototype.getpastor = function () {
+        return this.http.post(this.testApi + 'getpastorsdata', {});
+    };
+    ServiceProvider.prototype.getministry = function () {
+        return this.http.post(this.testApi + 'getministrydata', {});
+    };
+    ServiceProvider.prototype.getorganizations = function (data) {
+        return this.http.post(this.testApi + 'getorganizations', data || {});
     };
     ServiceProvider.prototype.getcatewebsitegallery = function () {
         return this.http.get(this.testApi + 'getcatewebsitegallery');
@@ -224,7 +233,7 @@ var ServiceProvider = /** @class */ (function () {
         return this.http.post(this.testApi + "postinfo", data);
     };
     ServiceProvider.prototype.getupdatenews = function () {
-        return this.http.get(this.testApi + "updatenewsdataa");
+        return this.http.get(this.testApi + "getnews");
     };
     ServiceProvider.prototype.getchurchesdatafilters = function (data) {
         return this.http.post(this.testApi + "getchurchesdatafilters", data);
@@ -251,7 +260,8 @@ var ServiceProvider = /** @class */ (function () {
     ServiceProvider.prototype.upadtedpassword = function (data) {
         return this.http.post(this.testApi + 'upadtedpassword', data);
     };
-        ServiceProvider.prototype.getcouncellingdoctors = function () {
+    // <--------------------- Family Counselling Endpoints --------------------->
+    ServiceProvider.prototype.getcouncellingdoctors = function () {
         return this.http.post(this.testApi + 'getcouncellingdoctors', {});
     };
     ServiceProvider.prototype.savecouncellingdoctor = function (data) {
@@ -310,208 +320,208 @@ webpackEmptyAsyncContext.id = 139;
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"../pages/family-councelling/family-councelling.module": [
-		511,
-		51
-	],
-	"../pages/doctorregister/doctorregister.module": [
-		513,
-		52
-	],
 	"../pages/about/about.module": [
 		408,
-		48
+		50
 	],
 	"../pages/account/account.module": [
 		409,
-		47
+		49
 	],
 	"../pages/addads/addads.module": [
 		410,
-		46
+		48
 	],
 	"../pages/addattacks/addattacks.module": [
+		447,
+		47
+	],
+	"../pages/addbussiness/addbussiness.module": [
+		446,
+		46
+	],
+	"../pages/addchurchtimings/addchurchtimings.module": [
 		411,
 		45
 	],
-	"../pages/addbussiness/addbussiness.module": [
-		412,
+	"../pages/addinstitute/addinstitute.module": [
+		449,
 		44
 	],
-	"../pages/addchurchtimings/addchurchtimings.module": [
-		413,
+	"../pages/addjobs/addjobs.module": [
+		448,
 		43
 	],
-	"../pages/addinstitute/addinstitute.module": [
-		415,
+	"../pages/addmarriage/addmarriage.module": [
+		412,
 		42
 	],
-	"../pages/addjobs/addjobs.module": [
-		414,
+	"../pages/addmeetings/addmeetings.module": [
+		456,
 		41
 	],
-	"../pages/addmarriage/addmarriage.module": [
-		429,
+	"../pages/association/association.module": [
+		413,
 		40
 	],
-	"../pages/addmeetings/addmeetings.module": [
-		416,
+	"../pages/believer/believer.module": [
+		450,
 		39
 	],
-	"../pages/association/association.module": [
-		418,
+	"../pages/church-timings/church-timings.module": [
+		414,
 		38
 	],
-	"../pages/believer/believer.module": [
-		417,
+	"../pages/church/church.module": [
+		415,
 		37
 	],
-	"../pages/church-timings/church-timings.module": [
-		419,
+	"../pages/churchgo/churchgo.module": [
+		416,
 		36
 	],
-	"../pages/church/church.module": [
-		422,
+	"../pages/contact/contact.module": [
+		417,
 		35
 	],
-	"../pages/churchgo/churchgo.module": [
-		421,
+	"../pages/doctorregister/doctorregister.module": [
+		418,
 		34
 	],
-	"../pages/contact/contact.module": [
-		420,
+	"../pages/entry-form/entry-form.module": [
+		451,
 		33
 	],
-	"../pages/entry-form/entry-form.module": [
-		424,
+	"../pages/family-councelling/family-councelling.module": [
+		457,
 		32
 	],
 	"../pages/forgot-password/forgot-password.module": [
-		423,
+		419,
 		31
 	],
 	"../pages/forms/forms.module": [
-		426,
+		421,
 		29
 	],
 	"../pages/forms2/forms2.module": [
-		425,
+		420,
 		30
 	],
 	"../pages/gallery/gallery.module": [
-		427,
+		423,
 		28
 	],
 	"../pages/help/help.module": [
-		428,
+		424,
 		27
 	],
 	"../pages/helpinghands/helpinghands.module": [
-		430,
+		422,
 		26
 	],
 	"../pages/home/home.module": [
-		432,
+		425,
 		1
 	],
 	"../pages/imagemodal/imagemodal.module": [
-		433,
+		426,
 		25
 	],
 	"../pages/institute/institute.module": [
-		431,
+		429,
 		24
 	],
 	"../pages/jobs/jobs.module": [
-		435,
+		427,
 		23
 	],
 	"../pages/login/login.module": [
-		434,
+		428,
 		0
 	],
 	"../pages/marriage/marriage.module": [
-		438,
+		430,
 		22
 	],
 	"../pages/meeting/meeting.module": [
-		436,
+		452,
 		5
 	],
 	"../pages/ministry/ministry.module": [
-		437,
+		431,
 		21
 	],
 	"../pages/modalpage/modalpage.module": [
-		439,
+		432,
 		20
 	],
 	"../pages/news-view/news-view.module": [
-		440,
+		434,
 		4
 	],
 	"../pages/news/news.module": [
-		441,
+		433,
 		19
 	],
 	"../pages/organisation/organisation.module": [
-		443,
+		436,
 		18
 	],
 	"../pages/pages-privacy/pages-privacy.module": [
-		442,
+		435,
 		17
 	],
 	"../pages/pastor/pastor.module": [
-		444,
+		437,
 		16
 	],
 	"../pages/profile/profile.module": [
-		445,
+		458,
 		15
 	],
 	"../pages/searchhouse/searchhouse.module": [
-		446,
+		453,
 		14
 	],
 	"../pages/searchorganisation/searchorganisation.module": [
-		449,
+		454,
 		13
 	],
 	"../pages/student/student.module": [
-		447,
+		455,
 		12
 	],
 	"../pages/sub-gallery/sub-gallery.module": [
-		450,
+		438,
 		6
 	],
 	"../pages/techsol/techsol.module": [
-		448,
+		439,
 		11
 	],
 	"../pages/video-gallery-sub/video-gallery-sub.module": [
-		451,
+		440,
 		3
 	],
 	"../pages/video-gallery/video-gallery.module": [
-		454,
+		441,
 		2
 	],
 	"../pages/webhelp/webhelp.module": [
-		452,
+		442,
 		10
 	],
 	"../pages/whatsapp/whatsapp.module": [
-		455,
+		443,
 		9
 	],
 	"../pages/wing/wing.module": [
-		453,
+		444,
 		8
 	],
 	"../pages/wingcommand/wingcommand.module": [
-		456,
+		445,
 		7
 	]
 };
@@ -593,54 +603,54 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/about/about.module#AboutPageModule', name: 'AboutPage', segment: 'about', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/account/account.module#AccountPageModule', name: 'AccountPage', segment: 'account', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/addads/addads.module#AddadsPageModule', name: 'AddadsPage', segment: 'addads', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/addattacks/addattacks.module#AddattacksPageModule', name: 'AddattacksPage', segment: 'addattacks', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/addbussiness/addbussiness.module#AddbussinessPageModule', name: 'AddbussinessPage', segment: 'addbussiness', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/addchurchtimings/addchurchtimings.module#AddchurchtimingsPageModule', name: 'AddchurchtimingsPage', segment: 'addchurchtimings', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/addjobs/addjobs.module#AddjobsPageModule', name: 'AddjobsPage', segment: 'addjobs', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/addinstitute/addinstitute.module#AddinstitutePageModule', name: 'AddinstitutePage', segment: 'addinstitute', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/addmeetings/addmeetings.module#AddmeetingsPageModule', name: 'AddmeetingsPage', segment: 'addmeetings', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/believer/believer.module#BelieverPageModule', name: 'BelieverPage', segment: 'believer', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/addmarriage/addmarriage.module#AddmarriagePageModule', name: 'AddmarriagePage', segment: 'addmarriage', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/association/association.module#AssociationPageModule', name: 'AssociationPage', segment: 'association', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/church-timings/church-timings.module#ChurchTimingsPageModule', name: 'ChurchTimingsPage', segment: 'church-timings', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/contact/contact.module#ContactPageModule', name: 'ContactPage', segment: 'contact', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/family-councelling/family-councelling.module#FamilyCouncellingPageModule', name: 'FamilyCouncellingPage', segment: 'family-councelling', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/doctorregister/doctorregister.module#DoctorregisterPageModule', name: 'DoctorregisterPage', segment: 'doctorregister', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/churchgo/churchgo.module#ChurchgoPageModule', name: 'ChurchgoPage', segment: 'churchgo', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/church/church.module#ChurchPageModule', name: 'ChurchPage', segment: 'church', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/churchgo/churchgo.module#ChurchgoPageModule', name: 'ChurchgoPage', segment: 'churchgo', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/contact/contact.module#ContactPageModule', name: 'ContactPage', segment: 'contact', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/doctorregister/doctorregister.module#DoctorregisterPageModule', name: 'DoctorregisterPage', segment: 'doctorregister', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/forgot-password/forgot-password.module#ForgotPasswordPageModule', name: 'ForgotPasswordPage', segment: 'forgot-password', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/entry-form/entry-form.module#EntryFormPageModule', name: 'EntryFormPage', segment: 'entry-form', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/forms2/forms2.module#Forms2PageModule', name: 'Forms2Page', segment: 'forms2', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/forms/forms.module#FormsPageModule', name: 'FormsPage', segment: 'forms', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/helpinghands/helpinghands.module#HelpinghandsPageModule', name: 'HelpinghandsPage', segment: 'helpinghands', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/gallery/gallery.module#GalleryPageModule', name: 'GalleryPage', segment: 'gallery', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/help/help.module#HelpPageModule', name: 'HelpPage', segment: 'help', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/addmarriage/addmarriage.module#AddmarriagePageModule', name: 'AddmarriagePage', segment: 'addmarriage', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/helpinghands/helpinghands.module#HelpinghandsPageModule', name: 'HelpinghandsPage', segment: 'helpinghands', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/institute/institute.module#InstitutePageModule', name: 'InstitutePage', segment: 'institute', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/home/home.module#HomePageModule', name: 'HomePage', segment: 'home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/imagemodal/imagemodal.module#ImagemodalPageModule', name: 'ImagemodalPage', segment: 'imagemodal', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/jobs/jobs.module#JobsPageModule', name: 'JobsPage', segment: 'jobs', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/meeting/meeting.module#MeetingPageModule', name: 'MeetingPage', segment: 'meeting', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/ministry/ministry.module#MinistryPageModule', name: 'MinistryPage', segment: 'ministry', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/institute/institute.module#InstitutePageModule', name: 'InstitutePage', segment: 'institute', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/marriage/marriage.module#MarriagePageModule', name: 'MarriagePage', segment: 'marriage', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/ministry/ministry.module#MinistryPageModule', name: 'MinistryPage', segment: 'ministry', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/modalpage/modalpage.module#ModalpagePageModule', name: 'ModalpagePage', segment: 'modalpage', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/news-view/news-view.module#NewsViewPageModule', name: 'NewsViewPage', segment: 'news-view', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/news/news.module#NewsPageModule', name: 'NewsPage', segment: 'news', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/news-view/news-view.module#NewsViewPageModule', name: 'NewsViewPage', segment: 'news-view', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/pages-privacy/pages-privacy.module#PagesPrivacyPageModule', name: 'PagesPrivacyPage', segment: 'pages-privacy', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/organisation/organisation.module#OrganisationPageModule', name: 'OrganisationPage', segment: 'organisation', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/pastor/pastor.module#PastorPageModule', name: 'PastorPage', segment: 'pastor', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/profile/profile.module#ProfilePageModule', name: 'ProfilePage', segment: 'profile', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/searchhouse/searchhouse.module#SearchhousePageModule', name: 'SearchhousePage', segment: 'searchhouse', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/student/student.module#StudentPageModule', name: 'StudentPage', segment: 'student', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/techsol/techsol.module#TechsolPageModule', name: 'TechsolPage', segment: 'techsol', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/searchorganisation/searchorganisation.module#SearchorganisationPageModule', name: 'SearchorganisationPage', segment: 'searchorganisation', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/sub-gallery/sub-gallery.module#SubGalleryPageModule', name: 'SubGalleryPage', segment: 'sub-gallery', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/techsol/techsol.module#TechsolPageModule', name: 'TechsolPage', segment: 'techsol', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/video-gallery-sub/video-gallery-sub.module#VideoGallerySubPageModule', name: 'VideoGallerySubPage', segment: 'video-gallery-sub', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/webhelp/webhelp.module#WebhelpPageModule', name: 'WebhelpPage', segment: 'webhelp', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/wing/wing.module#WingPageModule', name: 'WingPage', segment: 'wing', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/video-gallery/video-gallery.module#VideoGalleryPageModule', name: 'VideoGalleryPage', segment: 'video-gallery', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/webhelp/webhelp.module#WebhelpPageModule', name: 'WebhelpPage', segment: 'webhelp', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/whatsapp/whatsapp.module#WhatsappPageModule', name: 'WhatsappPage', segment: 'whatsapp', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/wingcommand/wingcommand.module#WingcommandPageModule', name: 'WingcommandPage', segment: 'wingcommand', priority: 'low', defaultHistory: [] }
+                        { loadChildren: '../pages/wing/wing.module#WingPageModule', name: 'WingPage', segment: 'wing', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/wingcommand/wingcommand.module#WingcommandPageModule', name: 'WingcommandPage', segment: 'wingcommand', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/addbussiness/addbussiness.module#AddbussinessPageModule', name: 'AddbussinessPage', segment: 'addbussiness', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/addattacks/addattacks.module#AddattacksPageModule', name: 'AddattacksPage', segment: 'addattacks', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/addjobs/addjobs.module#AddjobsPageModule', name: 'AddjobsPage', segment: 'addjobs', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/addinstitute/addinstitute.module#AddinstitutePageModule', name: 'AddinstitutePage', segment: 'addinstitute', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/believer/believer.module#BelieverPageModule', name: 'BelieverPage', segment: 'believer', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/entry-form/entry-form.module#EntryFormPageModule', name: 'EntryFormPage', segment: 'entry-form', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/meeting/meeting.module#MeetingPageModule', name: 'MeetingPage', segment: 'meeting', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/searchhouse/searchhouse.module#SearchhousePageModule', name: 'SearchhousePage', segment: 'searchhouse', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/searchorganisation/searchorganisation.module#SearchorganisationPageModule', name: 'SearchorganisationPage', segment: 'searchorganisation', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/student/student.module#StudentPageModule', name: 'StudentPage', segment: 'student', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/addmeetings/addmeetings.module#AddmeetingsPageModule', name: 'AddmeetingsPage', segment: 'addmeetings', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/family-councelling/family-councelling.module#FamilyCouncellingPageModule', name: 'FamilyCouncellingPage', segment: 'family-councelling', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/profile/profile.module#ProfilePageModule', name: 'ProfilePage', segment: 'profile', priority: 'low', defaultHistory: [] }
                     ]
                 }),
                 __WEBPACK_IMPORTED_MODULE_7__angular_common_http__["b" /* HttpClientModule */],
@@ -700,7 +710,7 @@ var MyApp = /** @class */ (function () {
         this.splashScreen = splashScreen;
         this.service = service;
         this.initializeApp();
-                this.pages = [
+        this.pages = [
             { 'title': 'ప్రొఫైల్‌ని సవరించండి', 'subtitle': 'Edit Profile & Details', 'image': 'assets/icon/svg/services.svg', 'page': 'ProfilePage' },
             { 'title': 'వివాహ & కుటుంబ కౌన్సిలింగ్', 'subtitle': 'Family & Marriage Counselling', 'image': 'assets/icon/svg/couple.svg', 'page': 'FamilyCouncellingPage' },
             { 'title': 'వివాహ సంబంధాలు', 'subtitle': 'Christian Marriage Alliances', 'image': 'assets/icon/svg/register.svg', 'page': 'MarriagePage' },
@@ -715,7 +725,7 @@ var MyApp = /** @class */ (function () {
             { 'title': 'క్రైస్తవ వార్తలు', 'subtitle': 'Latest Christian News', 'image': 'assets/icon/svg/news.svg', 'page': 'NewsPage' },
             { 'title': 'క్రైస్తవులపై దాడుల నమోదు', 'subtitle': 'Report Attacks on Christians', 'image': 'assets/icon/svg/organisation.svg', 'page': 'AddattacksPage' },
             { 'title': 'JBAC వింగ్స్ సమాచారం', 'subtitle': 'JBAC Wings & Leadership', 'image': 'assets/icon/svg/project-manager.svg', 'page': 'WingPage' },
-            { 'title': 'మమ్మల్ని సంప్రదించండి', 'subtitle': 'Contact JBAC Helpline', 'image': 'assets/icon/svg/contact-us.svg', 'page': 'ContactPage' }
+            { 'title': 'మమ్మల్ని సంప్రదించండి', 'subtitle': 'Contact JBAC Helpline', 'image': 'assets/icon/svg/contact-us.svg', 'page': 'ContactPage' },
         ];
         this.service.updatecount().subscribe(function (res) {
         });
@@ -748,7 +758,7 @@ var MyApp = /** @class */ (function () {
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Nav */])
     ], MyApp.prototype, "nav", void 0);
     MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\\Users\\rajes\\StudioProjects\\jbac_app\\src\\app\\app.html"*/'<ion-menu [content]="content" type="overlay">\n  <ion-header>\n    <ion-toolbar color="primary" style="background-color: #00548F; color: white;">\n      <ion-title style="color: white; font-weight: bold; font-size: 16px;">\n        JBAC మెనూ\n      </ion-title>\n      <ion-buttons end>\n        <button ion-button icon-only menuClose tappable style="color: white; font-size: 22px;">\n          <ion-icon name="close"></ion-icon>\n        </button>\n      </ion-buttons>\n    </ion-toolbar>\n  </ion-header>\n\n  <ion-content style="background-color: #f1f5f9;">\n    <div style="background: linear-gradient(135deg, #00548F, #19386d); padding: 16px 14px; color: white; margin-bottom: 8px;">\n      <div style="font-size: 16px; font-weight: bold; color: white;">Welcome to JBAC</div>\n      <div style="font-size: 11px; color: #dbeafe; margin-top: 3px;">జీసస్ బిలీవర్స్ అసోసియేషన్, ఆంధ్ర ప్రదేశ్</div>\n    </div>\n\n    <ion-list no-lines style="margin: 0; padding: 0 0 24px 0;">\n      <button ion-item *ngFor="let a of pages" (click)="openPage(a.page)" menuClose tappable class="jbac-menu-item">\n        <ion-avatar item-start class="jbac-menu-avatar">\n          <img [src]="a.image">\n        </ion-avatar>\n        <ion-label class="jbac-menu-label">\n          <div class="jbac-menu-title">{{a.title}}</div>\n          <div *ngIf="a.subtitle" class="jbac-menu-sub">{{a.subtitle}}</div>\n        </ion-label>\n        <ion-icon name="ios-arrow-forward" item-end class="jbac-menu-arrow"></ion-icon>\n      </button>\n    </ion-list>\n  </ion-content>\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it is poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>\n'/*ion-inline-end:"C:\\Users\\rajes\\StudioProjects\\jbac_app\\src\\app\\app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\app\app.html"*/'<ion-menu [content]="content" type="overlay">\n  <ion-header>\n    <ion-toolbar color="primary" style="background-color: #00548F; color: white;">\n      <ion-title style="color: white; font-weight: bold; font-size: 16px;">\n        JBAC మెనూ\n      </ion-title>\n      <ion-buttons end>\n        <button ion-button icon-only menuClose tappable style="color: white; font-size: 22px;">\n          <ion-icon name="close"></ion-icon>\n        </button>\n      </ion-buttons>\n    </ion-toolbar>\n  </ion-header>\n\n  <ion-content style="background-color: #f1f5f9;">\n    <div style="background: linear-gradient(135deg, #00548F, #19386d); padding: 16px 14px; color: white; margin-bottom: 8px;">\n      <div style="font-size: 16px; font-weight: bold; color: white;">Welcome to JBAC</div>\n      <div style="font-size: 11px; color: #dbeafe; margin-top: 3px;">జీసస్ బిలీవర్స్ అసోసియేషన్, ఆంధ్ర ప్రదేశ్</div>\n    </div>\n\n    <ion-list no-lines style="margin: 0; padding: 0 0 24px 0;">\n      <button ion-item *ngFor="let a of pages" (click)="openPage(a.page)" menuClose tappable class="jbac-menu-item">\n        <ion-avatar item-start class="jbac-menu-avatar">\n          <img [src]="a.image">\n        </ion-avatar>\n        <ion-label class="jbac-menu-label">\n          <div class="jbac-menu-title">{{a.title}}</div>\n          <div *ngIf="a.subtitle" class="jbac-menu-sub">{{a.subtitle}}</div>\n        </ion-label>\n        <ion-icon name="ios-arrow-forward" item-end class="jbac-menu-arrow"></ion-icon>\n      </button>\n    </ion-list>\n  </ion-content>\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>\n'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\app\app.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["u" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */], __WEBPACK_IMPORTED_MODULE_4__providers_service_service__["a" /* ServiceProvider */]])
     ], MyApp);

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ActionSheetController, IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
@@ -22,7 +22,7 @@ export class NewsPage {
   addingnews: FormGroup
   submitted: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public camera: Camera, public actionSheetCtrl: ActionSheetController, public formBuilder: FormBuilder, public service: ServiceProvider ,
-  private loadingCtrl: LoadingController
+  private loadingCtrl: LoadingController, public zone: NgZone
   ) {
 
     this.addingnews = this.formBuilder.group({
@@ -37,13 +37,36 @@ export class NewsPage {
     console.log('ionViewDidLoad NewsPage');
   }
 
+  triggerFileInput() {
+    const input = document.getElementById('newsFileInput') as HTMLInputElement;
+    if (input) input.click();
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.zone.run(() => {
+          this.imagesdata = [{
+            reviewimg: e.target.result,
+            filetype: 'jpeg'
+          }];
+          if (this.addingnews) {
+            this.addingnews.patchValue({ image: e.target.result });
+          }
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   async openphoto() {
     const actionSheet = this.actionSheetCtrl.create({
       buttons: [
         {
           icon: 'ios-folder-open',
           text: 'Gallery',
-          role: 'destructive',
           handler: () => {
             const options: CameraOptions = {
               quality: 70,
@@ -52,15 +75,20 @@ export class NewsPage {
               saveToPhotoAlbum: false
             }
             this.camera.getPicture(options).then((imaged) => {
-              var ing = `data:image/jpeg;base64,` + imaged;
-              var imagedata = {
-                reviewimg: ing,
-                filetype: 'jpeg',
-              }
-              console.log(imagedata);
-              this.imagesdata = [];
-              this.imagesdata.push(imagedata);
+              this.zone.run(() => {
+                var ing = `data:image/jpeg;base64,` + imaged;
+                var imagedata = {
+                  reviewimg: ing,
+                  filetype: 'jpeg',
+                }
+                this.imagesdata = [imagedata];
+                if (this.addingnews) {
+                  this.addingnews.patchValue({ image: ing });
+                }
+              });
             }, (err) => {
+              console.log('Gallery picker error, triggering file fallback', err);
+              this.triggerFileInput();
             });
           }
         }, {
@@ -75,16 +103,20 @@ export class NewsPage {
               mediaType: this.camera.MediaType.PICTURE
             }
             this.camera.getPicture(options).then((imageD) => {
-              var img = `data:image/jpeg;base64,` + imageD;
-              var imagedata = {
-                reviewimg: img,
-                filetype: 'jpeg',
-              }
-              console.log(imagedata);
-
-              this.imagesdata = [];
-              this.imagesdata.push(imagedata);
+              this.zone.run(() => {
+                var img = `data:image/jpeg;base64,` + imageD;
+                var imagedata = {
+                  reviewimg: img,
+                  filetype: 'jpeg',
+                }
+                this.imagesdata = [imagedata];
+                if (this.addingnews) {
+                  this.addingnews.patchValue({ image: img });
+                }
+              });
             }, (err) => {
+              console.log('Camera error, triggering file fallback', err);
+              this.triggerFileInput();
             });
           }
         }, {
@@ -96,7 +128,7 @@ export class NewsPage {
         }
       ]
     });
-    (await actionSheet).present();
+    actionSheet.present();
   }
 
   gotohome() {

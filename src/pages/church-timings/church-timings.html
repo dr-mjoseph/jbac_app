@@ -17,6 +17,13 @@
   <ion-card>
     <form [formGroup]="searchchurchingform" *ngIf="fromshow==2">
       <ion-item>
+        <ion-label stacked>రాష్ట్రం / State</ion-label>
+        <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">
+          <ion-option value="1">Andhra Pradesh</ion-option>
+          <ion-option value="2">Telangana</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
         <ion-label stacked style="color:black">సర్వీస్ టైమింగ్స్</ion-label>
         <ion-select formControlName="typetime" interface="popover">
           <ion-option value="" disabled selected> సమయాన్ని ఎంచుకోండి</ion-option>
@@ -61,7 +68,7 @@
 
       <ion-item>
         <ion-label stacked> జిల్లాలను ఎంచుకోండి <span style="color:red; ">*</span></ion-label>
-        <ion-select formControlName="district_id" (ionChange)="getconstency($event);"
+        <ion-select formControlName="district_id" [disabled]="!searchchurchingform.get('state_id')?.value" (ionChange)="getconstency($event);"
           [class.invalid]="submitted && h['district_id'].errors">
           <ion-option value="" disabled>సెలెక్ట్ జిల్లా</ion-option>
           <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>
@@ -73,7 +80,7 @@
 
       <ion-item>
         <ion-label stacked>సెలెక్ట్ నియోజకవర్గం <span style="color:red; ">*</span></ion-label>
-        <ion-select formControlName="constenncy_id" (ionChange)="getmandals($event);"
+        <ion-select formControlName="constenncy_id" [disabled]="!searchchurchingform.get('district_id')?.value" (ionChange)="getmandals($event);"
           [class.invalid]="submitted && h['constenncy_id'].errors">
           <ion-option value="" disabled>సెలెక్ట్  నియోజకవర్గం</ion-option>
           <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>
@@ -85,7 +92,7 @@
 
       <ion-item>
         <ion-label stacked>సెలెక్ట్ మండలం <span style="color:red; ">*</span></ion-label>
-        <ion-select formControlName="mandal_id" (ionChange)="gepanchayati($event);"
+        <ion-select formControlName="mandal_id" [disabled]="!searchchurchingform.get('constenncy_id')?.value" (ionChange)="gepanchayati($event);"
           [class.invalid]="submitted && h['mandal_id'].errors">
           <ion-option value="" disabled>సెలెక్ట్  మండలం</ion-option>
           <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>

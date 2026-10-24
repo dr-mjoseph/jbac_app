@@ -1,6 +1,6 @@
 webpackJsonp([15],{
 
-/***/ 445:
+/***/ 458:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProfilePageModule", function() { return ProfilePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__profile__ = __webpack_require__(497);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__profile__ = __webpack_require__(514);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,7 +38,7 @@ var ProfilePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 497:
+/***/ 514:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -74,6 +74,15 @@ var ProfilePage = /** @class */ (function () {
         this.formBuilder = formBuilder;
         this.service = service;
         this.loadingCtrl = loadingCtrl;
+        this.getpastorsdatas = [];
+        this.getchurchfilter = [];
+        this.getstudentspastors = [];
+        this.getchurchstudentfilter = [];
+        this.getministrypastors = [];
+        this.getchurchpastors = [];
+        this.getorganizationpastors = [];
+        this.getpastorassciationas = [];
+        this.ministryname = [];
         this.details = [];
         this.lead = false;
         this.mini = false;
@@ -324,6 +333,9 @@ var ProfilePage = /** @class */ (function () {
         this.mobile_number = localStorage.getItem("mobile_number");
     }
     ProfilePage.prototype.ionViewDidLoad = function () {
+        this.getpastorsdata();
+        this.getchurchesdata();
+        this.getministriesdata();
         console.log('ionViewDidLoad ProfilePage');
         this.geteditdtails();
         this.personaldata();
@@ -336,6 +348,32 @@ var ProfilePage = /** @class */ (function () {
         this.getconstency(0);
         this.gepanchayati(0);
         this.getservice();
+    };
+    ProfilePage.prototype.getpastorsdata = function () {
+        var _this = this;
+        this.service.getpastor().subscribe(function (res) {
+            _this.getpastorsdatas = res && res.data ? res.data : [];
+            _this.getstudentspastors = _this.getpastorsdatas;
+            _this.getministrypastors = _this.getpastorsdatas;
+            _this.getchurchpastors = _this.getpastorsdatas;
+            _this.getorganizationpastors = _this.getpastorsdatas;
+            _this.getpastorassciationas = _this.getpastorsdatas;
+        });
+    };
+    ProfilePage.prototype.getchurchesdata = function () {
+        var _this = this;
+        this.service.getchurch().subscribe(function (res) {
+            _this.getchurchfilter = res && res.data ? res.data : [];
+            _this.getchurchstudentfilter = _this.getchurchfilter;
+        });
+    };
+    ProfilePage.prototype.getpastorssdata = function () { this.getpastorsdata(); };
+    ProfilePage.prototype.getchurchesstudentdata = function () { this.getchurchesdata(); };
+    ProfilePage.prototype.getministriesdata = function () {
+        var _this = this;
+        this.service.getministry().subscribe(function (res) {
+            _this.ministryname = res && res.data ? res.data : [];
+        });
     };
     ProfilePage.prototype.getservice = function () {
         var _this = this;
@@ -399,23 +437,16 @@ var ProfilePage = /** @class */ (function () {
     };
     ProfilePage.prototype.gepanchayati = function (event) {
         var _this = this;
-        this.loading = this.loadingCtrl.create({
-            spinner: 'ios',
-            content: 'ప్రాసెస్ అవుతుంది దయచేసి ఆగండి'
-        });
-        this.loading.present();
-        if (event != 0) {
-            var id = event;
-        }
+        var id = event;
         this.service.gepanchayatis().subscribe(function (res) {
-            if (event == 0) {
-                _this.panchayati = res.data;
-                _this.loading.dismiss();
+            if (event == 0 || !id) {
+                _this.panchayati = res && res.data ? res.data : [];
             }
             else {
-                _this.panchayati = res.data.filter(function (data) { return data.mndl_id == id; });
-                _this.loading.dismiss();
+                _this.panchayati = res && res.data ? res.data.filter(function (data) { return data.mndl_id == id; }) : [];
             }
+        }, function (error) {
+            console.log(error);
         });
     };
     ProfilePage.prototype.getdenomations = function () {
@@ -511,17 +542,13 @@ var ProfilePage = /** @class */ (function () {
             mobile_number: localStorage.getItem('mobile_number')
         };
         this.service.geteditdtails(data).subscribe(function (res) {
-            if (!res || !res.data || res.data.length === 0) return;
+            if (!res || !res.data || res.data.length === 0)
+                return;
             _this.details = res.data[0];
             if (_this.details.category_id) {
                 _this.categoryid = String(_this.details.category_id);
             }
-            var distId = _this.details.district_id || _this.details.districts || _this.details.districtname;
-            var constId = _this.details.constituency_id || _this.details.constituencyname;
-            var mandalId = _this.details.mandal_id || _this.details.mandals;
-            if (distId) _this.getconstency(distId);
-            if (constId) _this.getmandals(constId);
-            if (mandalId) _this.gepanchayati(mandalId);
+            _this.details = res.data[0];
             _this.pastorform.patchValue({
                 pastorname: _this.details.pastorname || _this.details.name,
                 phonenumber: _this.details.phonenumber || _this.details.mobile_number,
@@ -713,6 +740,16 @@ var ProfilePage = /** @class */ (function () {
                 workingareas: _this.details.workingareas,
                 description: _this.details.description,
             });
+            // Pre-populate cascading location dropdowns
+            var distId = _this.details.district_id || _this.details.districts || _this.details.districtname;
+            var constId = _this.details.constituency_id || _this.details.constituencyname;
+            var mandalId = _this.details.mandal_id || _this.details.mandals;
+            if (distId)
+                _this.getconstency(distId);
+            if (constId)
+                _this.getmandals(constId);
+            if (mandalId)
+                _this.gepanchayati(mandalId);
             _this.ministryform.patchValue({
                 ministryname: _this.details.ministryname || _this.details.headname || _this.details.name,
                 denomation_id: _this.details.denomation_id,
@@ -734,14 +771,17 @@ var ProfilePage = /** @class */ (function () {
         });
     };
     ProfilePage.prototype.editbeliver = function () {
-        this.beliverform.value.usr_id = localStorage.getItem('usr_id');
-        this.service.editbeliver(this.beliverform.value).subscribe(function (res) {
+        var usr_id = localStorage.getItem('usr_id');
+        var data = Object.assign({}, this.beliverform.value, { usr_id: usr_id });
+        this.service.editbeliver(data).subscribe(function (res) {
             if (res.status == 200) {
-                alert('విజయవంతం గా అప్ డేట్ చేసినారు');
+                alert('విజయవంతంగా అప్డేట్ చేయబడింది / Updated Successfully');
             }
             else {
-                alert('server down');
+                alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
             }
+        }, function () {
+            alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
         });
     };
     // Accept Input As a Number Only
@@ -751,69 +791,88 @@ var ProfilePage = /** @class */ (function () {
         return result;
     };
     ProfilePage.prototype.editstudent = function () {
-        this.studentform.value.usr_id = localStorage.getItem('usr_id');
-        this.service.editstudent(this.studentform.value).subscribe(function (res) {
+        var usr_id = localStorage.getItem('usr_id');
+        var data = Object.assign({}, this.studentform.value, { usr_id: usr_id });
+        this.service.editstudent(data).subscribe(function (res) {
             if (res.status == 200) {
-                alert('విజయవంతం గా అప్ డేట్ చేసినారు');
+                alert('విజయవంతంగా అప్డేట్ చేయబడింది / Updated Successfully');
             }
             else {
-                alert('server down');
+                alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
             }
+        }, function () {
+            alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
         });
     };
     ProfilePage.prototype.postministryupdate = function () {
-        this.ministryform.value.usr_id = localStorage.getItem('usr_id');
-        this.service.editministry(this.ministryform.value).subscribe(function (res) {
+        var usr_id = localStorage.getItem('usr_id');
+        var sourceData = this.updateprofileministry ? this.updateprofileministry.value : this.ministryform.value;
+        var data = Object.assign({}, this.ministryform ? this.ministryform.value : {}, sourceData, { usr_id: usr_id });
+        this.service.editministry(data).subscribe(function (res) {
             if (res.status == 200) {
-                alert('విజయవంతం గా అప్ డేట్ చేసినారు');
+                alert('విజయవంతంగా అప్డేట్ చేయబడింది / Updated Successfully');
             }
             else {
-                alert('server down');
+                alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
             }
+        }, function () {
+            alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
         });
     };
     ProfilePage.prototype.editchurch = function () {
-        this.churchregsiterform.value.usr_id = localStorage.getItem('usr_id');
-        this.service.editchurch(this.churchregsiterform.value).subscribe(function (res) {
+        var usr_id = localStorage.getItem('usr_id');
+        var data = Object.assign({}, this.churchregsiterform.value, { usr_id: usr_id });
+        this.service.editchurch(data).subscribe(function (res) {
             if (res.status == 200) {
-                alert('విజయవంతం గా అప్ డేట్ చేసినారు');
+                alert('విజయవంతంగా అప్డేట్ చేయబడింది / Updated Successfully');
             }
             else {
-                alert('server down');
+                alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
             }
+        }, function () {
+            alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
         });
     };
     ProfilePage.prototype.editpastor = function () {
-        this.pastorform.value.usr_id = localStorage.getItem('usr_id');
-        this.service.editpastor(this.pastorform.value).subscribe(function (res) {
+        var usr_id = localStorage.getItem('usr_id');
+        var data = Object.assign({}, this.pastorform.value, { usr_id: usr_id });
+        this.service.editpastor(data).subscribe(function (res) {
             if (res.status == 200) {
-                alert('విజయవంతముగా సబ్మిట్ అయింది');
+                alert('విజయవంతముగా సబ్మిట్ అయింది / Submitted Successfully');
             }
             else {
-                alert('server down');
+                alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
             }
+        }, function () {
+            alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
         });
     };
     ProfilePage.prototype.editindependentorgainsation = function () {
-        this.independentorgainsationform.value.usr_id = localStorage.getItem('usr_id');
-        this.service.editindependentorgainsation(this.independentorgainsationform.value).subscribe(function (res) {
+        var usr_id = localStorage.getItem('usr_id');
+        var data = Object.assign({}, this.independentorgainsationform.value, { usr_id: usr_id });
+        this.service.editindependentorgainsation(data).subscribe(function (res) {
             if (res.status == 200) {
-                alert('విజయవంతం గా అప్ డేట్ చేసినారు');
+                alert('విజయవంతంగా అప్డేట్ చేయబడింది / Updated Successfully');
             }
             else {
-                alert('server down');
+                alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
             }
+        }, function () {
+            alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
         });
     };
     ProfilePage.prototype.editassciation = function () {
-        this.pastorsassociations.value.usr_id = localStorage.getItem('usr_id');
-        this.service.editpastorsassociations(this.pastorsassociations.value).subscribe(function (res) {
+        var usr_id = localStorage.getItem('usr_id');
+        var data = Object.assign({}, this.pastorsassociations.value, { usr_id: usr_id });
+        this.service.editpastororgainsation(data).subscribe(function (res) {
             if (res.status == 200) {
-                alert('విజయవంతం గా అప్ డేట్ చేసినారు');
+                alert('విజయవంతంగా అప్డేట్ చేయబడింది / Updated Successfully');
             }
             else {
-                alert('server down');
+                alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
             }
+        }, function () {
+            alert('సర్వర్ లో సమస్య ఉంది, దయచేసి తర్వాత ప్రయత్నించండి / Server error, please try again');
         });
     };
     ProfilePage = __decorate([

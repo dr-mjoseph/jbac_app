@@ -42,6 +42,7 @@ export class AddmeetingsPage {
       fromdate: ['', [Validators.required]],
       todate: ['', [Validators.required]],
       image: [''],
+      state_id: ['1'],
       districtname: ['', [Validators.required]],
       constituencyname: ['', [Validators.required]],
       mandals: ['', [Validators.required]],
@@ -67,118 +68,87 @@ export class AddmeetingsPage {
 
   ionViewDidLoad() {
     this.getdistric();
-    this.getdenomations();
+  }
+
+  onStateChange(event: any) {
+    var stateId = event;
+    this.form.patchValue({
+      state_id: stateId,
+      districtname: '',
+      constituencyname: '',
+      mandals: '',
+      village_name: ''
+    });
+    this.districts = [];
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    if (stateId) {
+      this.service.getdistrict(stateId).subscribe((res: any) => {
+        if (res && res.status == 200) {
+          this.districts = res.data;
+        }
+      });
+    }
   }
 
   getdistric() {
-    this.service.getdistrict().subscribe((res: any) => {
+    const stCtrl = this.form.get('state_id');
+    const sid = stCtrl && stCtrl.value ? stCtrl.value : '1';
+    this.service.getdistrict(sid).subscribe((res: any) => {
       this.districts = res.data;
     })
   }
 
-
-  getdenomations() {
-    this.service.getdenomation().subscribe((res: any) => {
-      this.denomation = res.data;
-    })
-  }
-  dist: any = 0
-  const: any = 0
-  man: any = 0
-  vil: any = 0
-
-  geyr(id: any) {
-
-    if (id == 2) {
-      if (this.dist == 0) {
-        this.loading = this.alertctrl.create({
-          mode: 'ios',
-          message: 'Select the District',
-          buttons: ['Ok']
-        });
-        this.loading.present();
-      }
-    }
-    if (id == 3) {
-      if (this.dist == 0) {
-        const akert = this.alertctrl.create({
-          mode: 'ios',
-          message: 'Select the District',
-          buttons: ['Ok']
-        });
-        akert.present();
-      } else if (this.const == 0) {
-        const akert = this.alertctrl.create({
-          mode: 'ios',
-          message: 'Select the Constitunecy',
-          buttons: ['Ok']
-        });
-        akert.present();
-      }
-      console.log(this.dist, this.const, this.man);
-
-    }
-    if (id == 4) {
-      if (this.dist == 0) {
-        const akert = this.alertctrl.create({
-          mode: 'ios',
-          message: 'Select the District',
-          buttons: ['Ok']
-        });
-        akert.present();
-      } else if (this.const == 0) {
-        const akert = this.alertctrl.create({
-          mode: 'ios',
-          message: 'Select the Constitunecy',
-          buttons: ['Ok']
-        });
-        akert.present();
-      } else if (this.man == 0) {
-        const akert = this.alertctrl.create({
-          mode: 'ios',
-          message: 'Select the Mandals',
-          buttons: ['Ok']
-        });
-        akert.present();
-      }
-    }
-
-  }
-
-
   getconstency(event: any) {
-    this.dist = 1;
     var id = event;
-    this.service.getconsistencys().subscribe((res: any) => {
-      this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
-    })
+    this.form.patchValue({
+      constituencyname: '',
+      mandals: '',
+      village_name: ''
+    });
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    if (id) {
+      this.service.getconsistencys().subscribe((res: any) => {
+        if (res && res.data) {
+          this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
+        }
+      });
+    }
   }
-
 
   getmandals(event: any) {
-    this.const = 1
     var id = event;
-    this.service.getmandals().subscribe((res: any) => {
-      this.mandals = res.data.filter((data: any) => data.const_id == id);
-    })
+    this.form.patchValue({
+      mandals: '',
+      village_name: ''
+    });
+    this.mandals = [];
+    this.panchayati = [];
+    if (id) {
+      this.service.getmandals().subscribe((res: any) => {
+        if (res && res.data) {
+          this.mandals = res.data.filter((data: any) => data.const_id == id);
+        }
+      });
+    }
   }
 
   gepanchayati(event: any) {
-    this.loading = this.loadingCtrl.create({
-      spinner: 'ios',
-      content: 'ప్రాసెస్ అవుతుంది దయచేసి ఆగండి'
-    });
-    this.loading.present();
-    this.man = 1
     var id = event;
-    this.service.gepanchayatis().subscribe((res: any) => {
-      this.panchayati = res.data.filter((data: any) => data.mndl_id == id);
-
-      if (this.panchayati.length) {
-        this.loading.dismiss();
-      }
-
-    })
+    this.form.patchValue({
+      village_name: ''
+    });
+    this.panchayati = [];
+    if (id) {
+      this.service.gepanchayatis().subscribe((res: any) => {
+        if (res && res.data) {
+          this.panchayati = res.data.filter((data: any) => data.mndl_id == id);
+        }
+      });
+    }
   }
 
   submitted: boolean = false;
@@ -204,6 +174,7 @@ export class AddmeetingsPage {
         speakerfour: this.form.value.speakerfour,
         fromdate: this.form.value.fromdate,                   //
         todate: this.form.value.todate,                       //
+        state_id: this.form.value.state_id,                   //
         districtname: this.form.value.districtname,           //
         description: this.form.value.description,             //
         constituencyname: this.form.value.constituencyname,   //
@@ -483,13 +454,39 @@ export class AddmeetingsPage {
     );
   }
 
+  triggerFileInput() {
+    const input = document.getElementById('meetingFileInput') as HTMLInputElement;
+    if (input) input.click();
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.zone.run(() => {
+          this.imagesData = [{
+            reviewimg: e.target.result,
+            filetype: 'jpeg'
+          }];
+          if (this.form) {
+            this.form.patchValue({ image: e.target.result });
+          }
+          if (this.cdr) {
+            this.cdr.detectChanges();
+          }
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   async openphoto() {
     const actionSheet = this.actionSheetCtrl.create({
       buttons: [
         {
           icon: 'ios-folder-open',
           text: 'Gallery',
-          role: 'destructive',
           handler: () => {
             const options: CameraOptions = {
               quality: 70,
@@ -498,15 +495,23 @@ export class AddmeetingsPage {
               saveToPhotoAlbum: false
             }
             this.camera.getPicture(options).then((imaged) => {
-              var ing = `data:image/jpeg;base64,` + imaged;
-              var imagedata = {
-                reviewimg: ing,
-                filetype: 'jpeg',
-              }
-              console.log(imagedata);
-              this.imagesData = [];
-              this.imagesData.push(imagedata);
+              this.zone.run(() => {
+                var ing = `data:image/jpeg;base64,` + imaged;
+                var imagedata = {
+                  reviewimg: ing,
+                  filetype: 'jpeg',
+                }
+                this.imagesData = [imagedata];
+                if (this.form) {
+                  this.form.patchValue({ image: ing });
+                }
+                if (this.cdr) {
+                  this.cdr.detectChanges();
+                }
+              });
             }, (err) => {
+              console.log('Gallery picker error, triggering file fallback', err);
+              this.triggerFileInput();
             });
           }
         }, {
@@ -521,14 +526,23 @@ export class AddmeetingsPage {
               mediaType: this.camera.MediaType.PICTURE
             }
             this.camera.getPicture(options).then((imageD) => {
-              var img = `data:image/jpeg;base64,` + imageD;
-              var imagedata = {
-                reviewimg: img,
-                filetype: 'jpeg',
-              }
-              this.imagesData = [];
-              this.imagesData.push(imagedata);
+              this.zone.run(() => {
+                var img = `data:image/jpeg;base64,` + imageD;
+                var imagedata = {
+                  reviewimg: img,
+                  filetype: 'jpeg',
+                }
+                this.imagesData = [imagedata];
+                if (this.form) {
+                  this.form.patchValue({ image: img });
+                }
+                if (this.cdr) {
+                  this.cdr.detectChanges();
+                }
+              });
             }, (err) => {
+              console.log('Camera error, triggering file fallback', err);
+              this.triggerFileInput();
             });
           }
         }, {
@@ -540,8 +554,7 @@ export class AddmeetingsPage {
         }
       ]
     });
-    (await actionSheet).present();
+    actionSheet.present();
   }
-
 
 }

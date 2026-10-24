@@ -1,6 +1,6 @@
 webpackJsonp([23],{
 
-/***/ 435:
+/***/ 427:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "JobsPageModule", function() { return JobsPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__jobs__ = __webpack_require__(488);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__jobs__ = __webpack_require__(482);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,7 +38,7 @@ var JobsPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 488:
+/***/ 482:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -87,22 +87,22 @@ var JobsPage = /** @class */ (function () {
             panchayati_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
         });
     }
-    JobsPage.prototype.gotohome = function () {
-        this.navCtrl.push('HomePage');
-    };
-        JobsPage.prototype.onStateChange = function (event) {
-        var stateId = (event && event.target) ? event.target.value : event;
-        if (this.searchdist !== undefined) this.searchdist = '';
-        if (this.searchconts !== undefined) this.searchconts = '';
-        var patchObj = { state_id: stateId };
-        patchObj['district_id'] = '';
-        var f = this.form || this.serachMeetingform || this.jobsadding || this.studentform || this.searchdenomation || this.ministryform;
-        if (f) { f.patchValue(patchObj); }
+    JobsPage.prototype.onStateChange = function (event) {
+        var _this = this;
+        var stateId = event;
+        this.searchdist = '';
+        this.searchconts = '';
+        this.form.patchValue({
+            state_id: stateId,
+            district_id: '',
+            constenncy_id: '',
+            mandal_id: '',
+            panchayati_id: ''
+        });
         this.districts = [];
         this.constituency = [];
         this.mandals = [];
         this.panchayati = [];
-        var _this = this;
         this.service.getdistrict(stateId).subscribe(function (res) {
             if (res && res.status == 200) {
                 _this.districts = res.data;
@@ -110,30 +110,21 @@ var JobsPage = /** @class */ (function () {
         }, function (error) {
             console.log(error);
         });
-        if (this.getjobs) {
-            if (stateId && this.service.searchjobswise) {
-                this.service.searchjobswise({ state_id: stateId }).subscribe(function (res) {
-                    if (res && res.status == 200 && Array.isArray(res.data)) {
-                        _this.jobs = res.data;
-                    }
-                });
-            } else {
-                this.getjobs();
-            }
+        if (stateId) {
+            this.service.searchjobswise({ state_id: stateId }).subscribe(function (res) {
+                if (res && res.status == 200 && Array.isArray(res.data)) {
+                    _this.jobs = res.data;
+                }
+            });
         }
-        if (this.defaultdata) {
-            if (stateId && this.service.getorganizations) {
-                this.service.getorganizations({ state_id: stateId }).subscribe(function (res) {
-                    if (res && res.status == 200 && Array.isArray(res.data)) {
-                        _this.marriagedata = res.data.map(function (item) { return Object.assign({}, item, { showMore: false }); });
-                    }
-                });
-            } else {
-                this.defaultdata();
-            }
+        else {
+            this.getjobs();
         }
     };
-JobsPage.prototype.ionViewDidLoad = function () {
+    JobsPage.prototype.gotohome = function () {
+        this.navCtrl.push('HomePage');
+    };
+    JobsPage.prototype.ionViewDidLoad = function () {
         this.getdistric();
         this.getjobs();
         this.getjob();
@@ -304,7 +295,7 @@ JobsPage.prototype.ionViewDidLoad = function () {
     };
     JobsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-jobs',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\jobs\jobs.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>ఉద్యోగాలు</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n  <ion-searchbar (click)="onSearch()" *ngIf="fromshow==1"></ion-searchbar>\n\n\n\n  <form [formGroup]="form" *ngIf="fromshow==2">\n\n    <ion-grid>\n\n\n\n      <ion-row>\n\n        <ion-col col-12 col-md-4>\n\n          <ion-item>\n\n            <ion-label stacked>ఉద్యోగ పేరు</ion-label>\n\n            <ion-select formControlName="jobtile" interface="popover" style="width: 273px;"\n\n              (ionChange)="searchjobswise($event, 1)">\n\n              <ion-option value="" disabled selected>పేరు ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of jobswe" [value]="item.jobtitle">{{item.jobtitle}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-4>\n\n          <ion-item>\n\n            <ion-label stacked>అర్హత</ion-label>\n\n            <ion-select formControlName="qual" interface="popover" style="width: 273px;"\n\n              (ionChange)="searchjobswise($event, 2)">\n\n              <ion-option value="" disabled selected>అర్హత ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of jobswe" [value]="item.qualification">{{item.qualification}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-4>\n\n          <ion-item>\n\n            <ion-label stacked>అనుభవం</ion-label>\n\n            <ion-select formControlName="experience" interface="popover" style="width: 273px;"\n\n              (ionChange)="searchjobswise($event, 3)">\n\n              <ion-option value="" disabled selected>మీ అనుభవం ఎంచుకోండి</ion-option>\n\n              <ion-option value="fresher">ఫ్రెషర్</ion-option>\n\n              <ion-option value="1-2">1-2</ion-option>\n\n              <ion-option value="2-3">2-3</ion-option>\n\n              <ion-option value="3-5">3-5</ion-option>\n\n              <ion-option value="Above 5YEARS">5 ఏళ్ళ మీరున్నారు</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n      </ion-row>\n\n\n\n      <ion-row>\n\n        <ion-col col-12 col-md-3>\n\n          <ion-item>\n\n            <ion-label stacked>రాష్ట్రం / State</ion-label>\n\n            <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">\n\n              <ion-option value="">అన్నీ (All States)</ion-option>\n\n              <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>\n\n              <ion-option value="2">తెలంగాణ (TG)</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-3>\n\n          <ion-item>\n\n            <ion-label stacked>జిల్లాలను ఎంచుకోండండి</ion-label>\n\n            <ion-select formControlName="district_id" interface="popover" style="width: 273px;"\n\n              (ionChange)="getconstency($event)" (ionChange)="searchdistric($event)">\n\n              <ion-option value="" disabled selected>జిల్లా ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-2>\n\n          <ion-item>\n\n            <ion-label stacked>నియోజకవర్గం ఎంచుకోండండి</ion-label>\n\n            <ion-select formControlName="constenncy_id" interface="popover" style="width: 273px;"\n\n              (ionChange)="getmandals($event)" (ionChange)="searchconstenct($event)">\n\n              <ion-option value="" disabled selected>నియోజకవర్గం ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-2>\n\n          <ion-item>\n\n            <ion-label stacked>మండలాలను ఎంచుకోండండి</ion-label>\n\n            <ion-select formControlName="mandal_id" interface="popover" style="width: 273px;"\n\n              (ionChange)="gepanchayati($event)" (ionChange)="searchmandals($event)">\n\n              <ion-option value="" disabled selected>మండల ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-2>\n\n          <ion-item>\n\n            <ion-label stacked>పంచాయతీ ఎంచుకోండండి</ion-label>\n\n            <ion-select formControlName="panchayati_id" interface="popover" style="width: 273px;">\n\n              <ion-option value="" disabled selected>పంచాయతీ ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-2>\n\n          <button type="submit" (click)="search()" ion-button block color="primary"> శోధించు </button>\n\n        </ion-col>\n\n      </ion-row>\n\n    \n\n    </ion-grid>\n\n  </form>\n\n</ion-content> '/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\jobs\jobs.html"*/,
+            selector: 'page-jobs',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\jobs\jobs.html"*/'﻿<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>ఉద్యోగాలు</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n  <ion-searchbar (click)="onSearch()" *ngIf="fromshow==1"></ion-searchbar>\n\n\n\n  <form [formGroup]="form" *ngIf="fromshow==2">\n\n    <ion-grid>\n\n\n\n      <ion-row>\n\n        <ion-col col-12 col-md-4>\n\n          <ion-item>\n\n            <ion-label stacked>ఉద్యోగ పేరు</ion-label>\n\n            <ion-select formControlName="jobtile" interface="popover" style="width: 273px;"\n\n              (ionChange)="searchjobswise($event, 1)">\n\n              <ion-option value="" disabled selected>పేరు ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of jobswe" [value]="item.jobtitle">{{item.jobtitle}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-4>\n\n          <ion-item>\n\n            <ion-label stacked>అర్హత</ion-label>\n\n            <ion-select formControlName="qual" interface="popover" style="width: 273px;"\n\n              (ionChange)="searchjobswise($event, 2)">\n\n              <ion-option value="" disabled selected>అర్హత ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of jobswe" [value]="item.qualification">{{item.qualification}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-4>\n\n          <ion-item>\n\n            <ion-label stacked>అనుభవం</ion-label>\n\n            <ion-select formControlName="experience" interface="popover" style="width: 273px;"\n\n              (ionChange)="searchjobswise($event, 3)">\n\n              <ion-option value="" disabled selected>మీ అనుభవం ఎంచుకోండి</ion-option>\n\n              <ion-option value="fresher">ఫ్రెషర్</ion-option>\n\n              <ion-option value="1-2">1-2</ion-option>\n\n              <ion-option value="2-3">2-3</ion-option>\n\n              <ion-option value="3-5">3-5</ion-option>\n\n              <ion-option value="Above 5YEARS">5 ఏళ్ళ మీరున్నారు</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n      </ion-row>\n\n\n\n      <ion-row>\n\n        <ion-col col-12 col-md-3>\n\n          <ion-item>\n\n            <ion-label stacked>రాష్ట్రం / State</ion-label>\n\n            <ion-select formControlName="state_id" interface="popover" style="width: 273px;"\n\n              (ionChange)="onStateChange($event)">\n\n              <ion-option value="">అన్నీ (All States)</ion-option>\n\n              <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>\n\n              <ion-option value="2">తెలంగాణ (TG)</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-3>\n\n          <ion-item>\n\n            <ion-label stacked>జిల్లాలను ఎంచుకోండండి</ion-label>\n\n            <ion-select formControlName="district_id" interface="popover" style="width: 273px;"\n\n              (ionChange)="getconstency($event)" (ionChange)="searchdistric($event)">\n\n              <ion-option value="" disabled selected>జిల్లా ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-2>\n\n          <ion-item>\n\n            <ion-label stacked>నియోజకవర్గం ఎంచుకోండండి</ion-label>\n\n            <ion-select formControlName="constenncy_id" interface="popover" style="width: 273px;"\n\n              (ionChange)="getmandals($event)" (ionChange)="searchconstenct($event)">\n\n              <ion-option value="" disabled selected>నియోజకవర్గం ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-2>\n\n          <ion-item>\n\n            <ion-label stacked>మండలాలను ఎంచుకోండండి</ion-label>\n\n            <ion-select formControlName="mandal_id" interface="popover" style="width: 273px;"\n\n              (ionChange)="gepanchayati($event)" (ionChange)="searchmandals($event)">\n\n              <ion-option value="" disabled selected>మండల ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-2>\n\n          <ion-item>\n\n            <ion-label stacked>పంచాయతీ ఎంచుకోండండి</ion-label>\n\n            <ion-select formControlName="panchayati_id" interface="popover" style="width: 273px;">\n\n              <ion-option value="" disabled selected>పంచాయతీ ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-2>\n\n          <button type="submit" (click)="search()" ion-button block color="primary"> శోధించు </button>\n\n        </ion-col>\n\n      </ion-row>\n\n\n\n    </ion-grid>\n\n  </form>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\jobs\jobs.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__providers_service_service__["a" /* ServiceProvider */]])
     ], JobsPage);

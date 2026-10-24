@@ -180,7 +180,7 @@ export class FamilyCouncellingPage {
     this.isSpeechSupported = !!SpeechRec;
   }
 
-  
+
   getFallbackDoctors() {
     return [];
   }
@@ -557,7 +557,7 @@ export class FamilyCouncellingPage {
           this.closeDoctorVoiceReply();
           this.loadAppointments();
         } else {
-          this.showToast(res?.message || 'సలహా పంపడంలో సమస్య ఏర్పడింది.');
+          this.showToast((res && res.message) ? res.message : 'సలహా పంపడంలో సమస్య ఏర్పడింది.');
         }
       },
       err => {

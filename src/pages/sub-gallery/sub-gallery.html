@@ -13,7 +13,7 @@
 
   <ion-row>
     <ion-col col-12 class="fghdh" *ngFor="let gt of gallery">
-      <img style="width:100%" src="{{gt.image}}" (click)="openImage(gt.image)" >
+      <img style="width:100%; border-radius: 8px; object-fit: cover;" src="{{gt.image}}" (error)="onImgError($event, gt)" (click)="openImage(gt.image)" >
       <h5>{{gt.image_name}}</h5>
     </ion-col>
     <br>

@@ -50,7 +50,8 @@
                   
           <ion-col col-12 (click)="openphoto()">
             <div class="imgerdt">
-              <img src="../../assets/icon/Upload.svg" style="height:70px;width:70px;font-family:ramabhadra;">
+              <input type="file" id="newsFileInput" (change)="onFileSelected($event)" accept="image/*" style="display:none">
+              <img src="assets/icon/upload.svg" style="height:70px;width:70px;font-family:ramabhadra;">
               వార్తల పేపర్ కటింగ్ / ఫోటో అప్‌లోడ్ చేయండి<br>
               <img *ngIf="imagesdata.length" style="width:200px;height:200px" src="{{imagesdata[0].reviewimg}}">
             </div>

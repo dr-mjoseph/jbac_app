@@ -85,6 +85,17 @@
       <ion-col col-12>
         <ion-list style="text-align: center;font-weight: 900;"> చిరునామా</ion-list>
         <ion-item>
+          <ion-label stacked>రాష్ట్రం / State <span style="color:red;">*</span></ion-label>
+          <ion-select formControlName="state_id" (ionChange)="onStateChange($event)"
+            [ngClass]="{'is-invalid': submitted && form.get('state_id').errors }">
+            <ion-option value="1">Andhra Pradesh</ion-option>
+            <ion-option value="2">Telangana</ion-option>
+          </ion-select>
+        </ion-item>
+        <div *ngIf="submitted && form.get('state_id').errors" class="error-message">
+          <div *ngIf="form.get('state_id').errors['required']">రాష్ట్రం ఎంచుకోండి</div>
+        </div>
+        <ion-item>
           <ion-label stacked>జిల్లా ఎంచుకోండి <span style="color:red;">*</span></ion-label>
           <ion-select formControlName="district_id" (ionChange)="getconstency($event)"
             [ngClass]="{'is-invalid': submitted && form.get('district_id').errors }">

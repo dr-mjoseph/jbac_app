@@ -1,4 +1,4 @@
-﻿<ion-header>
+<ion-header>
   <ion-navbar>
     <ion-buttons end>
       <button button (click)="gotohome()">
@@ -48,18 +48,18 @@
     <ion-row>
         <ion-col col-12>
             <ion-item>
-               <ion-label stacked>à°°à°¾à°·à±à°Ÿà±à°°à°‚ / State</ion-label>
+               <ion-label stacked>రాష్ట్రం / State</ion-label>
                 <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">
-                    <ion-option value="">à°…à°¨à±à°¨à±€ (All States)</ion-option>
-                    <ion-option value="1">à°†à°‚à°§à±à°°à°ªà±à°°à°¦à±‡à°¶à± (AP)</ion-option>
-                    <ion-option value="2">à°¤à±†à°²à°‚à°—à°¾à°£ (TG)</option>
+                    <ion-option value="">అన్నీ (All States)</ion-option>
+                    <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>
+                    <ion-option value="2">తెలంగాణ (TG)</ion-option>
                 </ion-select>
             </ion-item>
         </ion-col>
         <ion-col col-12>
             <ion-item>
                <ion-label stacked>జిల్లాలను ఎంచుకోండి</ion-label>
-                <ion-select formControlName="district_id" (ionChange)="getconstency($event); searchdistric($event); serachgenders($event,4);">
+                <ion-select formControlName="district_id" [disabled]="!serachMeetingform.get('state_id')?.value" (ionChange)="getconstency($event); searchdistric($event); serachgenders($event,4);">
                     <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
                     <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>
                 </ion-select>
@@ -67,8 +67,8 @@
         </ion-col>
         <ion-col col-12>
             <ion-item>
-               <ion-label stacked>మండలాలను ఎంచుకోండి</ion-label>
-                <ion-select formControlName="constenncy_id" (ionChange)="getmandals($event); searchconstenct($event); serachgenders($event,5);">
+               <ion-label stacked>నియోజకవర్గం ఎంచుకోండి</ion-label>
+                <ion-select formControlName="constenncy_id" [disabled]="!serachMeetingform.get('district_id')?.value" (ionChange)="getmandals($event); searchconstenct($event); serachgenders($event,5);">
                     <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
                     <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>
                 </ion-select>
@@ -77,7 +77,7 @@
         <ion-col col-12>
             <ion-item>
                <ion-label stacked>మండలాలను ఎంచుకోండి</ion-label>
-                <ion-select formControlName="mandal_id" (ionChange)="gepanchayati($event); searchmandals($event); serachgenders($event,6);">
+                <ion-select formControlName="mandal_id" [disabled]="!serachMeetingform.get('constenncy_id')?.value" (ionChange)="gepanchayati($event); searchmandals($event); serachgenders($event,6);">
                     <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
                     <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>
                 </ion-select>
@@ -86,7 +86,7 @@
         <ion-col col-12>
             <ion-item>
                <ion-label stacked>పంచాయతీ ఎంచుకోండి</ion-label>
-                <ion-select formControlName="panchayati_id" (ionChange)="searchvillages($event); serachgenders($event,7);">
+                <ion-select formControlName="panchayati_id" [disabled]="!serachMeetingform.get('mandal_id')?.value" (ionChange)="searchvillages($event); serachgenders($event,7);">
                     <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
                     <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>
                 </ion-select>

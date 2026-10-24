@@ -47,14 +47,14 @@ export class AssociationPage {
       workingareas: [''],
       description: [''],
       password: [''],
-      retypepassword: [''],],
+      retypepassword: [''],
       term: [true],
 
     })
   }
 
 
-  
+
   onStateChange(event: any) {
     var stateId = event;
     this.form.patchValue({

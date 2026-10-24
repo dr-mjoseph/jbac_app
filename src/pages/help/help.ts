@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ActionSheetController, IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -16,7 +16,7 @@ export class HelpPage {
   imagesdata: any = []
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public formBuilder: FormBuilder, public camera: Camera, public actionSheetCtrl: ActionSheetController, public service: ServiceProvider) {
+    public formBuilder: FormBuilder, public camera: Camera, public actionSheetCtrl: ActionSheetController, public service: ServiceProvider, public zone: NgZone) {
 
     this.form = this.formBuilder.group({
       description: ['', [Validators.required]],
@@ -27,13 +27,33 @@ export class HelpPage {
   gotohome() {
     this.navCtrl.push('HomePage')
   }
+  triggerFileInput() {
+    const input = document.getElementById('helpFileInput') as HTMLInputElement;
+    if (input) input.click();
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.zone.run(() => {
+          this.imagesdata = [{
+            reviewimg: e.target.result,
+            filetype: 'jpeg'
+          }];
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   async openphoto() {
     const actionSheet = this.actionSheetCtrl.create({
       buttons: [
         {
           icon: 'ios-folder-open',
           text: 'Gallery',
-          role: 'destructive',
           handler: () => {
             const options: CameraOptions = {
               quality: 70,
@@ -42,15 +62,17 @@ export class HelpPage {
               saveToPhotoAlbum: false
             }
             this.camera.getPicture(options).then((imaged) => {
-              var ing = `data:image/jpeg;base64,` + imaged;
-              var imagedata = {
-                reviewimg: ing,
-                filetype: 'jpeg',
-              }
-              console.log(imagedata);
-              this.imagesdata = [];
-              this.imagesdata.push(imagedata);
+              this.zone.run(() => {
+                var ing = `data:image/jpeg;base64,` + imaged;
+                var imagedata = {
+                  reviewimg: ing,
+                  filetype: 'jpeg',
+                }
+                this.imagesdata = [imagedata];
+              });
             }, (err) => {
+              console.log('Gallery picker error, triggering file fallback', err);
+              this.triggerFileInput();
             });
           }
         }, {
@@ -65,16 +87,17 @@ export class HelpPage {
               mediaType: this.camera.MediaType.PICTURE
             }
             this.camera.getPicture(options).then((imageD) => {
-              var img = `data:image/jpeg;base64,` + imageD;
-              var imagedata = {
-                reviewimg: img,
-                filetype: 'jpeg',
-              }
-              console.log(imagedata);
-
-              this.imagesdata = [];
-              this.imagesdata.push(imagedata);
+              this.zone.run(() => {
+                var img = `data:image/jpeg;base64,` + imageD;
+                var imagedata = {
+                  reviewimg: img,
+                  filetype: 'jpeg',
+                }
+                this.imagesdata = [imagedata];
+              });
             }, (err) => {
+              console.log('Camera error, triggering file fallback', err);
+              this.triggerFileInput();
             });
           }
         }, {
@@ -86,7 +109,7 @@ export class HelpPage {
         }
       ]
     });
-    (await actionSheet).present();
+    actionSheet.present();
   }
 
   ionViewDidLoad() {

@@ -34,8 +34,8 @@
             <ion-option value="రాష్ట్ర స్థాయి">రాష్ట్ర స్థాయి</ion-option>
             <ion-option value="జాతీయ స్థాయి">జాతీయ స్థాయి</ion-option>
             <ion-option value="అంతర్జాతీయ స్థాయి">అంతర్జాతీయ స్థాయి</ion-option>
-            
-            
+
+
           </ion-select>
         </ion-item>
       </ion-col>
@@ -58,7 +58,7 @@
     </ion-row>
 
     <ion-row>
-      
+
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>మీ అసోసియేషన్ లో మొబైల్ యాప్స్ ఉపయోగించ గలిగే సేవకుడు ఫోన్ నంబర్</ion-label>
@@ -113,6 +113,15 @@
     <ion-row>
       <ion-col col-12>
         <ion-item>
+          <ion-label stacked>రాష్ట్రం / State <span style="color:red;">*</span></ion-label>
+          <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">
+            <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>
+            <ion-option value="2">తెలంగాణ (TG)</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
           <ion-label stacked>జిల్లా <span style="color:red;">*</span></ion-label>
           <ion-select formControlName="district_id" (ionChange)="getconstency($event)" placeholder="ఇక్కడ క్లిక్ చేసి జిల్లా ఎంచుకోండి">
             <!-- <ion-option value="" disabled selected>ఈ క్రింది వాటిలో మీ జిల్లా ఎంచుకోండి</ion-option> -->
@@ -138,7 +147,7 @@
         </div>
       </ion-col>
     </ion-row>
-    
+
     <ion-row>
       <ion-col col-12>
         <ion-item>
@@ -158,7 +167,7 @@
         <ion-item>
           <ion-label stacked>పంచాయితి  <span style="color:red;">*</span></ion-label>
           <ion-select formControlName="village_id" placeholder="ఇక్కడ క్లిక్ చేసి పంచాయితి ఎంచుకోండి">
-            <ion-option value="" disabled selected>ఈ క్రింది వాటిలో మీ పంచాయితి ఎంచుకోండి</ion-option> 
+            <ion-option value="" disabled selected>ఈ క్రింది వాటిలో మీ పంచాయితి ఎంచుకోండి</ion-option>
             <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>
           </ion-select>
         </ion-item>

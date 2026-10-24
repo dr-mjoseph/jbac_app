@@ -1,4 +1,13 @@
-
+<ion-header>
+  <ion-navbar>
+    <ion-title style="text-align: center;font-family: Ramabhadra,sans-serif!important;"><b>చర్చి పర్మిషన్</b></ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="gotohome()">
+        <ion-icon style="font-size: 20px;" name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
 
 <ion-content padding class="pagecss">
 
@@ -9,21 +18,25 @@
     </h2>
     <hr>
     <div class="col-lg-12">
-      <img src="https://jbac.in/appimages/rc1.png">
-      <img src="https://jbac.in/appimages/rc2.png">
+      <img src="assets/images/rc1.jpg" style="width: 100%; margin-bottom: 10px; border-radius: 4px;">
+      <img src="assets/images/rc2.jpg" style="width: 100%; border-radius: 4px;">
     </div>
   </div>
-  <div style="background-color: #e4e3e3;border-radius: 8px;">
+  <div style="background-color: #e4e3e3;border-radius: 8px; margin-top: 15px;">
     <p style="text-align: justify;text-align: center; font-size:20px;font-weight: 900;padding: 1%;">
       నేను పెట్టే వీడియోలు మీరు చూచు నట్లు, వీడియో ఛానల్ సబ్ స్క్రైబ్ చేసుకోండి<br>
     </p>
 
-    <iframe width="330" height="300" src="https://www.youtube.com/embed/MjDV1hHkPkY?si=oH1BfkRY5P_A70Rz"
-      title="YouTube video player"></iframe>
+    <div style="text-align: center; margin: 20px 0;">
+      <button ion-button color="danger" (click)="openYoutube()" style="border-radius: 5px; font-weight: bold;">
+        <ion-icon name="logo-youtube" style="margin-right: 8px;"></ion-icon>
+        YouTube ఛానల్ సందర్శించండి
+      </button>
+    </div>
 
     <p style="text-align: justify;text-align: center; font-size:20px;font-weight: 900;padding: 1%;">
       నా గురుంచి తెలుసుకొనుటకు
-      <a href="/about">ఇక్కడ క్లిక్ చేయండి</a>
+      <a href="javascript:void(0)" (click)="gotoAbout()" style="color: blue; text-decoration: underline;">ఇక్కడ క్లిక్ చేయండి</a>
       <br>
       ప్రొఫెసర్ డాక్టర్.జోసఫ్ పి మోసిగంటి. <br> B.Tech, M.Tech, Ph.D<br>
       చైర్మన్ , ఆంధ్రప్రదేశ్ జీసస్ బిలీవర్స్ అసోసియేషన్ కౌన్సిల్ (JBAC)<br>

@@ -23,20 +23,27 @@ export class SubGalleryPage {
 
   getimages() {
     this.service.getcatewebsitegallery().subscribe((res: any) => {
-      this.gallery = res.data.filter((data: any) => data.category_id == this.id);
-    })
+      if (res && res.data && Array.isArray(res.data)) {
+        this.gallery = res.data.filter((data: any) => data.category_id == this.id || data.id == this.id);
+      } else {
+        this.gallery = [];
+      }
+    }, error => {
+      this.gallery = [];
+    });
   }
 
   gotohome() {
     this.navCtrl.push('HomePage');
   }
 
+  onImgError(event: any, item: any) {
+    const fallbackId = (item && item.id) ? (Math.abs(item.id) % 12) : 1;
+    event.target.src = 'assets/images/meet-fig' + fallbackId + '.png';
+  }
+
   openImage(imageUrl: string) {
     const imageModal = this.modalCtrl.create(ImagemodalPage, { imageSrc: imageUrl });
     imageModal.present();
   }
-
-
-
-
 }

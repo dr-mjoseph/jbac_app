@@ -1,6 +1,6 @@
 webpackJsonp([0],{
 
-/***/ 434:
+/***/ 428:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginPageModule", function() { return LoginPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login__ = __webpack_require__(487);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login__ = __webpack_require__(483);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,7 +38,7 @@ var LoginPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 457:
+/***/ 459:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -122,7 +122,7 @@ var win = (typeof window === 'undefined') ? {
 
 /***/ }),
 
-/***/ 459:
+/***/ 461:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -130,7 +130,7 @@ var win = (typeof window === 'undefined') ? {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_swiper__ = __webpack_require__(460);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_swiper__ = __webpack_require__(462);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_service_service__ = __webpack_require__(128);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -191,13 +191,12 @@ var HomePage = /** @class */ (function () {
         this.service = service;
         this.modalCtrl = modalCtrl;
         this.banners = [
-            { id: '1', banner: 'https://jbac.in/baneers/Banner01.png' },
-            // { id: '2', banner: 'https://jbac.in/baneers/Banner02.png' },
-            { id: '3', banner: 'https://jbac.in/baneers/Banner03.png' },
-            { id: '4', banner: 'https://jbac.in/baneers/Banner04.png' },
-            { id: '5', banner: 'https://jbac.in/baneers/Banner05.png' },
-            { id: '6', banner: 'https://jbac.in/baneers/Banner06.png' },
-            { id: '7', banner: 'https://jbac.in/baneers/Banner07.png' },
+            { id: '1', banner: 'assets/images/Banner01.png' },
+            { id: '3', banner: 'assets/images/Banner03.png' },
+            { id: '4', banner: 'assets/images/Banner04.png' },
+            { id: '5', banner: 'assets/images/Banner05.png' },
+            { id: '6', banner: 'assets/images/Banner06.png' },
+            { id: '7', banner: 'assets/images/Banner07.png' }
         ];
         this.main = 0;
         this.maintrue = false;
@@ -416,7 +415,7 @@ var HomePage = /** @class */ (function () {
     };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"C:\\Users\\rajes\\StudioProjects\\jbac_app\\src\\pages\\home\\home.html"*/'<ion-header>\n  <!-- <ion-navbar> -->\n  <ion-row>\n    <ion-col col-2>\n      <p style="text-align: center;" menuToggle>\n        <ion-icon style="color:white;font-size: 30px;" name="menu"></ion-icon>\n      </p>\n    </ion-col>\n    <ion-col col-8 style="font-weight: bolder;text-align: center;font-weight: 1000;color:white">\n      <h2>JBAC-AP</h2>\n    </ion-col>\n\n    <ion-col col-2 style="text-align: center;" (click)="logout()" *ngIf="maintrue">\n      <br>\n      <ion-icon style="color:white;font-size: 30px;" name="log-out"></ion-icon>\n    </ion-col>\n\n    <ion-col col-2 style="text-align: center;" (click)="login()" *ngIf="!maintrue">\n      <br>\n      <ion-icon style="color:white;font-size: 30px;" name="person"></ion-icon>\n    </ion-col>\n  </ion-row>\n  <!-- </ion-navbar> -->\n</ion-header>\n\n<ion-content class="pagecss">\n  <div style="padding: 1%;">\n    <div class="swiper-container">\n      <div class="swiper-wrapper">\n        <div class="swiper-slide" *ngFor="let i of banners">\n          <img src="{{i.banner}}" style="width:100%;border-radius:10px;height: 195px;">\n        </div>\n      </div>\n      <div class="swiper-pagination"></div>\n    </div>\n  </div>\n\n  <div class="marquee">\n    <h3>\n      <span style="color:red;font-weight:bolder;font-family: \'Ramabhadra\', sans-serif;"> News </span>\n      : <span (click)="gotopage(12)">చర్చి పర్మిషన్ గవర్నమెంట్ ఆర్డర్స్ .</span>\n      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n      <span (click)="gotopage(14)">మీ చర్చికి మా టెక్నికల్ సొల్లుషన్స్ .</span>\n      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n      <span (click)="gotopage(19)" style="color:#00548F;font-weight:bolder;">✨ నూతన సేవ: ఫ్యామిలీ కౌన్సిలింగ్ & డాక్టర్ అపాయింట్‌మెంట్లు .</span>\n\n    </h3>\n  </div>\n\n  \n  \n  \n  <div style="margin: 8px 12px; padding: 12px 14px; background: linear-gradient(135deg, #00548F, #1f376e); border-radius: 12px; color: white; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 10px rgba(0,84,143,0.25); cursor: pointer;" (click)="gotopage(19)">\n    <div style="display: flex; align-items: center;">\n      <div style="background: rgba(255,255,255,0.2); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 22px;">\n        💍\n      </div>\n      <div>\n        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; color: #ffeb3b;">\n          📢 నూతన సేవ • NEW SERVICE\n        </div>\n        <div style="font-size: 14px; font-weight: bold; margin-top: 2px;">\n          వివాహ & కుటుంబ కౌన్సిలింగ్ (Marriage Counselling)\n        </div>\n      </div>\n    </div>\n    <div style="font-size: 20px; font-weight: bold; padding-left: 8px; color: #ffeb3b;">\n      ➔\n    </div>\n  </div>\n\n  <ion-row style="text-align: center;">\n\n    <ion-col col-3 class="made" (click)="gotopage(19)">\n      <img style="padding:3%;width:100%" src="assets/icon/svg/couple.svg" onerror="this.onerror=null;this.src=\'assets/icon/svg/helping-hand.svg\';">\n      <b>వివాహ & కుటుంబ<br>కౌన్సిలింగ్</b>\n    </ion-col>\n\n    \n    <ion-col col-3 class="made" (click)="gotopage(1)">\n      <img style="padding:3%;width:100%" src="assets/icon/svg/information.svg">\n      <b>నా గురించి</b>\n    </ion-col>\n\n    <ion-col col-3 class="made" (click)="gotopage(3)">\n      <img style="padding:3%;width:100%" src="assets/icon/svg/register.svg">\n      <b> రిజిస్ట్రేషన్ </b>\n    </ion-col>\n\n    <ion-col col-3 class="made" (click)="gotopage(10)">\n      <img style="padding:3%;width:100%" src="assets/icon/svg/helping-hand.svg">\n      <b>మా సహాయం </b>\n    </ion-col>\n\n\n    <ion-col col-3 class="made" (click)="gotopage(2)">\n      <img style="padding:3%;width:100%" src=\'assets/icon/meetview.png\'>\n      <b>జరగబోయే మీటింగ్స్ </b>\n    </ion-col>\n\n    <ion-col col-3 class="made" (click)="gotopage(8)">\n      <img style="padding:3%;width:100%" src="assets/icon/meetsub.png">\n      <b>సబ్మిట్ మీటింగ్ పోస్టర్</b>\n    </ion-col>\n\n    <ion-col col-3 class="made" (click)="gotopage(14)">\n      <img style="padding:3%;width:100%" src="assets/icon/svg/employee.svg">\n      <b>టెక్నికల్<br> సోలుషన్స్ </b>\n    </ion-col>\n\n    <ion-col col-3 class="made" (click)="gotopage(17)">\n      <img style="padding:3%;width:100%" src="assets/icon/svg/news.svg">\n      <b> వార్తలు చుడానికి </b>\n    </ion-col>\n\n    <ion-col col-3 class="made" (click)="gotopage(7)">\n      <img style="padding:3%;width:100%" src="assets/icon/svg/tv.svg">\n      <b> వార్తలు నమోదు </b>\n    </ion-col>\n\n    <ion-col col-3 class="made" (click)="gotopage(15)">\n      <img style="padding:3%;width:100%" src="assets/icon/svg/picture.svg">\n      <b>ఫోటో గ్యాలరీ </b>\n    </ion-col>\n\n\n    <ion-col col-3 class="made" (click)="gotopage(11)">\n      <img style="padding:3%;width:100%" src="assets/icon/svg/contact-us.svg">\n      <b> మమ్మల్ని<br>సంప్రదించండి </b>\n    </ion-col>\n\n    <ion-col col-3 class="made" (click)="gotopage(9)">\n      <img style="padding:3%;width:100%" src=" assets/icon/download.png">\n      <b> చర్చి<br>సమయాలు </b>\n    </ion-col>\n\n    <ion-col col-3 class="made" (click)="gotopage(12)">\n      <img style="padding:3%;width:100%" src=" assets/icon/svg/permission.svg">\n      <b>చర్చి<br>పర్మిషన్</b>\n    </ion-col>\n    <ion-col col-3 class="made" (click)="gotopage(4)">\n      <img style="padding:3%;width:100%" src="assets/icon/svg/services.svg">\n      <b> ఇతర సర్వీసెస్ చుడానికి </b>\n    </ion-col>\n\n    <ion-col col-3 class="made" (click)="gotopage(5)">\n      <img style="padding:3%;width:100%" src="assets/icon/svg/myaccount.svg">\n      <b> ఇతర సర్వీసెస్ రిజిస్టర్</b>\n    </ion-col>\n\n    \n\n\n    <ion-col col-3 class="made" (click)="gotopage(16)">\n      <img style="padding:3%;width:100%" src="assets/icon/svg/video.svg">\n      <b>వీడియో<br>గ్యాలరీ </b>\n    </ion-col>\n\n    <ion-col col-3 class="made" (click)="gotopage(6)">\n      <img style="padding:3%;width:100%" src="assets/icon/svg/project-manager.svg">\n      <b> లీడర్స్ </b>\n    </ion-col>\n\n    <ion-col col-3 class="made" (click)="gotopage(18)">\n      <img style="padding:3%;width:100%" src="assets/icon/svg/123.svg">\n      <b> దాడుల నమోదు </b>\n    </ion-col><br> \n    <!-- <ion-col col-3 class="made" (click)="gotopage(13)">\n      <img style="padding:3%;width:100%" src="assets/icon/svg/cloud-computing.svg">\n      <b>వెబ్-సైట్ </b>\n    </ion-col> -->\n\n    <ion-col col-3 *ngIf="maintrue" class="made" (click)="logout()">\n      <img style="padding:3%;width:100%" src="assets/icon/svg/exit.svg">\n      <b> లాగ్ అవుట్ </b>\n    </ion-col>\n  </ion-row>\n  \n <br>\n  <ion-row>\n    <ion-col col-2></ion-col>\n    <ion-col col-8 style="background-color: white;text-align: center;border-radius: 10px;">\n      Application Visitors Count : <b>{{count}}</b>\n    </ion-col>\n    <ion-col col-2></ion-col>\n  </ion-row>\n  <br>\n  <ion-row>\n    <ion-col col-2></ion-col>\n    <ion-col col-8 style="background-color: white;text-align: center;border-radius: 10px;">\n      <b> <a (click)="gotoprivacy()">Privacy Policy</a></b>\n    </ion-col>\n    <ion-col col-2></ion-col>\n  </ion-row>\n  <br><br>\n</ion-content>\n\n<ion-footer\n  style="background-color: white; border-radius: 15px 15px 0px 0px;font-family: \'Ramabhadra\', sans-serif!important;">\n  <ion-row style="text-align: center;color:#1f376e">\n    <ion-col col-3>\n      <ion-icon style="font-size:34px;color:#1f376e" name="home"></ion-icon>\n      <br><b>హోమ్</b>\n    </ion-col>\n    <ion-col col-6>\n      <img style="margin-top:-18%;width:36%;" src="assets/icon/footer_logo.png">\n      <p style="font-size: 9px; font-weight: 1000; color: red;">\n        జీసస్ బిలీవర్స్ అసోసియేషన్, ఆంధ్ర ప్రదేశ్\n      </p>\n    </ion-col>\n    <ion-col col-3 (click)="gotoprofile()">\n      <ion-icon style="font-size:34px;color:#1f376e" name="person"></ion-icon>\n      <br>\n      <b *ngIf="maintrue">ప్రొఫైల్</b>\n      <b *ngIf="!maintrue">లాగిన్</b>\n    </ion-col>\n  </ion-row>\n</ion-footer>'/*ion-inline-end:"C:\\Users\\rajes\\StudioProjects\\jbac_app\\src\\pages\\home\\home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\home\home.html"*/'<ion-header>\n\n  <!-- <ion-navbar> -->\n\n  <ion-row>\n\n    <ion-col col-2>\n\n      <p style="text-align: center;" menuToggle>\n\n        <ion-icon style="color:white;font-size: 30px;" name="menu"></ion-icon>\n\n      </p>\n\n    </ion-col>\n\n    <ion-col col-8 style="font-weight: bolder;text-align: center;font-weight: 1000;color:white">\n\n      <h2>JBAC-AP</h2>\n\n    </ion-col>\n\n\n\n    <ion-col col-2 style="text-align: center;" (click)="logout()" *ngIf="maintrue">\n\n      <br>\n\n      <ion-icon style="color:white;font-size: 30px;" name="log-out"></ion-icon>\n\n    </ion-col>\n\n\n\n    <ion-col col-2 style="text-align: center;" (click)="login()" *ngIf="!maintrue">\n\n      <br>\n\n      <ion-icon style="color:white;font-size: 30px;" name="person"></ion-icon>\n\n    </ion-col>\n\n  </ion-row>\n\n  <!-- </ion-navbar> -->\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n  <div style="padding: 1%;">\n\n    <div class="swiper-container">\n\n      <div class="swiper-wrapper">\n\n        <div class="swiper-slide" *ngFor="let i of banners">\n\n          <img src="{{i.banner}}" style="width:100%;border-radius:10px;height: 195px;">\n\n        </div>\n\n      </div>\n\n      <div class="swiper-pagination"></div>\n\n    </div>\n\n  </div>\n\n\n\n  <div class="marquee">\n\n    <h3>\n\n      <span style="color:red;font-weight:bolder;font-family: \'Ramabhadra\', sans-serif;"> News </span>\n\n      : <span (click)="gotopage(12)">చర్చి పర్మిషన్ గవర్నమెంట్ ఆర్డర్స్ .</span>\n\n      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n\n      <span (click)="gotopage(14)">మీ చర్చికి మా టెక్నికల్ సొల్లుషన్స్ .</span>\n\n      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n\n      <span (click)="gotopage(19)" style="color:#00548F;font-weight:bolder;">✨ నూతన సేవ: ఫ్యామిలీ కౌన్సిలింగ్ & డాక్టర్ అపాయింట్‌మెంట్లు .</span>\n\n\n\n    </h3>\n\n  </div>\n\n\n\n  \n\n  \n\n  \n\n  <div tappable style="margin: 8px 12px; padding: 12px 14px; background: linear-gradient(135deg, #00548F, #1f376e); border-radius: 12px; color: white; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 10px rgba(0,84,143,0.25); cursor: pointer;" (click)="gotopage(19)">\n\n    <div style="display: flex; align-items: center;">\n\n      <div style="background: rgba(255,255,255,0.2); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 22px;">\n\n        💍\n\n      </div>\n\n      <div>\n\n        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; color: #ffeb3b;">\n\n          📢 నూతన సేవ • NEW SERVICE\n\n        </div>\n\n        <div style="font-size: 14px; font-weight: bold; margin-top: 2px;">\n\n          వివాహ & కుటుంబ కౌన్సిలింగ్ (Marriage Counselling)\n\n        </div>\n\n      </div>\n\n    </div>\n\n    <div style="font-size: 20px; font-weight: bold; padding-left: 8px; color: #ffeb3b;">\n\n      ➔\n\n    </div>\n\n  </div>\n\n\n\n  <ion-row style="text-align: center;">\n\n\n\n    <ion-col col-3 class="made" tappable (click)="gotopage(19)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/couple.svg" onerror="this.onerror=null;this.src=\'assets/icon/svg/helping-hand.svg\';">\n\n      <b>వివాహ & కుటుంబ<br>కౌన్సిలింగ్</b>\n\n    </ion-col>\n\n    <ion-col col-3 class="made" tappable (click)="gotopage(20)">\n      <img style="padding:3%;width:100%" src="assets/icon/svg/register.svg" onerror="this.onerror=null;this.src=\'assets/icon/svg/services.svg\';">\n      <b>వివాహ<br>సంబంధాలు</b>\n    </ion-col>\n\n\n\n    \n\n    <ion-col col-3 class="made" (click)="gotopage(1)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/information.svg">\n\n      <b>నా గురించి</b>\n\n    </ion-col>\n\n\n\n    <ion-col col-3 class="made" (click)="gotopage(3)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/register.svg">\n\n      <b> రిజిస్ట్రేషన్ </b>\n\n    </ion-col>\n\n\n\n    <ion-col col-3 class="made" (click)="gotopage(10)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/helping-hand.svg">\n\n      <b>మా సహాయం </b>\n\n    </ion-col>\n\n\n\n\n\n    <ion-col col-3 class="made" (click)="gotopage(2)">\n\n      <img style="padding:3%;width:100%" src=\'assets/icon/meetview.png\'>\n\n      <b>జరగబోయే మీటింగ్స్ </b>\n\n    </ion-col>\n\n\n\n    <ion-col col-3 class="made" (click)="gotopage(8)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/meetsub.png">\n\n      <b>సబ్మిట్ మీటింగ్ పోస్టర్</b>\n\n    </ion-col>\n\n\n\n    <ion-col col-3 class="made" (click)="gotopage(14)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/employee.svg">\n\n      <b>టెక్నికల్<br> సోలుషన్స్ </b>\n\n    </ion-col>\n\n\n\n    <ion-col col-3 class="made" (click)="gotopage(17)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/news.svg">\n\n      <b> వార్తలు చుడానికి </b>\n\n    </ion-col>\n\n\n\n    <ion-col col-3 class="made" (click)="gotopage(7)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/tv.svg">\n\n      <b> వార్తలు నమోదు </b>\n\n    </ion-col>\n\n\n\n    <ion-col col-3 class="made" (click)="gotopage(15)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/picture.svg">\n\n      <b>ఫోటో గ్యాలరీ </b>\n\n    </ion-col>\n\n\n\n\n\n    <ion-col col-3 class="made" (click)="gotopage(11)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/contact-us.svg">\n\n      <b> మమ్మల్ని<br>సంప్రదించండి </b>\n\n    </ion-col>\n\n\n\n    <ion-col col-3 class="made" (click)="gotopage(9)">\n\n      <img style="padding:3%;width:100%" src=" assets/icon/download.png">\n\n      <b> చర్చి<br>సమయాలు </b>\n\n    </ion-col>\n\n\n\n    <ion-col col-3 class="made" (click)="gotopage(12)">\n\n      <img style="padding:3%;width:100%" src=" assets/icon/svg/permission.svg">\n\n      <b>చర్చి<br>పర్మిషన్</b>\n\n    </ion-col>\n\n    <ion-col col-3 class="made" (click)="gotopage(4)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/services.svg">\n\n      <b> ఇతర సర్వీసెస్ చుడానికి </b>\n\n    </ion-col>\n\n\n\n    <ion-col col-3 class="made" (click)="gotopage(5)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/myaccount.svg">\n\n      <b> ఇతర సర్వీసెస్ రిజిస్టర్</b>\n\n    </ion-col>\n\n\n\n    \n\n\n\n\n\n    <ion-col col-3 class="made" (click)="gotopage(16)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/video.svg">\n\n      <b>వీడియో<br>గ్యాలరీ </b>\n\n    </ion-col>\n\n\n\n    <ion-col col-3 class="made" (click)="gotopage(6)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/project-manager.svg">\n\n      <b> లీడర్స్ </b>\n\n    </ion-col>\n\n\n\n    <ion-col col-3 class="made" (click)="gotopage(18)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/123.svg">\n\n      <b> దాడుల నమోదు </b>\n\n    </ion-col><br> \n\n    <!-- <ion-col col-3 class="made" (click)="gotopage(13)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/cloud-computing.svg">\n\n      <b>వెబ్-సైట్ </b>\n\n    </ion-col> -->\n\n\n\n    <ion-col col-3 *ngIf="maintrue" class="made" (click)="logout()">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/exit.svg">\n\n      <b> లాగ్ అవుట్ </b>\n\n    </ion-col>\n\n  </ion-row>\n\n  \n\n <br>\n\n  <ion-row>\n\n    <ion-col col-2></ion-col>\n\n    <ion-col col-8 style="background-color: white;text-align: center;border-radius: 10px;">\n\n      Application Visitors Count : <b>{{count}}</b>\n\n    </ion-col>\n\n    <ion-col col-2></ion-col>\n\n  </ion-row>\n\n  <br>\n\n  <ion-row>\n\n    <ion-col col-2></ion-col>\n\n    <ion-col col-8 style="background-color: white;text-align: center;border-radius: 10px;">\n\n      <b> <a (click)="gotoprivacy()">Privacy Policy</a></b>\n\n    </ion-col>\n\n    <ion-col col-2></ion-col>\n\n  </ion-row>\n\n  <br><br>\n\n</ion-content>\n\n\n\n<ion-footer\n\n  style="background-color: white; border-radius: 15px 15px 0px 0px;font-family: \'Ramabhadra\', sans-serif!important;">\n\n  <ion-row style="text-align: center;color:#1f376e">\n\n    <ion-col col-3>\n\n      <ion-icon style="font-size:34px;color:#1f376e" name="home"></ion-icon>\n\n      <br><b>హోమ్</b>\n\n    </ion-col>\n\n    <ion-col col-6>\n\n      <img style="margin-top:-18%;width:36%;" src="assets/icon/footer_logo.png">\n\n      <p style="font-size: 9px; font-weight: 1000; color: red;">\n\n        జీసస్ బిలీవర్స్ అసోసియేషన్, ఆంధ్ర ప్రదేశ్\n\n      </p>\n\n    </ion-col>\n\n    <ion-col col-3 (click)="gotoprofile()">\n\n      <ion-icon style="font-size:34px;color:#1f376e" name="person"></ion-icon>\n\n      <br>\n\n      <b *ngIf="maintrue">ప్రొఫైల్</b>\n\n      <b *ngIf="!maintrue">లాగిన్</b>\n\n    </ion-col>\n\n  </ion-row>\n\n</ion-footer>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\home\home.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["v" /* ToastController */], __WEBPACK_IMPORTED_MODULE_4__providers_service_service__["a" /* ServiceProvider */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["p" /* ModalController */]])
     ], HomePage);
@@ -427,12 +426,12 @@ var HomePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 460:
+/***/ 462:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_dom7_dist_dom7_modular__ = __webpack_require__(461);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ssr_window__ = __webpack_require__(457);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_dom7_dist_dom7_modular__ = __webpack_require__(463);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ssr_window__ = __webpack_require__(459);
 /**
  * Swiper 4.5.1
  * Most modern mobile touch slider and framework with hardware accelerated transitions
@@ -7602,7 +7601,7 @@ Swiper.use(components);
 
 /***/ }),
 
-/***/ 461:
+/***/ 463:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7693,7 +7692,7 @@ Swiper.use(components);
 /* unused harmony export touchmove */
 /* unused harmony export resize */
 /* unused harmony export scroll */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_ssr_window__ = __webpack_require__(457);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_ssr_window__ = __webpack_require__(459);
 /**
  * Dom7 2.1.5
  * Minimalistic JavaScript library for DOM manipulation, with a jQuery-compatible API
@@ -9046,7 +9045,7 @@ function scroll(...args) {
 
 /***/ }),
 
-/***/ 487:
+/***/ 483:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9054,7 +9053,7 @@ function scroll(...args) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(459);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(461);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_service_service__ = __webpack_require__(128);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -9115,6 +9114,7 @@ var LoginPage = /** @class */ (function () {
         this.service = service;
         this.loadingCtrl = loadingCtrl;
         this.modalCtrl = modalCtrl;
+        this.isLoggingIn = false;
         this.password_type = 'password';
         this.passloginform = this.formbuilder.group({
             category: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
@@ -9132,24 +9132,25 @@ var LoginPage = /** @class */ (function () {
         return result;
     };
     LoginPage.prototype.passlogin = function () {
-        this.isLoggingIn = true;
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
-            var alert_1;
-            var dismissLoadingSafely = function () {
-                _this.isLoggingIn = false;
-                if (_this.loading) {
-                    try {
-                        _this.loading.dismiss().catch(function () {});
-                    } catch (e) {}
-                }
-            };
+            var dismissLoadingSafely, alert_1;
             return __generator(this, function (_a) {
+                this.isLoggingIn = true;
                 this.loading = this.loadingCtrl.create({
                     spinner: 'ios',
                     content: 'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...'
                 });
                 this.loading.present();
+                dismissLoadingSafely = function () {
+                    _this.isLoggingIn = false;
+                    if (_this.loading) {
+                        try {
+                            _this.loading.dismiss().catch(function () { });
+                        }
+                        catch (_) { }
+                    }
+                };
                 if (this.passloginform.invalid) {
                     dismissLoadingSafely();
                     alert_1 = this.alertCtrl.create({
@@ -9211,55 +9212,58 @@ var LoginPage = /** @class */ (function () {
                                     localStorage.setItem('is_doctor', '1');
                                 }
                             }
-
-                            var navigated = false;
-                            var doNavigate = function () {
-                                if (navigated) return;
-                                navigated = true;
+                            var navigated_1 = false;
+                            var doNavigate_1 = function () {
+                                if (navigated_1)
+                                    return;
+                                navigated_1 = true;
                                 var redirect = _this.navParams.get('redirect');
                                 if (redirect === 'FamilyCouncellingPage' || redirect === 'family-councelling') {
                                     _this.navCtrl.setRoot('FamilyCouncellingPage');
-                                } else {
+                                }
+                                else {
                                     _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__home_home__["a" /* HomePage */]);
                                 }
                             };
-
                             var alert_4 = _this.alertCtrl.create({
                                 mode: 'ios',
                                 title: 'విజయ వంతం గా లాగిన్ అయ్యారు',
                                 buttons: [{
-                                    text: 'OK',
-                                    handler: function () {
-                                        doNavigate();
-                                    }
-                                }]
+                                        text: 'OK',
+                                        handler: function () {
+                                            doNavigate_1();
+                                        }
+                                    }]
                             });
                             alert_4.onDidDismiss(function () {
-                                doNavigate();
+                                doNavigate_1();
                             });
                             alert_4.present();
                         }
                         else {
-                            var alert_other = _this.alertCtrl.create({
+                            var alert_5 = _this.alertCtrl.create({
                                 mode: 'ios',
                                 title: res.message || 'లాగిన్ విఫలమైంది',
                                 buttons: ['OK']
                             });
-                            alert_other.present();
+                            alert_5.present();
                         }
-                    }, function (err) {
+                    }, function (_err) {
                         dismissLoadingSafely();
-                        var alert_err = _this.alertCtrl.create({
+                        var alert = _this.alertCtrl.create({
                             mode: 'ios',
                             title: 'సర్వర్ సమస్య ఉంది, దయచేసి మళ్లీ ప్రయత్నించండి',
                             buttons: ['OK']
                         });
-                        alert_err.present();
+                        alert.present();
                     });
                 }
                 return [2 /*return*/];
             });
         });
+    };
+    LoginPage.prototype.gotodoctorregister = function () {
+        this.navCtrl.push('DoctorregisterPage');
     };
     LoginPage.prototype.gotoformspage = function () {
         this.navCtrl.setRoot('FormsPage');
@@ -9273,7 +9277,7 @@ var LoginPage = /** @class */ (function () {
     };
     LoginPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-login',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\login\login.html"*/'<ion-content padding class="pagecss">\n\n\n\n  <div class="form">\n\n    \n\n    <form [formGroup]="passloginform" >\n\n      <div class="header">\n\n        <img class="jabc" src="assets/icon/png/newlogo.png"><br><br>\n\n        JBAC యాప్ కి లాగిన్ అవ్వండి\n\n      </div>\n\n\n\n      <!-- <h1 style="text-align: center;">JBAC లాగిన్</h1> -->\n\n\n\n      <div class="inputs">\n\n        <select placeholder="మీ లాగిన్ క్యాటగిరి" class="input" formControlName="category">\n\n          <option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</option>\n\n          <option value="1">విశ్వాసి</option>    \n\n          <option value="4">పాస్టర్</option>          \n\n          <option value="2">విద్యార్థి</option>\n\n          <option value="7">పాస్టర్ల అసోసియేషన్</option>\n\n          <option value="3">మినిస్ట్రీస్</option>\n\n          <option value="5">చర్చి</option>\n\n          <option value="6">క్రిస్టియన్ ఆర్గనైజెషన్ / కంపెనీ</option>\n\n         \n\n        </select>\n\n        \n\n        <input placeholder="మొబైల్ నంబర్ ఎంటర్ చేయండి" class="input" type="text" formControlName="mobile_number"\n\n          (keypress)="numericOnly($event)" maxlength="10" minlength="10">\n\n        \n\n        <input placeholder="పాస్వర్డ్ ఎంటర్ చేయండి" class="input" [type]="password_type" maxlength="16" minlength="4"\n\n          formControlName="password">\n\n\n\n        <div style="text-align: right;" class="field-icon" (click)="togglePasswordMode()">\n\n          <ion-icon name="eye"> </ion-icon> టైపు చేసిన పాస్వర్డ్ చూపించు\n\n        </div>\n\n        <button class="sigin-btn" (click)="passlogin()" [disabled]="isLoggingIn"><ion-spinner *ngIf="isLoggingIn" name="crescent" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"></ion-spinner><span *ngIf="isLoggingIn">దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...</span><span *ngIf="!isLoggingIn">సబ్మిట్</span></button>\n\n        <div style="text-align: center;" (click)="gotoforgetpasswordpage()">\n\n          <img src="assets/icon/svg/password.svg" style="width: 10%;margin-bottom: -3%;" ><b>రీసెట్ పాస్వర్డ్ / పాస్వర్డ్ మరిచిపోయాను</b> \n\n        </div>\n\n        <p class="signup-link" (click)="gotoformspage()">ఇంతకముందు రిజిస్టర్ కాకపోతే ? <a>రిజిస్టర్ </a></p>\n\n      </div>\n\n    </form>\n\n\n\n\n\n  </div>\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\login\login.html"*/,
+            selector: 'page-login',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\login\login.html"*/'<ion-content padding class="pagecss">\n\n\n\n  <div class="form">\n\n    \n\n    <form [formGroup]="passloginform" >\n\n      <div class="header">\n\n        <img class="jabc" src="assets/icon/png/newlogo.png"><br><br>\n\n        JBAC యాప్ కి లాగిన్ అవ్వండి\n\n      </div>\n\n\n\n      <!-- <h1 style="text-align: center;">JBAC లాగిన్</h1> -->\n\n\n\n      <div class="inputs">\n\n        <select placeholder="మీ లాగిన్ క్యాటగిరి" class="input" formControlName="category">\n\n          <option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</option>\n\n          <option value="1">విశ్వాసి</option>    \n\n          <option value="4">పాస్టర్</option>          \n\n          <option value="2">విద్యార్థి</option>\n\n          <option value="7">పాస్టర్ల అసోసియేషన్</option>\n\n          <option value="3">మినిస్ట్రీస్</option>\n\n          <option value="5">చర్చి</option>\n\n          <option value="6">క్రిస్టియన్ ఆర్గనైజెషన్ / కంపెనీ</option>\n\n          <option value="8">డాక్టర్ / కౌన్సిలర్ (Doctor / Counsellor)</option>\n\n         \n\n        </select>\n\n        \n\n        <input placeholder="మొబైల్ నంబర్ ఎంటర్ చేయండి" class="input" type="text" formControlName="mobile_number"\n\n          (keypress)="numericOnly($event)" maxlength="10" minlength="10">\n\n        \n\n        <input placeholder="పాస్వర్డ్ ఎంటర్ చేయండి" class="input" [type]="password_type" maxlength="16" minlength="4"\n\n          formControlName="password">\n\n\n\n        <div style="text-align: right;" class="field-icon" (click)="togglePasswordMode()">\n\n          <ion-icon name="eye"> </ion-icon> టైపు చేసిన పాస్వర్డ్ చూపించు\n\n        </div>\n\n        <button class="sigin-btn" (click)="passlogin()" [disabled]="isLoggingIn">\n\n          <ion-spinner *ngIf="isLoggingIn" name="crescent" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"></ion-spinner>\n\n          {{ isLoggingIn ? \'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...\' : \'సబ్మిట్\' }}\n\n        </button>\n\n        <div style="text-align: center;" (click)="gotoforgetpasswordpage()">\n\n          <img src="assets/icon/svg/password.svg" style="width: 10%;margin-bottom: -3%;" ><b>రీసెట్ పాస్వర్డ్ / పాస్వర్డ్ మరిచిపోయాను</b> \n\n        </div>\n\n        <p class="signup-link" (click)="gotoformspage()">ఇంతకముందు రిజిస్టర్ కాకపోతే ? <a>రిజిస్టర్ </a></p>\n\n        <p class="signup-link" style="margin-top: 8px;" (click)="gotodoctorregister()">🩺 డాక్టర్ / కౌన్సిలర్ రిజిస్ట్రేషన్ ? <a>ఇక్కడ నమోదు చేయండి</a></p>\n\n      </div>\n\n    </form>\n\n\n\n\n\n  </div>\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\login\login.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["s" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_4__providers_service_service__["a" /* ServiceProvider */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["o" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["p" /* ModalController */]])
     ], LoginPage);

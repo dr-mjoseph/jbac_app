@@ -1,4 +1,4 @@
-﻿<ion-header>
+<ion-header>
   <ion-navbar>
     <ion-buttons end>
       <button ion-button (click)="gotohome()">
@@ -32,7 +32,7 @@
           <div *ngIf="jobsadding.get('qualification').hasError('required')">అర్హత అవసరం</div>
         </div>
       </ion-col>
-      
+
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>అనుభవం <span style="color:red;">*</span></ion-label>
@@ -74,8 +74,9 @@
         </ion-item>
       </ion-col>
       <ion-col col-12 (click)="openphoto()">
+        <input type="file" id="jobFileInput" (change)="onFileSelected($event)" accept="image/*" style="display:none">
         <div class="imgerdt">
-          <img src="assets/icon/Upload.svg"  style="height:70px;width:70px;">
+          <img src="assets/icon/upload.svg"  style="height:70px;width:70px;">
           చిత్రం అప్‌లోడ్ చేయండి<br>
           <img *ngIf="imagesdata.length" style="width:200px;height:200px" src="{{imagesdata[0].reviewimg}}">
         </div>
@@ -109,13 +110,22 @@
           <ion-label stacked>ఫేస్‌బుక్</ion-label>
           <ion-input formControlName="facebook" placeholder="ఫేస్‌బుక్ నిర్వచించండి"></ion-input>
         </ion-item>
-      </ion-col>      
+      </ion-col>
     </ion-row>
     <ion-row>
       <ion-col col-12>
         <ion-item>
+          <ion-label stacked>రాష్ట్రం / State <span style="color:red;">*</span></ion-label>
+          <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">
+            <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>
+            <ion-option value="2">తెలంగాణ (TG)</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
           <ion-label stacked>జిల్లాల ఎంచుకోండి <span style="color:red;">*</span></ion-label>
-          <ion-select formControlName="districtname" (ionChange)="getconstency($event)">
+          <ion-select formControlName="districtname" [disabled]="!jobsadding.get('state_id')?.value" (ionChange)="getconstency($event)">
             <ion-option value="" disabled selected>రకము ఎంచుకోండి</ion-option>
             <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>
           </ion-select>
@@ -127,7 +137,7 @@
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>మండలం ఎంచుకోండి <span style="color:red;">*</span></ion-label>
-          <ion-select formControlName="constituencyname" (ionChange)="getmandals($event)">
+          <ion-select formControlName="constituencyname" [disabled]="!jobsadding.get('districtname')?.value" (ionChange)="getmandals($event)">
             <ion-option value="" disabled selected>రకము ఎంచుకోండి</ion-option>
             <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>
           </ion-select>
@@ -141,7 +151,7 @@
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>పండల ఎంచుకోండి <span style="color:red;">*</span></ion-label>
-          <ion-select formControlName="mandals" (ionChange)="gepanchayati($event)">
+          <ion-select formControlName="mandals" [disabled]="!jobsadding.get('constituencyname')?.value" (ionChange)="gepanchayati($event)">
             <ion-option value="" disabled selected>రకము ఎంచుకోండి</ion-option>
             <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>
           </ion-select>
@@ -153,7 +163,7 @@
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>పంచాయితీ ఎంచుకోండి <span style="color:red;">*</span></ion-label>
-          <ion-select formControlName="village_name">
+          <ion-select formControlName="village_name" [disabled]="!jobsadding.get('mandals')?.value">
             <ion-option value="" disabled selected>రకము ఎంచుకోండి</ion-option>
             <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>
           </ion-select>
@@ -172,7 +182,7 @@
         </div>
       </ion-col>
     </ion-row>
-    
+
     <ion-row>
       <ion-col col-md-12 style="text-align: center;">
         <button type="submit" ion-button class="default-btn user-all-btn" (click)="postjobs()">నమోదు</button>

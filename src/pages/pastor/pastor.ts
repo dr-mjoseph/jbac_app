@@ -51,14 +51,14 @@ export class PastorPage {
       ward: [''],
       youtubechanel: [''],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      retypepassword: [''],],
+      retypepassword: [''],
       leaders: ['', [Validators.required]],
       leadertype: [''],
       generaltype: ['',],
       wingtype: ['',],
       facebook: [''],
       god: [''],
-      //  // term: [true],
+      term: [true],
       lifegoal: [''],
       denomination_id: ['', [Validators.required]],
       villagename: ['', [Validators.required]],
@@ -70,7 +70,7 @@ export class PastorPage {
     })
   }
 
-  
+
   onStateChange(event: any) {
     var stateId = event;
     this.form.patchValue({
@@ -220,7 +220,7 @@ export class PastorPage {
     if (this.form.invalid) {
       alert('* ఉన్న తప్పనిసరి  ఫీల్డ్స్ ఎంటర్ చేయండి');
       return;
-    } 
+    }
     // else if (this.form.value.password != this.form.value.retypepassword) {
     //   alert("Passwords are Unmatched")
     // }

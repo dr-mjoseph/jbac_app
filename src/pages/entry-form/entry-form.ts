@@ -49,7 +49,7 @@ export class EntryFormPage {
   gotoprivacy() {
     this.navCtrl.push('PagesPrivacyPage')
   }
- 
+
 
   closeModal() {
     this.viewCtrl.dismiss();
@@ -77,7 +77,7 @@ export class EntryFormPage {
   }
 
   getdistric(stateId?: any) {
-    const sid = stateId || this.form.get('state_id')?.value || 1;
+    const sid = stateId || (this.form.get('state_id') ? this.form.get('state_id').value : 1);
     this.service.getdistrict(sid).subscribe((res: any) => {
       this.districts = res.data;
     });
@@ -214,7 +214,7 @@ export class EntryFormPage {
       this.isSubmitting = false;
     } else {
 
-      
+
       this.service.postinfo(this.form.value).subscribe((res: any) => {
         if (res.status == 200) {
           const toast = this.alertCtrl.create({

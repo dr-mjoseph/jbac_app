@@ -88,8 +88,17 @@
 
       <ion-col col-12 class="mb-4 pb-2">
         <ion-item>
+          <ion-label stacked>రాష్ట్రం / State <span style="color:red;">*</span></ion-label>
+          <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">
+            <ion-option value="1">Andhra Pradesh</ion-option>
+            <ion-option value="2">Telangana</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 class="mb-4 pb-2">
+        <ion-item>
           <ion-label stacked>జిల్లాలను ఎంచుకోండి<span style="color:red">*</span></ion-label>
-          <ion-select formControlName="district_id" (ionChange)="getconstency($event)">
+          <ion-select formControlName="district_id" [disabled]="!addingchurchtimimngs.get('state_id')?.value" (ionChange)="getconstency($event)">
             <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
             <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>
           </ion-select>
@@ -102,20 +111,20 @@
       <ion-col col-12 class="mb-4 pb-2">
         <ion-item>
           <ion-label stacked>నియోజకవర్గం ఎంచుకోండి<span style="color:red">*</span></ion-label>
-          <ion-select formControlName="constituency_id" (ionChange)="getmandals($event)">
+          <ion-select formControlName="constituency_id" [disabled]="!addingchurchtimimngs.get('district_id')?.value" (ionChange)="getmandals($event)">
             <ion-option value="" disabled selected>నియోజకవర్గం ఎంచుకోండి</ion-option>
             <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>
           </ion-select>
         </ion-item>
         <div *ngIf="submitted && c['constituency_id'].errors" class="invalid-feedback">
-          <div *ngIf="c['constituency_id'].errors['required']">మండలా అవసరం</div>
+          <div *ngIf="c['constituency_id'].errors['required']">నియోజకవర్గం అవసరం</div>
         </div>
       </ion-col>
 
       <ion-col col-12 class="mb-4 pb-2">
         <ion-item>
           <ion-label stacked>మండలాను ఎంచుకోండి<span style="color:red">*</span></ion-label>
-          <ion-select formControlName="mandal_id" (ionChange)="gepanchayati($event);" (click)="filterchurchdata();">
+          <ion-select formControlName="mandal_id" [disabled]="!addingchurchtimimngs.get('constituency_id')?.value" (ionChange)="gepanchayati($event);" (click)="filterchurchdata();">
             <ion-option value="" disabled selected>మండలo ఎంచుకోండి</ion-option>
             <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>
           </ion-select>

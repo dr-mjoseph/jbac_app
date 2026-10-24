@@ -1,14 +1,14 @@
 webpackJsonp([39],{
 
-/***/ 416:
+/***/ 450:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddmeetingsPageModule", function() { return AddmeetingsPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BelieverPageModule", function() { return BelieverPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__addmeetings__ = __webpack_require__(471);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__believer__ = __webpack_require__(506);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,36 +18,35 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var AddmeetingsPageModule = /** @class */ (function () {
-    function AddmeetingsPageModule() {
+var BelieverPageModule = /** @class */ (function () {
+    function BelieverPageModule() {
     }
-    AddmeetingsPageModule = __decorate([
+    BelieverPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__addmeetings__["a" /* AddmeetingsPage */],
+                __WEBPACK_IMPORTED_MODULE_2__believer__["a" /* BelieverPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__addmeetings__["a" /* AddmeetingsPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__believer__["a" /* BelieverPage */]),
             ],
         })
-    ], AddmeetingsPageModule);
-    return AddmeetingsPageModule;
+    ], BelieverPageModule);
+    return BelieverPageModule;
 }());
 
-//# sourceMappingURL=addmeetings.module.js.map
+//# sourceMappingURL=believer.module.js.map
 
 /***/ }),
 
-/***/ 471:
+/***/ 506:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddmeetingsPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BelieverPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(128);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_camera__ = __webpack_require__(246);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_service_service__ = __webpack_require__(128);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -57,534 +56,280 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [0, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
 
 
 
 
-
-// import { HomePage } from '../home/home';
-/**
- * Generated class for the AddmeetingsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var AddmeetingsPage = /** @class */ (function () {
-    function AddmeetingsPage(navCtrl, navParams, service, frombuilder, actionSheetCtrl, camera, loadingCtrl, alertctrl) {
+var BelieverPage = /** @class */ (function () {
+    // <span style="color:red;"> *</span>
+    function BelieverPage(navCtrl, navParams, formBuilder, service, alertCtrl) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.formBuilder = formBuilder;
         this.service = service;
-        this.frombuilder = frombuilder;
-        this.actionSheetCtrl = actionSheetCtrl;
-        this.camera = camera;
-        this.loadingCtrl = loadingCtrl;
-        this.alertctrl = alertctrl;
-        this.imagesData = [];
-        this.dist = 0;
-        this.const = 0;
-        this.man = 0;
-        this.vil = 0;
+        this.alertCtrl = alertCtrl;
+        this.showSpinner = false;
+        this.extension = false;
         this.submitted = false;
-        this.locationLoading = false;
-        this.locationError = '';
-        this.locationSuccess = '';
-        this.locationName = '';
-        this.locationSourceMessage = '';
-        this.form = this.frombuilder.group({
-            mettingtype: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required]],
-            denomation: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required]],
-            speakerone: [''],
-            speakertwo: [''],
-            speakerthree: [''],
-            speakerfour: [''],
-            fromdate: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required]],
-            todate: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required]],
-            image: [''],
-            districtname: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required]],
-            constituencyname: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required]],
-            mandals: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required]],
-            village_name: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required]],
-            description: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required]],
-            fromtime: [''],
-            totime: [''],
-            address: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required]],
-            location: [''],
-            facebook: [''],
+        this.imagedata = [];
+        this.getchurchfilter = [];
+        this.lead = false;
+        this.mini = false;
+        this.assicoation = false;
+        this.leadtype = false;
+        this.wingtype = false;
+        this.wingtypes = false;
+        this.subward = false;
+        this.father = false;
+        this.beliverform = this.form = this.formBuilder.group({
+            fname: ['', __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required],
+            whatsapp: [''],
+            dob: [''],
+            gender: ['',],
+            mobile_number: ['', __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required],
+            status: [''],
+            income: [''],
+            caste: [''],
+            subcaste: [''],
+            nativeplace: [''],
+            talent: ['', __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required],
+            education: ['', __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required],
+            designation: ['', __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required],
+            dpartment: ['', __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required],
+            state_id: ['1', __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required],
+            districts: ['', __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required],
+            mandals: ['', __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required],
+            panchayati: ['', __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required],
+            constituencyname: ['', __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required],
+            villagename: ['', __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required],
+            wardnumber: [''],
+            ward: ['', __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required],
+            nri: ['', __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required],
+            leadership: ['', __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required],
+            leadertype: [''],
+            generaltype: [''],
+            subward: [''],
+            wingtype: [''],
+            denomination_id: ['', __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required],
+            hobbies: [''],
+            spirit: [''],
+            lifegoal: [''],
+            church: [''],
+            pastor: [''],
             youtube: [''],
-            orgphone: [''],
-            evntphone: [''],
-            peoplecount: ['']
+            lname: [''],
+            god: [''],
+            term: [true],
+            password: ['', __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required],
+            retypepassword: ['', __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required],
         });
+        this.form.reset({ term: true });
     }
-    Object.defineProperty(AddmeetingsPage.prototype, "t", {
-        get: function () { return this.form.controls; },
-        enumerable: true,
-        configurable: true
-    });
-    AddmeetingsPage.prototype.gotohome = function () {
-        this.navCtrl.push('HomePage');
+    BelieverPage.prototype.gotohome = function () {
+        this.navCtrl.push('FormsPage');
     };
-    AddmeetingsPage.prototype.ionViewDidLoad = function () {
+    BelieverPage.prototype.onStateChange = function (event) {
+        var _this = this;
+        var stateId = event;
+        this.form.patchValue({
+            state_id: stateId,
+            districts: '',
+            constituencyname: '',
+            mandals: '',
+            panchayati: ''
+        });
+        this.districts = [];
+        this.constituency = [];
+        this.mandals = [];
+        this.panchayati = [];
+        this.service.getdistrict(stateId).subscribe(function (res) {
+            if (res && res.status == 200) {
+                _this.districts = res.data;
+            }
+        });
+    };
+    BelieverPage.prototype.ionViewDidLoad = function () {
         this.getdistric();
         this.getdenomations();
+        this.getwing();
+        this.getchurchesdata();
     };
-    AddmeetingsPage.prototype.getdistric = function () {
+    BelieverPage.prototype.getdistric = function () {
         var _this = this;
         this.service.getdistrict().subscribe(function (res) {
             _this.districts = res.data;
         });
     };
-    AddmeetingsPage.prototype.getdenomations = function () {
+    BelieverPage.prototype.getmandals = function (event) {
         var _this = this;
-        this.service.getdenomation().subscribe(function (res) {
-            _this.denomation = res.data;
-        });
-    };
-    AddmeetingsPage.prototype.geyr = function (id) {
-        if (id == 2) {
-            if (this.dist == 0) {
-                this.loading = this.alertctrl.create({
-                    mode: 'ios',
-                    message: 'Select the District',
-                    buttons: ['Ok']
-                });
-                this.loading.present();
-            }
-        }
-        if (id == 3) {
-            if (this.dist == 0) {
-                var akert = this.alertctrl.create({
-                    mode: 'ios',
-                    message: 'Select the District',
-                    buttons: ['Ok']
-                });
-                akert.present();
-            }
-            else if (this.const == 0) {
-                var akert = this.alertctrl.create({
-                    mode: 'ios',
-                    message: 'Select the Constitunecy',
-                    buttons: ['Ok']
-                });
-                akert.present();
-            }
-            console.log(this.dist, this.const, this.man);
-        }
-        if (id == 4) {
-            if (this.dist == 0) {
-                var akert = this.alertctrl.create({
-                    mode: 'ios',
-                    message: 'Select the District',
-                    buttons: ['Ok']
-                });
-                akert.present();
-            }
-            else if (this.const == 0) {
-                var akert = this.alertctrl.create({
-                    mode: 'ios',
-                    message: 'Select the Constitunecy',
-                    buttons: ['Ok']
-                });
-                akert.present();
-            }
-            else if (this.man == 0) {
-                var akert = this.alertctrl.create({
-                    mode: 'ios',
-                    message: 'Select the Mandals',
-                    buttons: ['Ok']
-                });
-                akert.present();
-            }
-        }
-    };
-    AddmeetingsPage.prototype.getconstency = function (event) {
-        var _this = this;
-        this.dist = 1;
-        var id = event;
-        this.service.getconsistencys().subscribe(function (res) {
-            _this.constituency = res.data.filter(function (data) { return data.dstrct_id == id; });
-        });
-    };
-    AddmeetingsPage.prototype.getmandals = function (event) {
-        var _this = this;
-        this.const = 1;
         var id = event;
         this.service.getmandals().subscribe(function (res) {
             _this.mandals = res.data.filter(function (data) { return data.const_id == id; });
         });
     };
-    AddmeetingsPage.prototype.gepanchayati = function (event) {
+    BelieverPage.prototype.getdenomations = function () {
         var _this = this;
-        this.loading = this.loadingCtrl.create({
-            spinner: 'ios',
-            content: 'ప్రాసెస్ అవుతుంది దయచేసి ఆగండి'
+        this.service.getdenomation().subscribe(function (res) {
+            _this.denomation = res.data;
         });
-        this.loading.present();
-        this.man = 1;
+    };
+    BelieverPage.prototype.getconstency = function (event) {
+        var _this = this;
+        var id = event;
+        this.service.getconsistencys().subscribe(function (res) {
+            _this.constituency = res.data.filter(function (data) { return data.dstrct_id == id; });
+        });
+    };
+    BelieverPage.prototype.gepanchayati = function (event) {
+        var _this = this;
         var id = event;
         this.service.gepanchayatis().subscribe(function (res) {
             _this.panchayati = res.data.filter(function (data) { return data.mndl_id == id; });
-            if (_this.panchayati.length) {
-                _this.loading.dismiss();
-            }
         });
     };
-    AddmeetingsPage.prototype.postmeetings = function () {
+    BelieverPage.prototype.getpastorsdata = function () {
         var _this = this;
-        this.loading = this.loadingCtrl.create({
-            spinner: 'ios',
-            content: 'ప్రాసెస్ అవుతుంది దయచేసి ఆగండి'
-        });
-        this.loading.present();
-        this.submitted = true;
-        if (this.form.invalid) {
-            this.loading.dismiss();
-            alert('* మార్క్ చేసిన వివరాలను తప్పనిసరిగా పూరించాలి');
+        if (this.form.value.districts == null || this.form.value.constituencyname == null || this.form.value.mandals == null) {
+            alert("Please Fill the Districts, Constituency & Mandal");
         }
         else {
             var data = {
-                mettingtype: this.form.value.mettingtype,
-                denomation: this.form.value.denomation,
-                speakerone: this.form.value.speakerone,
-                speakertwo: this.form.value.speakertwo,
-                speakerthree: this.form.value.speakerthree,
-                speakerfour: this.form.value.speakerfour,
-                fromdate: this.form.value.fromdate,
-                todate: this.form.value.todate,
-                districtname: this.form.value.districtname,
-                description: this.form.value.description,
+                districts: this.form.value.districts,
                 constituencyname: this.form.value.constituencyname,
-                mandals: this.form.value.mandals,
-                village_name: this.form.value.village_name,
-                fromtime: this.form.value.fromtime,
-                totime: this.form.value.totime,
-                location: this.form.value.location,
-                address: this.form.value.address,
-                facebook: this.form.value.facebook,
-                youtube: this.form.value.youtube,
-                ministry_id: this.form.value.ministry_id,
-                reviewImg: this.imagesData,
-                orgphone: this.form.value.orgphone,
-                evntphone: this.form.value.evntphone,
-                peoplecount: this.form.value.peoplecount
+                mandal_id: this.form.value.mandals,
             };
-            this.service.postsmeetings(data).subscribe(function (res) {
+            this.service.getpastorsfilters(data).subscribe(function (res) {
+                _this.getpastorsdatas = res.data;
+            });
+        }
+    };
+    BelieverPage.prototype.getchurchesdata = function () {
+        var _this = this;
+        var d = this.form.value.districts;
+        var c = this.form.value.constituencyname;
+        var m = this.form.value.mandals;
+        if (!d || !c || !m) {
+            this.service.getchurch().subscribe(function (res) {
+                _this.getchurchfilter = res && res.data ? res.data : [];
+            });
+        }
+        else {
+            var data = { districts: d, constituencyname: c, mandal_id: m };
+            this.service.getchurchesdatafilters(data).subscribe(function (res) {
+                _this.getchurchfilter = res && res.data ? res.data : [];
+            });
+        }
+    };
+    BelieverPage.prototype.getwing = function () {
+        var _this = this;
+        this.service.getwing().subscribe(function (res) {
+            _this.wings = res && res.data ? res.data : [];
+        });
+    };
+    BelieverPage.prototype.onradiochange = function (event) {
+        var a = event.target.value;
+        console.log(a);
+        if (a == 'YES') {
+            this.lead = true;
+        }
+        if (a == 'NO') {
+            this.lead = false;
+            this.leadtype = false;
+            this.wingtype = false;
+            this.wingtypes = false;
+            this.subward = false;
+        }
+    };
+    BelieverPage.prototype.onsubward = function (event) {
+        var s = event;
+        if (s == '6') {
+            this.subward = true;
+        }
+        else {
+            this.subward = false;
+        }
+    };
+    BelieverPage.prototype.onradioleadertype = function (event) {
+        var a = event.target.value;
+        if (a == '1') {
+            this.leadtype = true;
+            this.wingtype = false;
+            this.wingtypes = false;
+            this.subward = true;
+        }
+        else {
+            this.leadtype = false;
+            this.wingtype = true;
+            this.wingtypes = true;
+            this.subward = false;
+        }
+    };
+    BelieverPage.prototype.postbeliversignup = function () {
+        var _this = this;
+        this.showSpinner = true;
+        this.submitted = true;
+        if (!this.form.get('term') || !this.form.get('term').value) {
+            this.form.patchValue({ term: true });
+        }
+        if (this.form.invalid) {
+            var confirm_1 = this.alertCtrl.create({
+                mode: 'ios',
+                title: 'దయచేసి ఖాళీ ఫీల్డ్‌లను పూరించండి.!'
+            });
+            confirm_1.present();
+            this.showSpinner = false;
+            setTimeout(function () { confirm_1.dismiss(); }, 2000);
+        }
+        else if (this.form.value.password != this.form.value.retypepassword) {
+            alert("Passwords are Unmatched");
+        }
+        else {
+            console.log(this.form.value);
+            this.service.postbeliver(this.form.value).subscribe(function (res) {
+                _this.showSpinner = false;
+                if (res.status == 451) {
+                    alert('ఇదే ఫోన్ నెంబర్ తో ఇంతకుముందే రిజిస్టర్ అయ్యారు');
+                }
+                else
+                    _this.showSpinner = false;
                 if (res.status == 200) {
-                    _this.loading.dismiss();
-                    var confirm_1 = _this.alertctrl.create({
-                        mode: 'ios',
-                        title: 'విజయవంతంగా సబ్మిట్ చేసినారు',
-                        buttons: ['Ok']
+                    alert('విజయవంతముగా సబ్మిట్ అయింది');
+                    _this.form.reset({
+                        term: true
                     });
-                    confirm_1.present();
-                    _this.navCtrl.push('MeetingPage');
-                    _this.form.reset();
+                    _this.mandals = [];
+                    _this.constituency = [];
+                    _this.panchayati = [];
                     _this.submitted = false;
-        this.locationLoading = false;
-        this.locationError = '';
-        this.locationSuccess = '';
-        this.locationName = '';
-        this.locationSourceMessage = '';
-                    _this.loading.dismiss();
                 }
                 else {
-                    _this.loading.dismiss();
                     alert('server down');
                 }
             });
         }
     };
-    AddmeetingsPage.prototype.useCurrentLocation = function () {
-        var _this = this;
-        var confirmAlert = this.alertctrl.create({
-            mode: 'ios',
-            title: 'లొకేషన్ అనుమతి (Location Permission)',
-            message: 'మీ ప్రస్తుత ఖచ్చితమైన GPS లొకేషన్ మరియు అడ్రసును ఫారమ్‌లో నమోదు చేయడానికి అనుమతిస్తున్నారా?',
-            buttons: [
-                {
-                    text: 'రద్దు (Cancel)',
-                    role: 'cancel'
-                },
-                {
-                    text: 'అనుమతించు (Allow)',
-                    handler: function () {
-                        _this.executeGetCurrentLocation();
-                    }
-                }
-            ]
-        });
-        confirmAlert.present();
+    BelieverPage.prototype.togglePasswordVisibility = function (inputField) {
+        var input = document.querySelector("ion-input[formControlName='" + inputField + "'] input");
+        var icon = document.querySelector("ion-input[formControlName='" + inputField + "'] ion-icon");
+        if (input.getAttribute('type') === 'password') {
+            input.setAttribute('type', 'text');
+            icon.setAttribute('name', 'eye-off');
+        }
+        else {
+            input.setAttribute('type', 'password');
+            icon.setAttribute('name', 'eye');
+        }
     };
-    AddmeetingsPage.prototype.executeGetCurrentLocation = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            var reverseGeocode, applyLocation, handleFailure;
-            return __generator(this, function (_a) {
-                this.locationError = '';
-                this.locationSuccess = '';
-                this.locationName = '';
-                this.locationSourceMessage = '';
-                this.locationLoading = true;
-                if (this.cdr) {
-                    this.cdr.detectChanges();
-                }
-
-                reverseGeocode = function (lat, lng) {
-                    return __awaiter(_this, void 0, void 0, function () {
-                        var nominatimUrl, resNom, dataNom, a, parts;
-                        return __generator(this, function (_b) {
-                            switch (_b.label) {
-                                case 0:
-                                    _b.trys.push([0, 3, , 4]);
-                                    nominatimUrl = 'https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + lat + '&lon=' + lng + '&addressdetails=1';
-                                    return [4, fetch(nominatimUrl, { headers: { 'Accept': 'application/json' } })];
-                                case 1:
-                                    resNom = _b.sent();
-                                    return [4, resNom.json()];
-                                case 2:
-                                    dataNom = _b.sent();
-                                    if (dataNom) {
-                                        if (dataNom.display_name && dataNom.display_name.trim().length > 0) {
-                                            return [2, dataNom.display_name.trim()];
-                                        }
-                                        if (dataNom.address) {
-                                            a = dataNom.address;
-                                            parts = [
-                                                a.house_number || a.building || a.amenity || '',
-                                                a.road || a.street || '',
-                                                a.neighbourhood || a.suburb || '',
-                                                a.village || a.town || a.city || '',
-                                                a.county || a.mandal || '',
-                                                a.state_district || a.district || '',
-                                                a.state || '',
-                                                a.postcode || '',
-                                                a.country || ''
-                                            ].filter(function (p) { return !!p && p.trim().length > 0; });
-                                            if (parts.length > 0) {
-                                                return [2, parts.join(', ')];
-                                            }
-                                        }
-                                    }
-                                    return [3, 4];
-                                case 3:
-                                    _b.sent();
-                                    return [3, 4];
-                                case 4:
-                                    return [2, lat.toFixed(6) + ', ' + lng.toFixed(6)];
-                            }
-                        });
-                    });
-                };
-
-                applyLocation = function (lat, lng, place, source) {
-                    var googleUrl = 'https://maps.google.com/?q=' + lat + ',' + lng;
-                    _this.form.patchValue({
-                        location: googleUrl,
-                        address: place
-                    });
-                    if (_this.form.controls['location']) {
-                        _this.form.controls['location'].markAsDirty();
-                        _this.form.controls['location'].markAsTouched();
-                    }
-                    if (_this.form.controls['address']) {
-                        _this.form.controls['address'].markAsDirty();
-                        _this.form.controls['address'].markAsTouched();
-                    }
-                    _this.locationName = place;
-                    _this.locationSuccess = 'కరెంటు GPS లొకేషన్ విజయవంతముగా నమోదు చేయబడింది.';
-                    _this.locationSourceMessage = source;
-                    _this.locationLoading = false;
-                    if (_this.cdr) {
-                        _this.cdr.detectChanges();
-                    }
-
-                    var alertSuccess = _this.alertctrl.create({
-                        mode: 'ios',
-                        title: 'GPS లొకేషన్ నమోదు అయ్యింది!',
-                        subTitle: 'కూటములు జరిగే ప్రదేశం: ' + place,
-                        message: 'గూగుల్ లొకేషన్: ' + googleUrl,
-                        buttons: ['సరే']
-                    });
-                    alertSuccess.present();
-                };
-
-                handleFailure = function (reasonMsg) {
-                    _this.locationLoading = false;
-                    _this.locationError = reasonMsg;
-                    if (_this.cdr) {
-                        _this.cdr.detectChanges();
-                    }
-                    var alertErr = _this.alertctrl.create({
-                        mode: 'ios',
-                        title: 'లొకేషన్ లోపం',
-                        message: reasonMsg,
-                        buttons: ['సరే']
-                    });
-                    alertErr.present();
-                };
-
-                if (!navigator.geolocation) {
-                    handleFailure('మీ డివైస్ లేదా బ్రౌజర్ లో GPS జియోలొకేషన్ సపోర్ట్ లేదు.');
-                    return [2];
-                }
-
-                navigator.geolocation.getCurrentPosition(
-                    function (position) {
-                        return __awaiter(_this, void 0, void 0, function () {
-                            var lat, lng, place;
-                            return __generator(this, function (_a) {
-                                switch (_a.label) {
-                                    case 0:
-                                        lat = position.coords.latitude;
-                                        lng = position.coords.longitude;
-                                        return [4, reverseGeocode(lat, lng)];
-                                    case 1:
-                                        place = _a.sent();
-                                        applyLocation(lat, lng, place, 'డివైస్ GPS ద్వారా ఖచ్చితమైన లొకేషన్ పొందబడింది.');
-                                        return [2];
-                                }
-                            });
-                        });
-                    },
-                    function (error) {
-                        var msg = 'GPS లొకేషన్ పొందడంలో సమస్య ఏర్పడింది.';
-                        if (error.code === error.PERMISSION_DENIED) {
-                            msg = 'లొకేషన్ అనుమతి నిరాకరించబడింది. దయచేసి మొబైల్ లేదా బ్రౌజర్ సెట్టింగ్స్ లో లొకేషన్ ఆన్ చేసి పర్మిషన్ Allow చేయండి.';
-                        } else if (error.code === error.TIMEOUT) {
-                            msg = 'లొకేషన్ శోధించడానికి సమయం మించిపోయింది. దయచేసి డివైస్ GPS ఆన్ లో ఉందో లేదో సరిచూసుకోండి.';
-                        } else if (error.code === error.POSITION_UNAVAILABLE) {
-                            msg = 'GPS సిగ్నల్ అందుబాటులో లేదు. దయచేసి డివైస్ లో GPS లొకేషన్ ఆన్ చేయండి.';
-                        }
-                        handleFailure(msg);
-                    },
-                    {
-                        enableHighAccuracy: true,
-                        timeout: 15000,
-                        maximumAge: 0
-                    }
-                );
-
-                return [2];
-            });
-        });
-    };
-
-    AddmeetingsPage.prototype.openphoto = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            var actionSheet;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        actionSheet = this.actionSheetCtrl.create({
-                            buttons: [
-                                {
-                                    icon: 'ios-folder-open',
-                                    text: 'Gallery',
-                                    role: 'destructive',
-                                    handler: function () {
-                                        var options = {
-                                            quality: 70,
-                                            destinationType: _this.camera.DestinationType.DATA_URL,
-                                            sourceType: _this.camera.PictureSourceType.PHOTOLIBRARY,
-                                            saveToPhotoAlbum: false
-                                        };
-                                        _this.camera.getPicture(options).then(function (imaged) {
-                                            var ing = "data:image/jpeg;base64," + imaged;
-                                            var imagedata = {
-                                                reviewimg: ing,
-                                                filetype: 'jpeg',
-                                            };
-                                            console.log(imagedata);
-                                            _this.imagesData = [];
-                                            _this.imagesData.push(imagedata);
-                                        }, function (err) {
-                                        });
-                                    }
-                                }, {
-                                    icon: 'ios-camera',
-                                    text: 'Camera',
-                                    handler: function () {
-                                        var options = {
-                                            quality: 70,
-                                            correctOrientation: true,
-                                            destinationType: _this.camera.DestinationType.DATA_URL,
-                                            encodingType: _this.camera.EncodingType.JPEG,
-                                            mediaType: _this.camera.MediaType.PICTURE
-                                        };
-                                        _this.camera.getPicture(options).then(function (imageD) {
-                                            var img = "data:image/jpeg;base64," + imageD;
-                                            var imagedata = {
-                                                reviewimg: img,
-                                                filetype: 'jpeg',
-                                            };
-                                            _this.imagesData = [];
-                                            _this.imagesData.push(imagedata);
-                                        }, function (err) {
-                                        });
-                                    }
-                                }, {
-                                    icon: 'ios-close',
-                                    text: 'Cancel',
-                                    role: 'cancel',
-                                    handler: function () {
-                                    }
-                                }
-                            ]
-                        });
-                        return [4 /*yield*/, actionSheet];
-                    case 1:
-                        (_a.sent()).present();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    AddmeetingsPage = __decorate([
+    BelieverPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-addmeetings',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\addmeetings\addmeetings.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;font-size: 40px;font-family:ramabhadra"><b> క్రైస్తవ మీటింగ్స్ పోస్టర్‌ నమోదు</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding class="pagecss">\n\n  <h3\n\n    style="border-radius: 15px;text-align:center ;color: #fb0404;font-family:ramabhadra ; font-size: 20px;background-color: aliceblue;padding: 2%;font-weight: 800;">\n\n    క్రైస్తవ మీటింగ్స్ సమాచారం సబ్మిట్ చేయండి ( * మార్క్ వున్నవి తప్పనిసరిగా పూరించండి)</h3>\n\n  <form [formGroup]="form">\n\n    <ion-row>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>కూటముల టైపు ఎంచుకోండి<span style="color:red; font-family:ramabhadra">*</span></ion-label>\n\n          <ion-select formControlName="mettingtype" [ngClass]="{\'is-invalid\': submitted && t[\'mettingtype\'].errors }">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option value="ఉజ్జీవ">ఉజ్జీవ కూటములు</ion-option>\n\n            <ion-option value="సువార్త కూటములు">సువార్త కూటములు</ion-option>\n\n            <ion-option value="ఉపవాస కూటములు">ఉపవాస కూటములు</ion-option>\n\n            <ion-option value="స్వస్థత కూటములు">స్వస్థత కూటములు</ion-option>\n\n            <ion-option value="ఉజ్జీవ స్వస్థత కూటములు">ఉజ్జీవ స్వస్థత కూటములు</ion-option>\n\n            <ion-option value="వార్షికోత్సవ కూటములు">వార్షికోత్సవ కూటములు</ion-option>\n\n            <ion-option value="కృతజ్ఞత స్తుతి కూటములు">కృతజ్ఞత స్తుతి కూటములు</ion-option>\n\n            <ion-option value="ప్రవచన విడుదల కూటములు">ప్రవచన విడుదల కూటములు</ion-option>\n\n            <ion-option value="యూత్ మీటింగ్స్">యూత్ మీటింగ్స్</ion-option>\n\n            <ion-option value="క్రైస్తవ నాయకుల కూటములు">క్రైస్తవ నాయకుల కూటములు</ion-option>\n\n            <ion-option value="స్త్రీల కూటములు">స్త్రీల కూటములు</ion-option>\n\n            <ion-option value="పాస్టర్ ఫెలోషిప్ కూటములు">పాస్టర్ ఫెలోషిప్ కూటములు</ion-option>\n\n            <ion-option value="క్రైస్తవ పిల్లల కూటములు">క్రైస్తవ పిల్లల కూటములు</ion-option>\n\n            <ion-option value="క్రైస్తవ బుక్స్ ఎక్సిబిషన్">క్రైస్తవ బుక్స్ ఎక్సిబిషన్</ion-option>\n\n            <ion-option value="క్రైస్తవ సంగీత కూటములు">క్రైస్తవ సంగీత కూటములు</ion-option>\n\n            <ion-option value="ఇతర కూటములు">ఇతర కూటములు</ion-option>\n\n          </ion-select>\n\n          <div *ngIf="submitted && t[\'mettingtype\'].errors" class="invalid-feedback">\n\n            <div *ngIf="t[\'mettingtype\'].errors[\'required\']">కూటముల టైపు ఎంచుకోండి</div>\n\n          </div>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12 class="mb-4 pb-2">\n\n        <ion-item class="form-outline">\n\n          <ion-label stacked>మీ డినామినేషన్ మోడల్‌<span style="color:red; ">*</span></ion-label>\n\n          <ion-select formControlName="denomation" style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of denomation" [value]="item.id">{{item.denomation_name}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>కూటముల ప్రారంభ తేదీ<span style="color:red; ">*</span></ion-label>\n\n          <ion-input type="date" formControlName="fromdate" [min]="now"></ion-input>\n\n          <div *ngIf="submitted && t[\'fromdate\'].errors" class="invalid-feedback">\n\n            <div *ngIf="t[\'fromdate\'].errors[\'required\']">కూటముల ప్రారంభ తేదీ</div>\n\n          </div>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>కూటముల చివరి తేదీ<span style="color:red; ">*</span></ion-label>\n\n          <ion-input type="date" formControlName="todate" [min]="now"></ion-input>\n\n          <div *ngIf="submitted && t[\'todate\'].errors" class="invalid-feedback">\n\n            <div *ngIf="t[\'todate\'].errors[\'required\']">కూటముల చివరి తేదీ</div>\n\n          </div>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <div class="imgerdt" (click)="openphoto()">\n\n          <img src="assets/icon/Upload.svg" style="height:70px;width:70px;">అప్‌లోడ్ కూటముల పోస్టర్‌\n\n          <br>\n\n          <img *ngIf="imagesData.length" [src]="imagesData[0].reviewimg" alt="" height="200px" width="200px">\n\n          <div *ngIf="submitted && t[\'image\'].errors" class="invalid-feedback">\n\n            <div *ngIf="t[\'image\'].errors[\'required\']">ఇక్కడ క్లిక్ చేసి అప్‌లోడ్ కూటముల పోస్టర్‌</div>\n\n          </div>\n\n        </div>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item class="mb-4 pb-2">\n\n          <ion-label stacked>కూటముల సమయాలు & ఇతర సమాచారం<span style="color:red; ">*</span></ion-label>\n\n          <ion-textarea formControlName="description" class="form-control" col="5"\n\n            placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి"></ion-textarea>\n\n          <div *ngIf="submitted && t[\'description\'].errors" class="invalid-feedback">\n\n            <div *ngIf="t[\'description\'].errors[\'required\']">కూటముల సమయాలు ఎంటర్ చేయండి</div>\n\n          </div>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked> మీటింగ్ ఆర్గనైజర్ పేరు (ఇంటి పేరు తో సహా)</ion-label>\n\n          <ion-input type="text" formControlName="speakerone" placeholder=" ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి"\n\n            class="form-control"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <!-- <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked> స్పీకర్ రెండు పేరు</ion-label>\n\n          <ion-input type="text" formControlName="speakertwo" placeholder="స్పీకర్ ఒక పేరును నమోదు చేయండి"\n\n            class="form-control"></ion-input>\n\n        </ion-item>\n\n      </ion-col> -->\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మీటింగ్ ఆర్గనైజర్ ఫోన్ నెంబర్[10 అంకెలు]  (పబ్లిక్ కు చూపించ బడదు)</ion-label>\n\n          <ion-input type="tel" formControlName="orgphone" minlength="10" maxlength="10"\n\n            placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి" class="form-control"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మీటింగ్ కోసం సంప్రదించే ఫోన్[10 అంకెలు]  (పబ్లిక్ కు చూపించ బడును)</ion-label>\n\n          <ion-input type="tel" formControlName="evntphone" placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి" minlength="10"\n\n            maxlength="10" class="form-control"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item class="mb-4 pb-2">\n\n          <ion-label stacked>మీటింగ్ హాజరు అయ్యే వారి సంఖ్య ఎంత ఉండవచ్చు <span style="color:red; ">*</span></ion-label>\n\n          <ion-input formControlName="peoplecount" placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి " type="tel" \n\n            class="form-control"></ion-input>\n\n          <div *ngIf="submitted && t[\'address\'].errors" class="invalid-feedback">\n\n            <div *ngIf="t[\'address\'].errors[\'required\']">>మీటింగ్ హాజరు అయ్యే వారి సంఖ్య ఎంటర్ చేయండి</div>\n\n          </div>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మీ యూ ట్యూబ్ ఛానెల్ లింక్</ion-label>\n\n          <ion-input type="text" formControlName="youtube" placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి"\n\n            class="form-control"></ion-input>\n\n          <div *ngIf="submitted && t[\'youtube\'].errors" class="invalid-feedback">\n\n            <div *ngIf="t[\'youtube\'].errors[\'required\']">మీ యూ ట్యూబ్ ఛానెల్ లింక్ </div>\n\n          </div>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మీ ఫేస్ బుక్-లింక్</ion-label>\n\n          <ion-input type="text" formControlName="facebook" placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి"></ion-input>\n\n          <div *ngIf="submitted && t[\'facebook\'].errors" class="invalid-feedback">\n\n            <div *ngIf="t[\'facebook\'].errors[\'required\']">మీ ఫేస్ బుక్-లింక్</div>\n\n          </div>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <h4 Style="color:whitesmoke;text-align: center;font-weight: 600;">కూటముల జరిగే అడ్రసు </h4>\n\n        <ion-item class="mb-4 pb-2">\n\n          <ion-label stacked> జిల్లాను  <span style="color:red; ">*</span></ion-label>\n\n          <ion-select formControlName="districtname" (ionChange)="getconstency($event)" placeholder="ఇక్కడ క్లిక్ చేసి జిల్లాను ఎంచుకోండి"\n\n            (click)="geyr(1)" class="form-control">\n\n            <ion-option value="{{item.id}}" *ngFor="let item of districts">{{item.distrct_nm}}</ion-option>\n\n          </ion-select>\n\n          <div *ngIf="submitted && t[\'districtname\'].errors" class="invalid-feedback">\n\n            <div *ngIf="t[\'districtname\'].errors[\'required\']">జిల్లాను ఎంచుకోండి </div>\n\n          </div>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item class="mb-4 pb-2">\n\n          <ion-label stacked>నియోజకవర్గం  <span style="color:red; ">*</span></ion-label>\n\n          <ion-select formControlName="constituencyname" (ionChange)="getmandals($event)" (click)="geyr(2)"\n\n            placeholder="ఇక్కడ క్లిక్ చేసి  నియోజకవర్గం ఎంచుకోండి" class="form-control">\n\n            <ion-option value="{{item.id}}" *ngFor="let item of constituency">{{item.const_nm}}</ion-option>\n\n          </ion-select>\n\n          <div *ngIf="submitted && t[\'constituencyname\'].errors" class="invalid-feedback">\n\n            <div *ngIf="t[\'constituencyname\'].errors[\'required\']">నియోజకవర్గంను ఎంచుకోండి </div>\n\n          </div>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item class="mb-4 pb-2">\n\n          <ion-label stacked> మండలం / మున్సిపాలిటీని ఎంచుకోండి <span style="color:red; ">*</span></ion-label>\n\n          <ion-select formControlName="mandals" (ionChange)="gepanchayati($event)" (click)="geyr(3)"\n\n            placeholder="ఇక్కడ క్లిక్ చేసి సెలెక్ట్ మండలం / మున్సిపాలిటీ" class="form-control">\n\n            <ion-option value="{{item.id}}" *ngFor="let item of mandals">{{item.mndl_nm}}</ion-option>\n\n          </ion-select>\n\n          <div *ngIf="submitted && t[\'mandals\'].errors" class="invalid-feedback">\n\n            <div *ngIf="t[\'mandals\'].errors[\'required\']">మండలం / మున్సిపాలిటీని ఎంచుకోండి </div>\n\n          </div>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item class="mb-4 pb-2">\n\n          <ion-label stacked> పంచాయతీ / వార్డుని ఎంచుకోండి <span style="color:red; ">*</span></ion-label>\n\n          <ion-select formControlName="village_name" placeholder="ఇక్కడ క్లిక్ చేసి సెలెక్ట్ పంచాయతీ/వార్డు" (click)="geyr(4)"\n\n            class="form-control">\n\n            <ion-option value="{{item.id}}" *ngFor="let item of panchayati">{{item.pnchyt_nm}}</ion-option>\n\n          </ion-select>\n\n          <div *ngIf="submitted && t[\'village_name\'].errors" class="invalid-feedback">\n\n            <div *ngIf="t[\'village_name\'].errors[\'required\']">పంచాయతీ / వార్డు ని ఎంచుకోండి</div>\n\n          </div>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item class="mb-4 pb-2">\n\n          <ion-label stacked>కూటముల జరిగే ప్రదేశం ల్యాండ్ మార్క్ మరియు లోకల్ అడ్రస్ <span\n\n              style="color:red; ">*</span></ion-label>\n\n          <ion-textarea formControlName="address" col="5" placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి"\n\n            class="form-control"></ion-textarea>\n\n          <div *ngIf="submitted && t[\'address\'].errors" class="invalid-feedback">\n\n            <div *ngIf="t[\'address\'].errors[\'required\']">కూటముల జరిగే ప్రదేశం ల్యాండ్ మార్క్ మరియు లోకల్ అడ్రస్ ఎంటర్ చేయండి </div>\n\n          </div>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item class="mb-2">\n\n          <ion-label stacked>కూటముల గూగుల్ లొకేషన్ లింక్</ion-label>\n\n          <ion-input type="text" formControlName="location" placeholder="ఎంటర్ కూటముల గూగుల్ లొకేషన్"\n\n            class="form-control"></ion-input>\n\n          <div *ngIf="submitted && t[\'location\'].errors" class="invalid-feedback">\n\n            <div *ngIf="t[\'location\'].errors[\'required\']">కూటముల గూగుల్ లొకేషన్ ఎంటర్ చేయండి</div>\n\n          </div>\n\n        </ion-item>\n\n        <button ion-button block color="primary" type="button" (click)="useCurrentLocation()" [disabled]="locationLoading" style="margin-top: 8px; margin-bottom: 8px; height: 48px; font-size: 15px; font-weight: bold; border-radius: 8px; text-transform: none;">\n\n          <ion-icon name="pin" style="margin-right: 8px; font-size: 20px;"></ion-icon>\n\n          {{ locationLoading ? \'శోధిస్తున్నాము... దయచేసి ఆగండి\' : \'కరెంటు లొకేషన్ నమోదు కోసం క్లిక్ \' }}\n\n        </button>\n\n        <div *ngIf="locationLoading" style="background: #e7f3fe; color: #0c5460; padding: 10px 14px; border-radius: 8px; margin-bottom: 10px; font-size: 13px; border-left: 4px solid #17a2b8;">\n\n          <ion-icon name="sync" style="margin-right: 6px;"></ion-icon> లొకేషన్ శోధిస్తున్నాము... దయచేసి ఆగండి.\n\n        </div>\n\n        <div *ngIf="locationError" style="background: #fff3cd; color: #856404; padding: 10px 14px; border-radius: 8px; margin-bottom: 10px; font-size: 13px; border-left: 4px solid #ffc107;">\n\n          <ion-icon name="warning" style="margin-right: 6px;"></ion-icon> {{ locationError }}\n\n        </div>\n\n        <div *ngIf="locationSuccess" style="background: #d4edda; color: #155724; padding: 10px 14px; border-radius: 8px; margin-bottom: 10px; font-size: 13px; border-left: 4px solid #28a745;">\n\n          <ion-icon name="checkmark-circle" style="margin-right: 6px;"></ion-icon> {{ locationSuccess }}\n\n          <div *ngIf="locationName" style="margin-top: 6px; font-weight: 500;"><strong>ప్రదేశం:</strong> {{ locationName }}</div>\n\n        </div>\n\n        <div *ngIf="locationSourceMessage" style="color: #666; font-size: 12px; margin-top: 2px; margin-bottom: 8px;">\n\n          {{ locationSourceMessage }}\n\n        </div>\n\n      </ion-col>\n\n\n\n      <ion-col col-12 class="mb-4 pb-2" style="text-align: center;">\n\n        <button ion-button color="secondary" type="submit" (click)="postmeetings()">\n\n          నమోదు చేయండి\n\n        </button>\n\n      </ion-col>\n\n    </ion-row>\n\n  </form>\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\addmeetings\addmeetings.html"*/,
+            selector: 'page-believer',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\believer\believer.html"*/'﻿<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b><u>విశ్వాసి నమోదు </u><br> (ఏ పొజిషన్ లో వున్నా, <br> పాస్టర్ కాని వారు అందరు)</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding class="pagecss">\n\n  <form [formGroup]="form" class="form-container">\n\n    <ion-row>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>పేరు(ఇంటి పేరు తో సహా) <span style="color:red; "> *</span></ion-label>\n\n          <ion-input formControlName="fname" placeholder="పేరు నమోదు చేయండి"></ion-input>\n\n        </ion-item>\n\n        <ion-note *ngIf="form.get(\'fname\').invalid && form.get(\'fname\').touched" color="danger">\n\n          పేరు తప్పనిసరి\n\n        </ion-note>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>జెండర్</ion-label>\n\n          <ion-select formControlName="gender">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి సెలెక్ట చేయండి</ion-option>\n\n            <ion-option value="male">పురుషుడు</ion-option>\n\n            <ion-option value="female">స్త్రీ</ion-option>\n\n            <ion-option value="transgender">ట్రాన్స్ జెండర్</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n        <ion-note *ngIf="form.get(\'gender\').invalid && form.get(\'gender\').touched" color="danger">\n\n          జెండర్ సెలెక్ట చేయండి\n\n        </ion-note>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>మొబైల్ నంబర్<span style="color:red; "> *</span></ion-label>\n\n          <ion-input type="tel" formControlName="mobile_number" placeholder="ఇక్కడ క్లిక్ చేసి నమోదు చేయండి"\n\n            maxlength="10" minlength="10"></ion-input>\n\n        </ion-item>\n\n        <ion-note *ngIf="form.get(\'mobile_number\').invalid && form.get(\'mobile_number\').touched" color="danger">\n\n          మొబైల్ నంబర్  నమోదు చేయండి\n\n        </ion-note>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>వాట్స్ యాప్</ion-label>\n\n          <ion-input type="tel" formControlName="whatsapp" placeholder="WhatsApp నంబర్ నమోదు చేయండి" maxlength="10"\n\n            minlength="10"></ion-input>\n\n        </ion-item>\n\n        <!-- <ion-note *ngIf="form.get(\'whatsapp\').invalid && form.get(\'whatsapp\').touched" color="danger">\n\n          ఈ ఫీల్డ్ తప్పనిసరి\n\n        </ion-note> -->\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>పుట్టినరోజు</ion-label>\n\n          <ion-input type="date" formControlName="dob"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-note *ngIf="form.get(\'dob\').invalid && form.get(\'dob\').touched" color="danger">\n\n        పుట్టినరోజు తప్పనిసరి\n\n      </ion-note>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>మీ ఆధ్యాత్మిక స్థితి</ion-label>\n\n          <ion-select formControlName="spirit">\n\n            <ion-option value="" disabled selected>ఆధ్యాత్మిక స్థితి ఎంపిక చేయండి</ion-option>\n\n            <ion-option value="practicingchristian">ప్రాక్టీసింగ్ క్రిస్టియన్</ion-option>\n\n            <ion-option value="nominalchristian">నామినల్ క్రిస్టియన్</ion-option>\n\n            <ion-option value="festivalchristian">ఫెస్టివల్ క్రిస్టియన్</ion-option>\n\n            <ion-option value="justbelievingjesus">జస్ట్ బిలీవింగ్ జీసస్</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>దేవునికి</ion-label>\n\n          <ion-select formControlName="god">\n\n            <ion-option value="" disabled selected>రకం ఎంపిక చేయండి</ion-option>\n\n            <ion-option value="Singing">పాటలు పాడడం</ion-option>\n\n            <ion-option value="Music">సంగీతం</ion-option>\n\n            <ion-option value="Dance">నృత్యం</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>జీవిత లక్ష్యం</ion-label>\n\n          <ion-input type="text" formControlName="lifegoal" placeholder="మీ జీవిత లక్ష్యాన్ని నమోదు చేయండి"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>ఆసక్తిలు</ion-label>\n\n          <ion-select formControlName="hobbies">\n\n            <ion-option value="" disabled selected>రకం ఎంపిక చేయండి</ion-option>\n\n            <ion-option value="Singing">పాటలు పాడడం</ion-option>\n\n            <ion-option value="Designing">రూపకలా</ion-option>\n\n            <ion-option value="Writer">రచయిత</ion-option>\n\n            <ion-option value="readingbooks">పుస్తకాలు చదవడం</ion-option>\n\n            <ion-option value="servingpeople">ప్రజలకు సేవ చేయడం</ion-option>\n\n            <ion-option value="music">సంగీతం</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>మీ వివాహ స్థితి</ion-label>\n\n          <ion-select formControlName="status">\n\n            <ion-option value="" disabled selected>మీ వివాహ స్థితిని ఎంపిక చేయండి</ion-option>\n\n            <ion-option value="వివాహం కాలేదు">వివాహం కాలేదు</ion-option>\n\n            <ion-option value="వివాహం అయినది">వివాహం అయినది</ion-option>\n\n            <ion-option value="విడాకులు అయినది">విడాకులు అయినది</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>సెలెక్ట్ డినామినేషన్ మోడల్‌ <span style="color:red; "> *</span></ion-label>\n\n          <ion-select formControlName="denomination_id" placeholder="డినామినేషన్ ఎంపిక చేయండి">\n\n            <ion-option value="" disabled>డినామినేషన్ ఎంపిక చేయండి</ion-option>\n\n            <ion-option *ngFor="let i of denomation" [value]="i.id">{{i.denomation_name}}\n\n            </ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>టాలెంట్థాయి <span style="color:red; "> *</span></ion-label>\n\n          <ion-select formControlName="talent" placeholder="నేర్చుకోండి"\n\n            [ngClass]="{\'is-invalid\': submitted && form.controls[\'talent\'].errors}">\n\n            <ion-option value="" disabled selected>రకం ఎంపిక చేయండి</ion-option>\n\n            <ion-option value="Speaker">స్పీకర్</ion-option>\n\n            <ion-option value="Writer">రచయిత</ion-option>\n\n            <ion-option value="Singer">గాయకుడు</ion-option>\n\n            <ion-option value="Others">ఇతర</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>విద్య <span style="color:red; "> *</span></ion-label>\n\n          <ion-select formControlName="education" placeholder="విద్య ఎంపిక చేయండి">\n\n            <ion-option value="" disabled selected>రకం ఎంపిక చేయండి</ion-option>\n\n            <ion-option value="1-5">1-5</ion-option>\n\n            <ion-option value="6-10">6-10</ion-option>\n\n            <ion-option value="ITI">ఐటిఐ</ion-option>\n\n            <ion-option value="Diploma">డిప్లొమా</ion-option>\n\n            <ion-option value="Inter">ఇంటర్</ion-option>\n\n            <ion-option value="Degree">డిగ్రీ</ion-option>\n\n            <ion-option value="Medical">మెడికల్</ion-option>\n\n            <ion-option value="Engineering">ఇంజనీరింగ్</ion-option>\n\n            <ion-option value="PG">పిజి</ion-option>\n\n            <ion-option value="PHD">పిఎచ్‌డి</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked> అవధిని ఎంపిక చేయండి <span style="color:red; "> *</span></ion-label>\n\n          <ion-select formControlName="designation" placeholder="అవధిని ఎంపిక చేయండి">\n\n            <ion-option value="" disabled selected>రకం ఎంపిక చేయండి</ion-option>\n\n            <ion-option value="1-5">1-5</ion-option>\n\n            <ion-option value="6-10">6-10</ion-option>\n\n            <ion-option value="ITI">ఐటిఐ</ion-option>\n\n            <ion-option value="Diploma">డిప్లొమా</ion-option>\n\n            <ion-option value="Inter">ఇంటర్</ion-option>\n\n            <ion-option value="Degree">డిగ్రీ</ion-option>\n\n            <ion-option value="Medical">మెడికల్</ion-option>\n\n            <ion-option value="Engineering">ఇంజనీరింగ్</ion-option>\n\n            <ion-option value="PG">పిజి</ion-option>\n\n            <ion-option value="PHD">పిఎచ్‌డి</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>విభాగం<span style="color:red; ">*</span></ion-label>\n\n          <ion-select formControlName="dpartment" placeholder="విభాగం ఎంపిక చేయండి">\n\n            <ion-option value="" disabled selected>విభాగం ఎంపిక చేయండి</ion-option>\n\n\n\n            <ion-option value="Education">ఎడ్యుకేషన్</ion-option>\n\n            <ion-option value="Police">పోలీసు</ion-option>\n\n            <ion-option value="Advocate">అడ్వకేట్</ion-option>\n\n            <!-- <ion-option value="School">స్కూలు</ion-option>\n\n            <ion-option value="College">కళాశాల</ion-option>\n\n            <ion-option value="Cultivation">వ్యవసాయం</ion-option> -->\n\n            <ion-option value="Paper media">పేపర్ మీడియా</ion-option>\n\n            <ion-option value="Electronic media">ఎలక్ట్రానిక్ మీడియా</ion-option>\n\n            <ion-option value="Social media">సోషల్ మీడియా</ion-option>\n\n            <ion-option value="Real estate">రియల్ ఎస్టేట్</ion-option>\n\n            <ion-option value="Construction">కన్స్ట్రక్షన్</ion-option>\n\n                <ion-option value="Other">ఇతర</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>రాష్ట్రం / State <span style="color:red; "> *</span></ion-label>\n\n          <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">\n\n            <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>\n\n            <ion-option value="2">తెలంగాణ (TG)</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>ఎంపిక జిల్లా <span style="color:red; "> *</span></ion-label>\n\n          <ion-select formControlName="districts" (ionChange)="getconstency($event)">\n\n            <ion-option value="" disabled selected>ఎంపిక జిల్లా</ion-option>\n\n            <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>ఎంపిక నియోజకవర్గం <span style="color:red; "> *</span></ion-label>\n\n          <ion-select formControlName="constituencyname" (ionChange)="getmandals($event)">\n\n            <ion-option value="" disabled selected>ఎంపిక నియోజకవర్గం</ion-option>\n\n            <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>మండలం/పంచాయతి <span style="color:red; "> *</span></ion-label>\n\n          <ion-select formControlName="mandals" (ionChange)="gepanchayati($event);">\n\n            <ion-option value="" disabled selected>మండలం / పంచాయతి ఎంపిక చేయండి</ion-option>\n\n            <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>ఎంపిక పంచాయితి/వార్డు <span style="color:red; "> *</span></ion-label>\n\n          <ion-select formControlName="panchayati">\n\n            <ion-option value="" disabled selected>ఎంపిక పంచాయితి/వార్డు</ion-option>\n\n            <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n    </ion-row>\n\n    <ion-row>\n\n      <ion-col col-12 col-md-6>\n\n        <!-- Village Name/Street Name Form Group -->\n\n        <ion-item>\n\n          <ion-label stacked>గ్రామం పేరు / స్ట్రీట్ పేరు <span style="color:red; "> *</span></ion-label>\n\n          <ion-input type="text" formControlName="villagename" placeholder="మీ గ్రామం పేరును నమోదు చేయండి"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <!-- Ward Number Form Group -->\n\n        <ion-item>\n\n          <ion-label stacked>వార్డ్ నంబర్</ion-label>\n\n          <ion-input type="text" formControlName="wardnumber" placeholder="వార్డ్ నంబర్ నమోదు చేయండి"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n    </ion-row>\n\n\n\n    <ion-row>\n\n      <ion-col col-12 col-md-6>\n\n        <!-- Local Address/House Number Form Group -->\n\n        <ion-item>\n\n          <ion-label stacked>మీ స్థానిక చిరునామా / హౌస్ నంబర్ <span style="color:red; "> *</span></ion-label>\n\n          <ion-input type="text" formControlName="ward" placeholder="మీ స్ట్రీట్ పేరును నమోదు చేయండి"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <!-- Living From Form Group -->\n\n        <ion-item>\n\n          <ion-label stacked>నివాసం ముందు<span style="color:red; ">*</span></ion-label>\n\n          <ion-select formControlName="nri" placeholder="నివాసం ముందు ఎంపిక చేయండి">\n\n            <ion-option value="" disabled selected>రకం ఎంపిక చేయండి</ion-option>\n\n            <ion-option value="NRI">NRI</ion-option>\n\n            <ion-option value="NON-NRI">NON-NRI</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n    </ion-row>\n\n\n\n    <!-- <ion-row>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>పాస్టర్‌ను ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="pastor" interface="popover" (ionChange)="getpastorsdata()">\n\n            <ion-option value="" disabled selected>మీ పాస్టర్‌ను ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of getpastorsdatas" [value]="item.id">{{item.pastorname}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>చర్చిని ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="church" interface="popover" (ionChange)="getchurchesdata()">\n\n            <ion-option value="" disabled selected>చర్చి పేరును ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of getchurchfilter" [value]="item.id">{{item.church_name}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n    </ion-row> -->\n\n\n\n\n\n    <ion-row>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-list>\n\n          <ion-label stacked>నాయకుడు అయితే కావాలా? <span style="color:red; "> *</span></ion-label>\n\n          <ion-item>\n\n            <input type="radio" value="YES" (click)="onradiochange($event)" formControlName="leadership">\n\n            <label> అవును </label>\n\n          </ion-item>\n\n          <ion-item>\n\n            <input type="radio" value="NO" (click)="onradiochange($event)" formControlName="leadership" />\n\n            <label> కాదు </label>\n\n          </ion-item>\n\n        </ion-list>\n\n      </ion-col>\n\n\n\n\n\n      <ion-col col-12 col-md-6 *ngIf="lead">\n\n        <ion-list>\n\n          <ion-label stacked>నాయకత్వం</ion-label>\n\n          <ion-item>\n\n            <input type="radio" value="1" (click)="onradioleadertype($event)" formControlName="leadertype">\n\n            <label>జనరల్</label>\n\n          </ion-item>\n\n          <ion-item>\n\n            <input type="radio" value="2" (click)="onradioleadertype($event)" formControlName="leadertype">\n\n            <label>వింగ్</label>\n\n          </ion-item>\n\n        </ion-list>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6 *ngIf="leadtype" (click)="onsubward($event)">\n\n        <ion-item>\n\n          <ion-label stacked>జనరల్ నాయకత్వం లెవెల్</ion-label>\n\n          <ion-select formControlName="generaltype">\n\n            <ion-option value="">జనరల్ నాయకత్వం ఎంచుకోండి</ion-option>\n\n            <ion-option value="1">జిల్లా</ion-option>\n\n            <ion-option value="2">నియమకం</ion-option>\n\n            <ion-option value="3">మండలం</ion-option>\n\n            <ion-option value="4">గ్రామం</ion-option>\n\n            <ion-option value="5">వార్డ్</ion-option>\n\n            <ion-option value="6">సబ్ వార్డ్</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6 *ngIf="subward">\n\n        <ion-item>\n\n          <ion-label stacked>ఉప వార్డ్ పేరు</ion-label>\n\n          <ion-input type="text" formControlName="subward" placeholder="మీ ఉప వార్డ్ నమోదు చేయండి"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6 *ngIf="wingtype">\n\n        <ion-item>\n\n          <ion-label stacked>వింగ్ నాయకత్వం లెవెల్</ion-label>\n\n          <ion-select formControlName="wingtype">\n\n            <ion-option value="">వింగ్ నాయకత్వం ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of wings" [value]="item.id">{{item.position}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>యూట్యూబ్ ఛానల్</ion-label>\n\n          <ion-input type="text" formControlName="youtube" placeholder="మీ యూట్యూబ్ ఛానల్ ఎంటర్ చేయండి"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>ఇతర సమాచారం</ion-label>\n\n          <ion-input type="text" formControlName="lname" placeholder="ఇతర సమాచారం నమోదు చేయండి"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n    </ion-row>\n\n    <ion-row>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>స్థానిక ప్రాంతం</ion-label>\n\n          <ion-input type="text" formControlName="nativeplace"\n\n            placeholder="మీ స్థానిక ప్రాంతం ఎంటర్ చేయండి"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>నెలకు ఆదాయం</ion-label>\n\n          <ion-input type="text" formControlName="income" placeholder="మీ నెలకు ఆదాయం ఎంటర్ చేయండి"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n    </ion-row>\n\n    <ion-row>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>మీ కులం</ion-label>\n\n          <ion-select formControlName="caste">\n\n            <ion-option value="">జాతి ఎంచుకోండి</ion-option>\n\n            <ion-option value="no">జాతి లేదు</ion-option>\n\n            <ion-option value="SC">ఎస్సీ</ion-option>\n\n            <ion-option value="ST">ఎస్టీ</ion-option>\n\n            <ion-option value="BC-A">బిస్సి-ఎ</ion-option>\n\n            <ion-option value="BC-B">బిస్సి-బి</ion-option>\n\n            <ion-option value="BC-C">బిస్సి-సి</ion-option>\n\n            <ion-option value="BC-D">బిస్సి-డి</ion-option>\n\n            <ion-option value="BC-E">బిస్సి-ఇ</ion-option>\n\n            <ion-option value="OC">ఒస్సీ</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>ఉప జాతి</ion-label>\n\n          <ion-input type="text" formControlName="subcaste" placeholder="మీ ఉప జాతి ఎంటర్ చేయండి"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>పాస్‌వర్డ్<span style="color:red; "> * </span></ion-label>\n\n          <ion-input type="password" formControlName="password" placeholder="మీ పాస్‌వర్డ్ నమోదు చేయండి" maxlength="16"\n\n            minlength="6"></ion-input>\n\n          <ion-icon slot="end" name="eye" (click)="togglePasswordVisibility(\'password\')"></ion-icon>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>మళ్ళీ-పాస్వర్డ్<span style="color:red; "> * </span></ion-label>\n\n          <ion-input type="password" formControlName="retypepassword" placeholder="మీ పాస్‌వర్డ్ నమోదు చేయండి"\n\n            maxlength="16" minlength="6"></ion-input>\n\n          <ion-icon slot="end" name="eye" (click)="togglePasswordVisibility(\'retypepassword\')"></ion-icon>\n\n        </ion-item>\n\n      </ion-col>\n\n    </ion-row>\n\n    <ion-row>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <input type="checkbox" value="yes" formControlName="term">\n\n          <label>స్టోర్ చేయడానికి మరియు మీకు సమాచారం పంపడానికి ఒప్పుకోండి <span style="color:red; "> *</span></label>\n\n        </ion-item>\n\n      </ion-col>\n\n    </ion-row>\n\n\n\n    <ion-row>\n\n      <ion-col col-12 col-md-6>\n\n        <div style="text-align: center;">\n\n          <button ion-button color="secondary" (click)="postbeliversignup()" [disabled]="showSpinner" style="letter-spacing: 1px;">\n\n            <ion-spinner *ngIf="showSpinner" name="crescent" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"></ion-spinner>\n\n            {{ showSpinner ? \'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...\' : \'నమోదు చేయండి\' }}\n\n          </button>\n\n        </div>\n\n      </ion-col>\n\n    </ion-row>\n\n  </form>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\believer\believer.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_service_service__["a" /* ServiceProvider */], __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_4__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]])
-    ], AddmeetingsPage);
-    return AddmeetingsPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["s" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__providers_service_service__["a" /* ServiceProvider */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* AlertController */]])
+    ], BelieverPage);
+    return BelieverPage;
 }());
 
-//# sourceMappingURL=addmeetings.js.map
+//# sourceMappingURL=believer.js.map
 
 /***/ })
 

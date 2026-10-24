@@ -39,6 +39,7 @@ export class InstitutePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public service: ServiceProvider, public frombuilder: FormBuilder) {
     this.form = this.frombuilder.group({
+      state_id: ['1'],
       denomination_id: [''],
       ministry_id: [''],
       district_id: [''],
@@ -50,9 +51,28 @@ export class InstitutePage {
     })
   }
 
+  onStateChange(event: any) {
+    var stateId = event;
+    this.form.patchValue({
+      state_id: stateId,
+      district_id: '',
+      constenncy_id: '',
+      mandal_id: '',
+      panchayati_id: ''
+    });
+    this.districts = [];
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    this.service.getdistrict(stateId).subscribe((res: any) => {
+      if (res && res.status == 200) {
+        this.districts = res.data;
+      }
+    });
+  }
+
   ionViewDidLoad() {
     this.getdistric();
-    this.getdenomations();
     this.getbeliver();
     this.getinstitutes();
   }
@@ -78,36 +98,60 @@ export class InstitutePage {
   }
 
   getdistric() {
-    this.service.getdistrict().subscribe((res: any) => {
+    this.service.getdistrict(this.form.value.state_id || 1).subscribe((res: any) => {
       this.districts = res.data;
-    })
-  }
-
-  getmandals(event: any) {
-    var id = event;
-    this.service.getmandals().subscribe((res: any) => {
-      this.mandals = res.data.filter((data: any) => data.const_id == id);
-    })
-  }
-
-  getdenomations() {
-    this.service.getdenomation().subscribe((res: any) => {
-      this.denomation = res.data;
     })
   }
 
   getconstituency(event: any) {
     var id = event;
-    this.service.getconsistencys().subscribe((res: any) => {
-      this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
-    })
+    this.form.patchValue({
+      constenncy_id: '',
+      mandal_id: '',
+      panchayati_id: ''
+    });
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    if (id) {
+      this.service.getconsistencys().subscribe((res: any) => {
+        if (res && res.data) {
+          this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
+        }
+      });
+    }
+  }
+
+  getmandals(event: any) {
+    var id = event;
+    this.form.patchValue({
+      mandal_id: '',
+      panchayati_id: ''
+    });
+    this.mandals = [];
+    this.panchayati = [];
+    if (id) {
+      this.service.getmandals().subscribe((res: any) => {
+        if (res && res.data) {
+          this.mandals = res.data.filter((data: any) => data.const_id == id);
+        }
+      });
+    }
   }
 
   getpanchayati(event: any) {
     var id = event;
-    this.service.gepanchayatis().subscribe((res: any) => {
-      this.panchayati = res.data.filter((data: any) => data.mndl_id == id);
-    })
+    this.form.patchValue({
+      panchayati_id: ''
+    });
+    this.panchayati = [];
+    if (id) {
+      this.service.gepanchayatis().subscribe((res: any) => {
+        if (res && res.data) {
+          this.panchayati = res.data.filter((data: any) => data.mndl_id == id);
+        }
+      });
+    }
   }
 
   onSearch() {

@@ -96,7 +96,7 @@ export class DoctorregisterPage {
         } else {
           const alert = this.alertCtrl.create({
             title: 'లోపం సంభవించింది',
-            subTitle: res?.message || 'రిజిస్ట్రేషన్ పూర్తి కాలేదు. దయచేసి మళ్లీ ప్రయత్నించండి.',
+            subTitle: (res && res.message) ? res.message : 'రిజిస్ట్రేషన్ పూర్తి కాలేదు. దయచేసి మళ్లీ ప్రయత్నించండి.',
             buttons: ['Ok']
           });
           alert.present();

@@ -1,14 +1,14 @@
 webpackJsonp([50],{
 
-/***/ 513:
+/***/ 408:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DoctorregisterPageModule", function() { return DoctorregisterPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AboutPageModule", function() { return AboutPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__doctorregister__ = __webpack_require__(514);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__about__ = __webpack_require__(465);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -16,33 +16,35 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 
-var DoctorregisterPageModule = /** @class */ (function () {
-    function DoctorregisterPageModule() {
+
+
+var AboutPageModule = /** @class */ (function () {
+    function AboutPageModule() {
     }
-    DoctorregisterPageModule = __decorate([
+    AboutPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__doctorregister__["a" /* DoctorregisterPage */],
+                __WEBPACK_IMPORTED_MODULE_2__about__["a" /* AboutPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__doctorregister__["a" /* DoctorregisterPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__about__["a" /* AboutPage */]),
             ],
         })
-    ], DoctorregisterPageModule);
-    return DoctorregisterPageModule;
+    ], AboutPageModule);
+    return AboutPageModule;
 }());
+
+//# sourceMappingURL=about.module.js.map
 
 /***/ }),
 
-/***/ 514:
+/***/ 465:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DoctorregisterPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AboutPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_service_service__ = __webpack_require__(128);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -53,120 +55,39 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-var DoctorregisterPage = /** @class */ (function () {
-    function DoctorregisterPage(navCtrl, fb, alertCtrl, loadingCtrl, toastCtrl, service) {
+
+// import { HomePage } from '../home/home';
+var AboutPage = /** @class */ (function () {
+    function AboutPage(navCtrl, navParams) {
         this.navCtrl = navCtrl;
-        this.fb = fb;
-        this.alertCtrl = alertCtrl;
-        this.loadingCtrl = loadingCtrl;
-        this.toastCtrl = toastCtrl;
-        this.service = service;
-        this.showSpinner = false;
-        this.doctorForm = this.fb.group({
-            doctor_name: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(3)]],
-            license_number: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            specialization: ['Family Counsellor & Clinical Psychologist', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            qualification: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            experience_years: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            phone_number: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].pattern(/^[0-9]{10}$/)]],
-            email: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].email]],
-            password: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(6)]],
-            consultation_fee: ['Free / Volunteer Service'],
-            available_days: ['Monday to Saturday', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            available_time_start: ['10:00 AM', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            available_time_end: ['05:00 PM', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            location: ['Vijayawada & Online Consultation', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            address: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            bio: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            category_id: [8],
-            category: ['Doctor']
-        });
+        this.navParams = navParams;
     }
-    DoctorregisterPage.prototype.gotohome = function () {
-        this.navCtrl.setRoot('HomePage');
+    AboutPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad AboutPage');
     };
-    DoctorregisterPage.prototype.goToLogin = function () {
-        this.navCtrl.push('LoginPage');
+    AboutPage.prototype.gotohome = function () {
+        this.navCtrl.push('HomePage');
     };
-    DoctorregisterPage.prototype.submitDoctor = function () {
-        var _this = this;
-        if (this.doctorForm.invalid) {
-            var alert_1 = this.alertCtrl.create({
-                title: 'వివరాలు అసంపూర్ణం',
-                subTitle: 'దయచేసి పేరు, లైసెన్స్ నంబర్, మొబైల్ నంబర్ మరియు పాస్‌వర్డ్ మొదలైన తప్పనిసరి వివరాలను పూరించండి.',
-                buttons: ['Ok']
-            });
-            alert_1.present();
-            return;
+    AboutPage.prototype.loginmethod = function () {
+        if (localStorage.getItem("usr_id") == "" || localStorage.getItem("usr_id") == null || localStorage.getItem("usr_id") == undefined) {
+            this.navCtrl.setRoot('LoginPage'); // Use setRoot for the initial page
         }
-        this.showSpinner = true;
-        var payload = Object.assign({}, this.doctorForm.value, {
-            category_id: 8,
-            category: 'Doctor'
-        });
-        this.service.registercouncellingdoctor(payload).subscribe(function (res) {
-            _this.showSpinner = false;
-            if (res && res.status === 200) {
-                var alert_2 = _this.alertCtrl.create({
-                    title: 'రిజిస్ట్రేషన్ విజయవంతమైంది! 🎉',
-                    subTitle: 'స్వాగతం, ' + payload.doctor_name + '! మీరు ఇప్పుడు మీ మొబైల్ నంబర్ ' + payload.phone_number + ' తో లాగిన్ అయి మీ అపాయింట్‌మెంట్స్ చూడవచ్చు.',
-                    buttons: [{
-                            text: 'లాగిన్ అవ్వండి (Login)',
-                            handler: function () {
-                                _this.navCtrl.setRoot('LoginPage');
-                            }
-                        }]
-                });
-                alert_2.present();
-            }
-            else if (res && res.status === 300) {
-                var alert_3 = _this.alertCtrl.create({
-                    title: 'మొబైల్ నంబర్ ఇప్పటికే ఉంది',
-                    subTitle: res.message || 'ఈ మొబైల్ నంబర్‌తో ఇప్పటికే డాక్టర్ అకౌంట్ ఉంది. దయచేసి నేరుగా లాగిన్ అవ్వండి.',
-                    buttons: [{
-                            text: 'లాగిన్ పేజీకి వెళ్లండి',
-                            handler: function () {
-                                _this.navCtrl.setRoot('LoginPage');
-                            }
-                        }]
-                });
-                alert_3.present();
-            }
-            else {
-                var alert_4 = _this.alertCtrl.create({
-                    title: 'లోపం సంభవించింది',
-                    subTitle: (res === null || res === void 0 ? void 0 : res.message) || 'రిజిస్ట్రేషన్ పూర్తి కాలేదు. దయచేసి మళ్లీ ప్రయత్నించండి.',
-                    buttons: ['Ok']
-                });
-                alert_4.present();
-            }
-        }, function (err) {
-            _this.showSpinner = false;
-            var alert = _this.alertCtrl.create({
-                title: 'సర్వర్ సమస్య',
-                subTitle: 'నెట్‌వర్క్ లోపం సంభవించింది. దయచేసి మీ ఇంటర్నెట్ కనెక్షన్‌ను పరిశీలించి మళ్లీ ప్రయత్నించండి.',
-                buttons: ['Ok']
-            });
-            alert.present();
-        });
+        else {
+            this.navCtrl.setRoot('HomePage'); // Use setRoot for the initial page
+        }
     };
-    DoctorregisterPage = __decorate([
+    AboutPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-doctorregister',
-            template: /*ion-inline-start:"C:\\Users\\rajes\\StudioProjects\\jbac_app\\src\\pages\\doctorregister\\doctorregister.html"*/"<ion-header>\n  <ion-navbar color=\"primary\">\n    <ion-title style=\"text-align: center; font-size: 16px;\">\n      <b>డాక్టర్ రిజిస్ట్రేషన్ (Doctor Register)</b>\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)=\"gotohome()\">\n        <ion-icon name=\"home\"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content class=\"pagecss\">\n  <div class=\"form-card\">\n    <div class=\"header-box\">\n      <div style=\"font-size: 32px; margin-bottom: 6px;\">🩺</div>\n      <h3 style=\"margin: 0; font-size: 17px; font-weight: bold;\">క్రైస్తవ వైద్యులు & కౌన్సిలర్ల నమోదు</h3>\n      <p style=\"margin: 4px 0 0 0; font-size: 11.5px; opacity: 0.9;\">\n        JBAC ఫ్యామిలీ కౌన్సిలింగ్ నెట్‌వర్క్‌లో చేరి క్రైస్తవ కుటుంబాలకు సహాయపడండి\n      </p>\n    </div>\n\n    <form [formGroup]=\"doctorForm\" (ngSubmit)=\"submitDoctor()\">\n      <ion-item class=\"custom-item\">\n        <ion-label stacked>డాక్టర్ పూర్తి పేరు (Doctor Full Name) <span class=\"req\">*</span></ion-label>\n        <ion-input type=\"text\" formControlName=\"doctor_name\" placeholder=\"ఉదా: Dr. Mary Grace, M.D.\"></ion-input>\n      </ion-item>\n\n      <ion-item class=\"custom-item\">\n        <ion-label stacked>మెడికల్ కౌన్సిల్ లైసెన్స్ నంబర్ (License No) <span class=\"req\">*</span></ion-label>\n        <ion-input type=\"text\" formControlName=\"license_number\" placeholder=\"ఉదా: APMC-2015-88421\"></ion-input>\n      </ion-item>\n\n      <ion-item class=\"custom-item\">\n        <ion-label stacked>స్పెషలైజేషన్ (Specialization) <span class=\"req\">*</span></ion-label>\n        <ion-select formControlName=\"specialization\" okText=\"ఎంచుకోండి\" cancelText=\"రద్దు\">\n          <ion-option value=\"Family Counsellor & Clinical Psychologist\">Family Counsellor & Clinical Psychologist</ion-option>\n          <ion-option value=\"Marriage & Relationship Counsellor\">Marriage & Relationship Counsellor</ion-option>\n          <ion-option value=\"Youth & Family Mental Wellness Counsellor\">Youth & Family Mental Wellness Counsellor</ion-option>\n          <ion-option value=\"Parent-Child Dynamics Specialist\">Parent-Child Dynamics Specialist</ion-option>\n          <ion-option value=\"Christian Spiritual & Emotional Healing\">Christian Spiritual & Emotional Healing</ion-option>\n          <ion-option value=\"Addiction & Behavioral Therapy\">Addiction & Behavioral Therapy</ion-option>\n          <ion-option value=\"General Family Physician & Counsellor\">General Family Physician & Counsellor</ion-option>\n        </ion-select>\n      </ion-item>\n\n      <ion-item class=\"custom-item\">\n        <ion-label stacked>విద్యార్హతలు (Qualifications) <span class=\"req\">*</span></ion-label>\n        <ion-input type=\"text\" formControlName=\"qualification\" placeholder=\"ఉదా: MBBS, M.D., M.Sc Psychology\"></ion-input>\n      </ion-item>\n\n      <ion-item class=\"custom-item\">\n        <ion-label stacked>అనుభవం (Years of Experience) <span class=\"req\">*</span></ion-label>\n        <ion-input type=\"text\" formControlName=\"experience_years\" placeholder=\"ఉదా: 8 Years\"></ion-input>\n      </ion-item>\n\n      <ion-item class=\"custom-item\">\n        <ion-label stacked>10 అంకెల మొబైల్ నంబర్ (Mobile Number) <span class=\"req\">*</span></ion-label>\n        <ion-input type=\"tel\" maxlength=\"10\" formControlName=\"phone_number\" placeholder=\"10-digit mobile\"></ion-input>\n      </ion-item>\n\n      <ion-item class=\"custom-item\">\n        <ion-label stacked>ఈమెయిల్ (Email Address)</ion-label>\n        <ion-input type=\"email\" formControlName=\"email\" placeholder=\"doctor@jbac.in\"></ion-input>\n      </ion-item>\n\n      <ion-item class=\"custom-item\">\n        <ion-label stacked>పాస్‌వర్డ్ (Password - కనీసం 6 అక్షరాలు) <span class=\"req\">*</span></ion-label>\n        <ion-input type=\"password\" maxlength=\"16\" formControlName=\"password\" placeholder=\"లాగిన్ పాస్‌వర్డ్\"></ion-input>\n      </ion-item>\n\n      <ion-item class=\"custom-item\">\n        <ion-label stacked>కన్సల్టేషన్ ఫీజు (Consultation Fee)</ion-label>\n        <ion-input type=\"text\" formControlName=\"consultation_fee\" placeholder=\"Free / Volunteer Service\"></ion-input>\n      </ion-item>\n\n      <ion-item class=\"custom-item\">\n        <ion-label stacked>అందుబాటులో ఉండే రోజులు (Available Days) <span class=\"req\">*</span></ion-label>\n        <ion-input type=\"text\" formControlName=\"available_days\" placeholder=\"Monday to Saturday\"></ion-input>\n      </ion-item>\n\n      <ion-item class=\"custom-item\">\n        <ion-label stacked>ప్రారంభ సమయం (Start Time) <span class=\"req\">*</span></ion-label>\n        <ion-input type=\"text\" formControlName=\"available_time_start\" placeholder=\"10:00 AM\"></ion-input>\n      </ion-item>\n\n      <ion-item class=\"custom-item\">\n        <ion-label stacked>ముగింపు సమయం (End Time) <span class=\"req\">*</span></ion-label>\n        <ion-input type=\"text\" formControlName=\"available_time_end\" placeholder=\"05:00 PM\"></ion-input>\n      </ion-item>\n\n      <ion-item class=\"custom-item\">\n        <ion-label stacked>ప్రాంతం & కౌన్సిలింగ్ విధానం (Location) <span class=\"req\">*</span></ion-label>\n        <ion-input type=\"text\" formControlName=\"location\" placeholder=\"ఉదా: Vijayawada & Online\"></ion-input>\n      </ion-item>\n\n      <ion-item class=\"custom-item\">\n        <ion-label stacked>పూర్తి క్లినిక్ / చర్చి చిరునామా (Address) <span class=\"req\">*</span></ion-label>\n        <ion-input type=\"text\" formControlName=\"address\" placeholder=\"క్లినిక్ లేదా ఆసుపత్రి చిరునామా\"></ion-input>\n      </ion-item>\n\n      <ion-item class=\"custom-item\">\n        <ion-label stacked>డాక్టర్ గురించిన సంక్షిప్త వివరణ (Bio) <span class=\"req\">*</span></ion-label>\n        <ion-textarea rows=\"3\" formControlName=\"bio\" placeholder=\"మీ అనుభవం, కౌన్సిలింగ్ పద్ధతులు మరియు సేవా సంకల్పం...\"></ion-textarea>\n      </ion-item>\n\n      <div style=\"margin-top: 16px;\">\n        <button ion-button block color=\"primary\" type=\"submit\" [disabled]=\"showSpinner\" style=\"border-radius: 8px; font-weight: bold; height: 44px;\">\n          <ion-spinner *ngIf=\"showSpinner\" name=\"crescent\" style=\"margin-right: 8px;\"></ion-spinner>\n          డాక్టర్ రిజిస్ట్రేషన్ పూర్తి చేయండి (Submit)\n        </button>\n      </div>\n\n      <div style=\"text-align: center; margin-top: 14px;\">\n        <span style=\"font-size: 13px; color: #64748b;\">ఇప్పటికే అకౌంట్ ఉందా?</span>\n        <button ion-button clear small color=\"primary\" type=\"button\" (click)=\"goToLogin()\">\n          <b>ఇక్కడ లాగిన్ అవ్వండి (Login)</b>\n        </button>\n      </div>\n    </form>\n  </div>\n</ion-content>\n"/*ion-inline-end:"C:\\Users\\rajes\\StudioProjects\\jbac_app\\src\\pages\\doctorregister\\doctorregister.html"*/
+            selector: 'page-about',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\about\about.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;">గురించి</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n\n\n  <ion-card style="padding: 1%;border-radius: 5px;">\n\n\n\n    <h2 style="text-align: center;color: #e35b5b;font-weight: 800">\n\n      <u>నేను పుట్టిన ఆంధ్రప్రదేశ్ రాష్ట్రంలో నా క్రైస్తవ సమాజం కోసం నేను ఏమిచేసాను .</u> </h2>&nbsp;\n\n\n\n    <h6 style="text-align:center;font-weight:700;">\n\n      నా కోసం, నా కుటుంబం కోసం ప్రార్ధించండి, JBAC కోఆర్డినేటర్ , ..ప్రొఫెసర్ డాక్టర్ జోసెఫ్ పి.మోసిగంటి, B.Tech, M.Tech, Ph.D .\n\n    </h6>&nbsp;\n\n\n\n    <h5 style="text-align: center;font-weight: 700;">\n\n      <u> డైరెక్టర్ సెయింట్ మేరీస్ గ్రూప్ ఆఫ్ ఇంజినీరింగ్ కాలేజెస్, చేబ్రోలు, గుంటూరు</u>\n\n    </h5>\n\n\n\n  </ion-card>\n\n  <ion-card style="padding: 1%;border-radius: 5px;">\n\n    <p style="line-height: 35px;text-align: justify;justify-self: start;;font-weight: 1000;font-family: Ramabhadra,sans-serif!important;">\n\n      క్రైస్తవ సమాజం పట్ల జరుగుతున్న దాడులు, చర్చిలు మీద దాడులు, సువార్త చెప్పకుండా అడ్డంకులు, కేసులు ఇవన్నీ\n\n      చూసి నా మనసు చాలా నలిగిపోయింది, కాబట్టి నేను జాబు చేయకుండా, నేను సమాజం కోసం ఒక వాయిస్ గా ఉండాలి అని\n\n      అనిపించింది, పాస్టర్లు చక్కగా చర్చిలకు కట్టుకునేటట్టు, సువార్త చేసుకునేటట్టు తర్వాత క్రైస్తవులు\n\n      నిరభ్యంతరంగా వాళ్లపై ఎక్సర్సైజ్ చేసుకునేటట్టు ప్రార్థనలు చేసుకునేటట్టు Policyలు మార్చాలని దాని మీద కూడా\n\n      వర్క్ చేస్తున్నాను.ఆంధ్రప్రదేశ్ రాష్ట్రంలో కోటిమంది ఏసుప్రభు నమ్ముకున్న వారు వున్నాము.<br>\n\n      ఇప్పటివరకు 60 వేల మందికి పైనే పాస్టర్లకు Bulk SMS, Bulk calls, WhatsApp ద్వారా\n\n      సమాచారం ఇస్తున్నాను. ఉద్యోగం మానేసిన కారణంగా రెండు లక్షల జీతం రాకపోగా ప్రయాణ ఖర్చులు, మీటింగులు ఖర్చులు,\n\n      software’s ఖర్చులు. అయినా సంతోషంగా క్రైస్తవ సమాజానికి హృదయమంతటితో చేస్తున్నాను. ఇంకా ఎఫెక్టివ్ గా మంచిగా\n\n      చేయాలని ఉంది తప్పకుండా చేస్తాను. నాకోసం నా కుటుంబం కోసం ప్రార్థించండి.\n\n      <br> 60 వేల పైనే పాస్టర్స్ మరియు ఇతరుల నంబర్లు కలెక్ట్ చేశాను. క్రిస్టియన్ డైరెక్టరీస్, వాట్స్ యాప్\n\n      గ్రూప్లు నుంచి, పేస్ బుక్, పాస్టర్ ఫెలో షిప్ లనుంచి కలెక్ట్ చేశాను .ఇప్పటివరకు, నేను ఒక్కడినే రాత్రి\n\n      పగలు కష్టపడ్డాను. ఎక్కువమందితో కమ్యూనికేషన్ అయిపోవడం వల్ల నేను ఫోన్ లిఫ్ట్ చేయలేకపోతున్నాను, ఇంకొక\n\n      వీక్నెస్ ఏంటంటే నేను మాట్లాడితే అర్థగంట నుంచి గంట మాట్లాడుతాను అందుకే ఫోన్లు లేపట్లేదు. మెసేజ్ గాని\n\n      పెడితే అది నాకు చాలా ఉపయోగకరంగా ఉంటుంది, నేను రెస్పాన్స్ ఇస్తాను.\n\n      <br>వివరాలు పొందడానికి ఈ నెంబర్ కూడా 7075482182 సేవ్ చేసుకోండి లేదా వెబ్ సైట్ అయినా చూడవచ్చు. కొన్ని\n\n      వేల రూపాయలు పెట్టి ఎక్విప్మెంట్, సాఫ్ట్వేర్లు కొని ఆటోమైజ్ చేసేసాను. ఇప్పటివరకు ఎవరిని అడగలేదు ఎవరు\n\n      ఇవ్వలేదు ఇద్దరు తప్ప. నాకు సమాజం పట్ల ఉన్న అంకితభావం వలన నాకున్నది ఖర్చు చేసేసాను. నేను రెండు లక్షలు\n\n      జీతం వదిలేసి నా ఖర్చులు నిమిత్తము పార్ట్ టైం డైరెక్టర్ గా పనిచేస్తున్నాను, నాకు దేవుడు ఏదో విధంగా సహాయం\n\n      చేస్తాడని నమ్మకం.\n\n      మిమ్మల్ని మనీ అడగట్లేదు కానీ మీరు చేయగలిగింది చేయండి.\n\n      <br>\n\n      నేను పెట్టే వీడియోలు మీరు చూచు నట్లు, వీడియో ఛానల్ సబ్ స్క్రైబ్ చేసుకోండి<br>\n\n      నా సాక్షం వీడియో\n\n    </p>\n\n\n\n    <iframe height="240" src="https://www.youtube.com/embed/xKb9CQvHYUQ?si=C2GoTyHg1-UBJgnz"\n\n      title="YouTube video player" frameborder="0"\n\n      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"\n\n      allowfullscreen></iframe>\n\n\n\n  </ion-card>\n\n\n\n  <ion-card style="padding: 1%;border-radius: 5px;">\n\n    <h5 style="line-height: 35px;text-align: center;font-weight: 1000;">\n\n      ..ప్రొఫెసర్ డాక్టర్ జోసఫ్ పి మోసిగంటి.\n\n      <br>\n\n      B.Tech, M.Tech, Ph.D<br>\n\n      చైర్మన్, ఆంధ్రప్రదేశ్ జీసస్ బిలీవర్స్ అసోసియేషన్ కౌన్సిల్ (JBAC) . <br>\n\n      డైరెక్టర్ , సెయింట్ మేరీస్ గ్రూప్ ఆఫ్ ఇంజినీరింగ్ కాలేజెస్ , చేబ్రోలు , గుంటూరు . <br>\n\n      Phone : 7075482182 ( సేవ్ చేసుకొని మెసేజ్-SMS మాత్రమే చేయండి ) .<br>\n\n       నా ఫోన్ నెంబర్ తో పాటు, నా పేరు, నా వివరాలు, సేవ్ చేసుకోవడానికి ఈ లింక్ ఓపెన్ చేసి \n\n       <a href="https://save-jbac-contact.jbac.in"> ఇక్కడ క్లిక్ చేయండి </a> సేవ్ బటన్ అని ఉంటది దాన్ని క్లిక్\n\n      చేసి డౌన్లోడ్ అయిన తర్వాత ఓపెన్ చేసి , ఇంపోర్ట్ క్లిక్ చేసి , జిమెయిల్ గాని , ఫోన్ గాని క్లిక్ చేసి , సేవ్\n\n      చేసుకుంటే మీ కాంటాక్ట్స్ లో అన్ని వివరాలు సేవ్ అయిపోతాయి. అయ్యా నేను 40 వేల మందికి మెసేజ్ పంపించాను ,\n\n      మీరు తిరిగి నాకు వాట్ సేప్(WhatsApp) లో మెసేజ్ , వీడియోలు , ఫోటోలు పెట్టవద్దు , దయచేసి అర్థం చేసుకోండి .\n\n    </h5>\n\n  </ion-card>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\about\about.html"*/,
         }),
-        __metadata("design:paramtypes", [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["v" /* ToastController */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_service_service__["a" /* ServiceProvider */]
-        ])
-    ], DoctorregisterPage);
-    return DoctorregisterPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavParams */]])
+    ], AboutPage);
+    return AboutPage;
 }());
+
+//# sourceMappingURL=about.js.map
 
 /***/ })
 
 });
+//# sourceMappingURL=50.js.map

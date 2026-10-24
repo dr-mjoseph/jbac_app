@@ -1,6 +1,6 @@
 webpackJsonp([31],{
 
-/***/ 423:
+/***/ 419:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ForgotPasswordPageModule", function() { return ForgotPasswordPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__forgot_password__ = __webpack_require__(478);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__forgot_password__ = __webpack_require__(476);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,7 +38,7 @@ var ForgotPasswordPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 478:
+/***/ 476:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -151,6 +151,9 @@ var ForgotPasswordPage = /** @class */ (function () {
             }
             else if (this.passloginform.value.category == 7) {
                 this.category = 'పాస్టర్ల అసోసియేషన్';
+            }
+            else if (this.passloginform.value.category == 8) {
+                this.category = 'డాక్టర్ / కౌన్సిలర్';
             }
             this.service.checknumberpassword(this.passloginform.value).subscribe(function (res) {
                 if (res.status == 200) {

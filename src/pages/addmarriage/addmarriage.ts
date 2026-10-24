@@ -33,6 +33,7 @@ export class AddmarriagePage {
       address: ['', [Validators.required]],
       description: [''],
       phonenumber: ['', [Validators.required, Validators.maxLength(10)]],
+      state_id: ['1', [Validators.required]],
       districtname: ['', [Validators.required]],
       constituencyname: ['', [Validators.required]],
       mandals: ['', [Validators.required]],
@@ -42,17 +43,35 @@ export class AddmarriagePage {
       whealth: [''],
       types: [''],
       self: [''],
-       // term: ['', [Validators.required]],
+      term: [true],
       caste: ['', [Validators.required]],
       subcaste: [''],
       spirti: ['']
-    })
-    this.addingmarriages.reset();
+    });
   }
 
   get m() { return this.addingmarriages.controls; }
 
-  
+  onStateChange(event: any) {
+    var stateId = event;
+    this.addingmarriages.patchValue({
+      state_id: stateId,
+      districtname: '',
+      constituencyname: '',
+      mandals: '',
+      village_name: ''
+    });
+    this.districts = [];
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    this.service.getdistrict(stateId).subscribe((res: any) => {
+      if (res && res.status == 200) {
+        this.districts = res.data;
+      }
+    });
+  }
+
   pastoras: any = [];
   pastorfilterdropdown() {
     this.service.getpastor().subscribe((res: any) => {
@@ -108,33 +127,59 @@ export class AddmarriagePage {
     })
   }
 
-  getmandals(event: any) {
-    var id = event;
-    this.service.getmandals().subscribe((res: any) => {
-      if (res.status == 202) {
-        alert(res.message);
-      } else if (res.status == 200) {
-        this.mandals = res.data.filter((data: any) => data.const_id == id);
-      }
-    })
-  }
-
   getconstency(event: any) {
     var id = event;
-    this.service.getconsistencys().subscribe((res: any) => {
-      this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
+    this.addingmarriages.patchValue({
+      constituencyname: '',
+      mandals: '',
+      village_name: ''
     });
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    if (id) {
+      this.service.getconsistencys().subscribe((res: any) => {
+        if (res && res.data) {
+          this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
+        }
+      });
+    }
+  }
+
+  getmandals(event: any) {
+    var id = event;
+    this.addingmarriages.patchValue({
+      mandals: '',
+      village_name: ''
+    });
+    this.mandals = [];
+    this.panchayati = [];
+    if (id) {
+      this.service.getmandals().subscribe((res: any) => {
+        if (res.status == 202) {
+          alert(res.message);
+        } else if (res.status == 200) {
+          this.mandals = res.data.filter((data: any) => data.const_id == id);
+        }
+      });
+    }
   }
 
   gepanchayati(event: any) {
     var id = event;
-    this.service.gepanchayatis().subscribe((res: any) => {
-      if (res.status == 202) {
-        alert(res.message);
-      } else if (res.status == 200) {
-        this.panchayati = res.data.filter((data: any) => data.mndl_id == id);
-      }
-    })
+    this.addingmarriages.patchValue({
+      village_name: ''
+    });
+    this.panchayati = [];
+    if (id) {
+      this.service.gepanchayatis().subscribe((res: any) => {
+        if (res.status == 202) {
+          alert(res.message);
+        } else if (res.status == 200) {
+          this.panchayati = res.data.filter((data: any) => data.mndl_id == id);
+        }
+      });
+    }
   }
 
   getbeliver() {

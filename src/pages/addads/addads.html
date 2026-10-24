@@ -33,11 +33,12 @@
         </ion-item>
       </ion-col>
       <ion-col col-12  (click)="openphoto()" >
+        <input type="file" id="adsFileInput" (change)="onFileSelected($event)" accept="image/*" style="display:none">
         <div class="imgerdt">
-          <img src="assets/icon/Upload.svg"style="height:70px;width:70px;">
+          <img src="assets/icon/upload.svg" style="height:70px;width:70px;">
           చిత్రం అప్‌లోడ్ చేయండి
           <br>
-          <img *ngIf="imagesdata.length" style="width:200px;height:200px" src="{{imagesdata[0].reviewimg}}">
+          <img *ngIf="imagesdata.length" style="width:200px;height:200px" [src]="imagesdata[0].reviewimg || imagesdata[0].reviewImg">
         </div>
       </ion-col>
       <ion-col col-12>

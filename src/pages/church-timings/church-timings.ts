@@ -27,6 +27,7 @@ export class ChurchTimingsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public toastCtrl: ToastController, public service: ServiceProvider, public modalCtrl: ModalController, public alertCtrl: AlertController) {
 
     this.searchchurchingform = this.formBuilder.group({
+      state_id: ['1'],
       district_id: ['', [Validators.required]],
       constenncy_id: ['', [Validators.required]],
       mandal_id: ['', [Validators.required]],
@@ -36,6 +37,26 @@ export class ChurchTimingsPage {
       ministry_id: [''],
       day: [''],
     })
+  }
+
+  onStateChange(event: any) {
+    var stateId = event;
+    this.searchchurchingform.patchValue({
+      state_id: stateId,
+      district_id: '',
+      constenncy_id: '',
+      mandal_id: '',
+      panchayati_id: ''
+    });
+    this.districts = [];
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    this.service.getdistrict(stateId).subscribe((res: any) => {
+      if (res && res.status == 200) {
+        this.districts = res.data;
+      }
+    });
   }
 
   fromshow: any = 1;
@@ -94,24 +115,42 @@ export class ChurchTimingsPage {
 
   getmandals(event: any) {
     var id = event;
-    this.service.getmandals().subscribe((res: any) => {
-      if (res.status == 202) {
-        const confirm = this.alertCtrl.create({
-          mode: 'ios',
-          title: res.message
-        })
-        confirm.present();
-      } else if (res.status == 200) {
-        this.mandals = res.data.filter((data: any) => data.const_id == id);
-      }
-    })
+    this.searchchurchingform.patchValue({
+      mandal_id: '',
+      panchayati_id: ''
+    });
+    this.mandals = [];
+    this.panchayati = [];
+    if (id) {
+      this.service.getmandals().subscribe((res: any) => {
+        if (res.status == 202) {
+          const confirm = this.alertCtrl.create({
+            mode: 'ios',
+            title: res.message
+          })
+          confirm.present();
+        } else if (res.status == 200) {
+          this.mandals = res.data.filter((data: any) => data.const_id == id);
+        }
+      })
+    }
   }
 
   getconstency(event: any) {
     var id = event;
-    this.service.getconsistencys().subscribe((res: any) => {
-      this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
+    this.searchchurchingform.patchValue({
+      constenncy_id: '',
+      mandal_id: '',
+      panchayati_id: ''
     });
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    if (id) {
+      this.service.getconsistencys().subscribe((res: any) => {
+        this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
+      });
+    }
   }
 
   gepanchayati(event: any) {

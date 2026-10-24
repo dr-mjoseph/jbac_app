@@ -1,6 +1,6 @@
 webpackJsonp([28],{
 
-/***/ 427:
+/***/ 423:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GalleryPageModule", function() { return GalleryPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__gallery__ = __webpack_require__(482);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__gallery__ = __webpack_require__(480);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,7 +38,7 @@ var GalleryPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 482:
+/***/ 480:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46,6 +46,14 @@ var GalleryPageModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(128);
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -71,8 +79,30 @@ var GalleryPage = /** @class */ (function () {
     GalleryPage.prototype.getimages = function () {
         var _this = this;
         this.service.getimages().subscribe(function (res) {
-            _this.imagesget = res.data;
+            if (res && res.data && Array.isArray(res.data)) {
+                var uniqueCategories = [];
+                var map = new Map();
+                for (var _i = 0, _a = res.data; _i < _a.length; _i++) {
+                    var item = _a[_i];
+                    var catId = item.category_id || item.id;
+                    if (catId && !map.has(catId)) {
+                        map.set(catId, true);
+                        uniqueCategories.push(__assign({}, item, { id: catId }));
+                    }
+                }
+                _this.imagesget = uniqueCategories.length > 0 ? uniqueCategories : res.data;
+            }
+            else {
+                _this.imagesget = [];
+            }
+        }, function (error) {
+            console.log('Error fetching gallery images', error);
+            _this.imagesget = [];
         });
+    };
+    GalleryPage.prototype.onImgError = function (event, item) {
+        var fallbackId = (item && item.id) ? (Math.abs(item.id) % 12) : 1;
+        event.target.src = 'assets/images/meet-fig' + fallbackId + '.png';
     };
     GalleryPage.prototype.gotohome = function () {
         this.navCtrl.push('HomePage');
@@ -83,7 +113,7 @@ var GalleryPage = /** @class */ (function () {
     };
     GalleryPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-gallery',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\gallery\gallery.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>ఫోటో గేలరీ</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n\n\n  <ion-row>\n\n\n\n    <ion-col col-12 *ngFor="let gt of imagesget" style="text-align: center;">\n\n      <img style="height: 200px;" src="{{gt.image}}" (click)="gotosub(gt.id)">\n\n      <h3 style="color:white;">{{gt.categoryname}}</h3>\n\n    </ion-col>\n\n\n\n    <ion-col col-12 style="text-align: center;">\n\n      <img style="height: 200px;" src="https://jbac.in/websiteimages/8058081698510916218.jpg">\n\n      <h3 style="color:white;">Main House</h3>\n\n    </ion-col>\n\n\n\n  </ion-row>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\gallery\gallery.html"*/,
+            selector: 'page-gallery',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\gallery\gallery.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>ఫోటో గేలరీ</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n\n\n  <ion-row>\n\n\n\n    <ion-col col-12 *ngFor="let gt of imagesget" style="text-align: center;">\n\n      <img style="height: 200px; max-width: 100%; object-fit: cover; border-radius: 8px;" src="{{gt.image}}" (error)="onImgError($event, gt)" (click)="gotosub(gt.id)">\n\n      <h3 style="color:white;">{{gt.categoryname}}</h3>\n\n    </ion-col>\n\n\n\n    <ion-col col-12 style="text-align: center;">\n\n      <img style="height: 200px; max-width: 100%; object-fit: cover; border-radius: 8px;" src="https://jbac.in/websiteimages/8058081698510916218.jpg" (error)="onImgError($event, {id: 0})">\n\n      <h3 style="color:white;">Main House</h3>\n\n    </ion-col>\n\n\n\n  </ion-row>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\gallery\gallery.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_service_service__["a" /* ServiceProvider */]])
     ], GalleryPage);

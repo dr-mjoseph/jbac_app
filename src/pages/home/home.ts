@@ -12,13 +12,11 @@ import { ServiceProvider } from '../../providers/service/service';
 export class HomePage {
   banners = [
     { id: '1', banner: 'assets/images/Banner01.png' },
-    { id: '2', banner: 'assets/images/Banner02.png' },
     { id: '3', banner: 'assets/images/Banner03.png' },
     { id: '4', banner: 'assets/images/Banner04.png' },
     { id: '5', banner: 'assets/images/Banner05.png' },
     { id: '6', banner: 'assets/images/Banner06.png' },
-    { id: '7', banner: 'assets/images/Banner07.png' },
-    { id: '8', banner: 'assets/images/Banner08.png' }
+    { id: '7', banner: 'assets/images/Banner07.png' }
   ]
   main: any = 0
   count: any
@@ -130,7 +128,7 @@ export class HomePage {
 
 
 
-   
+
     } else if (id == 8) {
       if (localStorage.getItem("usr_id") == " " || localStorage.getItem("usr_id") == null || localStorage.getItem("usr_id") == undefined) {
         const confirm = this.alertCtrl.create({
@@ -178,7 +176,7 @@ export class HomePage {
     } else if (id == 20) {
       this.navCtrl.push('MarriagePage');
     }
-   
+
   }
 
   async logout() {
@@ -191,7 +189,7 @@ export class HomePage {
           handler: () => {
             localStorage.clear();
             this.navCtrl.push('LoginPage')
-   
+
           }
         },
         {

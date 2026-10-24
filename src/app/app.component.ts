@@ -13,7 +13,7 @@ export class MyApp {
 
   rootPage: any;
 
-  pages: Array<{ title: string, image: any, page: string }>;
+  pages: Array<{ title: string, subtitle?: string, image: any, page: string }>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public service: ServiceProvider) {
     this.initializeApp();
@@ -64,5 +64,5 @@ export class MyApp {
     this.nav.push(page);
   }
 
-  
+
 }

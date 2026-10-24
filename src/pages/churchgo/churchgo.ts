@@ -16,13 +16,15 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ChurchgoPage {
 
- 
-  yourVideoId = 'https://www.youtube.com/embed/MjDV1hHkPkY?si=oH1BfkRY5P_A70Rz';
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ChurchgoPage');
+  openYoutube() {
+    window.open('https://www.youtube.com/channel/UCnk2hURhesjDM7SuOxgmt5A/about', '_system', 'location=yes');
+  }
+
+  gotoAbout() {
+    this.navCtrl.push('AboutPage');
   }
 
   gotohome(){

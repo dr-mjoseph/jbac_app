@@ -67,6 +67,15 @@
       </ion-col>
       <ion-col col-12 col-md-6>
         <ion-item>
+          <ion-label stacked>రాష్ట్రం / State</ion-label>
+          <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">
+            <ion-option value="1">Andhra Pradesh</ion-option>
+            <ion-option value="2">Telangana</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-item>
           <ion-label stacked>జిల్లాను ఎంచుకోండి</ion-label>
           <ion-select formControlName="district_id" (ionChange)="getconstency($event)"
             >
@@ -111,7 +120,7 @@
       <ion-col col-6 style="text-align: center;">
         <button ion-button block (click)="hidefrom()">క్లోజ్ సెర్చ్ ఆప్షన్</button>
       </ion-col>
-      
+
     </ion-row>
   </form>
 

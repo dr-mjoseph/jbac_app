@@ -42,6 +42,7 @@ export class MeetingPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, public service: ServiceProvider, public alrtcyt: AlertController, public modalCtrl: ModalController) {
 
     this.meetingfrom = this.formBuilder.group({
+      state_id: [''],
       mettingtype: [''],
       denomation_id: [''],
       ministry_id: [''],
@@ -56,6 +57,26 @@ export class MeetingPage {
     this.getbeliver();
     this.getdistric();
     this.searechevents();
+  }
+
+  onStateChange(event: any) {
+    var stateId = event;
+    this.meetingfrom.patchValue({
+      state_id: stateId,
+      district_id: '',
+      constenncy_id: '',
+      mandal_id: '',
+      panchayati_id: ''
+    });
+    this.districts = [];
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    this.service.getdistrict(stateId).subscribe((res: any) => {
+      if (res && res.status == 200) {
+        this.districts = res.data;
+      }
+    });
   }
 
   getdenomations() {
@@ -97,15 +118,17 @@ export class MeetingPage {
       }
       const ddmmyyyy = dateVal.trim().match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
       if (ddmmyyyy) {
-        return `${ddmmyyyy[3]}-${ddmmyyyy[2].padStart(2, '0')}-${ddmmyyyy[1].padStart(2, '0')}`;
+        const m = ddmmyyyy[2].length === 1 ? '0' + ddmmyyyy[2] : ddmmyyyy[2];
+        const d = ddmmyyyy[1].length === 1 ? '0' + ddmmyyyy[1] : ddmmyyyy[1];
+        return `${ddmmyyyy[3]}-${m}-${d}`;
       }
     }
     try {
-      const d = new Date(dateVal);
-      if (isNaN(d.getTime())) return '';
-      const year = d.getFullYear();
-      const month = String(d.getMonth() + 1).padStart(2, '0');
-      const day = String(d.getDate()).padStart(2, '0');
+      const dt = new Date(dateVal);
+      if (isNaN(dt.getTime())) return '';
+      const year = dt.getFullYear();
+      const month = dt.getMonth() + 1 < 10 ? '0' + (dt.getMonth() + 1) : String(dt.getMonth() + 1);
+      const day = dt.getDate() < 10 ? '0' + dt.getDate() : String(dt.getDate());
       return `${year}-${month}-${day}`;
     } catch {
       return '';

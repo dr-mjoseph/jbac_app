@@ -14,7 +14,7 @@
 
   <ion-item>
     <ion-label stacked>సెలెక్ట్ న్యూస్<span style="color:red; font-family:ramabhadra;">*</span></ion-label>
-    <ion-select (ionChange)="getfilter($event)">
+    <ion-select [(ngModel)]="selectedCategory" (ionChange)="getfilter($event)">
       <ion-option value="" selected disabled>కేటగిరీ ఎంచుకోండి</ion-option>
       <ion-option value="0">అన్ని వార్తలు</ion-option>
       <ion-option value="క్రైస్తవుల మీద దాడులు">క్రైస్తవుల మీద దాడులు సంబంధించిన న్యూస్</ion-option>
@@ -42,11 +42,11 @@
           </div>
         </ion-card-header>
         <ion-card-content style="text-transform: capitalize;font-size: 20px;font-family:ramabhadra;">
-          <p style="font-size: 20px;font-family:ramabhadra;">వివరణ: <strong>
+          <p style="font-size: 20px;font-family:ramabhadra;" *ngIf="item.description">వివరణ: <strong>
               {{ showFullDescription ? item.description : (item.description | slice:0:100) }}
-              {{ item.description.length > 100 && !showFullDescription ? '...' : '' }}
+              {{ (item.description && item.description.length > 100 && !showFullDescription) ? '...' : '' }}
             </strong></p>
-          <p *ngIf="item.description.length > 100">
+          <p *ngIf="item.description && item.description.length > 100">
             <button (click)="toggleDescription()">
               {{ showFullDescription ? 'తక్కువ సమాచారం' : 'మరింత సమాచారం' }}
             </button>

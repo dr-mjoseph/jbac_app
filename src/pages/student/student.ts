@@ -22,10 +22,11 @@ export class StudentPage {
   denomation: any = []
   studentform: FormGroup;
   submitted: boolean = false;
-  
+
   constituency1:any=[];
   mandals1:any=[];
   panchayati1:any=[];
+  resDistricts: any = [];
   states: any = [
     { id: 1, state_name: 'ఆంధ్రప్రదేశ్ (Andhra Pradesh - AP)' },
     { id: 2, state_name: 'తెలంగాణ (Telangana - TG)' }
@@ -88,9 +89,7 @@ export class StudentPage {
       orphon: [''],
       subcaste: [''],
       gender: ['']
-    })
-
-    this.studentform.reset({ term: true });
+    });
 
     const datePipe = new DatePipe('en-Us');
     this.now = datePipe.transform(new Date(), 'yyyy-MM-dd');
@@ -99,8 +98,9 @@ export class StudentPage {
 
   ionViewDidLoad() {
     this.getdistric();
+    this.getresdistric();
     this.getdenomations();
-    this.getwing()
+    this.getwing();
   }
 
   getdenomations() {
@@ -108,7 +108,7 @@ export class StudentPage {
       this.denomation = res.data;
     })
   }
-    getstates() {
+  getstates() {
     this.service.getstates().subscribe((res: any) => {
       if (res && res.data) {
         this.states = res.data;
@@ -118,11 +118,13 @@ export class StudentPage {
 
   onStateChange(event: any) {
     this.studentform.patchValue({
+      state_id: event,
       district_id: '',
       constituency_id: '',
       mandal_id: '',
       village_id: ''
     });
+    this.districts = [];
     this.constituency = [];
     this.mandals = [];
     this.panchayati = [];
@@ -131,7 +133,52 @@ export class StudentPage {
 
   onResStateChange(event: any) {
     this.studentform.patchValue({
+      res_state_id: event,
       resdistricts: '',
+      resconstituencyname: '',
+      resmandals: '',
+      respanchayati: ''
+    });
+    this.resDistricts = [];
+    this.constituency1 = [];
+    this.mandals1 = [];
+    this.panchayati1 = [];
+    this.getresdistric(event);
+  }
+
+  getdistric(stateId?: any) {
+    const sid = stateId || (this.studentform.get('state_id') ? this.studentform.get('state_id').value : 1);
+    this.service.getdistrict(sid).subscribe((res: any) => {
+      this.districts = res.data;
+    });
+  }
+
+  getresdistric(stateId?: any) {
+    const sid = stateId || (this.studentform.get('res_state_id') ? this.studentform.get('res_state_id').value : 1);
+    this.service.getdistrict(sid).subscribe((res: any) => {
+      this.resDistricts = res.data;
+    });
+  }
+
+  getconstency(event: any) {
+    var id = event;
+    this.studentform.patchValue({
+      constituency_id: '',
+      mandal_id: '',
+      village_id: ''
+    });
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    if (!id) return;
+    this.service.getconsistencys().subscribe((res: any) => {
+      this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
+    })
+  }
+
+  getconstency1(event: any) {
+    var id = event;
+    this.studentform.patchValue({
       resconstituencyname: '',
       resmandals: '',
       respanchayati: ''
@@ -139,43 +186,35 @@ export class StudentPage {
     this.constituency1 = [];
     this.mandals1 = [];
     this.panchayati1 = [];
-    this.getdistric(event);
-  }
-
-  getdistric(stateId?: any) {
-    const sid = stateId || this.studentform.get('state_id')?.value || 1;
-    this.service.getdistrict(sid).subscribe((res: any) => {
-      this.districts = res.data;
-    });
-  }
-
-  
-
-  getconstency(event: any) {
-    var id = event;
-    this.service.getconsistencys().subscribe((res: any) => {
-      this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
-    })
-  }
-
-  
-  getconstency1(event: any) {
-    var id = event;
+    if (!id) return;
     this.service.getconsistencys().subscribe((res: any) => {
       this.constituency1 = res.data.filter((data: any) => data.dstrct_id == id);
     })
   }
 
-
-
   getmandals(event: any) {
     var id = event;
+    this.studentform.patchValue({
+      mandal_id: '',
+      village_id: ''
+    });
+    this.mandals = [];
+    this.panchayati = [];
+    if (!id) return;
     this.service.getmandals().subscribe((res: any) => {
       this.mandals = res.data.filter((data: any) => data.const_id == id);
     })
   }
+
   getmandals1(event: any) {
     var id = event;
+    this.studentform.patchValue({
+      resmandals: '',
+      respanchayati: ''
+    });
+    this.mandals1 = [];
+    this.panchayati1 = [];
+    if (!id) return;
     this.service.getmandals().subscribe((res: any) => {
       this.mandals1 = res.data.filter((data: any) => data.const_id == id);
     })
@@ -183,12 +222,23 @@ export class StudentPage {
 
   gepanchayati(event: any) {
     var id = event;
+    this.studentform.patchValue({
+      village_id: ''
+    });
+    this.panchayati = [];
+    if (!id) return;
     this.service.gepanchayatis().subscribe((res: any) => {
       this.panchayati = res.data.filter((data: any) => data.mndl_id == id);
     })
   }
+
   gepanchayati1(event: any) {
     var id = event;
+    this.studentform.patchValue({
+      respanchayati: ''
+    });
+    this.panchayati1 = [];
+    if (!id) return;
     this.service.gepanchayatis().subscribe((res: any) => {
       this.panchayati1 = res.data.filter((data: any) => data.mndl_id == id);
     })
@@ -272,15 +322,6 @@ export class StudentPage {
         }
       })
     }
-  }
-
-  numericOnly(event: any): boolean {
-    const charCode = (event.which) ? event.which : event.keyCode;
-    return charCode >= 48 && charCode <= 57;
-  }
-
-  gotohome() {
-    this.navCtrl.push('FormsPage');
   }
 
   church: any;

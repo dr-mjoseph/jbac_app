@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ActionSheetController, IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
@@ -15,18 +15,16 @@ import { ServiceProvider } from '../../providers/service/service';
 export class AddadsPage {
   addsadding:FormGroup
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public camera: Camera, public actionSheetCtrl: ActionSheetController, public formBuilder: FormBuilder, public service: ServiceProvider , public loadingCtrl:LoadingController ) {
-    
+  constructor(public navCtrl: NavController, public navParams: NavParams, public camera: Camera, public actionSheetCtrl: ActionSheetController, public formBuilder: FormBuilder, public service: ServiceProvider , public loadingCtrl:LoadingController, public zone: NgZone ) {
+
     this.addsadding = this.formBuilder.group({
       title: ['', [Validators.required]],
       type: ['', [Validators.required]],
       image: [''],
       description: ['', [Validators.required]],
       number: ['', [Validators.required, Validators.minLength(10)]],
-      term: ['', [Validators.required]]
-    })
-
-    this.addsadding.reset();
+      term: [true, [Validators.required]]
+    });
   }
 
   gotohome() {
@@ -38,6 +36,30 @@ export class AddadsPage {
     console.log('ionViewDidLoad AddadsPage');
   }
 
+  triggerFileInput() {
+    const fileInput = document.getElementById('adsFileInput') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
+    }
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.zone.run(() => {
+          this.imagesdata = [{
+            reviewimg: e.target.result,
+            reviewImg: e.target.result,
+            filetype: file.type || 'image/jpeg'
+          }];
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   imagesdata: any = []
   async openphoto() {
     const actionSheet = this.actionSheetCtrl.create({
@@ -45,7 +67,6 @@ export class AddadsPage {
         {
           icon: 'ios-folder-open',
           text: 'Gallery',
-          role: 'destructive',
           handler: () => {
             const options: CameraOptions = {
               quality: 70,
@@ -54,15 +75,17 @@ export class AddadsPage {
               saveToPhotoAlbum: false
             }
             this.camera.getPicture(options).then((imaged) => {
-              var ing = `data:image/jpeg;base64,` + imaged;
-              var imagedata = {
-                reviewimg: ing,
-                filetype: 'jpeg',
-              }
-              console.log(imagedata);
-              this.imagesdata = [];
-              this.imagesdata.push(imagedata);
+              this.zone.run(() => {
+                var ing = `data:image/jpeg;base64,` + imaged;
+                var imagedata = {
+                  reviewimg: ing,
+                  reviewImg: ing,
+                  filetype: 'jpeg',
+                }
+                this.imagesdata = [imagedata];
+              });
             }, (err) => {
+              this.triggerFileInput();
             });
           }
         }, {
@@ -77,14 +100,17 @@ export class AddadsPage {
               mediaType: this.camera.MediaType.PICTURE
             }
             this.camera.getPicture(options).then((imageD) => {
-              var img = `data:image/jpeg;base64,` + imageD;
-              var imagedata = {
-                reviewImg: img,
-                filetype: 'jpeg',
-              }
-              this.imagesdata = [];
-              this.imagesdata.push(imagedata);
+              this.zone.run(() => {
+                var img = `data:image/jpeg;base64,` + imageD;
+                var imagedata = {
+                  reviewimg: img,
+                  reviewImg: img,
+                  filetype: 'jpeg',
+                }
+                this.imagesdata = [imagedata];
+              });
             }, (err) => {
+              this.triggerFileInput();
             });
           }
         }, {
@@ -96,9 +122,9 @@ export class AddadsPage {
         }
       ]
     });
-    (await actionSheet).present();
+    actionSheet.present();
   }
-  
+
   submitted:any=[]
   loading:any
   postadds() {

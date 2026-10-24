@@ -322,7 +322,7 @@ export class ProfilePage {
   }
 
   services: any;
-  
+
   getpastorsdata() {
     this.service.getpastor().subscribe((res: any) => {
       this.getpastorsdatas = res && res.data ? res.data : [];
@@ -411,23 +411,16 @@ export class ProfilePage {
   }
 
   gepanchayati(event: any) {
-    this.loading = this.loadingCtrl.create({
-      spinner: 'ios',
-      content: 'ప్రాసెస్ అవుతుంది దయచేసి ఆగండి'
-    });
-    this.loading.present();
-    if (event != 0) {
-      var id = event
-    }
+    var id = event;
     this.service.gepanchayatis().subscribe((res: any) => {
-      if (event == 0) {
-        this.panchayati = res.data;
-        this.loading.dismiss();
+      if (event == 0 || !id) {
+        this.panchayati = res && res.data ? res.data : [];
       } else {
-        this.panchayati = res.data.filter((data: any) => data.mndl_id == id);
-        this.loading.dismiss();
+        this.panchayati = res && res.data ? res.data.filter((data: any) => data.mndl_id == id) : [];
       }
-    })
+    }, error => {
+      console.log(error);
+    });
   }
 
   getdenomations() {

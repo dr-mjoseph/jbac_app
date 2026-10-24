@@ -1,6 +1,6 @@
 webpackJsonp([5],{
 
-/***/ 436:
+/***/ 452:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MeetingPageModule", function() { return MeetingPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__meeting__ = __webpack_require__(489);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__meeting__ = __webpack_require__(508);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,7 +38,7 @@ var MeetingPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 458:
+/***/ 460:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -84,7 +84,7 @@ var ModalpagePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 489:
+/***/ 508:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -93,7 +93,7 @@ var ModalpagePage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_service_service__ = __webpack_require__(128);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modalpage_modalpage__ = __webpack_require__(458);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modalpage_modalpage__ = __webpack_require__(460);
 var __assign = (this && this.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
@@ -165,6 +165,7 @@ var MeetingPage = /** @class */ (function () {
         this.searchevents = [];
         this.submitted = false;
         this.meetingfrom = this.formBuilder.group({
+            state_id: [''],
             mettingtype: [''],
             denomation_id: [''],
             ministry_id: [''],
@@ -179,33 +180,89 @@ var MeetingPage = /** @class */ (function () {
         this.getdistric();
         this.searechevents();
     }
-    
+    MeetingPage.prototype.onStateChange = function (event) {
+        var _this = this;
+        var stateId = event;
+        this.meetingfrom.patchValue({
+            state_id: stateId,
+            district_id: '',
+            constenncy_id: '',
+            mandal_id: '',
+            panchayati_id: ''
+        });
+        this.districts = [];
+        this.constituency = [];
+        this.mandals = [];
+        this.panchayati = [];
+        this.service.getdistrict(stateId).subscribe(function (res) {
+            if (res && res.status == 200) {
+                _this.districts = res.data;
+            }
+        });
+    };
+    MeetingPage.prototype.getdenomations = function () {
+        var _this = this;
+        this.service.getdenomation().subscribe(function (res) {
+            _this.denomation = res.data;
+        });
+    };
+    MeetingPage.prototype.getbeliver = function () {
+        var _this = this;
+        this.service.getbeliversdata().subscribe(function (res) {
+            _this.ministryname = res.data;
+        });
+    };
+    MeetingPage.prototype.getdistric = function () {
+        var _this = this;
+        this.service.getdistrict().subscribe(function (res) {
+            if (res.status == 202) {
+                alert(res.message);
+            }
+            else if (res.status == 200) {
+                _this.districts = res.data;
+            }
+        });
+    };
+    MeetingPage.prototype.getconstency = function (event) {
+        var _this = this;
+        var id = event;
+        this.service.getconsistencys().subscribe(function (res) {
+            _this.constituency = res.data.filter(function (data) { return data.dstrct_id == id; });
+            console.log(_this.constituency);
+        });
+    };
     MeetingPage.prototype.formatDateString = function (dateVal) {
-        if (!dateVal) return '';
+        if (!dateVal)
+            return '';
         if (typeof dateVal === 'string') {
             var match = dateVal.trim().match(/^(\d{4})-(\d{2})-(\d{2})/);
             if (match) {
-                return match[1] + '-' + match[2] + '-' + match[3];
+                return match[1] + "-" + match[2] + "-" + match[3];
             }
             var ddmmyyyy = dateVal.trim().match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
             if (ddmmyyyy) {
-                return ddmmyyyy[3] + '-' + ('0' + ddmmyyyy[2]).slice(-2) + '-' + ('0' + ddmmyyyy[1]).slice(-2);
+                var m = ddmmyyyy[2].length === 1 ? '0' + ddmmyyyy[2] : ddmmyyyy[2];
+                var d = ddmmyyyy[1].length === 1 ? '0' + ddmmyyyy[1] : ddmmyyyy[1];
+                return ddmmyyyy[3] + "-" + m + "-" + d;
             }
         }
         try {
-            var d = new Date(dateVal);
-            if (isNaN(d.getTime())) return '';
-            var year = d.getFullYear();
-            var month = ('0' + (d.getMonth() + 1)).slice(-2);
-            var day = ('0' + d.getDate()).slice(-2);
-            return year + '-' + month + '-' + day;
-        } catch (e) {
+            var dt = new Date(dateVal);
+            if (isNaN(dt.getTime()))
+                return '';
+            var year = dt.getFullYear();
+            var month = dt.getMonth() + 1 < 10 ? '0' + (dt.getMonth() + 1) : String(dt.getMonth() + 1);
+            var day = dt.getDate() < 10 ? '0' + dt.getDate() : String(dt.getDate());
+            return year + "-" + month + "-" + day;
+        }
+        catch (_a) {
             return '';
         }
     };
     MeetingPage.prototype.isOldMeeting = function (event) {
         var today = this.formatDateString(new Date());
-        if (!today || !event) return false;
+        if (!today || !event)
+            return false;
         var end = this.formatDateString(event.enddate);
         var start = this.formatDateString(event.startdate || event.event_date);
         if (end) {
@@ -244,38 +301,6 @@ var MeetingPage = /** @class */ (function () {
             .map(function (item) { return (__assign({}, item, { showMore: false })); });
         this.searchevents = this.sortEventsAscending(nonExpired);
     };
-
-    MeetingPage.prototype.getdenomations = function () {
-        var _this = this;
-        this.service.getdenomation().subscribe(function (res) {
-            _this.denomation = res.data;
-        });
-    };
-    MeetingPage.prototype.getbeliver = function () {
-        var _this = this;
-        this.service.getbeliversdata().subscribe(function (res) {
-            _this.ministryname = res.data;
-        });
-    };
-    MeetingPage.prototype.getdistric = function () {
-        var _this = this;
-        this.service.getdistrict().subscribe(function (res) {
-            if (res.status == 202) {
-                alert(res.message);
-            }
-            else if (res.status == 200) {
-                _this.districts = res.data;
-            }
-        });
-    };
-    MeetingPage.prototype.getconstency = function (event) {
-        var _this = this;
-        var id = event;
-        this.service.getconsistencys().subscribe(function (res) {
-            _this.constituency = res.data.filter(function (data) { return data.dstrct_id == id; });
-            console.log(_this.constituency);
-        });
-    };
     MeetingPage.prototype.searchdistric = function (event) {
         var _this = this;
         this.searchdist = event;
@@ -287,7 +312,6 @@ var MeetingPage = /** @class */ (function () {
             _this.searchevents = [];
             if (res.status == 200) {
                 _this.setFilteredEvents(res.data);
-                console.log(_this.searchevents);
             }
             else {
                 alert('server down');
@@ -503,7 +527,7 @@ var MeetingPage = /** @class */ (function () {
     };
     MeetingPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-meeting',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\meeting\meeting.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="font-family:ramabhadra ;text-align: center;"><b> ఆంధ్రలో జరగబోయే క్రైస్తవ మీటింగ్స్ </b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n  <!-- <h4 style="text-align:center;font-weight: 800;">ఆంధ్ర రాష్ట్రంలోని రాబోయే క్రైస్తవ మీటింగ్స్</h4> -->\n\n  <ion-searchbar (click)="onSearch()" *ngIf="fromshow==1"></ion-searchbar>\n\n\n\n  <form [formGroup]="meetingfrom" class="form-container" *ngIf="fromshow==2">\n\n    <ion-row>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>మీ కూటముల టైపు ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="mettingtype" >\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option value="ఉజ్జీవ">ఉజ్జీవ కూటములు</ion-option>\n\n            <ion-option value="సువార్త కూటములు">సువార్త కూటములు</ion-option>\n\n            <ion-option value="ఉపవాస కూటములు">ఉపవాస కూటములు</ion-option>\n\n            <ion-option value="స్వస్థత కూటములు">స్వస్థత కూటములు</ion-option>\n\n            <ion-option value="ఉజ్జీవ స్వస్థత కూటములు">ఉజ్జీవ స్వస్థత కూటములు</ion-option>\n\n            <ion-option value="వార్షికోత్సవ కూటములు">వార్షికోత్సవ కూటములు</ion-option>\n\n            <ion-option value="కృతజ్ఞత స్తుతి కూటములు">కృతజ్ఞత స్తుతి కూటములు</ion-option>\n\n            <ion-option value="ప్రవచన విడుదల కూటములు">ప్రవచన విడుదల కూటములు</ion-option>\n\n            <ion-option value="యూత్ మీటింగ్స్">యూత్ మీటింగ్స్</ion-option>\n\n            <ion-option value="క్రైస్తవ నాయకుల కూటములు">క్రైస్తవ నాయకుల కూటములు</ion-option>\n\n            <ion-option value="స్త్రీల కూటములు">స్త్రీల కూటములు</ion-option>\n\n            <ion-option value="పాస్టర్ ఫెలోషిప్ కూటములు">పాస్టర్ ఫెలోషిప్ కూటములు</ion-option>\n\n            <ion-option value="క్రైస్తవ పిల్లల కూటములు">క్రైస్తవ పిల్లల కూటములు</ion-option>\n\n            <ion-option value="క్రైస్తవ బుక్స్ ఎక్సిబిషన్">క్రైస్తవ బుక్స్ ఎక్సిబిషన్</ion-option>\n\n            <ion-option value="క్రైస్తవ సంగీత కూటములు">క్రైస్తవ సంగీత కూటములు</ion-option>\n\n            <ion-option value="ఇతర కూటములు">ఇతర కూటములు</ion-option>\n\n            </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>మీ డినామినేషన్ మోడల్ ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="denomation_id" >\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option value="{{item.id}}" *ngFor="let item of denomation">\n\n              {{item.denomation_name}}\n\n            </ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <!-- <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>సెలెక్ట్ మినిస్ట్రీ</ion-label>\n\n          <ion-select formControlName="ministry_id" >\n\n            <ion-option value="" disabled selected>సెలెక్ట్ మినిస్ట్రీ</ion-option>\n\n            <ion-option *ngFor="let i of ministryname" [value]="i.id">{{i.ministryname}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col> -->\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label> సమావేశం తేదీ</ion-label>\n\n          <ion-input type="date" formControlName="startdate" [min]="now" (ionChange)="onDateChange($event)"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>జిల్లాను ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="district_id" (ionChange)="getconstency($event)"\n\n            >\n\n            <ion-option value="" disabled selected>జిల్లాను ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>నియోజకవర్గంను ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="constenncy_id" (ionChange)="getmandals($event)">\n\n            <ion-option value="" disabled selected>నియోజకవర్గంను ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>మండలం / మున్సిపాలిటీని ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="mandal_id" (ionChange)="gepanchayati($event)" >\n\n            <ion-option value="" disabled selected>మండలం / మున్సిపాలిటీని ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked> పంచాయతీ / వార్డుని ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="panchayati_id">\n\n            <ion-option value="" disabled selected> పంచాయతీ / వార్డుని ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <button ion-button block (click)="search()">సెర్చ్ చేయండి</button>\n\n      </ion-col>\n\n      <ion-col col-6 style="text-align: center;">\n\n        <button ion-button block (click)="reset()">రీసెట్ సెర్చ్ ఆప్షన్స్</button>\n\n      </ion-col>\n\n      <ion-col col-6 style="text-align: center;">\n\n        <button ion-button block (click)="hidefrom()">క్లోజ్ సెర్చ్ ఆప్షన్</button>\n\n      </ion-col>\n\n      \n\n    </ion-row>\n\n  </form>\n\n\n\n  <ion-row class="card-row">\n\n    <ion-col col-12 *ngFor="let item of searchevents" class="card-col">\n\n      <ion-card class="custom-card">\n\n        <ion-card-header>\n\n          <div class="card-image" (click)="tester(item.image)"  >\n\n            <img *ngIf="item.image" [src]="item.image" alt="Image" class="card-img">\n\n          </div>\n\n        </ion-card-header>\n\n        <ion-card-content>\n\n          <p>మీటింగ్ ప్రారంభ తేదీ: <strong>{{ item.startdate | date }}</strong></p>\n\n          <p>మీటింగ్ చివర తేదీ: <strong>{{ item.enddate | date }}</strong></p>\n\n          <p><b>మీటింగ్ టైపు: {{ item.eventname }} </b></p>\n\n           <!-- <p><b>మీటింగ్ టైపు: {{ item.distrct_nm }} </b></p>  -->\n\n          <!-- <ion-option *ngFor="let item of districts" [value]="districts">{{item.distrct_nm}}</ion-option> -->\n\n\n\n          <ion-buttons class="card-buttons">\n\n            <ng-container >\n\n              <a ion-button *ngIf="item.location" [href]="item.location">\n\n                <ion-icon name="pin"></ion-icon>\n\n              </a>\n\n              <a ion-button *ngIf="item.youtube" [href]="item.youtube">\n\n                <ion-icon name="logo-youtube"></ion-icon>\n\n              </a>\n\n              <a ion-button *ngIf="item.facebook" [href]="item.facebook">\n\n                <ion-icon name="logo-facebook"></ion-icon>\n\n              </a>\n\n              <a ion-button *ngIf="item.eventcontactnumber" [href]="\'tel:+91\' + item.eventcontactnumber">\n\n                <ion-icon name="call"></ion-icon>\n\n              </a>\n\n            </ng-container>\n\n          </ion-buttons>\n\n          <p *ngIf="item.showMore"><b>{{ item.description }}</b></p>\n\n          <button ion-button (click)="item.showMore = !item.showMore" color="danger" *ngIf="!item.showMore">\n\n            మరింత సమాచారం\n\n          </button>\n\n          <button ion-button (click)="item.showMore = !item.showMore" color="danger" *ngIf="item.showMore">\n\n            తక్కువ సమాచారం చూపించు\n\n          </button>\n\n        </ion-card-content>\n\n      </ion-card>\n\n    </ion-col>\n\n  </ion-row>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\meeting\meeting.html"*/,
+            selector: 'page-meeting',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\meeting\meeting.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="font-family:ramabhadra ;text-align: center;"><b> ఆంధ్రలో జరగబోయే క్రైస్తవ మీటింగ్స్ </b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n  <!-- <h4 style="text-align:center;font-weight: 800;">ఆంధ్ర రాష్ట్రంలోని రాబోయే క్రైస్తవ మీటింగ్స్</h4> -->\n\n  <ion-searchbar (click)="onSearch()" *ngIf="fromshow==1"></ion-searchbar>\n\n\n\n  <form [formGroup]="meetingfrom" class="form-container" *ngIf="fromshow==2">\n\n    <ion-row>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>మీ కూటముల టైపు ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="mettingtype" >\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option value="ఉజ్జీవ">ఉజ్జీవ కూటములు</ion-option>\n\n            <ion-option value="సువార్త కూటములు">సువార్త కూటములు</ion-option>\n\n            <ion-option value="ఉపవాస కూటములు">ఉపవాస కూటములు</ion-option>\n\n            <ion-option value="స్వస్థత కూటములు">స్వస్థత కూటములు</ion-option>\n\n            <ion-option value="ఉజ్జీవ స్వస్థత కూటములు">ఉజ్జీవ స్వస్థత కూటములు</ion-option>\n\n            <ion-option value="వార్షికోత్సవ కూటములు">వార్షికోత్సవ కూటములు</ion-option>\n\n            <ion-option value="కృతజ్ఞత స్తుతి కూటములు">కృతజ్ఞత స్తుతి కూటములు</ion-option>\n\n            <ion-option value="ప్రవచన విడుదల కూటములు">ప్రవచన విడుదల కూటములు</ion-option>\n\n            <ion-option value="యూత్ మీటింగ్స్">యూత్ మీటింగ్స్</ion-option>\n\n            <ion-option value="క్రైస్తవ నాయకుల కూటములు">క్రైస్తవ నాయకుల కూటములు</ion-option>\n\n            <ion-option value="స్త్రీల కూటములు">స్త్రీల కూటములు</ion-option>\n\n            <ion-option value="పాస్టర్ ఫెలోషిప్ కూటములు">పాస్టర్ ఫెలోషిప్ కూటములు</ion-option>\n\n            <ion-option value="క్రైస్తవ పిల్లల కూటములు">క్రైస్తవ పిల్లల కూటములు</ion-option>\n\n            <ion-option value="క్రైస్తవ బుక్స్ ఎక్సిబిషన్">క్రైస్తవ బుక్స్ ఎక్సిబిషన్</ion-option>\n\n            <ion-option value="క్రైస్తవ సంగీత కూటములు">క్రైస్తవ సంగీత కూటములు</ion-option>\n\n            <ion-option value="ఇతర కూటములు">ఇతర కూటములు</ion-option>\n\n            </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>మీ డినామినేషన్ మోడల్ ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="denomation_id" >\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option value="{{item.id}}" *ngFor="let item of denomation">\n\n              {{item.denomation_name}}\n\n            </ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <!-- <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>సెలెక్ట్ మినిస్ట్రీ</ion-label>\n\n          <ion-select formControlName="ministry_id" >\n\n            <ion-option value="" disabled selected>సెలెక్ట్ మినిస్ట్రీ</ion-option>\n\n            <ion-option *ngFor="let i of ministryname" [value]="i.id">{{i.ministryname}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col> -->\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label> సమావేశం తేదీ</ion-label>\n\n          <ion-input type="date" formControlName="startdate" [min]="now" (ionChange)="onDateChange($event)"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>రాష్ట్రం / State</ion-label>\n\n          <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">\n\n            <ion-option value="1">Andhra Pradesh</ion-option>\n\n            <ion-option value="2">Telangana</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>జిల్లాను ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="district_id" (ionChange)="getconstency($event)"\n\n            >\n\n            <ion-option value="" disabled selected>జిల్లాను ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>నియోజకవర్గంను ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="constenncy_id" (ionChange)="getmandals($event)">\n\n            <ion-option value="" disabled selected>నియోజకవర్గంను ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked>మండలం / మున్సిపాలిటీని ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="mandal_id" (ionChange)="gepanchayati($event)" >\n\n            <ion-option value="" disabled selected>మండలం / మున్సిపాలిటీని ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <ion-item>\n\n          <ion-label stacked> పంచాయతీ / వార్డుని ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="panchayati_id">\n\n            <ion-option value="" disabled selected> పంచాయతీ / వార్డుని ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 col-md-6>\n\n        <button ion-button block (click)="search()">సెర్చ్ చేయండి</button>\n\n      </ion-col>\n\n      <ion-col col-6 style="text-align: center;">\n\n        <button ion-button block (click)="reset()">రీసెట్ సెర్చ్ ఆప్షన్స్</button>\n\n      </ion-col>\n\n      <ion-col col-6 style="text-align: center;">\n\n        <button ion-button block (click)="hidefrom()">క్లోజ్ సెర్చ్ ఆప్షన్</button>\n\n      </ion-col>\n\n\n\n    </ion-row>\n\n  </form>\n\n\n\n  <ion-row class="card-row">\n\n    <ion-col col-12 *ngFor="let item of searchevents" class="card-col">\n\n      <ion-card class="custom-card">\n\n        <ion-card-header>\n\n          <div class="card-image" (click)="tester(item.image)"  >\n\n            <img *ngIf="item.image" [src]="item.image" alt="Image" class="card-img">\n\n          </div>\n\n        </ion-card-header>\n\n        <ion-card-content>\n\n          <p>మీటింగ్ ప్రారంభ తేదీ: <strong>{{ item.startdate | date }}</strong></p>\n\n          <p>మీటింగ్ చివర తేదీ: <strong>{{ item.enddate | date }}</strong></p>\n\n          <p><b>మీటింగ్ టైపు: {{ item.eventname }} </b></p>\n\n           <!-- <p><b>మీటింగ్ టైపు: {{ item.distrct_nm }} </b></p>  -->\n\n          <!-- <ion-option *ngFor="let item of districts" [value]="districts">{{item.distrct_nm}}</ion-option> -->\n\n\n\n          <ion-buttons class="card-buttons">\n\n            <ng-container >\n\n              <a ion-button *ngIf="item.location" [href]="item.location">\n\n                <ion-icon name="pin"></ion-icon>\n\n              </a>\n\n              <a ion-button *ngIf="item.youtube" [href]="item.youtube">\n\n                <ion-icon name="logo-youtube"></ion-icon>\n\n              </a>\n\n              <a ion-button *ngIf="item.facebook" [href]="item.facebook">\n\n                <ion-icon name="logo-facebook"></ion-icon>\n\n              </a>\n\n              <a ion-button *ngIf="item.eventcontactnumber" [href]="\'tel:+91\' + item.eventcontactnumber">\n\n                <ion-icon name="call"></ion-icon>\n\n              </a>\n\n            </ng-container>\n\n          </ion-buttons>\n\n          <p *ngIf="item.showMore"><b>{{ item.description }}</b></p>\n\n          <button ion-button (click)="item.showMore = !item.showMore" color="danger" *ngIf="!item.showMore">\n\n            మరింత సమాచారం\n\n          </button>\n\n          <button ion-button (click)="item.showMore = !item.showMore" color="danger" *ngIf="item.showMore">\n\n            తక్కువ సమాచారం చూపించు\n\n          </button>\n\n        </ion-card-content>\n\n      </ion-card>\n\n    </ion-col>\n\n  </ion-row>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\meeting\meeting.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__providers_service_service__["a" /* ServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ModalController */]])
     ], MeetingPage);

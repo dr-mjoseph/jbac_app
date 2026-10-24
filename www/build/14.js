@@ -1,6 +1,6 @@
 webpackJsonp([14],{
 
-/***/ 446:
+/***/ 453:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SearchhousePageModule", function() { return SearchhousePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__searchhouse__ = __webpack_require__(498);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__searchhouse__ = __webpack_require__(509);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,7 +38,7 @@ var SearchhousePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 498:
+/***/ 509:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -91,50 +91,32 @@ var SearchhousePage = /** @class */ (function () {
             panchayati_id: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
         });
     }
-        SearchhousePage.prototype.onStateChange = function (event) {
-        var stateId = (event && event.target) ? event.target.value : event;
-        if (this.searchdist !== undefined) this.searchdist = '';
-        if (this.searchconts !== undefined) this.searchconts = '';
-        var patchObj = { state_id: stateId };
-        patchObj['district_id'] = '';
-        var f = this.form || this.serachMeetingform || this.jobsadding || this.studentform || this.searchdenomation || this.ministryform;
-        if (f) { f.patchValue(patchObj); }
+    SearchhousePage.prototype.callNumber = function (num) {
+        if (num) {
+            window.open('tel:' + num, '_system');
+        }
+    };
+    SearchhousePage.prototype.onStateChange = function (event) {
+        var _this = this;
+        var stateId = event;
+        this.serachMeetingform.patchValue({
+            state_id: stateId,
+            district_id: '',
+            constenncy_id: '',
+            mandal_id: '',
+            panchayati_id: ''
+        });
         this.districts = [];
         this.constituency = [];
         this.mandals = [];
         this.panchayati = [];
-        var _this = this;
         this.service.getdistrict(stateId).subscribe(function (res) {
             if (res && res.status == 200) {
                 _this.districts = res.data;
             }
-        }, function (error) {
-            console.log(error);
         });
-        if (this.getjobs) {
-            if (stateId && this.service.searchjobswise) {
-                this.service.searchjobswise({ state_id: stateId }).subscribe(function (res) {
-                    if (res && res.status == 200 && Array.isArray(res.data)) {
-                        _this.jobs = res.data;
-                    }
-                });
-            } else {
-                this.getjobs();
-            }
-        }
-        if (this.defaultdata) {
-            if (stateId && this.service.getorganizations) {
-                this.service.getorganizations({ state_id: stateId }).subscribe(function (res) {
-                    if (res && res.status == 200 && Array.isArray(res.data)) {
-                        _this.marriagedata = res.data.map(function (item) { return Object.assign({}, item, { showMore: false }); });
-                    }
-                });
-            } else {
-                this.defaultdata();
-            }
-        }
     };
-SearchhousePage.prototype.ionViewDidLoad = function () {
+    SearchhousePage.prototype.ionViewDidLoad = function () {
         this.getdistric();
         this.searechevents();
         this.getdenomations();
@@ -411,7 +393,7 @@ SearchhousePage.prototype.ionViewDidLoad = function () {
     };
     SearchhousePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-searchhouse',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\searchhouse\searchhouse.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>Search Business / Rent</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n\n\n  <ion-searchbar (click)="onSearch()" *ngIf="fromshow==1"></ion-searchbar>\n\n\n\n  <form [formGroup]="searchdenomation" *ngIf="fromshow==2">\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="type" (ionChange)="searchchange($event)">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option value="Sales">అమ్మకాయ</ion-option>\n\n            <ion-option value="Purchase">కొనుగోలు</ion-option>\n\n            <ion-option value="Rent">అద్దె</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>డెనమినేషన్‌లను ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="denomation" (ionChange)="searchdenomationdata($event)"\n\n            style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of denomation" [value]="item.id">{{item.denomation_name}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>ఫ్లాట్‌ల రకాలు</ion-label>\n\n          <ion-select formControlName="title" (ionChange)="searchspeak($event)">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option value="1bhk">1BHK</ion-option>\n\n            <ion-option value="2bhk">2BHK</ion-option>\n\n            <ion-option value="3bhk">3BHK</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మంత్రిస్థానం ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="ministry_id" (ionChange)="ministry($event)" style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let i of ministryname" [value]="i.ministryname">{{i.ministryname}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n    </ion-row>\n\n  </form>\n\n\n\n  <form [formGroup]="serachMeetingform" *ngIf="fromshow==2">\n\n    <ion-row>\n\n      <ion-col col-12>\n\n          <ion-item>\n\n            <ion-label stacked>రాష్ట్రం / State</ion-label>\n\n            <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">\n\n              <ion-option value="">అన్నీ (All States)</ion-option>\n\n              <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>\n\n              <ion-option value="2">తెలంగాణ (TG)</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>జిల్లాలను ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="district_id" (ionChange)="getconstency($event)"\n\n            (ionChange)="searchdistric($event)" style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>జిల్లా ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మండలాను ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="constenncy_id" (ionChange)="getmandals($event)"\n\n            (ionChange)="searchconstenct($event)" style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మండలాలను ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="mandal_id" (ionChange)="gepanchayati($event)" (ionChange)="searchmandals($event)"\n\n            style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>మండలo ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>పంచాయితీలను ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="panchayati_id" style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>పంచాయితీ ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 style="text-align: center;">\n\n        <button ion-button type="submit" color="secondary" (click)="search()"\n\n          class="default-btn user-all-btn"><b>వెతకండి</b></button>\n\n      </ion-col>\n\n    </ion-row>\n\n  </form>\n\n\n\n  <ion-row>\n\n    <ion-col col-12 *ngFor="let item of searchevents">\n\n      <div class="flex justify-center items-center h-screen">\n\n        <div class="main">\n\n          <ion-list>\n\n            <ion-item>\n\n              <ion-card (click)="openimg(item.image,openmodel)">\n\n                <img *ngIf="!item.image || item.image == \'\'" src="../../../assets/images/no.jpg">\n\n                <img *ngIf="item.image" [src]="item.image" style="width:212px;height:250px;">\n\n                <ion-card-content>\n\n                  <p>రకం: <strong>{{item.type}}</strong></p>\n\n                  <p>శీర్షిక: <strong>{{item.title}}</strong></p>\n\n                  <p><b>చిరునామా: {{item.address}}</b></p>\n\n                  <button ion-button fill="clear" (click)="callNumber(\'+91\' + item.number)">\n\n                    <img src="assets/images/phone.png" style="width:45px;">\n\n                  </button>\n\n                  <br>\n\n                  <p *ngIf="item.showMore"><b>{{item.description}}</b></p>\n\n                  <button ion-button fill="clear" (click)="item.showMore = !item.showMore" *ngIf="!item.showMore"\n\n                    color="danger">\n\n                    <b>మరింత చూపు</b>\n\n                  </button>\n\n                  <button ion-button fill="clear" (click)="item.showMore = !item.showMore" *ngIf="item.showMore"\n\n                    color="danger">\n\n                    <b>కనిపించు లేదు</b>\n\n                  </button>\n\n                </ion-card-content>\n\n              </ion-card>\n\n            </ion-item>\n\n          </ion-list>\n\n        </div>\n\n      </div>\n\n    </ion-col>\n\n  </ion-row>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\searchhouse\searchhouse.html"*/,
+            selector: 'page-searchhouse',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\searchhouse\searchhouse.html"*/'﻿<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>Search Business / Rent</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n\n\n  <ion-searchbar (click)="onSearch()" *ngIf="fromshow==1"></ion-searchbar>\n\n\n\n  <form [formGroup]="searchdenomation" *ngIf="fromshow==2">\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="type" (ionChange)="searchchange($event)">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option value="Sales">అమ్మకాయ</ion-option>\n\n            <ion-option value="Purchase">కొనుగోలు</ion-option>\n\n            <ion-option value="Rent">అద్దె</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>డెనమినేషన్‌లను ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="denomation" (ionChange)="searchdenomationdata($event)"\n\n            style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of denomation" [value]="item.id">{{item.denomation_name}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>ఫ్లాట్‌ల రకాలు</ion-label>\n\n          <ion-select formControlName="title" (ionChange)="searchspeak($event)">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option value="1bhk">1BHK</ion-option>\n\n            <ion-option value="2bhk">2BHK</ion-option>\n\n            <ion-option value="3bhk">3BHK</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మంత్రిస్థానం ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="ministry_id" (ionChange)="ministry($event)" style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let i of ministryname" [value]="i.ministryname">{{i.ministryname}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n    </ion-row>\n\n  </form>\n\n\n\n  <form [formGroup]="serachMeetingform" *ngIf="fromshow==2">\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>రాష్ట్రం / State</ion-label>\n\n          <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">\n\n            <ion-option value="">అన్నీ (All States)</ion-option>\n\n            <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>\n\n            <ion-option value="2">తెలంగాణ (TG)</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>జిల్లాలను ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="district_id" (ionChange)="getconstency($event)"\n\n            (ionChange)="searchdistric($event)" style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>జిల్లా ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మండలాను ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="constenncy_id" (ionChange)="getmandals($event)"\n\n            (ionChange)="searchconstenct($event)" style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మండలాలను ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="mandal_id" (ionChange)="gepanchayati($event)" (ionChange)="searchmandals($event)"\n\n            style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>మండలo ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>పంచాయితీలను ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="panchayati_id" style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>పంచాయితీ ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 style="text-align: center;">\n\n        <button ion-button type="submit" color="secondary" (click)="search()"\n\n          class="default-btn user-all-btn"><b>వెతకండి</b></button>\n\n      </ion-col>\n\n    </ion-row>\n\n  </form>\n\n\n\n  <ion-row>\n\n    <ion-col col-12 *ngFor="let item of searchevents">\n\n      <div class="flex justify-center items-center h-screen">\n\n        <div class="main">\n\n          <ion-list>\n\n            <ion-item>\n\n              <ion-card (click)="openimg(item.image,openmodel)">\n\n                <img *ngIf="!item.image || item.image == \'\'" src="../../../assets/images/no.jpg">\n\n                <img *ngIf="item.image" [src]="item.image" style="width:212px;height:250px;">\n\n                <ion-card-content>\n\n                  <p>రకం: <strong>{{item.type}}</strong></p>\n\n                  <p>శీర్షిక: <strong>{{item.title}}</strong></p>\n\n                  <p><b>చిరునామా: {{item.address}}</b></p>\n\n                  <button ion-button fill="clear" (click)="callNumber(\'+91\' + item.number)">\n\n                    <img src="assets/images/phone.png" style="width:45px;">\n\n                  </button>\n\n                  <br>\n\n                  <p *ngIf="item.showMore"><b>{{item.description}}</b></p>\n\n                  <button ion-button fill="clear" (click)="item.showMore = !item.showMore" *ngIf="!item.showMore"\n\n                    color="danger">\n\n                    <b>మరింత చూపు</b>\n\n                  </button>\n\n                  <button ion-button fill="clear" (click)="item.showMore = !item.showMore" *ngIf="item.showMore"\n\n                    color="danger">\n\n                    <b>కనిపించు లేదు</b>\n\n                  </button>\n\n                </ion-card-content>\n\n              </ion-card>\n\n            </ion-item>\n\n          </ion-list>\n\n        </div>\n\n      </div>\n\n    </ion-col>\n\n  </ion-row>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\searchhouse\searchhouse.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["s" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__providers_service_service__["a" /* ServiceProvider */]])
     ], SearchhousePage);

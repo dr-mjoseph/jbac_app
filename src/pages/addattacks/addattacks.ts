@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { ActionSheetController, IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
 // import { HomePage } from '../home/home';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -18,9 +18,10 @@ export class AddattacksPage {
 
   imagesData: any = []
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public camera: Camera, public actionSheetCtrl: ActionSheetController, public formBuilder: FormBuilder, public service: ServiceProvider , private loadingCtrl: LoadingController ) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public camera: Camera, public actionSheetCtrl: ActionSheetController, public formBuilder: FormBuilder, public service: ServiceProvider , private loadingCtrl: LoadingController, public zone: NgZone ) {
 
     this.form = this.formBuilder.group({
+      state_id: ['1'],
       image: [''],
       videoa: [''],
       videob: [''],
@@ -40,9 +41,31 @@ export class AddattacksPage {
       constituency_id: ['', [Validators.required]],
       mandal_id: ['', [Validators.required]],
       village_id: ['', [Validators.required]],
-      term: ['', [Validators.required]]
+      term: [true, [Validators.required]]
     })
-    this.form.reset();
+  }
+
+  triggerFileInput() {
+    const fileInput = document.getElementById('attackFileInput') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
+    }
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.zone.run(() => {
+          this.imagesData.push({
+            reviewImg: e.target.result,
+            filetype: file.type || 'image/jpeg'
+          });
+        });
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
   async openphoto() {
@@ -51,7 +74,6 @@ export class AddattacksPage {
         {
           icon: 'ios-folder-open',
           text: 'Gallery',
-          role: 'destructive',
           handler: () => {
             const options: CameraOptions = {
               quality: 70,
@@ -60,13 +82,16 @@ export class AddattacksPage {
               saveToPhotoAlbum: false
             }
             this.camera.getPicture(options).then((imaged) => {
-              var ing = `data:image/jpeg;base64,` + imaged;
-              var imagedata = {
-                reviewImg: ing,
-                filetype: 'jpeg',
-              }
-              this.imagesData.push(imagedata);
+              this.zone.run(() => {
+                var ing = `data:image/jpeg;base64,` + imaged;
+                var imagedata = {
+                  reviewImg: ing,
+                  filetype: 'jpeg',
+                }
+                this.imagesData.push(imagedata);
+              });
             }, (err) => {
+              this.triggerFileInput();
             });
           }
         }, {
@@ -81,14 +106,16 @@ export class AddattacksPage {
               mediaType: this.camera.MediaType.PICTURE
             }
             this.camera.getPicture(options).then((imageD) => {
-              var img = `data:image/jpeg;base64,` + imageD;
-              var imagedata = {
-                reviewImg: img,
-                filetype: 'jpeg',
-              }
-              console.log(imagedata);
-              this.imagesData.push(imagedata);
+              this.zone.run(() => {
+                var img = `data:image/jpeg;base64,` + imageD;
+                var imagedata = {
+                  reviewImg: img,
+                  filetype: 'jpeg',
+                }
+                this.imagesData.push(imagedata);
+              });
             }, (err) => {
+              this.triggerFileInput();
             });
           }
         }, {
@@ -100,7 +127,7 @@ export class AddattacksPage {
         }
       ]
     });
-    (await actionSheet).present();
+    actionSheet.present();
   }
 
 
@@ -112,6 +139,26 @@ export class AddattacksPage {
 
   ionViewDidLoad() {
     this.getdistric();
+  }
+
+  onStateChange(event: any) {
+    var stateId = event;
+    this.form.patchValue({
+      state_id: stateId,
+      district_id: '',
+      constituency_id: '',
+      mandal_id: '',
+      village_id: ''
+    });
+    this.districts = [];
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    this.service.getdistrict(stateId).subscribe((res: any) => {
+      if (res && res.status == 200) {
+        this.districts = res.data;
+      }
+    });
   }
 
   getdistric() {
@@ -126,8 +173,31 @@ export class AddattacksPage {
     })
   }
 
+  getconstency(event: any) {
+    var id = event;
+    this.form.patchValue({
+      constituency_id: '',
+      mandal_id: '',
+      village_id: ''
+    });
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    if (!id) return;
+    this.service.getconsistencys().subscribe((res: any) => {
+      this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
+    });
+  }
+
   getmandals(event: any) {
     var id = event;
+    this.form.patchValue({
+      mandal_id: '',
+      village_id: ''
+    });
+    this.mandals = [];
+    this.panchayati = [];
+    if (!id) return;
     this.service.getmandals().subscribe((res: any) => {
       if (res.status == 202) {
         alert(res.message);
@@ -139,15 +209,13 @@ export class AddattacksPage {
     })
   }
 
-  getconstency(event: any) {
-    var id = event;
-    this.service.getconsistencys().subscribe((res: any) => {
-      this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
-    });
-  }
-
   gepanchayati(event: any) {
     var id = event;
+    this.form.patchValue({
+      village_id: ''
+    });
+    this.panchayati = [];
+    if (!id) return;
     this.service.gepanchayatis().subscribe((res: any) => {
       if (res.status == 202) {
         alert(res.message);
@@ -268,7 +336,7 @@ export class AddattacksPage {
       this.form.value.usernumber = localStorage.getItem('mobile_number')
 
       console.log(this.form.value);
-      
+
       this.service.postattacks(this.form.value).subscribe((res: any) => {
         if (res.status == 200) {
           alert('విజయవంతముగా సబ్మిట్ అయింది')

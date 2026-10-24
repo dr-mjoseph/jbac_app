@@ -1,6 +1,6 @@
 webpackJsonp([4],{
 
-/***/ 440:
+/***/ 434:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NewsViewPageModule", function() { return NewsViewPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__news_view__ = __webpack_require__(492);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__news_view__ = __webpack_require__(488);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,7 +38,7 @@ var NewsViewPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 458:
+/***/ 460:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -84,7 +84,7 @@ var ModalpagePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 492:
+/***/ 488:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -92,7 +92,7 @@ var ModalpagePage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(128);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modalpage_modalpage__ = __webpack_require__(458);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modalpage_modalpage__ = __webpack_require__(460);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -119,6 +119,7 @@ var NewsViewPage = /** @class */ (function () {
         this.navParams = navParams;
         this.service = service;
         this.modalCtrl = modalCtrl;
+        this.selectedCategory = '0';
     }
     NewsViewPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad NewsViewPage');
@@ -138,18 +139,23 @@ var NewsViewPage = /** @class */ (function () {
         });
     };
     NewsViewPage.prototype.getfilter = function (event) {
-        console.log(event);
-        if (event == 0) {
-            this.getnews();
+        console.log('Filtering news by:', event);
+        if (!this.allsearchnews)
+            return;
+        if (event == '0' || event == 0 || !event) {
+            this.searchnews = this.allsearchnews.slice();
         }
         else {
-            this.searchnews = this.allsearchnews.filter(function (item) { return item.news === event; });
+            var selected_1 = String(event).trim().toLowerCase();
+            this.searchnews = this.allsearchnews.filter(function (item) {
+                if (!item || !item.news)
+                    return false;
+                var cat = String(item.news).trim().toLowerCase();
+                return cat === selected_1 || cat.includes(selected_1) || selected_1.includes(cat);
+            });
         }
         if (this.searchnews.length == 0) {
             alert('ఈ క్యాటగిరీకి సంబంధించిన డేటా లేదు');
-        }
-        else {
-            alert('సర్వర్ డౌన్ వుంది');
         }
     };
     NewsViewPage.prototype.toggleDescription = function () {
@@ -164,7 +170,7 @@ var NewsViewPage = /** @class */ (function () {
     };
     NewsViewPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-news-view',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\news-view\news-view.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;font-size: 20px;font-family:ramabhadra;"><b>JBAC: వార్తలు &\n\n        ప్రకటనలు</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n\n\n  <ion-item>\n\n    <ion-label stacked>సెలెక్ట్ న్యూస్<span style="color:red; font-family:ramabhadra;">*</span></ion-label>\n\n    <ion-select (ionChange)="getfilter($event)">\n\n      <ion-option value="" selected disabled>కేటగిరీ ఎంచుకోండి</ion-option>\n\n      <ion-option value="0">అన్ని వార్తలు</ion-option>\n\n      <ion-option value="క్రైస్తవుల మీద దాడులు">క్రైస్తవుల మీద దాడులు సంబంధించిన న్యూస్</ion-option>\n\n      <ion-option value="గౌరవ వేతనం, ప్రభుత్వ పథకాలు సంబంధించిన న్యూస్">గౌరవ వేతనం, ప్రభుత్వ పథకాలు సంబంధించిన న్యూస్</ion-option>\n\n      <ion-option value="క్రైస్తవులకు సంబంధించిన న్యూస్">క్రైస్తవులకు సంబంధించిన న్యూస్</ion-option>\n\n      <ion-option value="జనరల్ న్యూస్">జనరల్ న్యూస్</ion-option>   \n\n      <ion-option value="దళిత్ క్రిస్టియన్స్ షెడ్యూల్ కాస్ట్ స్టేటస్ న్యూస్">దళిత్ క్రిస్టియన్స్ షెడ్యూల్ కాస్ట్ స్టేటస్ న్యూస్</ion-option>      \n\n      <ion-option value="చదువుకి సంబంధించి">చదువుకి సంబంధించి</ion-option>\n\n      <ion-option value="ట్రైనింగ్ కి సంబంధించి">ట్రైనింగ్ కి సంబంధించి</ion-option>\n\n      <ion-option value="ఉద్యోగాలకు సంబంధించి">ఉద్యోగాలకు సంబంధించి</ion-option>\n\n      <ion-option value="ఆరోగ్యం కి సంబంధించి">ఆరోగ్యం కి సంబంధించి</ion-option>\n\n      <ion-option value="సమాజం లోని సమస్యలు కి సంబంధించి న్యూస్">సమాజం లోని సమస్యలు కి సంబంధించి న్యూస్</ion-option>\n\n      <ion-option value="డా|| జోసెఫ్ గారి వార్తలు">డా|| జోసెఫ్ గారి వార్తలు</ion-option>\n\n    </ion-select>\n\n  </ion-item>\n\n\n\n  <ion-row class="card-row">\n\n\n\n    <ion-col col-12 *ngFor="let item of searchnews" class="card-col">\n\n      <ion-card class="custom-card" style="border-radius: 10px;">\n\n        <ion-card-header>\n\n          <div class="card-image">\n\n            <img style="border-radius: 8px;" *ngIf="item.image" [src]="item.image" alt="Image" class="card-img"\n\n              (click)="openImage(item.image)">\n\n          </div>\n\n        </ion-card-header>\n\n        <ion-card-content style="text-transform: capitalize;font-size: 20px;font-family:ramabhadra;">\n\n          <p style="font-size: 20px;font-family:ramabhadra;">వివరణ: <strong>\n\n              {{ showFullDescription ? item.description : (item.description | slice:0:100) }}\n\n              {{ item.description.length > 100 && !showFullDescription ? \'...\' : \'\' }}\n\n            </strong></p>\n\n          <p *ngIf="item.description.length > 100">\n\n            <button (click)="toggleDescription()">\n\n              {{ showFullDescription ? \'తక్కువ సమాచారం\' : \'మరింత సమాచారం\' }}\n\n            </button>\n\n          </p>\n\n\n\n          <p style="font-size: 20px;font-family:ramabhadra;">విభాగం: <strong>{{item.news}}</strong></p>\n\n        </ion-card-content>\n\n      </ion-card>\n\n    </ion-col>\n\n\n\n  </ion-row>\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\news-view\news-view.html"*/,
+            selector: 'page-news-view',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\news-view\news-view.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;font-size: 20px;font-family:ramabhadra;"><b>JBAC: వార్తలు &\n\n        ప్రకటనలు</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n\n\n  <ion-item>\n\n    <ion-label stacked>సెలెక్ట్ న్యూస్<span style="color:red; font-family:ramabhadra;">*</span></ion-label>\n\n    <ion-select [(ngModel)]="selectedCategory" (ionChange)="getfilter($event)">\n\n      <ion-option value="" selected disabled>కేటగిరీ ఎంచుకోండి</ion-option>\n\n      <ion-option value="0">అన్ని వార్తలు</ion-option>\n\n      <ion-option value="క్రైస్తవుల మీద దాడులు">క్రైస్తవుల మీద దాడులు సంబంధించిన న్యూస్</ion-option>\n\n      <ion-option value="గౌరవ వేతనం, ప్రభుత్వ పథకాలు సంబంధించిన న్యూస్">గౌరవ వేతనం, ప్రభుత్వ పథకాలు సంబంధించిన న్యూస్</ion-option>\n\n      <ion-option value="క్రైస్తవులకు సంబంధించిన న్యూస్">క్రైస్తవులకు సంబంధించిన న్యూస్</ion-option>\n\n      <ion-option value="జనరల్ న్యూస్">జనరల్ న్యూస్</ion-option>   \n\n      <ion-option value="దళిత్ క్రిస్టియన్స్ షెడ్యూల్ కాస్ట్ స్టేటస్ న్యూస్">దళిత్ క్రిస్టియన్స్ షెడ్యూల్ కాస్ట్ స్టేటస్ న్యూస్</ion-option>      \n\n      <ion-option value="చదువుకి సంబంధించి">చదువుకి సంబంధించి</ion-option>\n\n      <ion-option value="ట్రైనింగ్ కి సంబంధించి">ట్రైనింగ్ కి సంబంధించి</ion-option>\n\n      <ion-option value="ఉద్యోగాలకు సంబంధించి">ఉద్యోగాలకు సంబంధించి</ion-option>\n\n      <ion-option value="ఆరోగ్యం కి సంబంధించి">ఆరోగ్యం కి సంబంధించి</ion-option>\n\n      <ion-option value="సమాజం లోని సమస్యలు కి సంబంధించి న్యూస్">సమాజం లోని సమస్యలు కి సంబంధించి న్యూస్</ion-option>\n\n      <ion-option value="డా|| జోసెఫ్ గారి వార్తలు">డా|| జోసెఫ్ గారి వార్తలు</ion-option>\n\n    </ion-select>\n\n  </ion-item>\n\n\n\n  <ion-row class="card-row">\n\n\n\n    <ion-col col-12 *ngFor="let item of searchnews" class="card-col">\n\n      <ion-card class="custom-card" style="border-radius: 10px;">\n\n        <ion-card-header>\n\n          <div class="card-image">\n\n            <img style="border-radius: 8px;" *ngIf="item.image" [src]="item.image" alt="Image" class="card-img"\n\n              (click)="openImage(item.image)">\n\n          </div>\n\n        </ion-card-header>\n\n        <ion-card-content style="text-transform: capitalize;font-size: 20px;font-family:ramabhadra;">\n\n          <p style="font-size: 20px;font-family:ramabhadra;" *ngIf="item.description">వివరణ: <strong>\n\n              {{ showFullDescription ? item.description : (item.description | slice:0:100) }}\n\n              {{ (item.description && item.description.length > 100 && !showFullDescription) ? \'...\' : \'\' }}\n\n            </strong></p>\n\n          <p *ngIf="item.description && item.description.length > 100">\n\n            <button (click)="toggleDescription()">\n\n              {{ showFullDescription ? \'తక్కువ సమాచారం\' : \'మరింత సమాచారం\' }}\n\n            </button>\n\n          </p>\n\n\n\n          <p style="font-size: 20px;font-family:ramabhadra;">విభాగం: <strong>{{item.news}}</strong></p>\n\n        </ion-card-content>\n\n      </ion-card>\n\n    </ion-col>\n\n\n\n  </ion-row>\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\news-view\news-view.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_service_service__["a" /* ServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ModalController */]])
     ], NewsViewPage);

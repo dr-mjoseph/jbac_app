@@ -26,7 +26,7 @@
           <ion-label stacked>కులం</ion-label>
           <ion-select formControlName="caste">
             <ion-option value="" disabled selected>కులం ఎంపిక చేయండి</ion-option>
-            
+
             <ion-option value="ఎస్సీ">ఎస్సీ</ion-option>
             <ion-option value="ఎస్టీ">ఎస్టీ</ion-option>
             <ion-option value="బిసి - ఏ">బిసి - ఏ</ion-option>
@@ -255,8 +255,20 @@
 
       <ion-col col-12>
         <ion-item>
+          <ion-label stacked>రాష్ట్రం / State <span style="color:red;">*</span></ion-label>
+          <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">
+            <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>
+            <ion-option value="2">తెలంగాణ (TG)</ion-option>
+          </ion-select>
+        </ion-item>
+        <div *ngIf="submitted && m['state_id'].errors" class="error-message">
+          <div *ngIf="m['state_id'].errors['required']">రాష్ట్రం అవసరం</div>
+        </div>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
           <ion-label stacked>జిల్లాల ఎంచుకోండి <span style="color:red;">*</span></ion-label>
-          <ion-select formControlName="districtname" [ngClass]="{'is-invalid': submitted && m['districtname'].errors }"
+          <ion-select formControlName="districtname" [disabled]="!addingmarriages.get('state_id')?.value" [ngClass]="{'is-invalid': submitted && m['districtname'].errors }"
             (ionChange)="getconstency($event)">
             <ion-option value="" selected disabled>రకము ఎంచుకోండి</ion-option>
             <ion-option *ngFor="let item of districts" [value]="item.id">{{ item.distrct_nm }}</ion-option>
@@ -270,7 +282,7 @@
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>నియోజకవర్గం ఎంచుకోండి <span style="color:red;">*</span></ion-label>
-          <ion-select formControlName="constituencyname"
+          <ion-select formControlName="constituencyname" [disabled]="!addingmarriages.get('districtname')?.value"
             [ngClass]="{'is-invalid': submitted && m['constituencyname'].errors }" (ionChange)="getmandals($event)">
             <ion-option value="" selected disabled>నియోజకవర్గం ఎంచుకోండి</ion-option>
             <ion-option *ngFor="let item of constituency" [value]="item.id">{{ item.const_nm }}</ion-option>
@@ -284,7 +296,7 @@
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>మండలం ఎంచుకోండి <span style="color:red;">*</span></ion-label>
-          <ion-select formControlName="mandals" [ngClass]="{'is-invalid': submitted && m['mandals'].errors }"
+          <ion-select formControlName="mandals" [disabled]="!addingmarriages.get('constituencyname')?.value" [ngClass]="{'is-invalid': submitted && m['mandals'].errors }"
             (ionChange)="gepanchayati($event)">
             <ion-option value="" selected disabled>రకము ఎంచుకోండి</ion-option>
             <ion-option *ngFor="let item of mandals" [value]="item.id">{{ item.mndl_nm }}</ion-option>
@@ -298,7 +310,7 @@
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>పంచాయతీల ఎంచుకోండి <span style="color:red;">*</span></ion-label>
-          <ion-select formControlName="village_name" [ngClass]="{'is-invalid': submitted && m['village_name'].errors }">
+          <ion-select formControlName="village_name" [disabled]="!addingmarriages.get('mandals')?.value" [ngClass]="{'is-invalid': submitted && m['village_name'].errors }">
             <ion-option value="" selected disabled>రకము ఎంచుకోండి</ion-option>
             <ion-option *ngFor="let item of panchayati" [value]="item.id">{{ item.pnchyt_nm }}</ion-option>
           </ion-select>

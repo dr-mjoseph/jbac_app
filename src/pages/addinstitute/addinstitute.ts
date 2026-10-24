@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { ActionSheetController, IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
 // import { HomePage } from '../home/home';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -14,7 +14,7 @@ export class AddinstitutePage {
 
   addinginsututies: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public camera: Camera, public actionSheetCtrl: ActionSheetController, public formBuilder: FormBuilder, public service: ServiceProvider,     private loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public camera: Camera, public actionSheetCtrl: ActionSheetController, public formBuilder: FormBuilder, public service: ServiceProvider, private loadingCtrl: LoadingController, public zone: NgZone) {
     this.addinginsututies = this.formBuilder.group({
       checkbox: [''],
       believer_id: [''],
@@ -28,6 +28,7 @@ export class AddinstitutePage {
       website: [''],
       image: [''],
       description: [''],
+      state_id: ['1', [Validators.required]],
       district_id: ['', [Validators.required]],
       constituency_id: ['', [Validators.required]],
       mandal_id: ['', [Validators.required]],
@@ -35,10 +36,9 @@ export class AddinstitutePage {
       location: [''],
       address: ['', [Validators.required]],
       facebook: [''],
-       // term: ['', [Validators.required]],
+      term: [true],
       ministry_id: [''],
-    })
-    this.addinginsututies.reset();
+    });
   }
 
 
@@ -57,7 +57,7 @@ export class AddinstitutePage {
   imagesdata: any = [];
   bliversdata: any
 
-  
+
   getpastorassciationas: any = [];
   pastorfilter() {
     this.service.getpastor().subscribe((res: any) => {
@@ -70,6 +70,26 @@ export class AddinstitutePage {
     this.getbeliver();
     this.getbelivers();
     this.pastorfilter();
+  }
+
+  onStateChange(event: any) {
+    var stateId = event;
+    this.addinginsututies.patchValue({
+      state_id: stateId,
+      district_id: '',
+      constituency_id: '',
+      mandal_id: '',
+      village_id: ''
+    });
+    this.districts = [];
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    this.service.getdistrict(stateId).subscribe((res: any) => {
+      if (res && res.status == 200) {
+        this.districts = res.data;
+      }
+    });
   }
 
   getbelivers() {
@@ -90,37 +110,63 @@ export class AddinstitutePage {
     })
   }
 
-  getmandals(event: any) {
-    var id = event;
-    this.service.getmandals().subscribe((res: any) => {
-      if (res.status == 202) {
-        alert(res.message);
-      } else if (res.status == 200) {
-        this.mandals = res.data.filter((data: any) => data.const_id == id);
-      }
-    }, error => {
-      console.log(error);
-    })
-  }
-
   getconstency(event: any) {
     var id = event;
-    this.service.getconsistencys().subscribe((res: any) => {
-      this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
+    this.addinginsututies.patchValue({
+      constituency_id: '',
+      mandal_id: '',
+      village_id: ''
     });
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    if (id) {
+      this.service.getconsistencys().subscribe((res: any) => {
+        if (res && res.data) {
+          this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
+        }
+      });
+    }
+  }
+
+  getmandals(event: any) {
+    var id = event;
+    this.addinginsututies.patchValue({
+      mandal_id: '',
+      village_id: ''
+    });
+    this.mandals = [];
+    this.panchayati = [];
+    if (id) {
+      this.service.getmandals().subscribe((res: any) => {
+        if (res.status == 202) {
+          alert(res.message);
+        } else if (res.status == 200) {
+          this.mandals = res.data.filter((data: any) => data.const_id == id);
+        }
+      }, error => {
+        console.log(error);
+      });
+    }
   }
 
   gepanchayati(event: any) {
     var id = event;
-    this.service.gepanchayatis().subscribe((res: any) => {
-      if (res.status == 202) {
-        alert(res.message);
-      } else if (res.status == 200) {
-        this.panchayati = res.data.filter((data: any) => data.mndl_id == id);
-      }
-    }, error => {
-      console.log(error);
-    })
+    this.addinginsututies.patchValue({
+      village_id: ''
+    });
+    this.panchayati = [];
+    if (id) {
+      this.service.gepanchayatis().subscribe((res: any) => {
+        if (res.status == 202) {
+          alert(res.message);
+        } else if (res.status == 200) {
+          this.panchayati = res.data.filter((data: any) => data.mndl_id == id);
+        }
+      }, error => {
+        console.log(error);
+      });
+    }
   }
 
   getbeliver() {
@@ -149,6 +195,29 @@ export class AddinstitutePage {
     }
   }
 
+  triggerFileInput() {
+    const input = document.getElementById('instituteFileInput') as HTMLInputElement;
+    if (input) input.click();
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.zone.run(() => {
+          this.imagesdata = [{
+            reviewimg: e.target.result,
+            filetype: 'jpeg'
+          }];
+          if (this.addinginsututies) {
+            this.addinginsututies.patchValue({ image: e.target.result });
+          }
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  }
 
   async openphoto() {
     const actionSheet = this.actionSheetCtrl.create({
@@ -156,7 +225,6 @@ export class AddinstitutePage {
         {
           icon: 'ios-folder-open',
           text: 'Gallery',
-          role: 'destructive',
           handler: () => {
             const options: CameraOptions = {
               quality: 70,
@@ -165,15 +233,20 @@ export class AddinstitutePage {
               saveToPhotoAlbum: false
             }
             this.camera.getPicture(options).then((imaged) => {
-              var ing = `data:image/jpeg;base64,` + imaged;
-              var imagedata = {
-                reviewimg: ing,
-                filetype: 'jpeg',
-              }
-              console.log(imagedata);
-              this.imagesdata = [];
-              this.imagesdata.push(imagedata);
+              this.zone.run(() => {
+                var ing = `data:image/jpeg;base64,` + imaged;
+                var imagedata = {
+                  reviewimg: ing,
+                  filetype: 'jpeg',
+                }
+                this.imagesdata = [imagedata];
+                if (this.addinginsututies) {
+                  this.addinginsututies.patchValue({ image: ing });
+                }
+              });
             }, (err) => {
+              console.log('Gallery picker error, triggering file fallback', err);
+              this.triggerFileInput();
             });
           }
         }, {
@@ -188,14 +261,20 @@ export class AddinstitutePage {
               mediaType: this.camera.MediaType.PICTURE
             }
             this.camera.getPicture(options).then((imageD) => {
-              var img = `data:image/jpeg;base64,` + imageD;
-              var imagedata = {
-                reviewimg: img,
-                filetype: 'jpeg',
-              }
-              this.imagesdata = [];
-              this.imagesdata.push(imagedata);
+              this.zone.run(() => {
+                var img = `data:image/jpeg;base64,` + imageD;
+                var imagedata = {
+                  reviewimg: img,
+                  filetype: 'jpeg',
+                }
+                this.imagesdata = [imagedata];
+                if (this.addinginsututies) {
+                  this.addinginsututies.patchValue({ image: img });
+                }
+              });
             }, (err) => {
+              console.log('Camera error, triggering file fallback', err);
+              this.triggerFileInput();
             });
           }
         }, {
@@ -207,7 +286,7 @@ export class AddinstitutePage {
         }
       ]
     });
-    (await actionSheet).present();
+    actionSheet.present();
   }
 
   belivers(inputValue: any) {
@@ -224,7 +303,7 @@ export class AddinstitutePage {
 
   submitted: boolean = false
   loading:any
-  
+
   postinsututies() {
     this.submitted = true;
     this.loading = this.loadingCtrl.create({

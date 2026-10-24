@@ -8,7 +8,7 @@ export class ServiceProvider {
 
   testApi = 'https://1a8kqxawxd.execute-api.ap-southeast-2.amazonaws.com/dashboardapi/'
 
-  
+
   // testApi = 'http://localhost:2303/dashboardapi/'
 
 
@@ -116,7 +116,7 @@ export class ServiceProvider {
   }
 
   getimages() {
-    return this.http.post(this.testApi + 'getwebsitegallery', [])
+    return this.http.get(this.testApi + 'getcatewebsitegallery')
   }
 
   postupdatenews(data: any) {
@@ -173,10 +173,6 @@ export class ServiceProvider {
 
   searchinorganizations(data: any) {
     return this.http.post(this.testApi + 'searchinorganizations', data);
-  }
-
-  getorganizations() {
-    return this.http.post(this.testApi + 'getorganizations', []);
   }
 
   postchurchmeetings(data: any) {
@@ -251,6 +247,18 @@ export class ServiceProvider {
     return this.http.post(this.testApi + 'editpastor', data);
   }
 
+  getpastor() {
+    return this.http.post(this.testApi + 'getpastorsdata', {});
+  }
+
+  getministry() {
+    return this.http.post(this.testApi + 'getministrydata', {});
+  }
+
+  getorganizations(data?: any) {
+    return this.http.post(this.testApi + 'getorganizations', data || {});
+  }
+
   getcatewebsitegallery() {
     return this.http.get(this.testApi + 'getcatewebsitegallery')
   }
@@ -284,7 +292,7 @@ export class ServiceProvider {
   }
 
   getupdatenews() {
-    return this.http.get<any>(this.testApi + `updatenewsdataa`)
+    return this.http.get<any>(this.testApi + `getnews`)
   }
 
   getchurchesdatafilters(data) {

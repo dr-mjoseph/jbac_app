@@ -37,7 +37,8 @@
       </ion-col>
       <ion-col col-12 (click)="openphoto()">
         <div class="imgerdt">
-          <img src="assets/icon/Upload.svg" style="height:70px;width:70px;">
+          <input type="file" id="helpFileInput" (change)="onFileSelected($event)" accept="image/*" style="display:none">
+          <img src="assets/icon/upload.svg" style="height:70px;width:70px;">
           చిత్రం అప్‌లోడ్ చేయండి<br><br>
           <img *ngIf="imagesdata.length" style="width:200px;height:200px" src="{{imagesdata[0].reviewimg}}">
         </div>

@@ -14,12 +14,12 @@
   <ion-row>
 
     <ion-col col-12 *ngFor="let gt of imagesget" style="text-align: center;">
-      <img style="height: 200px;" src="{{gt.image}}" (click)="gotosub(gt.id)">
+      <img style="height: 200px; max-width: 100%; object-fit: cover; border-radius: 8px;" src="{{gt.image}}" (error)="onImgError($event, gt)" (click)="gotosub(gt.id)">
       <h3 style="color:white;">{{gt.categoryname}}</h3>
     </ion-col>
 
     <ion-col col-12 style="text-align: center;">
-      <img style="height: 200px;" src="https://jbac.in/websiteimages/8058081698510916218.jpg">
+      <img style="height: 200px; max-width: 100%; object-fit: cover; border-radius: 8px;" src="https://jbac.in/websiteimages/8058081698510916218.jpg" (error)="onImgError($event, {id: 0})">
       <h3 style="color:white;">Main House</h3>
     </ion-col>
 

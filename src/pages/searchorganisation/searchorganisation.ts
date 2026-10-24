@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
@@ -159,15 +159,23 @@ export class SearchorganisationPage {
 
   getmandals(event: any) {
     var id = event;
-    this.service.getmandals().subscribe((res: any) => {
-      if (res.status == 202) {
-        alert(res.message);
-      } else if (res.status == 200) {
-        this.mandals = res.data.filter((data: any) => data.const_id == id);
-      }
-    }, error => {
-      console.log(error);
-    })
+    this.serachMeetingform.patchValue({
+      mandal_id: '',
+      panchayati_id: ''
+    });
+    this.mandals = [];
+    this.panchayati = [];
+    if (id) {
+      this.service.getmandals().subscribe((res: any) => {
+        if (res.status == 202) {
+          alert(res.message);
+        } else if (res.status == 200) {
+          this.mandals = res.data.filter((data: any) => data.const_id == id);
+        }
+      }, error => {
+        console.log(error);
+      });
+    }
   }
 
   trimString(string: any, length: any) {
@@ -178,21 +186,39 @@ export class SearchorganisationPage {
 
   getconstency(event: any) {
     var id = event;
-    this.service.getconsistencys().subscribe((res: any) => {
-      this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
+    this.serachMeetingform.patchValue({
+      constenncy_id: '',
+      mandal_id: '',
+      panchayati_id: ''
     });
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    if (id) {
+      this.service.getconsistencys().subscribe((res: any) => {
+        if (res && res.data) {
+          this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
+        }
+      });
+    }
   }
 
   panchayati: any;
   gepanchayati(event: any) {
     var id = event;
-    this.service.gepanchayatis().subscribe((res: any) => {
-      if (res.status == 202) {
-        alert(res.message);
-      } else if (res.status == 200) {
-        this.panchayati = res.data.filter((data: any) => data.mndl_id == id);
-      }
-    })
+    this.serachMeetingform.patchValue({
+      panchayati_id: ''
+    });
+    this.panchayati = [];
+    if (id) {
+      this.service.gepanchayatis().subscribe((res: any) => {
+        if (res.status == 202) {
+          alert(res.message);
+        } else if (res.status == 200) {
+          this.panchayati = res.data.filter((data: any) => data.mndl_id == id);
+        }
+      });
+    }
   }
   marriagedata:any
   serachcaste(event: any) {

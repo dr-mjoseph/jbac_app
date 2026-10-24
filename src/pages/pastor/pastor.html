@@ -58,7 +58,7 @@
             minlength="10" (keypress)="numericOnly($event)"></ion-input>
         </ion-item>
         <!-- <div *ngIf="submitted && form.get('phonenumber2').errors" class="invalid-feedback">
-          <div *ngIf="form.get('phonenumber2').errors['required']">జెండర్ అవసరం</div> 
+          <div *ngIf="form.get('phonenumber2').errors['required']">జెండర్ అవసరం</div>
           <div *ngIf="form.get('phonenumber2').errors['maxlength']">10 అంకెల వాట్స్ యాప్ ఫోన్ నంబర్ నమోదు చేయండి</div>
         </div> -->
       </ion-col>
@@ -71,7 +71,7 @@
             minlength="10" (keypress)="numericOnly($event)"></ion-input>
         </ion-item>
         <!-- <div *ngIf="submitted && form.get('pa_phonenumber').errors" class="invalid-feedback">
-          <div *ngIf="form.get('pa_phonenumber').errors['required']">జంతువు అవసరం</div> 
+          <div *ngIf="form.get('pa_phonenumber').errors['required']">జంతువు అవసరం</div>
           <div *ngIf="form.get('pa_phonenumber').errors['maxlength']">10 అంకెల మీ అసిస్టెంట్ నంబర్ నమోదు చేయండి</div>
         </div> -->
       </ion-col>
@@ -167,6 +167,15 @@
       <h4 style="padding-left: 15px;text-align: center;color: white;">చిరునామా</h4>
 
       <ion-row>
+        <ion-col col-12>
+          <ion-item>
+            <ion-label stacked>రాష్ట్రం / State <span style="color:red;">*</span></ion-label>
+            <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">
+              <ion-option value="1">Andhra Pradesh</ion-option>
+              <ion-option value="2">Telangana</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
         <ion-col col-12>
           <ion-item>
             <ion-label stacked>జిల్లా ఎంచుకోండి<span style="color:red">*</span></ion-label>
@@ -446,7 +455,7 @@
 
          <div *ngIf="submitted && o['retypepassword'].errors" class="invalid-feedback">
             <div *ngIf="o['retypepassword'].errors['required']">Retype-Password is required</div>
-            <div *ngIf="o['retypepassword'].errors['minlength']">Password must be between 6 to 16 characters</div> 
+            <div *ngIf="o['retypepassword'].errors['minlength']">Password must be between 6 to 16 characters</div>
           </div>
       </ion-col> -->
     </ion-row>

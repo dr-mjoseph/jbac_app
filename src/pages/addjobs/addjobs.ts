@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { ActionSheetController, IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -18,10 +18,10 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
   templateUrl: 'addjobs.html',
 })
 export class AddjobsPage {
-  
+
   jobsadding:any
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public camera: Camera, public actionSheetCtrl: ActionSheetController, public formBuilder: FormBuilder, public service: ServiceProvider , public loadingCtrl:LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public camera: Camera, public actionSheetCtrl: ActionSheetController, public formBuilder: FormBuilder, public service: ServiceProvider, public loadingCtrl:LoadingController, public zone: NgZone) {
 
      this.jobsadding = this.formBuilder.group({
       jobname: ['', [Validators.required]],
@@ -41,14 +41,13 @@ export class AddjobsPage {
       image: [''],
       facebook: [''],
       youtube: [''],
-       // term: ['', [Validators.required]],
-    })
-    this.jobsadding.reset();
+      term: [true],
+    });
   }
 
   get a() { return this.jobsadding.controls; }
 
-  
+
   onStateChange(event: any) {
     var stateId = event;
     this.jobsadding.patchValue({
@@ -56,7 +55,7 @@ export class AddjobsPage {
       districtname: '',
       constituencyname: '',
       mandals: '',
-      panchayati: ''
+      village_name: ''
     });
     this.districts = [];
     this.constituency = [];
@@ -117,6 +116,13 @@ export class AddjobsPage {
 
   getmandals(event: any) {
     var id = event;
+    this.jobsadding.patchValue({
+      mandals: '',
+      village_name: ''
+    });
+    this.mandals = [];
+    this.panchayati = [];
+    if (!id) return;
     this.service.getmandals().subscribe((res: any) => {
       if (res.status == 202) {
         alert(res.message);
@@ -130,6 +136,15 @@ export class AddjobsPage {
 
   getconstency(event: any) {
     var id = event;
+    this.jobsadding.patchValue({
+      constituencyname: '',
+      mandals: '',
+      village_name: ''
+    });
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    if (!id) return;
     this.service.getconsistencys().subscribe((res: any) => {
       this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
     });
@@ -137,6 +152,11 @@ export class AddjobsPage {
 
   gepanchayati(event: any) {
     var id = event;
+    this.jobsadding.patchValue({
+      village_name: ''
+    });
+    this.panchayati = [];
+    if (!id) return;
     this.service.gepanchayatis().subscribe((res: any) => {
       if (res.status == 202) {
         alert(res.message);
@@ -167,6 +187,29 @@ export class AddjobsPage {
     return result;
   }
 
+  triggerFileInput() {
+    const fileInput = document.getElementById('jobFileInput') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
+    }
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.zone.run(() => {
+          this.imagesdata = [{
+            reviewimg: e.target.result,
+            filetype: file.type || 'image/jpeg'
+          }];
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   imagesdata: any = []
   async openphoto() {
     const actionSheet = this.actionSheetCtrl.create({
@@ -174,7 +217,6 @@ export class AddjobsPage {
         {
           icon: 'ios-folder-open',
           text: 'Gallery',
-          role: 'destructive',
           handler: () => {
             const options: CameraOptions = {
               quality: 70,
@@ -188,10 +230,11 @@ export class AddjobsPage {
                 reviewimg: ing,
                 filetype: 'jpeg',
               }
-              console.log(imagedata);
-              this.imagesdata = [];
-              this.imagesdata.push(imagedata);
+              this.zone.run(() => {
+                this.imagesdata = [imagedata];
+              });
             }, (err) => {
+              this.triggerFileInput();
             });
           }
         }, {
@@ -211,9 +254,11 @@ export class AddjobsPage {
                 reviewimg: img,
                 filetype: 'jpeg',
               }
-              this.imagesdata = [];
-              this.imagesdata.push(imagedata);
+              this.zone.run(() => {
+                this.imagesdata = [imagedata];
+              });
             }, (err) => {
+              this.triggerFileInput();
             });
           }
         }, {
@@ -225,7 +270,7 @@ export class AddjobsPage {
         }
       ]
     });
-    (await actionSheet).present();
+    actionSheet.present();
   }
 
   loading:any
