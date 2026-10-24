@@ -18,7 +18,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-var testApi = 'https://1a8kqxawxd.execute-api.ap-southeast-2.amazonaws.com/dashboardapi/';
+var testApi = "https://1a8kqxawxd.execute-api.ap-southeast-2.amazonaws.com/dashboardapi/";
 var ServiceProvider = /** @class */ (function () {
     // testApi = 'http://localhost:2303/dashboardapi/'
     function ServiceProvider(http) {
