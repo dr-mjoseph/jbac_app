@@ -1,4 +1,4 @@
-﻿<ion-header>
+<ion-header>
   <ion-navbar>
     <ion-buttons end>
       <button ion-button (click)="gotohome()">
@@ -201,7 +201,8 @@
       <ion-col col-12 col-md-6>
         <ion-item>
           <ion-label stacked>రాష్ట్రం / State <span style="color:red; "> *</span></ion-label>
-          <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">
+          <ion-select formControlName="state_id" (ionChange)="onStateChange($event)" placeholder="రాష్ట్రం ఎంచుకోండి">
+            <ion-option value="" disabled selected>రాష్ట్రం ఎంచుకోండి</ion-option>
             <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>
             <ion-option value="2">తెలంగాణ (TG)</ion-option>
           </ion-select>
@@ -210,7 +211,7 @@
       <ion-col col-12 col-md-6>
         <ion-item>
           <ion-label stacked>ఎంపిక జిల్లా <span style="color:red; "> *</span></ion-label>
-          <ion-select formControlName="districts" (ionChange)="getconstency($event)">
+          <ion-select formControlName="districts" [disabled]="!form.value.state_id" (ionChange)="getconstency($event)" placeholder="ఎంపిక జిల్లా">
             <ion-option value="" disabled selected>ఎంపిక జిల్లా</ion-option>
             <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>
           </ion-select>
@@ -219,7 +220,7 @@
       <ion-col col-12 col-md-6>
         <ion-item>
           <ion-label stacked>ఎంపిక నియోజకవర్గం <span style="color:red; "> *</span></ion-label>
-          <ion-select formControlName="constituencyname" (ionChange)="getmandals($event)">
+          <ion-select formControlName="constituencyname" [disabled]="!form.value.districts" (ionChange)="getmandals($event)" placeholder="ఎంపిక నియోజకవర్గం">
             <ion-option value="" disabled selected>ఎంపిక నియోజకవర్గం</ion-option>
             <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>
           </ion-select>
@@ -228,7 +229,7 @@
       <ion-col col-12 col-md-6>
         <ion-item>
           <ion-label stacked>మండలం/పంచాయతి <span style="color:red; "> *</span></ion-label>
-          <ion-select formControlName="mandals" (ionChange)="gepanchayati($event);">
+          <ion-select formControlName="mandals" [disabled]="!form.value.constituencyname" (ionChange)="gepanchayati($event);" placeholder="మండలం ఎంపిక చేయండి">
             <ion-option value="" disabled selected>మండలం / పంచాయతి ఎంపిక చేయండి</ion-option>
             <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>
           </ion-select>
@@ -237,7 +238,7 @@
       <ion-col col-12 col-md-6>
         <ion-item>
           <ion-label stacked>ఎంపిక పంచాయితి/వార్డు <span style="color:red; "> *</span></ion-label>
-          <ion-select formControlName="panchayati">
+          <ion-select formControlName="panchayati" [disabled]="!form.value.mandals" placeholder="ఎంపిక పంచాయితి/వార్డు">
             <ion-option value="" disabled selected>ఎంపిక పంచాయితి/వార్డు</ion-option>
             <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>
           </ion-select>

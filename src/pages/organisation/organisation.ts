@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -41,7 +41,7 @@ export class OrganisationPage {
       ministry_id: [''],
       password: ['', [Validators.required, Validators.minLength(6)]],
      retypepassword: ['', [Validators.required, Validators.minLength(6)]],
-      state_id: ['1', [Validators.required]],
+      state_id: ['', [Validators.required]],
       districts: ['', [Validators.required]],
       constituencyname: ['', [Validators.required]],
       mandals: ['', [Validators.required]],
@@ -68,11 +68,13 @@ export class OrganisationPage {
     this.constituency = [];
     this.mandals = [];
     this.panchayati = [];
-    this.service.getdistrict(stateId).subscribe((res: any) => {
-      if (res && res.status == 200) {
-        this.districts = res.data;
-      }
-    });
+    if (stateId) {
+      this.service.getdistrict(stateId).subscribe((res: any) => {
+        if (res && res.status == 200) {
+          this.districts = res.data;
+        }
+      });
+    }
   }
   getorgnaziationpstorsget() {
     this.service.getpastor().subscribe((res: any) => {
@@ -81,7 +83,6 @@ export class OrganisationPage {
   }
 
   ionViewDidLoad() {
-    this.getdistric();
     this.getorgnaziationpstorsget();
     this.getdenomations();
     this.getbelivers();
@@ -104,14 +105,17 @@ export class OrganisationPage {
     })
   }
 
-  getdistric() {
-    this.service.getdistrict().subscribe((res: any) => {
-      this.districts = res.data;
-    })
-  }
-
   getconstency(event: any) {
     var id = event;
+    this.form.patchValue({
+      constituencyname: '',
+      mandals: '',
+      panchayati: ''
+    });
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    if (!id) return;
     this.service.getconsistencys().subscribe((res: any) => {
       this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
     })
@@ -119,6 +123,13 @@ export class OrganisationPage {
 
   getmandals(event: any) {
     var id = event;
+    this.form.patchValue({
+      mandals: '',
+      panchayati: ''
+    });
+    this.mandals = [];
+    this.panchayati = [];
+    if (!id) return;
     this.service.getmandals().subscribe((res: any) => {
       this.mandals = res.data.filter((data: any) => data.const_id == id);
     })
@@ -126,6 +137,11 @@ export class OrganisationPage {
 
   gepanchayati(event: any) {
     var id = event;
+    this.form.patchValue({
+      panchayati: ''
+    });
+    this.panchayati = [];
+    if (!id) return;
     this.service.gepanchayatis().subscribe((res: any) => {
       this.panchayati = res.data.filter((data: any) => data.mndl_id == id);
     })

@@ -115,10 +115,6 @@ export class ServiceProvider {
     return this.http.post(this.testApi + 'postpastorassociations', data)
   }
 
-  getimages() {
-    return this.http.get(this.testApi + 'getcatewebsitegallery')
-  }
-
   postupdatenews(data: any) {
     return this.http.post(this.testApi + 'postnews', data)
   }
@@ -259,10 +255,6 @@ export class ServiceProvider {
     return this.http.post(this.testApi + 'getorganizations', data || {});
   }
 
-  getcatewebsitegallery() {
-    return this.http.get(this.testApi + 'getcatewebsitegallery')
-  }
-
   getvideourl() {
     return this.http.get(this.testApi + 'getvideourl')
   }
@@ -371,5 +363,13 @@ export class ServiceProvider {
 
   getcouncellingvoicemessages(data: any) {
     return this.http.post(this.testApi + 'getcouncellingvoicemessages', data);
+  }
+
+  getimages() {
+    return this.http.post(this.testApi + 'getwebsitegallery', []);
+  }
+
+  getcatewebsitegallery() {
+    return this.http.get(this.testApi + 'getcatewebsitegallery');
   }
 }

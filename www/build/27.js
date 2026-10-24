@@ -1,6 +1,6 @@
 webpackJsonp([27],{
 
-/***/ 423:
+/***/ 422:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HelpPageModule", function() { return HelpPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__help__ = __webpack_require__(480);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__help__ = __webpack_require__(479);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,7 +38,7 @@ var HelpPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 480:
+/***/ 479:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -118,8 +118,17 @@ var HelpPage = /** @class */ (function () {
     };
     HelpPage.prototype.triggerFileInput = function () {
         var input = document.getElementById('helpFileInput');
-        if (input)
+        if (input) {
+            input.value = '';
             input.click();
+        }
+    };
+    HelpPage.prototype.triggerCameraInput = function () {
+        var input = document.getElementById('helpCameraInput');
+        if (input) {
+            input.value = '';
+            input.click();
+        }
     };
     HelpPage.prototype.onFileSelected = function (event) {
         var _this = this;
@@ -143,55 +152,74 @@ var HelpPage = /** @class */ (function () {
             var actionSheet;
             return __generator(this, function (_a) {
                 actionSheet = this.actionSheetCtrl.create({
+                    title: 'ఫోటో ఎంచుకోండి (Select Photo)',
                     buttons: [
                         {
                             icon: 'ios-folder-open',
                             text: 'Gallery',
                             handler: function () {
-                                var options = {
-                                    quality: 70,
-                                    destinationType: _this.camera.DestinationType.DATA_URL,
-                                    sourceType: _this.camera.PictureSourceType.PHOTOLIBRARY,
-                                    saveToPhotoAlbum: false
-                                };
-                                _this.camera.getPicture(options).then(function (imaged) {
-                                    _this.zone.run(function () {
-                                        var ing = "data:image/jpeg;base64," + imaged;
-                                        var imagedata = {
-                                            reviewimg: ing,
-                                            filetype: 'jpeg',
-                                        };
-                                        _this.imagesdata = [imagedata];
-                                    });
-                                }, function (err) {
-                                    console.log('Gallery picker error, triggering file fallback', err);
+                                if (!(window.navigator && window.navigator.camera)) {
                                     _this.triggerFileInput();
-                                });
+                                    return;
+                                }
+                                try {
+                                    var options = {
+                                        quality: 70,
+                                        destinationType: _this.camera.DestinationType.DATA_URL,
+                                        sourceType: _this.camera.PictureSourceType.PHOTOLIBRARY,
+                                        saveToPhotoAlbum: false
+                                    };
+                                    _this.camera.getPicture(options).then(function (imaged) {
+                                        _this.zone.run(function () {
+                                            var ing = "data:image/jpeg;base64," + imaged;
+                                            var imagedata = {
+                                                reviewimg: ing,
+                                                filetype: 'jpeg',
+                                            };
+                                            _this.imagesdata = [imagedata];
+                                        });
+                                    }, function (err) {
+                                        console.log('Gallery picker error, triggering file fallback', err);
+                                        _this.triggerFileInput();
+                                    });
+                                }
+                                catch (err) {
+                                    _this.triggerFileInput();
+                                }
                             }
                         }, {
                             icon: 'ios-camera',
                             text: 'Camera',
                             handler: function () {
-                                var options = {
-                                    quality: 70,
-                                    correctOrientation: true,
-                                    destinationType: _this.camera.DestinationType.DATA_URL,
-                                    encodingType: _this.camera.EncodingType.JPEG,
-                                    mediaType: _this.camera.MediaType.PICTURE
-                                };
-                                _this.camera.getPicture(options).then(function (imageD) {
-                                    _this.zone.run(function () {
-                                        var img = "data:image/jpeg;base64," + imageD;
-                                        var imagedata = {
-                                            reviewimg: img,
-                                            filetype: 'jpeg',
-                                        };
-                                        _this.imagesdata = [imagedata];
+                                if (!(window.navigator && window.navigator.camera)) {
+                                    _this.triggerCameraInput();
+                                    return;
+                                }
+                                try {
+                                    var options = {
+                                        quality: 70,
+                                        correctOrientation: true,
+                                        destinationType: _this.camera.DestinationType.DATA_URL,
+                                        encodingType: _this.camera.EncodingType.JPEG,
+                                        mediaType: _this.camera.MediaType.PICTURE
+                                    };
+                                    _this.camera.getPicture(options).then(function (imageD) {
+                                        _this.zone.run(function () {
+                                            var img = "data:image/jpeg;base64," + imageD;
+                                            var imagedata = {
+                                                reviewimg: img,
+                                                filetype: 'jpeg',
+                                            };
+                                            _this.imagesdata = [imagedata];
+                                        });
+                                    }, function (err) {
+                                        console.log('Camera error, triggering camera fallback', err);
+                                        _this.triggerCameraInput();
                                     });
-                                }, function (err) {
-                                    console.log('Camera error, triggering file fallback', err);
-                                    _this.triggerFileInput();
-                                });
+                                }
+                                catch (err) {
+                                    _this.triggerCameraInput();
+                                }
                             }
                         }, {
                             icon: 'ios-close',
@@ -238,7 +266,7 @@ var HelpPage = /** @class */ (function () {
     };
     HelpPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-help',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\help\help.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>మా సహాయం</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding class="pagecss">\n\n  <form [formGroup]="form">\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>వివరణ<span style="color:red;">*</span></ion-label>\n\n          <ion-textarea type="text" formControlName="description" placeholder="వివరణను ఎంచుకోండి"></ion-textarea>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>ఏ రకం సహాయం <span style="color:red;">*</span></ion-label>\n\n          <ion-select formControlName="help" placeholder="సహాయం ఎంచుకోండి">\n\n            <ion-option value="" disabled>సహాయం ఎంచుకోండి</ion-option>\n\n            <ion-option value="CommunitySupport Help">కమ్యూనిటీ మద్దతు సహాయం</ion-option>\n\n            <ion-option value="Education Help">విద్యా సహాయం</ion-option>\n\n            <ion-option value="Financial Help">ఆర్థిక సహాయం</ion-option>\n\n            <ion-option value="ForChurchConstruction Help">చర్చి నిర్మాణ సహాయం</ion-option>\n\n            <ion-option value="Legal Help">చట్టపరమైన సహాయం</ion-option>\n\n            <ion-option value="Medical Help">మెడికల్ సహాయం</ion-option>\n\n            <ion-option value="PoliceDepartmental Help">పోలీసు విభాగ సహాయం</ion-option>\n\n            <ion-option value="Political Help">రాజకీయ సహాయం</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 (click)="openphoto()">\n\n        <div class="imgerdt">\n\n          <input type="file" id="helpFileInput" (change)="onFileSelected($event)" accept="image/*" style="display:none">\n\n          <img src="assets/icon/upload.svg" style="height:70px;width:70px;">\n\n          చిత్రం అప్‌లోడ్ చేయండి<br><br>\n\n          <img *ngIf="imagesdata.length" style="width:200px;height:200px" src="{{imagesdata[0].reviewimg}}">\n\n        </div>\n\n      </ion-col>\n\n      <ion-col col-12 style="text-align: center;">\n\n        <button ion-button color="secondary" (click)="postmeetings()" style="letter-spacing: 1px;">నమోదు చేయండి</button>\n\n      </ion-col>\n\n\n\n    </ion-row>\n\n  </form>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\help\help.html"*/,
+            selector: 'page-help',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\help\help.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>మా సహాయం</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding class="pagecss">\n\n  <form [formGroup]="form">\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>వివరణ<span style="color:red;">*</span></ion-label>\n\n          <ion-textarea type="text" formControlName="description" placeholder="వివరణను ఎంచుకోండి"></ion-textarea>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>ఏ రకం సహాయం <span style="color:red;">*</span></ion-label>\n\n          <ion-select formControlName="help" placeholder="సహాయం ఎంచుకోండి">\n\n            <ion-option value="" disabled>సహాయం ఎంచుకోండి</ion-option>\n\n            <ion-option value="CommunitySupport Help">కమ్యూనిటీ మద్దతు సహాయం</ion-option>\n\n            <ion-option value="Education Help">విద్యా సహాయం</ion-option>\n\n            <ion-option value="Financial Help">ఆర్థిక సహాయం</ion-option>\n\n            <ion-option value="ForChurchConstruction Help">చర్చి నిర్మాణ సహాయం</ion-option>\n\n            <ion-option value="Legal Help">చట్టపరమైన సహాయం</ion-option>\n\n            <ion-option value="Medical Help">మెడికల్ సహాయం</ion-option>\n\n            <ion-option value="PoliceDepartmental Help">పోలీసు విభాగ సహాయం</ion-option>\n\n            <ion-option value="Political Help">రాజకీయ సహాయం</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 (click)="openphoto()">\n\n        <div class="imgerdt">\n\n          <input type="file" id="helpFileInput" (change)="onFileSelected($event)" accept="image/*" style="display:none">\n\n          <input type="file" id="helpCameraInput" (change)="onFileSelected($event)" accept="image/*" capture="camera" style="display:none">\n\n          <img src="assets/icon/upload.svg" style="height:70px;width:70px;">\n\n          చిత్రం అప్‌లోడ్ చేయండి<br><br>\n\n          <img *ngIf="imagesdata.length" style="width:200px;height:200px" src="{{imagesdata[0].reviewimg}}">\n\n        </div>\n\n      </ion-col>\n\n      <ion-col col-12 style="text-align: center;">\n\n        <button ion-button color="secondary" (click)="postmeetings()" style="letter-spacing: 1px;">నమోదు చేయండి</button>\n\n      </ion-col>\n\n\n\n    </ion-row>\n\n  </form>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\help\help.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["r" /* NavController */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["s" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_4__providers_service_service__["a" /* ServiceProvider */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */]])

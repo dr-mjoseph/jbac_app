@@ -1,6 +1,6 @@
 webpackJsonp([46],{
 
-/***/ 447:
+/***/ 445:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddbussinessPageModule", function() { return AddbussinessPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__addbussiness__ = __webpack_require__(503);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__addbussiness__ = __webpack_require__(501);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,7 +38,7 @@ var AddbussinessPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 503:
+/***/ 501:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -122,7 +122,7 @@ var AddbussinessPage = /** @class */ (function () {
             description: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
             number: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].minLength(10)]],
             denomation: [''],
-            state_id: ['1', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
+            state_id: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
             districtname: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
             constituencyname: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
             mandals: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
@@ -133,8 +133,6 @@ var AddbussinessPage = /** @class */ (function () {
         });
     }
     AddbussinessPage.prototype.ionViewDidLoad = function () {
-        this.getdistric();
-        this.getbeliver();
         this.getbelivers();
         this.getdenomations();
     };
@@ -271,8 +269,17 @@ var AddbussinessPage = /** @class */ (function () {
     };
     AddbussinessPage.prototype.triggerFileInput = function () {
         var input = document.getElementById('businessFileInput');
-        if (input)
+        if (input) {
+            input.value = '';
             input.click();
+        }
+    };
+    AddbussinessPage.prototype.triggerCameraInput = function () {
+        var input = document.getElementById('businessCameraInput');
+        if (input) {
+            input.value = '';
+            input.click();
+        }
     };
     AddbussinessPage.prototype.onFileSelected = function (event) {
         var _this = this;
@@ -296,55 +303,74 @@ var AddbussinessPage = /** @class */ (function () {
             var actionSheet;
             return __generator(this, function (_a) {
                 actionSheet = this.actionSheetCtrl.create({
+                    title: 'ఫోటో ఎంచుకోండి (Select Photo)',
                     buttons: [
                         {
                             icon: 'ios-folder-open',
                             text: 'Gallery',
                             handler: function () {
-                                var options = {
-                                    quality: 70,
-                                    destinationType: _this.camera.DestinationType.DATA_URL,
-                                    sourceType: _this.camera.PictureSourceType.PHOTOLIBRARY,
-                                    saveToPhotoAlbum: false
-                                };
-                                _this.camera.getPicture(options).then(function (imaged) {
-                                    _this.zone.run(function () {
-                                        var ing = "data:image/jpeg;base64," + imaged;
-                                        var imagedata = {
-                                            reviewimg: ing,
-                                            filetype: 'jpeg',
-                                        };
-                                        _this.imagesdata = [imagedata];
-                                    });
-                                }, function (err) {
-                                    console.log('Gallery picker error, triggering file fallback', err);
+                                if (!(window.navigator && window.navigator.camera)) {
                                     _this.triggerFileInput();
-                                });
+                                    return;
+                                }
+                                try {
+                                    var options = {
+                                        quality: 70,
+                                        destinationType: _this.camera.DestinationType.DATA_URL,
+                                        sourceType: _this.camera.PictureSourceType.PHOTOLIBRARY,
+                                        saveToPhotoAlbum: false
+                                    };
+                                    _this.camera.getPicture(options).then(function (imaged) {
+                                        _this.zone.run(function () {
+                                            var ing = "data:image/jpeg;base64," + imaged;
+                                            var imagedata = {
+                                                reviewimg: ing,
+                                                filetype: 'jpeg',
+                                            };
+                                            _this.imagesdata = [imagedata];
+                                        });
+                                    }, function (err) {
+                                        console.log('Gallery picker error, triggering file fallback', err);
+                                        _this.triggerFileInput();
+                                    });
+                                }
+                                catch (err) {
+                                    _this.triggerFileInput();
+                                }
                             }
                         }, {
                             icon: 'ios-camera',
                             text: 'Camera',
                             handler: function () {
-                                var options = {
-                                    quality: 70,
-                                    correctOrientation: true,
-                                    destinationType: _this.camera.DestinationType.DATA_URL,
-                                    encodingType: _this.camera.EncodingType.JPEG,
-                                    mediaType: _this.camera.MediaType.PICTURE
-                                };
-                                _this.camera.getPicture(options).then(function (imageD) {
-                                    _this.zone.run(function () {
-                                        var img = "data:image/jpeg;base64," + imageD;
-                                        var imagedata = {
-                                            reviewimg: img,
-                                            filetype: 'jpeg',
-                                        };
-                                        _this.imagesdata = [imagedata];
+                                if (!(window.navigator && window.navigator.camera)) {
+                                    _this.triggerCameraInput();
+                                    return;
+                                }
+                                try {
+                                    var options = {
+                                        quality: 70,
+                                        correctOrientation: true,
+                                        destinationType: _this.camera.DestinationType.DATA_URL,
+                                        encodingType: _this.camera.EncodingType.JPEG,
+                                        mediaType: _this.camera.MediaType.PICTURE
+                                    };
+                                    _this.camera.getPicture(options).then(function (imageD) {
+                                        _this.zone.run(function () {
+                                            var img = "data:image/jpeg;base64," + imageD;
+                                            var imagedata = {
+                                                reviewimg: img,
+                                                filetype: 'jpeg',
+                                            };
+                                            _this.imagesdata = [imagedata];
+                                        });
+                                    }, function (err) {
+                                        console.log('Camera error, triggering camera fallback', err);
+                                        _this.triggerCameraInput();
                                     });
-                                }, function (err) {
-                                    console.log('Camera error, triggering file fallback', err);
-                                    _this.triggerFileInput();
-                                });
+                                }
+                                catch (err) {
+                                    _this.triggerCameraInput();
+                                }
                             }
                         }, {
                             icon: 'ios-close',
@@ -407,7 +433,7 @@ var AddbussinessPage = /** @class */ (function () {
     };
     AddbussinessPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-addbussiness',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\addbussiness\addbussiness.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b> మీ వ్యాపార నమోదు</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding class="pagecss">\n\n  <form [formGroup]="addingbusiness">\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>విధానానికి జోడించండి<span style="color:red">*</span></ion-label>\n\n          <ion-select formControlName="type" [ngClass]="{\'is-invalid\': submitted && j[\'type\'].errors }">\n\n            <ion-option value="" disabled selected>విధానానికి జోడించండి</ion-option>\n\n            <ion-option value="Sales">అమ్మకం</ion-option>\n\n            <ion-option value="Purchase">కొనుగోలు</ion-option>\n\n            <ion-option value="Rent">అద్దె</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n        <div *ngIf="submitted && j[\'type\'].errors" class="invalid-feedback">\n\n          <div *ngIf="j[\'type\'].errors[\'required\']">విధానం అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>ఫ్లాట్ల రకాలు<span style="color:red">*</span></ion-label>\n\n          <ion-select formControlName="title" [ngClass]="{\'is-invalid\': submitted && j[\'title\'].errors }">\n\n            <ion-option value="" disabled selected>ఫ్లాట్ల రకాలు ఎంచుకోండి</ion-option>\n\n            <ion-option value="1bhk">1BHK</ion-option>\n\n            <ion-option value="2bhk">2BHK</ion-option>\n\n            <ion-option value="3bhk">3BHK</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n        <div *ngIf="submitted && j[\'title\'].errors" class="invalid-feedback">\n\n          <div *ngIf="j[\'title\'].errors[\'required\']">శీర్షిక అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n    </ion-row>\n\n\n\n    <ion-row>\n\n      <ion-col col-12  (click)="openphoto()">\n\n        <div class="imgerdt" >\n\n          <input type="file" id="businessFileInput" (change)="onFileSelected($event)" accept="image/*" style="display:none">\n\n          <img src="assets/icon/upload.svg"  style="height:70px;width:70px;">అప్‌లోడ్ చేయించుకోండి\n\n          బ్రాచ్యాల్‌ను\n\n          <img *ngIf="imagesdata.length" [src]="imagesdata[0].reviewimg" alt="" height="100px" width="100px">\n\n\n\n       </div>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>వివరణ<span style="color:red">*</span></ion-label>\n\n          <ion-textarea formControlName="description" placeholder="వివరణ నమోదు చేయండి"\n\n            [ngClass]="{\'is-invalid\': submitted && j[\'description\'].errors }"></ion-textarea>\n\n        </ion-item>\n\n        <div *ngIf="submitted && j[\'description\'].errors" class="invalid-feedback">\n\n          <div *ngIf="j[\'description\'].errors[\'required\']">వివరణ అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>సెలెక్ట్ డినామినేషన్ మోడల్‌</ion-label>\n\n          <ion-select formControlName="denomation" style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of denomation" [value]="item.id">{{item.denomation_name}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మంత్రిత్వం ఎంపికచేయండి</ion-label>\n\n          <ion-select formControlName="ministry_id" style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let i of ministryname" [value]="i.ministryname">{{i.ministryname}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>స్థానిక చిరునామా/స్ట్రీట్ పేరు <span style="color:red">*</span></ion-label>\n\n          <ion-input type="text" formControlName="ward" placeholder="స్ట్రీట్ పేరు నమోదు చేయండి"\n\n            [ngClass]="{\'is-invalid\': submitted && j[\'ward\'].errors }"></ion-input>\n\n        </ion-item>\n\n        <div *ngIf="submitted && j[\'ward\'].errors" class="invalid-feedback">\n\n          <div *ngIf="j[\'ward\'].errors[\'required\']">స్థానిక చిరునామా/స్ట్రీట్ పేరు అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>కాంటాక్ట్ నంబర్ <span style="color:red">*</span></ion-label>\n\n          <ion-input type="text" formControlName="number" placeholder="కాంటాక్ట్ నంబర్ నమోదు చేయండి" maxlength="10"\n\n            (keypress)="numericOnly($event)" [ngClass]="{\'is-invalid\': submitted && j[\'number\'].errors }"></ion-input>\n\n        </ion-item>\n\n        <div *ngIf="submitted && j[\'number\'].errors" class="invalid-feedback">\n\n          <div *ngIf="j[\'number\'].errors[\'required\']">కాంటాక్ట్ నంబర్ అవసరం</div>\n\n          <div *ngIf="j[\'number\'].errors[\'minlength\']">10 అంకెల కనిపించాలి</div>\n\n        </div>\n\n      </ion-col>\n\n\n\n    </ion-row>\n\n\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>రాష్ట్రం / State <span style="color:red">*</span></ion-label>\n\n          <ion-select formControlName="state_id" (ionChange)="onStateChange($event)" style="height:37px;width: 273px;">\n\n            <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>\n\n            <ion-option value="2">తెలంగాణ (TG)</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n        <div *ngIf="submitted && j[\'state_id\'].errors" class="invalid-feedback">\n\n          <div *ngIf="j[\'state_id\'].errors[\'required\']">రాష్ట్రం అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>జిల్లాలను ఎంపికచేయండి <span style="color:red">*</span></ion-label>\n\n          <ion-select formControlName="districtname" [disabled]="!addingbusiness.get(\'state_id\')?.value" (ionChange)="getconstency($event)"\n\n            [ngClass]="{\'is-invalid\': submitted && j[\'districtname\'].errors }" style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n        <div *ngIf="submitted && j[\'districtname\'].errors" class="invalid-feedback">\n\n          <div *ngIf="j[\'districtname\'].errors[\'required\']">జిల్లా అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మండలాలను ఎంపికచేయండి <span style="color:red">*</span></ion-label>\n\n          <ion-select formControlName="constituencyname" [disabled]="!addingbusiness.get(\'districtname\')?.value" (ionChange)="getmandals($event)"\n\n            [ngClass]="{\'is-invalid\': submitted && j[\'constituencyname\'].errors }" style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n        <div *ngIf="submitted && j[\'constituencyname\'].errors" class="invalid-feedback">\n\n          <div *ngIf="j[\'constituencyname\'].errors[\'required\']">మండలం అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n    </ion-row>\n\n\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>పంచాయితీ ఎంపికచేయండి <span style="color:red">*</span></ion-label>\n\n          <ion-select formControlName="mandals" [disabled]="!addingbusiness.get(\'constituencyname\')?.value" (ionChange)="gepanchayati($event)"\n\n            [ngClass]="{\'is-invalid\': submitted && j[\'mandals\'].errors }" style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n        <div *ngIf="submitted && j[\'mandals\'].errors" class="invalid-feedback">\n\n          <div *ngIf="j[\'mandals\'].errors[\'required\']">మండలం అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>గ్రామ ఎంపికచేయండి <span style="color:red">*</span></ion-label>\n\n          <ion-select formControlName="village_name" [disabled]="!addingbusiness.get(\'mandals\')?.value" [ngClass]="{\'is-invalid\': submitted && j[\'village_name\'].errors }"\n\n            style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n        <div *ngIf="submitted && j[\'village_name\'].errors" class="invalid-feedback">\n\n          <div *ngIf="j[\'village_name\'].errors[\'required\']">గ్రామం అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n\n\n      <ion-col col-12 mb-4 pb-2>\n\n        <ion-item>\n\n          <ion-label stacked>షరతులు మరియు అంశాలు<span style="color:red">*</span></ion-label>\n\n          <ion-checkbox formControlName="term" checked\n\n            [ngClass]="{\'is-invalid\': submitted && j[\'term\'].errors }"></ion-checkbox>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n    </ion-row>\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <button type="button" ion-button (click)="postbusiness()">నమోదు చేయి</button>\n\n      </ion-col>\n\n    </ion-row>\n\n  </form>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\addbussiness\addbussiness.html"*/,
+            selector: 'page-addbussiness',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\addbussiness\addbussiness.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b> మీ వ్యాపార నమోదు</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding class="pagecss">\n\n  <form [formGroup]="addingbusiness">\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>విధానానికి జోడించండి<span style="color:red">*</span></ion-label>\n\n          <ion-select formControlName="type" [ngClass]="{\'is-invalid\': submitted && j[\'type\'].errors }">\n\n            <ion-option value="" disabled selected>విధానానికి జోడించండి</ion-option>\n\n            <ion-option value="Sales">అమ్మకం</ion-option>\n\n            <ion-option value="Purchase">కొనుగోలు</ion-option>\n\n            <ion-option value="Rent">అద్దె</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n        <div *ngIf="submitted && j[\'type\'].errors" class="invalid-feedback">\n\n          <div *ngIf="j[\'type\'].errors[\'required\']">విధానం అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>ఫ్లాట్ల రకాలు<span style="color:red">*</span></ion-label>\n\n          <ion-select formControlName="title" [ngClass]="{\'is-invalid\': submitted && j[\'title\'].errors }">\n\n            <ion-option value="" disabled selected>ఫ్లాట్ల రకాలు ఎంచుకోండి</ion-option>\n\n            <ion-option value="1bhk">1BHK</ion-option>\n\n            <ion-option value="2bhk">2BHK</ion-option>\n\n            <ion-option value="3bhk">3BHK</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n        <div *ngIf="submitted && j[\'title\'].errors" class="invalid-feedback">\n\n          <div *ngIf="j[\'title\'].errors[\'required\']">శీర్షిక అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n    </ion-row>\n\n\n\n    <ion-row>\n\n      <ion-col col-12  (click)="openphoto()">\n\n        <div class="imgerdt" >\n\n          <input type="file" id="businessFileInput" (change)="onFileSelected($event)" accept="image/*" style="display:none">\n\n          <input type="file" id="businessCameraInput" (change)="onFileSelected($event)" accept="image/*" capture="camera" style="display:none">\n\n          <img src="assets/icon/upload.svg"  style="height:70px;width:70px;">అప్‌లోడ్ చేయించుకోండి\n\n          బ్రాచ్యాల్‌ను\n\n          <img *ngIf="imagesdata.length" [src]="imagesdata[0].reviewimg" alt="" height="100px" width="100px">\n\n\n\n       </div>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>వివరణ<span style="color:red">*</span></ion-label>\n\n          <ion-textarea formControlName="description" placeholder="వివరణ నమోదు చేయండి"\n\n            [ngClass]="{\'is-invalid\': submitted && j[\'description\'].errors }"></ion-textarea>\n\n        </ion-item>\n\n        <div *ngIf="submitted && j[\'description\'].errors" class="invalid-feedback">\n\n          <div *ngIf="j[\'description\'].errors[\'required\']">వివరణ అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>సెలెక్ట్ డినామినేషన్ మోడల్‌</ion-label>\n\n          <ion-select formControlName="denomation" style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of denomation" [value]="item.id">{{item.denomation_name}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మంత్రిత్వం ఎంపికచేయండి</ion-label>\n\n          <ion-select formControlName="ministry_id" style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let i of ministryname" [value]="i.ministryname">{{i.ministryname}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>స్థానిక చిరునామా/స్ట్రీట్ పేరు <span style="color:red">*</span></ion-label>\n\n          <ion-input type="text" formControlName="ward" placeholder="స్ట్రీట్ పేరు నమోదు చేయండి"\n\n            [ngClass]="{\'is-invalid\': submitted && j[\'ward\'].errors }"></ion-input>\n\n        </ion-item>\n\n        <div *ngIf="submitted && j[\'ward\'].errors" class="invalid-feedback">\n\n          <div *ngIf="j[\'ward\'].errors[\'required\']">స్థానిక చిరునామా/స్ట్రీట్ పేరు అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>కాంటాక్ట్ నంబర్ <span style="color:red">*</span></ion-label>\n\n          <ion-input type="text" formControlName="number" placeholder="కాంటాక్ట్ నంబర్ నమోదు చేయండి" maxlength="10"\n\n            (keypress)="numericOnly($event)" [ngClass]="{\'is-invalid\': submitted && j[\'number\'].errors }"></ion-input>\n\n        </ion-item>\n\n        <div *ngIf="submitted && j[\'number\'].errors" class="invalid-feedback">\n\n          <div *ngIf="j[\'number\'].errors[\'required\']">కాంటాక్ట్ నంబర్ అవసరం</div>\n\n          <div *ngIf="j[\'number\'].errors[\'minlength\']">10 అంకెల కనిపించాలి</div>\n\n        </div>\n\n      </ion-col>\n\n\n\n    </ion-row>\n\n\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>రాష్ట్రం / State <span style="color:red">*</span></ion-label>\n\n          <ion-select formControlName="state_id" (ionChange)="onStateChange($event)" style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>రాష్ట్రం ఎంచుకోండి</ion-option>\n\n            <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>\n\n            <ion-option value="2">తెలంగాణ (TG)</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n        <div *ngIf="submitted && j[\'state_id\'].errors" class="invalid-feedback">\n\n          <div *ngIf="j[\'state_id\'].errors[\'required\']">రాష్ట్రం అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>జిల్లాలను ఎంపికచేయండి <span style="color:red">*</span></ion-label>\n\n          <ion-select formControlName="districtname" [disabled]="!addingbusiness.value.state_id" (ionChange)="getconstency($event)"\n\n            [ngClass]="{\'is-invalid\': submitted && j[\'districtname\'].errors }" style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n        <div *ngIf="submitted && j[\'districtname\'].errors" class="invalid-feedback">\n\n          <div *ngIf="j[\'districtname\'].errors[\'required\']">జిల్లా అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మండలాలను ఎంపికచేయండి <span style="color:red">*</span></ion-label>\n\n          <ion-select formControlName="constituencyname" [disabled]="!addingbusiness.value.districtname" (ionChange)="getmandals($event)"\n\n            [ngClass]="{\'is-invalid\': submitted && j[\'constituencyname\'].errors }" style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n        <div *ngIf="submitted && j[\'constituencyname\'].errors" class="invalid-feedback">\n\n          <div *ngIf="j[\'constituencyname\'].errors[\'required\']">మండలం అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n    </ion-row>\n\n\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>పంచాయితీ ఎంపికచేయండి <span style="color:red">*</span></ion-label>\n\n          <ion-select formControlName="mandals" [disabled]="!addingbusiness.value.constituencyname" (ionChange)="gepanchayati($event)"\n\n            [ngClass]="{\'is-invalid\': submitted && j[\'mandals\'].errors }" style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n        <div *ngIf="submitted && j[\'mandals\'].errors" class="invalid-feedback">\n\n          <div *ngIf="j[\'mandals\'].errors[\'required\']">మండలం అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>గ్రామ ఎంపికచేయండి <span style="color:red">*</span></ion-label>\n\n          <ion-select formControlName="village_name" [disabled]="!addingbusiness.value.mandals" [ngClass]="{\'is-invalid\': submitted && j[\'village_name\'].errors }"\n\n            style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n        <div *ngIf="submitted && j[\'village_name\'].errors" class="invalid-feedback">\n\n          <div *ngIf="j[\'village_name\'].errors[\'required\']">గ్రామం అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n\n\n      <ion-col col-12 mb-4 pb-2>\n\n        <ion-item>\n\n          <ion-label stacked>షరతులు మరియు అంశాలు<span style="color:red">*</span></ion-label>\n\n          <ion-checkbox formControlName="term" checked\n\n            [ngClass]="{\'is-invalid\': submitted && j[\'term\'].errors }"></ion-checkbox>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n    </ion-row>\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <button type="button" ion-button (click)="postbusiness()">నమోదు చేయి</button>\n\n      </ion-col>\n\n    </ion-row>\n\n  </form>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\addbussiness\addbussiness.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["s" /* NavParams */], __WEBPACK_IMPORTED_MODULE_4__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__providers_service_service__["a" /* ServiceProvider */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["o" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */]])
     ], AddbussinessPage);

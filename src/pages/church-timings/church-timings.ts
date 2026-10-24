@@ -27,11 +27,11 @@ export class ChurchTimingsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public toastCtrl: ToastController, public service: ServiceProvider, public modalCtrl: ModalController, public alertCtrl: AlertController) {
 
     this.searchchurchingform = this.formBuilder.group({
-      state_id: ['1'],
+      state_id: [''],
       district_id: ['', [Validators.required]],
       constenncy_id: ['', [Validators.required]],
       mandal_id: ['', [Validators.required]],
-      typetime: ['1'],
+      typetime: [''],
       panchayati_id: [''],
       denomationid: [''],
       ministry_id: [''],
@@ -52,11 +52,13 @@ export class ChurchTimingsPage {
     this.constituency = [];
     this.mandals = [];
     this.panchayati = [];
-    this.service.getdistrict(stateId).subscribe((res: any) => {
-      if (res && res.status == 200) {
-        this.districts = res.data;
-      }
-    });
+    if (stateId) {
+      this.service.getdistrict(stateId).subscribe((res: any) => {
+        if (res && res.status == 200) {
+          this.districts = res.data;
+        }
+      });
+    }
   }
 
   fromshow: any = 1;
@@ -70,12 +72,10 @@ export class ChurchTimingsPage {
   }
 
   ionViewDidLoad() {
-    this.getdistric();
-    // this.churchtimings();
+    this.churchtimings();
     this.getdenomations();
     this.getbeliver();
     this.getadds();
-    this.search();
   }
 
   gotohome() {

@@ -47,6 +47,7 @@
       <ion-col col-12  (click)="openphoto()">
         <div class="imgerdt" >
           <input type="file" id="businessFileInput" (change)="onFileSelected($event)" accept="image/*" style="display:none">
+          <input type="file" id="businessCameraInput" (change)="onFileSelected($event)" accept="image/*" capture="camera" style="display:none">
           <img src="assets/icon/upload.svg"  style="height:70px;width:70px;">అప్‌లోడ్ చేయించుకోండి
           బ్రాచ్యాల్‌ను
           <img *ngIf="imagesdata.length" [src]="imagesdata[0].reviewimg" alt="" height="100px" width="100px">
@@ -115,6 +116,7 @@
         <ion-item>
           <ion-label stacked>రాష్ట్రం / State <span style="color:red">*</span></ion-label>
           <ion-select formControlName="state_id" (ionChange)="onStateChange($event)" style="height:37px;width: 273px;">
+            <ion-option value="" disabled selected>రాష్ట్రం ఎంచుకోండి</ion-option>
             <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>
             <ion-option value="2">తెలంగాణ (TG)</ion-option>
           </ion-select>
@@ -126,7 +128,7 @@
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>జిల్లాలను ఎంపికచేయండి <span style="color:red">*</span></ion-label>
-          <ion-select formControlName="districtname" [disabled]="!addingbusiness.get('state_id')?.value" (ionChange)="getconstency($event)"
+          <ion-select formControlName="districtname" [disabled]="!addingbusiness.value.state_id" (ionChange)="getconstency($event)"
             [ngClass]="{'is-invalid': submitted && j['districtname'].errors }" style="height:37px;width: 273px;">
             <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
             <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>
@@ -140,7 +142,7 @@
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>మండలాలను ఎంపికచేయండి <span style="color:red">*</span></ion-label>
-          <ion-select formControlName="constituencyname" [disabled]="!addingbusiness.get('districtname')?.value" (ionChange)="getmandals($event)"
+          <ion-select formControlName="constituencyname" [disabled]="!addingbusiness.value.districtname" (ionChange)="getmandals($event)"
             [ngClass]="{'is-invalid': submitted && j['constituencyname'].errors }" style="height:37px;width: 273px;">
             <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
             <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>
@@ -156,7 +158,7 @@
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>పంచాయితీ ఎంపికచేయండి <span style="color:red">*</span></ion-label>
-          <ion-select formControlName="mandals" [disabled]="!addingbusiness.get('constituencyname')?.value" (ionChange)="gepanchayati($event)"
+          <ion-select formControlName="mandals" [disabled]="!addingbusiness.value.constituencyname" (ionChange)="gepanchayati($event)"
             [ngClass]="{'is-invalid': submitted && j['mandals'].errors }" style="height:37px;width: 273px;">
             <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
             <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>
@@ -170,7 +172,7 @@
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>గ్రామ ఎంపికచేయండి <span style="color:red">*</span></ion-label>
-          <ion-select formControlName="village_name" [disabled]="!addingbusiness.get('mandals')?.value" [ngClass]="{'is-invalid': submitted && j['village_name'].errors }"
+          <ion-select formControlName="village_name" [disabled]="!addingbusiness.value.mandals" [ngClass]="{'is-invalid': submitted && j['village_name'].errors }"
             style="height:37px;width: 273px;">
             <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
             <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>

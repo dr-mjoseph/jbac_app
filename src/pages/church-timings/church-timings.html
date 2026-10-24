@@ -19,6 +19,7 @@
       <ion-item>
         <ion-label stacked>రాష్ట్రం / State</ion-label>
         <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">
+          <ion-option value="" disabled selected>రాష్ట్రం ఎంచుకోండి</ion-option>
           <ion-option value="1">Andhra Pradesh</ion-option>
           <ion-option value="2">Telangana</ion-option>
         </ion-select>

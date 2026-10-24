@@ -77,6 +77,7 @@
       <ion-col col-12>
         <div class="imgerdt" (click)="openphoto()">
           <input type="file" id="meetingFileInput" (change)="onFileSelected($event)" accept="image/*" style="display:none">
+          <input type="file" id="meetingCameraInput" (change)="onFileSelected($event)" accept="image/*" capture="camera" style="display:none">
           <img src="assets/icon/upload.svg" style="height:70px;width:70px;">అప్‌లోడ్ కూటముల పోస్టర్‌
           <br>
           <img *ngIf="imagesData.length" [src]="imagesData[0].reviewimg" alt="" height="200px" width="200px">
@@ -165,13 +166,14 @@
         <ion-item class="mb-4 pb-2">
           <ion-label stacked>రాష్ట్రం / State <span style="color:red; ">*</span></ion-label>
           <ion-select formControlName="state_id" (ionChange)="onStateChange($event)" placeholder="రాష్ట్రం ఎంచుకోండి" class="form-control">
+            <ion-option value="" disabled selected>రాష్ట్రం ఎంచుకోండి</ion-option>
             <ion-option value="1">Andhra Pradesh</ion-option>
             <ion-option value="2">Telangana</ion-option>
           </ion-select>
         </ion-item>
         <ion-item class="mb-4 pb-2">
           <ion-label stacked> జిల్లాను  <span style="color:red; ">*</span></ion-label>
-          <ion-select formControlName="districtname" [disabled]="!form.get('state_id')?.value" (ionChange)="getconstency($event)" placeholder="ఇక్కడ క్లిక్ చేసి జిల్లాను ఎంచుకోండి"
+          <ion-select formControlName="districtname" [disabled]="!form.value.state_id" (ionChange)="getconstency($event)" placeholder="ఇక్కడ క్లిక్ చేసి జిల్లాను ఎంచుకోండి"
             (click)="geyr(1)" class="form-control">
             <ion-option value="{{item.id}}" *ngFor="let item of districts">{{item.distrct_nm}}</ion-option>
           </ion-select>
@@ -184,7 +186,7 @@
       <ion-col col-12>
         <ion-item class="mb-4 pb-2">
           <ion-label stacked>నియోజకవర్గం  <span style="color:red; ">*</span></ion-label>
-          <ion-select formControlName="constituencyname" [disabled]="!form.get('districtname')?.value" (ionChange)="getmandals($event)" (click)="geyr(2)"
+          <ion-select formControlName="constituencyname" [disabled]="!form.value.districtname" (ionChange)="getmandals($event)" (click)="geyr(2)"
             placeholder="ఇక్కడ క్లిక్ చేసి  నియోజకవర్గం ఎంచుకోండి" class="form-control">
             <ion-option value="{{item.id}}" *ngFor="let item of constituency">{{item.const_nm}}</ion-option>
           </ion-select>
@@ -197,7 +199,7 @@
       <ion-col col-12>
         <ion-item class="mb-4 pb-2">
           <ion-label stacked> మండలం / మున్సిపాలిటీని ఎంచుకోండి <span style="color:red; ">*</span></ion-label>
-          <ion-select formControlName="mandals" [disabled]="!form.get('constituencyname')?.value" (ionChange)="gepanchayati($event)" (click)="geyr(3)"
+          <ion-select formControlName="mandals" [disabled]="!form.value.constituencyname" (ionChange)="gepanchayati($event)" (click)="geyr(3)"
             placeholder="ఇక్కడ క్లిక్ చేసి సెలెక్ట్ మండలం / మున్సిపాలిటీ" class="form-control">
             <ion-option value="{{item.id}}" *ngFor="let item of mandals">{{item.mndl_nm}}</ion-option>
           </ion-select>
@@ -210,7 +212,7 @@
       <ion-col col-12>
         <ion-item class="mb-4 pb-2">
           <ion-label stacked> పంచాయతీ / వార్డుని ఎంచుకోండి <span style="color:red; ">*</span></ion-label>
-          <ion-select formControlName="village_name" [disabled]="!form.get('mandals')?.value" placeholder="ఇక్కడ క్లిక్ చేసి సెలెక్ట్ పంచాయతీ/వార్డు" (click)="geyr(4)"
+          <ion-select formControlName="village_name" [disabled]="!form.value.mandals" placeholder="ఇక్కడ క్లిక్ చేసి సెలెక్ట్ పంచాయతీ/వార్డు" (click)="geyr(4)"
             class="form-control">
             <ion-option value="{{item.id}}" *ngFor="let item of panchayati">{{item.pnchyt_nm}}</ion-option>
           </ion-select>

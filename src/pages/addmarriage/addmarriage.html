@@ -89,6 +89,15 @@
           </div>
         </ion-item>
       </ion-col>
+      <ion-col col-12 (click)="openphoto()">
+        <div class="imgerdt">
+          <input type="file" id="marriageFileInput" (change)="onFileSelected($event)" accept="image/*" style="display:none">
+          <input type="file" id="marriageCameraInput" (change)="onFileSelected($event)" accept="image/*" capture="camera" style="display:none">
+          <img src="assets/icon/upload.svg" style="height:70px;width:70px;">
+          చిత్రం అప్‌లోడ్ చేయండి<br>
+          <img *ngIf="imagesdata.length" style="width:200px;height:200px" src="{{imagesdata[0].reviewimg}}">
+        </div>
+      </ion-col>
       <ion-col col-12>
         <ion-list>
           <ion-label stacked>మీరు ఎవరు</ion-label>
@@ -257,6 +266,7 @@
         <ion-item>
           <ion-label stacked>రాష్ట్రం / State <span style="color:red;">*</span></ion-label>
           <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">
+            <ion-option value="" disabled selected>రాష్ట్రం ఎంచుకోండి</ion-option>
             <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>
             <ion-option value="2">తెలంగాణ (TG)</ion-option>
           </ion-select>
@@ -268,7 +278,7 @@
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>జిల్లాల ఎంచుకోండి <span style="color:red;">*</span></ion-label>
-          <ion-select formControlName="districtname" [disabled]="!addingmarriages.get('state_id')?.value" [ngClass]="{'is-invalid': submitted && m['districtname'].errors }"
+          <ion-select formControlName="districtname" [disabled]="!addingmarriages.value.state_id" [ngClass]="{'is-invalid': submitted && m['districtname'].errors }"
             (ionChange)="getconstency($event)">
             <ion-option value="" selected disabled>రకము ఎంచుకోండి</ion-option>
             <ion-option *ngFor="let item of districts" [value]="item.id">{{ item.distrct_nm }}</ion-option>
@@ -282,7 +292,7 @@
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>నియోజకవర్గం ఎంచుకోండి <span style="color:red;">*</span></ion-label>
-          <ion-select formControlName="constituencyname" [disabled]="!addingmarriages.get('districtname')?.value"
+          <ion-select formControlName="constituencyname" [disabled]="!addingmarriages.value.districtname"
             [ngClass]="{'is-invalid': submitted && m['constituencyname'].errors }" (ionChange)="getmandals($event)">
             <ion-option value="" selected disabled>నియోజకవర్గం ఎంచుకోండి</ion-option>
             <ion-option *ngFor="let item of constituency" [value]="item.id">{{ item.const_nm }}</ion-option>
@@ -296,7 +306,7 @@
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>మండలం ఎంచుకోండి <span style="color:red;">*</span></ion-label>
-          <ion-select formControlName="mandals" [disabled]="!addingmarriages.get('constituencyname')?.value" [ngClass]="{'is-invalid': submitted && m['mandals'].errors }"
+          <ion-select formControlName="mandals" [disabled]="!addingmarriages.value.constituencyname" [ngClass]="{'is-invalid': submitted && m['mandals'].errors }"
             (ionChange)="gepanchayati($event)">
             <ion-option value="" selected disabled>రకము ఎంచుకోండి</ion-option>
             <ion-option *ngFor="let item of mandals" [value]="item.id">{{ item.mndl_nm }}</ion-option>
@@ -310,7 +320,7 @@
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>పంచాయతీల ఎంచుకోండి <span style="color:red;">*</span></ion-label>
-          <ion-select formControlName="village_name" [disabled]="!addingmarriages.get('mandals')?.value" [ngClass]="{'is-invalid': submitted && m['village_name'].errors }">
+          <ion-select formControlName="village_name" [disabled]="!addingmarriages.value.mandals" [ngClass]="{'is-invalid': submitted && m['village_name'].errors }">
             <ion-option value="" selected disabled>రకము ఎంచుకోండి</ion-option>
             <ion-option *ngFor="let item of panchayati" [value]="item.id">{{ item.pnchyt_nm }}</ion-option>
           </ion-select>

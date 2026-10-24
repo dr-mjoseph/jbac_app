@@ -20,7 +20,7 @@ export class AddchurchtimingsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public camera: Camera, public actionSheetCtrl: ActionSheetController, public formBuilder: FormBuilder, public service: ServiceProvider, private loadingCtrl: LoadingController) {
 
     this.addingchurchtimimngs = this.formBuilder.group({
-      state_id: ['1'],
+      state_id: ['', [Validators.required]],
       service_name: ['', [Validators.required]],
       day: ['', [Validators.required]],
       time_start: ['', [Validators.required]],
@@ -47,7 +47,6 @@ export class AddchurchtimingsPage {
   searchdist: any;
 
   ionViewDidLoad() {
-    this.getdistric();
   }
 
   onStateChange(event: any) {

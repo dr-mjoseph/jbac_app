@@ -37,7 +37,7 @@
       <ion-card class="custom-card" style="border-radius: 10px;">
         <ion-card-header>
           <div class="card-image">
-            <img style="border-radius: 8px;" *ngIf="item.image" [src]="item.image" alt="Image" class="card-img"
+            <img style="border-radius: 8px;" *ngIf="item.image" [src]="item.image" (error)="item.image='assets/icon/svg/news.svg'" alt="Image" class="card-img"
               (click)="openImage(item.image)">
           </div>
         </ion-card-header>
@@ -55,6 +55,11 @@
           <p style="font-size: 20px;font-family:ramabhadra;">విభాగం: <strong>{{item.news}}</strong></p>
         </ion-card-content>
       </ion-card>
+    </ion-col>
+
+    <ion-col col-12 *ngIf="searchnews && searchnews.length === 0" style="text-align: center; padding: 40px 16px;">
+      <ion-icon name="information-circle" style="font-size: 48px; color: #ffeb3b;"></ion-icon>
+      <p style="font-size: 18px; color: #ffffff; font-family: ramabhadra;">ఈ కేటగిరీలో ప్రస్తుతానికి వార్తలు ఏవీ లేవు</p>
     </ion-col>
 
   </ion-row>

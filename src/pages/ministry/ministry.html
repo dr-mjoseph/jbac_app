@@ -81,7 +81,8 @@
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>రాష్ట్రం / State <span style="color:red; ">*</span></ion-label>
-          <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">
+          <ion-select formControlName="state_id" (ionChange)="onStateChange($event)" placeholder="రాష్ట్రం ఎంచుకోండి">
+            <ion-option value="" disabled selected>రాష్ట్రం ఎంచుకోండి</ion-option>
             <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>
             <ion-option value="2">తెలంగాణ (TG)</ion-option>
           </ion-select>
@@ -91,28 +92,28 @@
         <ion-item>
           <ion-label stacked>జిల్లాల ఎంచుకోండి <span
               style="color:red; ">*</span></ion-label>
-          <ion-select formControlName="district_id" [disabled]="!ministryform.get('state_id')?.value" (ionChange)="getconstency($event);" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి"
-            [ngClass]="{'is-invalid': submitted && r['district_id']?.errors }">
+          <ion-select formControlName="district_id" [disabled]="!ministryform.value.state_id" (ionChange)="getconstency($event);" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి"
+            [ngClass]="{'is-invalid': submitted && ministryform.get('district_id').invalid }">
             <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
             <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>
           </ion-select>
         </ion-item>
-        <div *ngIf="submitted && r['district_id']?.errors" class="invalid-feedback">
-          <div *ngIf="r['district_id']?.errors?.['required']">జిల్లాల ఎంచుకోండి అవసరం</div>
+        <div *ngIf="submitted && ministryform.get('district_id').invalid" class="invalid-feedback">
+          <div *ngIf="ministryform.get('district_id').hasError('required')">జిల్లాల ఎంచుకోండి అవసరం</div>
         </div>
       </ion-col>
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>కాన్స్టిట్యూన్సీ ఎంచుకోండి <span
               style="color:red; ">*</span></ion-label>
-          <ion-select formControlName="constituency_id" [disabled]="!ministryform.get('district_id')?.value" (ionChange)="getmandals($event);" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి"
-            [ngClass]="{'is-invalid': submitted && r['constituency_id']?.errors }">
+          <ion-select formControlName="constituency_id" [disabled]="!ministryform.value.district_id" (ionChange)="getmandals($event);" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి"
+            [ngClass]="{'is-invalid': submitted && ministryform.get('constituency_id').invalid }">
             <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
             <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>
           </ion-select>
         </ion-item>
-        <div *ngIf="submitted && r['constituency_id']?.errors" class="invalid-feedback">
-          <div *ngIf="r['constituency_id']?.errors?.['required']">కాన్స్టిట్యూన్సీ ఎంచుకోండి అవసరం</div>
+        <div *ngIf="submitted && ministryform.get('constituency_id').invalid" class="invalid-feedback">
+          <div *ngIf="ministryform.get('constituency_id').hasError('required')">కాన్స్టిట్యూన్సీ ఎంచుకోండి అవసరం</div>
         </div>
       </ion-col>
     </ion-row>
@@ -121,28 +122,28 @@
         <ion-item>
           <ion-label stacked>మండలాలను ఎంచుకోండి<span
               style="color:red; ">*</span></ion-label>
-          <ion-select formControlName="mandal_id" [disabled]="!ministryform.get('constituency_id')?.value" (ionChange)="gepanchayati($event);" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి"
-            [ngClass]="{'is-invalid': submitted && r['mandal_id']?.errors }">
+          <ion-select formControlName="mandal_id" [disabled]="!ministryform.value.constituency_id" (ionChange)="gepanchayati($event);" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి"
+            [ngClass]="{'is-invalid': submitted && ministryform.get('mandal_id').invalid }">
             <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
             <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>
           </ion-select>
         </ion-item>
-        <div *ngIf="submitted && r['mandal_id']?.errors" class="invalid-feedback">
-          <div *ngIf="r['mandal_id']?.errors?.['required']">మండలం అవసరం</div>
+        <div *ngIf="submitted && ministryform.get('mandal_id').invalid" class="invalid-feedback">
+          <div *ngIf="ministryform.get('mandal_id').hasError('required')">మండలం అవసరం</div>
         </div>
       </ion-col>
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>పంచాయతీ ఎంచుకోండి <span
               style="color:red; ">*</span></ion-label>
-          <ion-select formControlName="panchayat_id" [disabled]="!ministryform.get('mandal_id')?.value" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి"
-            [ngClass]="{'is-invalid': submitted && r['panchayat_id']?.errors }">
+          <ion-select formControlName="panchayat_id" [disabled]="!ministryform.value.mandal_id" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి"
+            [ngClass]="{'is-invalid': submitted && ministryform.get('panchayat_id').invalid }">
             <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>
             <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>
           </ion-select>
         </ion-item>
-        <div *ngIf="submitted && r['panchayat_id']?.errors" class="invalid-feedback">
-          <div *ngIf="r['panchayat_id']?.errors?.['required']">పంచాయతీ అవసరం</div>
+        <div *ngIf="submitted && ministryform.get('panchayat_id').invalid" class="invalid-feedback">
+          <div *ngIf="ministryform.get('panchayat_id').hasError('required')">పంచాయతీ అవసరం</div>
         </div>
       </ion-col>
       <ion-row>
@@ -162,12 +163,12 @@
                 style="color:red; ">*</span></ion-label>
             <ion-input type="text" formControlName="headnmber"
               placeholder="మీ ఆంధ్రప్రదేశ్ రాష్ట్రపాల ఫోన్ నంబర్‌ను నమోదు చేయండి"
-              [ngClass]="{'is-invalid': submitted && r['headnmber']?.errors }" maxlength="10" minlength="10"
+              [ngClass]="{'is-invalid': submitted && ministryform.get('headnmber').invalid }" maxlength="10" minlength="10"
               (keypress)="numericOnly($event)"></ion-input>
           </ion-item>
-          <div *ngIf="submitted && r['headnmber']?.errors" class="invalid-feedback">
-            <div *ngIf="r['headnmber']?.errors?.['required']">ఫోన్ నంబర్ అవసరం</div>
-            <div *ngIf="r['headnmber']?.errors?.['maxlength']">10 అంకెల నంబర్ అవసరం</div>
+          <div *ngIf="submitted && ministryform.get('headnmber').invalid" class="invalid-feedback">
+            <div *ngIf="ministryform.get('headnmber').hasError('required')">ఫోన్ నంబర్ అవసరం</div>
+            <div *ngIf="ministryform.get('headnmber').hasError('maxlength')">10 అంకెల నంబర్ అవసరం</div>
           </div>
         </ion-col>
       </ion-row>
@@ -185,11 +186,11 @@
         <ion-item>
           <ion-label stacked>సంకేతపదం <span style="color:red; ">*</span></ion-label>
           <ion-input type="password" formControlName="password" placeholder="మీ సంకేతపదం నమోదు చేయండి" maxlength="16"
-            minlength="6" [ngClass]="{'is-invalid': submitted && r['password'].errors }"></ion-input>
+            minlength="6" [ngClass]="{'is-invalid': submitted && ministryform.get('password').invalid }"></ion-input>
         </ion-item>
-        <div *ngIf="submitted && r['password'].errors" class="invalid-feedback">
-          <div *ngIf="r['password'].errors['required']">సంకేతపదం అవసరం</div>
-          <div *ngIf="r['password'].errors['minlength']">సంకేతపదం 6 నుండి 16 అక్షరాలకు ఉండాలి</div>
+        <div *ngIf="submitted && ministryform.get('password').invalid" class="invalid-feedback">
+          <div *ngIf="ministryform.get('password').hasError('required')">సంకేతపదం అవసరం</div>
+          <div *ngIf="ministryform.get('password').hasError('minlength')">సంకేతపదం 6 నుండి 16 అక్షరాలకు ఉండాలి</div>
         </div>
       </ion-col>
       <ion-col col-12>
@@ -198,11 +199,11 @@
               style="color:red; ">*</span></ion-label>
           <ion-input type="password" formControlName="retypepassword" maxlength="16" minlength="6"
             placeholder="మీ సంకేతపదం నమోదు చేయండి"
-            [ngClass]="{'is-invalid': submitted && r['retypepassword'].errors }"></ion-input>
+            [ngClass]="{'is-invalid': submitted && ministryform.get('retypepassword').invalid }"></ion-input>
         </ion-item>
-        <div *ngIf="submitted && r['retypepassword'].errors" class="invalid-feedback">
-          <div *ngIf="r['retypepassword'].errors['required']">మళ్ళీ నమోదు చేయుటకు సంకేతపదం అవసరం</div>
-          <div *ngIf="r['retypepassword'].errors['minlength']">సంకేతపదం 6 నుండి 16 అక్షరాలకు ఉండాలి</div>
+        <div *ngIf="submitted && ministryform.get('retypepassword').invalid" class="invalid-feedback">
+          <div *ngIf="ministryform.get('retypepassword').hasError('required')">మళ్ళీ నమోదు చేయుటకు సంకేతపదం అవసరం</div>
+          <div *ngIf="ministryform.get('retypepassword').hasError('minlength')">సంకేతపదం 6 నుండి 16 అక్షరాలకు ఉండాలి</div>
         </div>
       </ion-col>
       <ion-col col-12>

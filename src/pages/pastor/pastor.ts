@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -43,7 +43,7 @@ export class PastorPage {
       nativeplace: [''],
       talent: [''],
       education: [''],
-      state_id: ['1', [Validators.required]],
+      state_id: ['', [Validators.required]],
       district_id: ['', [Validators.required]],
       constituency_id: ['', [Validators.required]],
       mandal_id: ['', [Validators.required]],
@@ -84,14 +84,15 @@ export class PastorPage {
     this.constituency = [];
     this.mandals = [];
     this.panchayati = [];
-    this.service.getdistrict(stateId).subscribe((res: any) => {
-      if (res && res.status == 200) {
-        this.districts = res.data;
-      }
-    });
+    if (stateId) {
+      this.service.getdistrict(stateId).subscribe((res: any) => {
+        if (res && res.status == 200) {
+          this.districts = res.data;
+        }
+      });
+    }
   }
   ionViewDidLoad() {
-    this.getdistric();
     this.getdenomations();
     this.getbelivers();
     this.getwing();
@@ -119,14 +120,17 @@ export class PastorPage {
     })
   }
 
-  getdistric() {
-    this.service.getdistrict().subscribe((res: any) => {
-      this.districts = res.data;
-    })
-  }
-
   getconstency(event: any) {
     var id = event;
+    this.form.patchValue({
+      constituency_id: '',
+      mandal_id: '',
+      panchayat_id: ''
+    });
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    if (!id) return;
     this.service.getconsistencys().subscribe((res: any) => {
       this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
     })
@@ -134,6 +138,13 @@ export class PastorPage {
 
   getmandals(event: any) {
     var id = event;
+    this.form.patchValue({
+      mandal_id: '',
+      panchayat_id: ''
+    });
+    this.mandals = [];
+    this.panchayati = [];
+    if (!id) return;
     this.service.getmandals().subscribe((res: any) => {
       this.mandals = res.data.filter((data: any) => data.const_id == id);
     })
@@ -141,6 +152,11 @@ export class PastorPage {
 
   gepanchayati(event: any) {
     var id = event;
+    this.form.patchValue({
+      panchayat_id: ''
+    });
+    this.panchayati = [];
+    if (!id) return;
     this.service.gepanchayatis().subscribe((res: any) => {
       this.panchayati = res.data.filter((data: any) => data.mndl_id == id);
     })

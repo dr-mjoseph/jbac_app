@@ -34,10 +34,84 @@ export class DoctorregisterPage {
       available_time_start: ['10:00 AM', [Validators.required]],
       available_time_end: ['05:00 PM', [Validators.required]],
       location: ['Vijayawada & Online Consultation', [Validators.required]],
+      state_id: ['', [Validators.required]],
+      district_id: ['', [Validators.required]],
+      constituency_id: ['', [Validators.required]],
+      mandal_id: ['', [Validators.required]],
+      panchayat_id: ['', [Validators.required]],
       address: ['', [Validators.required]],
       bio: ['', [Validators.required]],
       category_id: [8],
       category: ['Doctor']
+    });
+  }
+
+  districts: any = [];
+  constituency: any = [];
+  mandals: any = [];
+  panchayati: any = [];
+
+  onStateChange(event: any) {
+    var stateId = event;
+    this.doctorForm.patchValue({
+      state_id: stateId,
+      district_id: '',
+      constituency_id: '',
+      mandal_id: '',
+      panchayat_id: ''
+    });
+    this.districts = [];
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    if (stateId) {
+      this.service.getdistrict(stateId).subscribe((res: any) => {
+        if (res && res.status == 200) {
+          this.districts = res.data;
+        }
+      });
+    }
+  }
+
+  getconstency(event: any) {
+    var id = event;
+    this.doctorForm.patchValue({
+      constituency_id: '',
+      mandal_id: '',
+      panchayat_id: ''
+    });
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    if (!id) return;
+    this.service.getconsistencys().subscribe((res: any) => {
+      this.constituency = (res && res.data) ? res.data.filter((data: any) => data.dstrct_id == id) : [];
+    });
+  }
+
+  getmandals(event: any) {
+    var id = event;
+    this.doctorForm.patchValue({
+      mandal_id: '',
+      panchayat_id: ''
+    });
+    this.mandals = [];
+    this.panchayati = [];
+    if (!id) return;
+    this.service.getmandals().subscribe((res: any) => {
+      this.mandals = (res && res.data) ? res.data.filter((data: any) => data.const_id == id) : [];
+    });
+  }
+
+  gepanchayati(event: any) {
+    var id = event;
+    this.doctorForm.patchValue({
+      panchayat_id: ''
+    });
+    this.panchayati = [];
+    if (!id) return;
+    this.service.gepanchayatis().subscribe((res: any) => {
+      this.panchayati = (res && res.data) ? res.data.filter((data: any) => data.mndl_id == id) : [];
     });
   }
 

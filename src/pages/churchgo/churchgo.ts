@@ -20,7 +20,16 @@ export class ChurchgoPage {
   }
 
   openYoutube() {
-    window.open('https://www.youtube.com/channel/UCnk2hURhesjDM7SuOxgmt5A/about', '_system', 'location=yes');
+    const url = 'https://www.youtube.com/channel/UCnk2hURhesjDM7SuOxgmt5A/about';
+    try {
+      if ((window as any).cordova && (window as any).cordova.InAppBrowser) {
+        (window as any).cordova.InAppBrowser.open(url, '_system', 'location=yes');
+      } else {
+        window.open(url, '_system');
+      }
+    } catch (e) {
+      window.location.href = url;
+    }
   }
 
   gotoAbout() {

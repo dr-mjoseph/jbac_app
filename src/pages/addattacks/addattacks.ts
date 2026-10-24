@@ -21,7 +21,6 @@ export class AddattacksPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public camera: Camera, public actionSheetCtrl: ActionSheetController, public formBuilder: FormBuilder, public service: ServiceProvider , private loadingCtrl: LoadingController, public zone: NgZone ) {
 
     this.form = this.formBuilder.group({
-      state_id: ['1'],
       image: [''],
       videoa: [''],
       videob: [''],
@@ -37,6 +36,7 @@ export class AddattacksPage {
       attacker2name: [''],
       noteondescription: [''],
       audio: [''],
+      state_id: ['', [Validators.required]],
       district_id: ['', [Validators.required]],
       constituency_id: ['', [Validators.required]],
       mandal_id: ['', [Validators.required]],
@@ -48,12 +48,21 @@ export class AddattacksPage {
   triggerFileInput() {
     const fileInput = document.getElementById('attackFileInput') as HTMLInputElement;
     if (fileInput) {
+      fileInput.value = '';
       fileInput.click();
     }
   }
 
+  triggerCameraInput() {
+    const cameraInput = document.getElementById('attackCameraInput') as HTMLInputElement;
+    if (cameraInput) {
+      cameraInput.value = '';
+      cameraInput.click();
+    }
+  }
+
   onFileSelected(event: any) {
-    const file = event.target.files[0];
+    const file = event.target.files && event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
@@ -70,53 +79,72 @@ export class AddattacksPage {
 
   async openphoto() {
     const actionSheet = this.actionSheetCtrl.create({
+      title: 'ఫోటో ఎంచుకోండి (Select Photo)',
       buttons: [
         {
           icon: 'ios-folder-open',
           text: 'Gallery',
           handler: () => {
-            const options: CameraOptions = {
-              quality: 70,
-              destinationType: this.camera.DestinationType.DATA_URL,
-              sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-              saveToPhotoAlbum: false
-            }
-            this.camera.getPicture(options).then((imaged) => {
-              this.zone.run(() => {
-                var ing = `data:image/jpeg;base64,` + imaged;
-                var imagedata = {
-                  reviewImg: ing,
-                  filetype: 'jpeg',
-                }
-                this.imagesData.push(imagedata);
-              });
-            }, (err) => {
+            if (!((window as any).navigator && (window as any).navigator.camera)) {
               this.triggerFileInput();
-            });
+              return;
+            }
+            try {
+              const options: CameraOptions = {
+                quality: 70,
+                destinationType: this.camera.DestinationType.DATA_URL,
+                sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+                saveToPhotoAlbum: false
+              };
+              this.camera.getPicture(options).then((imaged) => {
+                this.zone.run(() => {
+                  var ing = `data:image/jpeg;base64,` + imaged;
+                  var imagedata = {
+                    reviewImg: ing,
+                    filetype: 'jpeg',
+                  };
+                  this.imagesData.push(imagedata);
+                });
+              }, (err) => {
+                console.log('Gallery picker error, triggering file fallback', err);
+                this.triggerFileInput();
+              });
+            } catch (err) {
+              this.triggerFileInput();
+            }
           }
         }, {
           icon: 'ios-camera',
           text: 'Camera',
           handler: () => {
-            const options: CameraOptions = {
-              quality: 70,
-              correctOrientation: true,
-              destinationType: this.camera.DestinationType.DATA_URL,
-              encodingType: this.camera.EncodingType.JPEG,
-              mediaType: this.camera.MediaType.PICTURE
+            if (!((window as any).navigator && (window as any).navigator.camera)) {
+              this.triggerCameraInput();
+              return;
             }
-            this.camera.getPicture(options).then((imageD) => {
-              this.zone.run(() => {
-                var img = `data:image/jpeg;base64,` + imageD;
-                var imagedata = {
-                  reviewImg: img,
-                  filetype: 'jpeg',
-                }
-                this.imagesData.push(imagedata);
+            try {
+              const options: CameraOptions = {
+                quality: 70,
+                correctOrientation: true,
+                destinationType: this.camera.DestinationType.DATA_URL,
+                encodingType: this.camera.EncodingType.JPEG,
+                mediaType: this.camera.MediaType.PICTURE
+              };
+              this.camera.getPicture(options).then((imageD) => {
+                this.zone.run(() => {
+                  var img = `data:image/jpeg;base64,` + imageD;
+                  var imagedata = {
+                    reviewImg: img,
+                    filetype: 'jpeg',
+                  };
+                  this.imagesData.push(imagedata);
+                });
+              }, (err) => {
+                console.log('Camera error, triggering camera fallback', err);
+                this.triggerCameraInput();
               });
-            }, (err) => {
-              this.triggerFileInput();
-            });
+            } catch (err) {
+              this.triggerCameraInput();
+            }
           }
         }, {
           icon: 'ios-close',
@@ -138,7 +166,6 @@ export class AddattacksPage {
   searchdist: any;
 
   ionViewDidLoad() {
-    this.getdistric();
   }
 
   onStateChange(event: any) {

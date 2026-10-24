@@ -1,6 +1,6 @@
 webpackJsonp([36],{
 
-/***/ 418:
+/***/ 415:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChurchgoPageModule", function() { return ChurchgoPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__churchgo__ = __webpack_require__(475);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__churchgo__ = __webpack_require__(472);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,7 +38,7 @@ var ChurchgoPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 475:
+/***/ 472:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -69,7 +69,18 @@ var ChurchgoPage = /** @class */ (function () {
         this.navParams = navParams;
     }
     ChurchgoPage.prototype.openYoutube = function () {
-        window.open('https://www.youtube.com/channel/UCnk2hURhesjDM7SuOxgmt5A/about', '_system', 'location=yes');
+        var url = 'https://www.youtube.com/channel/UCnk2hURhesjDM7SuOxgmt5A/about';
+        try {
+            if (window.cordova && window.cordova.InAppBrowser) {
+                window.cordova.InAppBrowser.open(url, '_system', 'location=yes');
+            }
+            else {
+                window.open(url, '_system');
+            }
+        }
+        catch (e) {
+            window.location.href = url;
+        }
     };
     ChurchgoPage.prototype.gotoAbout = function () {
         this.navCtrl.push('AboutPage');

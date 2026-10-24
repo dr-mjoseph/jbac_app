@@ -35,7 +35,7 @@ export class MinistryPage {
       headnmber: ['', [Validators.required, Validators.maxLength(10)]],
       number_ofchurches: ['', [Validators.required]],
       number_ofmembers: ['', [Validators.required]],
-      state_id: ['1'],
+      state_id: ['', [Validators.required]],
       district_id: ['', [Validators.required]],
       constituency_id: ['', [Validators.required]],
       mandal_id: ['', [Validators.required]],
@@ -49,7 +49,6 @@ export class MinistryPage {
   }
 
   ionViewDidLoad() {
-    this.getdistric();
     this.getdenomations();
   }
 

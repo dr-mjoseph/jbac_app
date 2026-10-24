@@ -100,8 +100,6 @@ export class SearchorganisationPage {
 
 
   ionViewDidLoad() {
-    this.getdistric();
-    // this.searechevents();
     this.defaultdata();
     this.getdenomations();
     this.getbeliver();

@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
@@ -38,7 +38,7 @@ export class AssociationPage {
       whatsapp_number: [''],
       totalleadrs: [''],
       address: [''],
-      state_id: ['1', [Validators.required]],
+      state_id: ['', [Validators.required]],
       district_id: ['', [Validators.required]],
       constituency_id: ['', [Validators.required]],
       mandal_id: ['', [Validators.required]],
@@ -66,14 +66,15 @@ export class AssociationPage {
     this.districts = [];
     this.constituency = [];
     this.mandals = [];
-    this.service.getdistrict(stateId).subscribe((res: any) => {
-      if (res && res.status == 200) {
-        this.districts = res.data;
-      }
-    });
+    if (stateId) {
+      this.service.getdistrict(stateId).subscribe((res: any) => {
+        if (res && res.status == 200) {
+          this.districts = res.data;
+        }
+      });
+    }
   }
   ionViewDidLoad() {
-    this.getdistric();
     this.getdenomations();
     // this.getbelivers();
     // this.getbeliver();
@@ -95,14 +96,15 @@ export class AssociationPage {
     })
   }
 
-  getdistric() {
-    this.service.getdistrict().subscribe((res: any) => {
-      this.districts = res.data;
-    })
-  }
-
   getconstency(event: any) {
     var id = event;
+    this.form.patchValue({
+      constituency_id: '',
+      mandal_id: ''
+    });
+    this.constituency = [];
+    this.mandals = [];
+    if (!id) return;
     this.service.getconsistencys().subscribe((res: any) => {
       this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
     })
@@ -110,6 +112,11 @@ export class AssociationPage {
 
   getmandals(event: any) {
     var id = event;
+    this.form.patchValue({
+      mandal_id: ''
+    });
+    this.mandals = [];
+    if (!id) return;
     this.service.getmandals().subscribe((res: any) => {
       this.mandals = res.data.filter((data: any) => data.const_id == id);
     })

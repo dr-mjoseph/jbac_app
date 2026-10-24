@@ -54,7 +54,7 @@ export class StudentPage {
       tmarks: [''],
       mmarks: [''],
       branch: [''],
-      state_id: ['1'],
+      state_id: ['', [Validators.required]],
       district_id: ['', [Validators.required]],
       constituency_id: ['', [Validators.required]],
       mandal_id: ['', [Validators.required]],
@@ -81,7 +81,7 @@ export class StudentPage {
       respanchayati: ['', [Validators.required]],
       resmandals: ['', [Validators.required]],
       resconstituencyname: ['', [Validators.required]],
-      res_state_id: ['1'],
+      res_state_id: ['', [Validators.required]],
       resdistricts: ['', [Validators.required]],
       god: [''],
       term: [true],
@@ -97,8 +97,6 @@ export class StudentPage {
   }
 
   ionViewDidLoad() {
-    this.getdistric();
-    this.getresdistric();
     this.getdenomations();
     this.getwing();
   }

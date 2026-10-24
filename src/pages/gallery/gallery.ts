@@ -21,19 +21,7 @@ export class GalleryPage {
   getimages() {
     this.service.getimages().subscribe((res: any) => {
       if (res && res.data && Array.isArray(res.data)) {
-        const uniqueCategories = [];
-        const map = new Map();
-        for (const item of res.data) {
-          const catId = item.category_id || item.id;
-          if (catId && !map.has(catId)) {
-            map.set(catId, true);
-            uniqueCategories.push({
-              ...item,
-              id: catId
-            });
-          }
-        }
-        this.imagesget = uniqueCategories.length > 0 ? uniqueCategories : res.data;
+        this.imagesget = res.data;
       } else {
         this.imagesget = [];
       }

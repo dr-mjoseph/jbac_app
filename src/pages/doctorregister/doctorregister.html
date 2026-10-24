@@ -96,6 +96,47 @@
       </ion-item>
 
       <ion-item class="custom-item">
+        <ion-label stacked>రాష్ట్రం / State <span class="req">*</span></ion-label>
+        <ion-select formControlName="state_id" (ionChange)="onStateChange($event)" placeholder="రాష్ట్రం ఎంచుకోండి">
+          <ion-option value="" disabled selected>రాష్ట్రం ఎంచుకోండి</ion-option>
+          <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>
+          <ion-option value="2">తెలంగాణ (TG)</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>జిల్లా (District) <span class="req">*</span></ion-label>
+        <ion-select formControlName="district_id" [disabled]="!doctorForm.value.state_id" (ionChange)="getconstency($event)" placeholder="జిల్లా ఎంచుకోండి">
+          <ion-option value="" disabled selected>జిల్లా ఎంచుకోండి</ion-option>
+          <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>నియోజకవర్గం (Constituency) <span class="req">*</span></ion-label>
+        <ion-select formControlName="constituency_id" [disabled]="!doctorForm.value.district_id" (ionChange)="getmandals($event)" placeholder="నియోజకవర్గం ఎంచుకోండి">
+          <ion-option value="" disabled selected>నియోజకవర్గం ఎంచుకోండి</ion-option>
+          <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>మండలం (Mandal) <span class="req">*</span></ion-label>
+        <ion-select formControlName="mandal_id" [disabled]="!doctorForm.value.constituency_id" (ionChange)="gepanchayati($event)" placeholder="మండలం ఎంచుకోండి">
+          <ion-option value="" disabled selected>మండలం ఎంచుకోండి</ion-option>
+          <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>పంచాయతీ / గ్రామం (Panchayat) <span class="req">*</span></ion-label>
+        <ion-select formControlName="panchayat_id" [disabled]="!doctorForm.value.mandal_id" placeholder="పంచాయతీ ఎంచుకోండి">
+          <ion-option value="" disabled selected>పంచాయతీ ఎంచుకోండి</ion-option>
+          <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
         <ion-label stacked>పూర్తి క్లినిక్ / చర్చి చిరునామా (Address) <span class="req">*</span></ion-label>
         <ion-input type="text" formControlName="address" placeholder="క్లినిక్ లేదా ఆసుపత్రి చిరునామా"></ion-input>
       </ion-item>

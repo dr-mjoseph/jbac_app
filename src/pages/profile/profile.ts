@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
 // import { HomePage } from '../home/home';
 
@@ -63,8 +63,7 @@ export class ProfilePage {
 
   loading: any
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, public service: ServiceProvider,
-    private loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, public service: ServiceProvider) {
 
     this.pastorform = this.formBuilder.group({
       pastorname: [''],
@@ -374,8 +373,12 @@ export class ProfilePage {
       category_id: localStorage.getItem('category_id'),
     }
     this.service.getuserprofilereport(data).subscribe((res: any) => {
-      this.profiledata = res.data[0];
-    })
+      if (res && res.data && res.data.length > 0) {
+        this.profiledata = res.data[0];
+      }
+    }, err => {
+      console.log('Error loading personal data:', err);
+    });
   }
 
   getdistric() {

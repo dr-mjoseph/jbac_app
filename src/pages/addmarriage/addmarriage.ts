@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { ActionSheetController, IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
-import { Camera } from '@ionic-native/camera';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // import { HomePage } from '../home/home';
 
@@ -16,7 +16,7 @@ export class AddmarriagePage {
 
   imagesdata: any = []
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public camera: Camera, public actionSheetCtrl: ActionSheetController, public formBuilder: FormBuilder, public service: ServiceProvider,private loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public camera: Camera, public actionSheetCtrl: ActionSheetController, public formBuilder: FormBuilder, public service: ServiceProvider,private loadingCtrl: LoadingController, public zone: NgZone) {
 
     this.addingmarriages = this.formBuilder.group({
       gender: ['', [Validators.required]],
@@ -33,7 +33,7 @@ export class AddmarriagePage {
       address: ['', [Validators.required]],
       description: [''],
       phonenumber: ['', [Validators.required, Validators.maxLength(10)]],
-      state_id: ['1', [Validators.required]],
+      state_id: ['', [Validators.required]],
       districtname: ['', [Validators.required]],
       constituencyname: ['', [Validators.required]],
       mandals: ['', [Validators.required]],
@@ -80,7 +80,6 @@ export class AddmarriagePage {
   }
 
   ionViewDidLoad() {
-    this.getdistric();
     this.getbeliver();
     this.getbelivers();
     this.pastorfilterdropdown();
@@ -197,6 +196,128 @@ export class AddmarriagePage {
     let patt = /^([0-9])$/;
     let result = patt.test(event.key);
     return result;
+  }
+
+  triggerFileInput() {
+    const input = document.getElementById('marriageFileInput') as HTMLInputElement;
+    if (input) {
+      input.value = '';
+      input.click();
+    }
+  }
+
+  triggerCameraInput() {
+    const input = document.getElementById('marriageCameraInput') as HTMLInputElement;
+    if (input) {
+      input.value = '';
+      input.click();
+    }
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.zone.run(() => {
+          this.imagesdata = [{
+            reviewimg: e.target.result,
+            filetype: 'jpeg'
+          }];
+          if (this.addingmarriages) {
+            this.addingmarriages.patchValue({ image: e.target.result });
+          }
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  async openphoto() {
+    const actionSheet = this.actionSheetCtrl.create({
+      title: 'ఫోటో ఎంచుకోండి (Select Photo)',
+      buttons: [
+        {
+          icon: 'ios-folder-open',
+          text: 'Gallery',
+          handler: () => {
+            if (!((window as any).navigator && (window as any).navigator.camera)) {
+              this.triggerFileInput();
+              return;
+            }
+            try {
+              const options: CameraOptions = {
+                quality: 70,
+                destinationType: this.camera.DestinationType.DATA_URL,
+                sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+                saveToPhotoAlbum: false
+              };
+              this.camera.getPicture(options).then((imaged) => {
+                this.zone.run(() => {
+                  var ing = `data:image/jpeg;base64,` + imaged;
+                  var imagedata = {
+                    reviewimg: ing,
+                    filetype: 'jpeg',
+                  };
+                  this.imagesdata = [imagedata];
+                  if (this.addingmarriages) {
+                    this.addingmarriages.patchValue({ image: ing });
+                  }
+                });
+              }, (err) => {
+                console.log('Gallery picker error, triggering file fallback', err);
+                this.triggerFileInput();
+              });
+            } catch (err) {
+              this.triggerFileInput();
+            }
+          }
+        }, {
+          icon: 'ios-camera',
+          text: 'Camera',
+          handler: () => {
+            if (!((window as any).navigator && (window as any).navigator.camera)) {
+              this.triggerCameraInput();
+              return;
+            }
+            try {
+              const options: CameraOptions = {
+                quality: 70,
+                correctOrientation: true,
+                destinationType: this.camera.DestinationType.DATA_URL,
+                encodingType: this.camera.EncodingType.JPEG,
+                mediaType: this.camera.MediaType.PICTURE
+              };
+              this.camera.getPicture(options).then((imageD) => {
+                this.zone.run(() => {
+                  var img = `data:image/jpeg;base64,` + imageD;
+                  var imagedata = {
+                    reviewimg: img,
+                    filetype: 'jpeg',
+                  };
+                  this.imagesdata = [imagedata];
+                  if (this.addingmarriages) {
+                    this.addingmarriages.patchValue({ image: img });
+                  }
+                });
+              }, (err) => {
+                console.log('Camera error, triggering camera fallback', err);
+                this.triggerCameraInput();
+              });
+            } catch (err) {
+              this.triggerCameraInput();
+            }
+          }
+        }, {
+          icon: 'ios-close',
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+          }
+        }
+      ]
+    });
+    actionSheet.present();
   }
 
   submitted: boolean = false

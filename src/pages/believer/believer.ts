@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
@@ -97,50 +97,62 @@ export class BelieverPage {
     this.constituency = [];
     this.mandals = [];
     this.panchayati = [];
-    this.service.getdistrict(stateId).subscribe((res: any) => {
-      if (res && res.status == 200) {
-        this.districts = res.data;
-      }
-    });
+    if (stateId) {
+      this.service.getdistrict(stateId).subscribe((res: any) => {
+        if (res && res.status == 200) {
+          this.districts = res.data;
+        }
+      });
+    }
   }
   ionViewDidLoad() {
-    this.getdistric();
-    this.getdenomations();
     this.getwing();
     this.getchurchesdata();
   }
 
-  getdistric() {
-    this.service.getdistrict().subscribe((res: any) => {
-      this.districts = res.data;
-    })
+  getconstency(event: any) {
+    var id = event;
+    this.form.patchValue({
+      constituencyname: '',
+      mandals: '',
+      panchayati: ''
+    });
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+    if (id) {
+      this.service.getconsistencys().subscribe((res: any) => {
+        this.constituency = (res && res.data) ? res.data.filter((data: any) => data.dstrct_id == id) : [];
+      });
+    }
   }
 
   getmandals(event: any) {
     var id = event;
-    this.service.getmandals().subscribe((res: any) => {
-      this.mandals = res.data.filter((data: any) => data.const_id == id);
-    })
-  }
-
-  getdenomations() {
-    this.service.getdenomation().subscribe((res: any) => {
-      this.denomation = res.data;
-    })
-  }
-
-  getconstency(event: any) {
-    var id = event;
-    this.service.getconsistencys().subscribe((res: any) => {
-      this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
-    })
+    this.form.patchValue({
+      mandals: '',
+      panchayati: ''
+    });
+    this.mandals = [];
+    this.panchayati = [];
+    if (id) {
+      this.service.getmandals().subscribe((res: any) => {
+        this.mandals = (res && res.data) ? res.data.filter((data: any) => data.const_id == id) : [];
+      });
+    }
   }
 
   gepanchayati(event: any) {
     var id = event;
-    this.service.gepanchayatis().subscribe((res: any) => {
-      this.panchayati = res.data.filter((data: any) => data.mndl_id == id);
-    })
+    this.form.patchValue({
+      panchayati: ''
+    });
+    this.panchayati = [];
+    if (id) {
+      this.service.gepanchayatis().subscribe((res: any) => {
+        this.panchayati = (res && res.data) ? res.data.filter((data: any) => data.mndl_id == id) : [];
+      });
+    }
   }
 
   getpastorsdatas: any;

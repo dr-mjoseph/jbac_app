@@ -30,33 +30,32 @@ export class NewsViewPage {
   selectedCategory: any = '0';
   getnews() {
     this.service.getupdatenews().subscribe(res => {
-      if (res.status == 202) {
-        alert(res.message);
-      } else if (res.status == 200) {
+      if (res && res.status == 202) {
+        console.log(res.message);
+      } else if (res && res.status == 200 && res.data) {
         this.allsearchnews = res.data;
-        this.searchnews = res.data;
-        console.log(this.searchnews);
-
+        this.getfilter(this.selectedCategory);
+        console.log('Loaded news:', this.allsearchnews.length);
       }
-    })
+    }, err => {
+      console.log('Error loading news:', err);
+    });
   }
 
   getfilter(event: any) {
     console.log('Filtering news by:', event);
     if (!this.allsearchnews) return;
-    if (event == '0' || event == 0 || !event) {
+    if (event == '0' || event === 0 || !event) {
       this.searchnews = [...this.allsearchnews];
-    } else {
-      const selected = String(event).trim().toLowerCase();
-      this.searchnews = this.allsearchnews.filter((item: any) => {
-        if (!item || !item.news) return false;
-        const cat = String(item.news).trim().toLowerCase();
-        return cat === selected || cat.includes(selected) || selected.includes(cat);
-      });
+      return;
     }
-    if (this.searchnews.length == 0) {
-      alert('ఈ క్యాటగిరీకి సంబంధించిన డేటా లేదు');
-    }
+    const cleanStr = (s: any) => String(s || '').replace(/[\s,\.\-_\/]+/g, '').trim().toLowerCase();
+    const selected = cleanStr(event);
+    this.searchnews = this.allsearchnews.filter((item: any) => {
+      if (!item) return false;
+      const cat = cleanStr(item.news || item.category || '');
+      return cat === selected || cat.includes(selected) || selected.includes(cat);
+    });
   }
 
 

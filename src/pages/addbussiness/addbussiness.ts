@@ -30,7 +30,7 @@ export class AddbussinessPage {
       description: ['', [Validators.required]],
       number: ['', [Validators.required, Validators.minLength(10)]],
       denomation: [''],
-      state_id: ['1', [Validators.required]],
+      state_id: ['', [Validators.required]],
       districtname: ['', [Validators.required]],
       constituencyname: ['', [Validators.required]],
       mandals: ['', [Validators.required]],
@@ -43,8 +43,6 @@ export class AddbussinessPage {
   }
 
   ionViewDidLoad() {
-    this.getdistric();
-    this.getbeliver();
     this.getbelivers();
     this.getdenomations();
   }
@@ -188,7 +186,18 @@ export class AddbussinessPage {
 
   triggerFileInput() {
     const input = document.getElementById('businessFileInput') as HTMLInputElement;
-    if (input) input.click();
+    if (input) {
+      input.value = '';
+      input.click();
+    }
+  }
+
+  triggerCameraInput() {
+    const input = document.getElementById('businessCameraInput') as HTMLInputElement;
+    if (input) {
+      input.value = '';
+      input.click();
+    }
   }
 
   onFileSelected(event: any) {
@@ -209,55 +218,72 @@ export class AddbussinessPage {
 
   async openphoto() {
     const actionSheet = this.actionSheetCtrl.create({
+      title: 'ఫోటో ఎంచుకోండి (Select Photo)',
       buttons: [
         {
           icon: 'ios-folder-open',
           text: 'Gallery',
           handler: () => {
-            const options: CameraOptions = {
-              quality: 70,
-              destinationType: this.camera.DestinationType.DATA_URL,
-              sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-              saveToPhotoAlbum: false
-            }
-            this.camera.getPicture(options).then((imaged) => {
-              this.zone.run(() => {
-                var ing = `data:image/jpeg;base64,` + imaged;
-                var imagedata = {
-                  reviewimg: ing,
-                  filetype: 'jpeg',
-                }
-                this.imagesdata = [imagedata];
-              });
-            }, (err) => {
-              console.log('Gallery picker error, triggering file fallback', err);
+            if (!((window as any).navigator && (window as any).navigator.camera)) {
               this.triggerFileInput();
-            });
+              return;
+            }
+            try {
+              const options: CameraOptions = {
+                quality: 70,
+                destinationType: this.camera.DestinationType.DATA_URL,
+                sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+                saveToPhotoAlbum: false
+              };
+              this.camera.getPicture(options).then((imaged) => {
+                this.zone.run(() => {
+                  var ing = `data:image/jpeg;base64,` + imaged;
+                  var imagedata = {
+                    reviewimg: ing,
+                    filetype: 'jpeg',
+                  };
+                  this.imagesdata = [imagedata];
+                });
+              }, (err) => {
+                console.log('Gallery picker error, triggering file fallback', err);
+                this.triggerFileInput();
+              });
+            } catch (err) {
+              this.triggerFileInput();
+            }
           }
         }, {
           icon: 'ios-camera',
           text: 'Camera',
           handler: () => {
-            const options: CameraOptions = {
-              quality: 70,
-              correctOrientation: true,
-              destinationType: this.camera.DestinationType.DATA_URL,
-              encodingType: this.camera.EncodingType.JPEG,
-              mediaType: this.camera.MediaType.PICTURE
+            if (!((window as any).navigator && (window as any).navigator.camera)) {
+              this.triggerCameraInput();
+              return;
             }
-            this.camera.getPicture(options).then((imageD) => {
-              this.zone.run(() => {
-                var img = `data:image/jpeg;base64,` + imageD;
-                var imagedata = {
-                  reviewimg: img,
-                  filetype: 'jpeg',
-                }
-                this.imagesdata = [imagedata];
+            try {
+              const options: CameraOptions = {
+                quality: 70,
+                correctOrientation: true,
+                destinationType: this.camera.DestinationType.DATA_URL,
+                encodingType: this.camera.EncodingType.JPEG,
+                mediaType: this.camera.MediaType.PICTURE
+              };
+              this.camera.getPicture(options).then((imageD) => {
+                this.zone.run(() => {
+                  var img = `data:image/jpeg;base64,` + imageD;
+                  var imagedata = {
+                    reviewimg: img,
+                    filetype: 'jpeg',
+                  };
+                  this.imagesdata = [imagedata];
+                });
+              }, (err) => {
+                console.log('Camera error, triggering camera fallback', err);
+                this.triggerCameraInput();
               });
-            }, (err) => {
-              console.log('Camera error, triggering file fallback', err);
-              this.triggerFileInput();
-            });
+            } catch (err) {
+              this.triggerCameraInput();
+            }
           }
         }, {
           icon: 'ios-close',
