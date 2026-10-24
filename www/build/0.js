@@ -122,7 +122,7 @@ var win = (typeof window === 'undefined') ? {
 
 /***/ }),
 
-/***/ 461:
+/***/ 462:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -130,7 +130,7 @@ var win = (typeof window === 'undefined') ? {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_swiper__ = __webpack_require__(462);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_swiper__ = __webpack_require__(463);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_service_service__ = __webpack_require__(128);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -211,9 +211,15 @@ var HomePage = /** @class */ (function () {
         else {
             this.maintrue = true;
         }
-        this.service.getcount().subscribe(function (res) {
-            _this.count = res.data[0].count;
-        });
+        if (this.service && typeof this.service.getcount === 'function') {
+            this.service.getcount().subscribe(function (res) {
+                if (res && res.data && res.data[0] && res.data[0].count !== undefined) {
+                    _this.count = res.data[0].count;
+                }
+            }, function (err) {
+                console.warn('getcount failed:', err);
+            });
+        }
     }
     HomePage.prototype.login = function () {
         this.navCtrl.push('LoginPage');
@@ -426,11 +432,11 @@ var HomePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 462:
+/***/ 463:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_dom7_dist_dom7_modular__ = __webpack_require__(463);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_dom7_dist_dom7_modular__ = __webpack_require__(464);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ssr_window__ = __webpack_require__(459);
 /**
  * Swiper 4.5.1
@@ -7601,7 +7607,7 @@ Swiper.use(components);
 
 /***/ }),
 
-/***/ 463:
+/***/ 464:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9053,7 +9059,7 @@ function scroll(...args) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(461);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(462);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_service_service__ = __webpack_require__(128);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;

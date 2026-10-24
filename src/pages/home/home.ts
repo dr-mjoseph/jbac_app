@@ -35,9 +35,15 @@ export class HomePage {
       this.maintrue = true;
     }
 
-    this.service.getcount().subscribe((res: any) => {
-      this.count = res.data[0].count
-    })
+    if (this.service && typeof this.service.getcount === 'function') {
+      this.service.getcount().subscribe((res: any) => {
+        if (res && res.data && res.data[0] && res.data[0].count !== undefined) {
+          this.count = res.data[0].count;
+        }
+      }, (err) => {
+        console.warn('getcount failed:', err);
+      });
+    }
 
   }
 

@@ -11,7 +11,7 @@ import { ServiceProvider } from '../providers/service/service';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any;
+  rootPage: any = 'HomePage';
 
   pages: Array<{ title: string, subtitle?: string, image: any, page: string }>;
 
@@ -36,8 +36,13 @@ export class MyApp {
       { 'title': 'మమ్మల్ని సంప్రదించండి', 'subtitle': 'Contact JBAC Helpline', 'image': 'assets/icon/svg/contact-us.svg', 'page': 'ContactPage' },
     ];
 
-    this.service.updatecount().subscribe((res: any) => {
-    })
+    if (this.service && typeof this.service.updatecount === 'function') {
+      try {
+        this.service.updatecount().subscribe(() => {});
+      } catch (e) {
+        console.warn('updatecount error:', e);
+      }
+    }
   }
 
   initializeApp() {
@@ -45,11 +50,9 @@ export class MyApp {
       // this.statusBar.styleDefault();
       this.statusBar.backgroundColorByHexString('#00548F'); // Set color to blue
       this.splashScreen.hide();
-      // if (localStorage.getItem("usr_id") == "" || localStorage.getItem("usr_id") == null || localStorage.getItem("usr_id") == undefined) {
-      //   this.nav.setRoot('LoginPage'); // Use setRoot for the initial page
-      // } else {
-      this.nav.setRoot('HomePage'); // Use setRoot for the initial page
-      // }
+      if (this.nav && !this.nav.getActive()) {
+        this.nav.setRoot('HomePage');
+      }
     });
   }
 
