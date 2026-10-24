@@ -859,9 +859,9 @@
       .desktop-only { display: none !important; }
 
       body {
-        height: 100% !important;
+        height: auto !important;
         min-height: 100vh !important;
-        overflow-x: hidden !important;
+        overflow-y: auto !important;
       }
 
       header {
@@ -1055,7 +1055,7 @@
       </div>
       <button class="btn btn-sm" onclick="saveAndTestApi()">⚡ Connect</button>
       <button class="btn btn-sm btn-primary" onclick="refreshCurrentTab()">🔄 Refresh</button>
-
+      
       <!-- Authenticated Admin User Status -->
       <div class="admin-badge" id="adminBadge">
         <span>🛡️ Admin: <b id="adminUserDisplay">admin</b></span>
