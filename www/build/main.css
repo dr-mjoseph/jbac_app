@@ -26105,6 +26105,64 @@ strong {
   font-size: 16px !important;
 }
 
+.click-block {
+  z-index: 999 !important;
+}
+
+.click-block-active {
+  top: 56px !important;
+  pointer-events: none !important;
+}
+
+ion-header,
+ion-navbar,
+.toolbar {
+  z-index: 100000 !important;
+  pointer-events: auto !important;
+}
+
+.back-button,
+ion-navbar .back-button,
+button.back-button,
+ion-header button[icon-only] {
+  z-index: 100001 !important;
+  pointer-events: auto !important;
+  min-width: 48px !important;
+  min-height: 48px !important;
+  display: -webkit-box !important;
+  display: -webkit-flex !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-align: center !important;
+  -webkit-align-items: center !important;
+  -ms-flex-align: center !important;
+  align-items: center !important;
+  -webkit-box-pack: center !important;
+  -webkit-justify-content: center !important;
+  -ms-flex-pack: center !important;
+  justify-content: center !important;
+  -ms-touch-action: manipulation !important;
+  touch-action: manipulation !important;
+  cursor: pointer !important;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.back-button-icon {
+  font-size: 26px !important;
+  min-width: 28px !important;
+  min-height: 28px !important;
+}
+
+ion-navbar .toolbar-title,
+.toolbar-title {
+  pointer-events: none !important;
+}
+
+ion-navbar .toolbar-title > *,
+.toolbar-title > * {
+  pointer-events: auto !important;
+}
+
 page-account ion-card {
   border-radius: 8px;
   -webkit-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

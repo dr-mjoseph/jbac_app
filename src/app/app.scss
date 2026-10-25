@@ -228,3 +228,54 @@ strong {
 .label-md[stacked] {
     font-size: 16px !important;
 }
+
+// Mobile Compatibility: Smooth, responsive go-back navigation
+.click-block {
+    z-index: 999 !important;
+}
+
+.click-block-active {
+    top: 56px !important;
+    pointer-events: none !important;
+}
+
+ion-header,
+ion-navbar,
+.toolbar {
+    z-index: 100000 !important;
+    pointer-events: auto !important;
+}
+
+.back-button,
+ion-navbar .back-button,
+button.back-button,
+ion-header button[icon-only] {
+    z-index: 100001 !important;
+    pointer-events: auto !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    touch-action: manipulation !important;
+    cursor: pointer !important;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.back-button-icon {
+    font-size: 26px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+}
+
+// Ensure centered title doesn't swallow touch events meant for back button
+ion-navbar .toolbar-title,
+.toolbar-title {
+    pointer-events: none !important;
+}
+
+ion-navbar .toolbar-title > *,
+.toolbar-title > * {
+    pointer-events: auto !important;
+}
+

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { App, IonicApp, MenuController, Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 // import { HomePage } from '../pages/home/home';
@@ -15,7 +15,15 @@ export class MyApp {
 
   pages: Array<{ title: string, subtitle?: string, image: any, page: string }>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public service: ServiceProvider) {
+  constructor(
+    public platform: Platform,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen,
+    public service: ServiceProvider,
+    public app: App,
+    public ionicApp: IonicApp,
+    public menuCtrl: MenuController
+  ) {
     this.initializeApp();
 
         this.pages = [
@@ -53,6 +61,31 @@ export class MyApp {
       if (this.nav && !this.nav.getActive()) {
         this.nav.setRoot('HomePage');
       }
+
+      this.platform.registerBackButtonAction(() => {
+        if (this.menuCtrl && this.menuCtrl.isOpen()) {
+          this.menuCtrl.close();
+          return;
+        }
+        const activePortal = (this.ionicApp._modalPortal && this.ionicApp._modalPortal.getActive()) ||
+                             (this.ionicApp._overlayPortal && this.ionicApp._overlayPortal.getActive()) ||
+                             (this.ionicApp._loadingPortal && this.ionicApp._loadingPortal.getActive());
+        if (activePortal) {
+          activePortal.dismiss().catch(() => {});
+          return;
+        }
+        const activeNav = (this.app && this.app.getActiveNavs && this.app.getActiveNavs()[0]) || this.nav;
+        if (activeNav && activeNav.canGoBack()) {
+          activeNav.pop();
+          return;
+        }
+        const view = activeNav ? activeNav.getActive() : null;
+        if (view && view.id !== 'HomePage') {
+          activeNav.setRoot('HomePage');
+        } else {
+          this.platform.exitApp();
+        }
+      }, 101);
     });
   }
 

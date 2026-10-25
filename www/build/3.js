@@ -1,6 +1,6 @@
 webpackJsonp([3],{
 
-/***/ 440:
+/***/ 439:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -89,7 +89,7 @@ var VideoGallerySubPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-video-gallery-sub',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\video-gallery-sub\video-gallery-sub.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b style="text-transform: capitalize;"> {{catreru}} Video-Gallery\n\n      </b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding class="pagecss">\n\n\n\n\n\n  <div *ngFor="let o of videos">\n\n    <br>\n\n    <div style="text-align: center;">\n\n      <iframe [src]="o.banner_url | tubet " allow="autoplay; encrypted-media" style="height:250px;width:333px"></iframe>\n\n    </div>\n\n  </div>\n\n\n\n  <div>\n\n    <br>\n\n    <p style="color: white;text-transform: capitalize;">Church\'s <span style="text-align: left">More</span></p>\n\n    <div style="text-align: center;">\n\n      <iframe src=" https://www.youtube.com/embed/Kz5pscwuTF8?si=GCFQfS8y6jiyzRVD" allow="autoplay; encrypted-media"\n\n        allowfullscreen style="height:250px;width:333px"></iframe>\n\n    </div>\n\n  </div>\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\video-gallery-sub\video-gallery-sub.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_service_service__["a" /* ServiceProvider */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_service_service__["a" /* ServiceProvider */]])
     ], VideoGallerySubPage);
     return VideoGallerySubPage;
 }());

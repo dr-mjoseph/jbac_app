@@ -53,10 +53,18 @@ export class ProfilePage {
   subward: boolean = false;
   father: boolean = false;
 
+  states: any = [
+    { id: 1, state_name: 'ఆంధ్రప్రదేశ్ (Andhra Pradesh - AP)' },
+    { id: 2, state_name: 'తెలంగాణ (Telangana - TG)' }
+  ];
   districts: any = [];
   mandals: any = [];
   constituency: any = [];
   panchayati: any = [];
+  resDistricts: any = [];
+  resConstituency: any = [];
+  resMandals: any = [];
+  resPanchayati: any = [];
   denomation: any;
 
   bliversdata: any
@@ -66,6 +74,7 @@ export class ProfilePage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, public service: ServiceProvider) {
 
     this.pastorform = this.formBuilder.group({
+      state_id: [''],
       pastorname: [''],
       dob: [''],
       about_desp: [''],
@@ -107,6 +116,7 @@ export class ProfilePage {
     })
 
     this.churchregsiterform = this.formBuilder.group({
+      state_id: [''],
       church_name: ['', [Validators.required]],
       denomination_id: [''],
       total_members: [''],
@@ -128,6 +138,7 @@ export class ProfilePage {
     })
 
     this.updateprofileministry = this.formBuilder.group({
+      state_id: [''],
       ministryname: [''],
       denomation: [''],
       ministryemail: [''],
@@ -146,6 +157,7 @@ export class ProfilePage {
     })
 
     this.beliverform = this.formBuilder.group({
+      state_id: [''],
       fname: [''],
       whatsapp: [''],
       dob: [''],
@@ -187,6 +199,7 @@ export class ProfilePage {
     })
 
     this.studentform = this.formBuilder.group({
+      state_id: [''],
       studentname: [''],
       gender: [''],
       number: [''],
@@ -219,6 +232,7 @@ export class ProfilePage {
       ward: [''],
       wardnumber: [''],
       villagename: [''],
+      res_state_id: [''],
       respanchayati: [''],
       resmandals: [''],
       resconstituencyname: ['',],
@@ -232,6 +246,7 @@ export class ProfilePage {
     })
 
     this.independentorgainsationform = this.formBuilder.group({
+      state_id: [''],
       organisation_name: [''],
       checkbox: [''],
       believer_id: [''],
@@ -256,6 +271,7 @@ export class ProfilePage {
     })
 
     this.pastorsassociations = this.formBuilder.group({
+      state_id: [''],
       pa_name: [''],
       pastor_id: [''],
       level: [''],
@@ -277,6 +293,7 @@ export class ProfilePage {
     })
 
     this.ministryform = this.formBuilder.group({
+      state_id: [''],
       ministryname: [''],
       denomation_id: [''],
       headname: [''],
@@ -313,10 +330,6 @@ export class ProfilePage {
     this.getpastorassciation();
     this.getwing();
     this.getbelivers();
-    this.getdistric()
-    this.getmandals(0);
-    this.getconstency(0);
-    this.gepanchayati(0);
     this.getservice();
   }
 
@@ -381,48 +394,207 @@ export class ProfilePage {
     });
   }
 
-  getdistric() {
-    this.service.getdistrict().subscribe((res: any) => {
-      this.districts = res.data;
-    })
+  getdistric(stateId?: any) {
+    const sid = stateId || 1;
+    this.service.getdistrict(sid).subscribe((res: any) => {
+      this.districts = res && res.data ? res.data : [];
+    }, () => {
+      this.districts = [];
+    });
   }
 
-  getconstency(event: any) {
-    if (event != 0) {
-      var id = event;
+  onStateChange(event: any, formType?: string) {
+    const sid = event;
+    this.constituency = [];
+    this.mandals = [];
+    this.panchayati = [];
+
+    if (formType === 'believer' || !formType) {
+      this.beliverform.patchValue({ districts: '', constituencyname: '', mandals: '', panchayati: '' });
+    }
+    if (formType === 'student' || !formType) {
+      this.studentform.patchValue({ district_id: '', constituency_id: '', mandal_id: '', village_id: '' });
+    }
+    if (formType === 'ministry' || !formType) {
+      this.updateprofileministry.patchValue({ district_id: '', constituency_id: '', mandal_id: '', panchayat_id: '' });
+      if (this.ministryform) {
+        this.ministryform.patchValue({ district_id: '', constituency_id: '', mandal_id: '', panchayat_id: '' });
+      }
+    }
+    if (formType === 'pastor' || !formType) {
+      this.pastorform.patchValue({ district_id: '', constituency_id: '', mandal_id: '', panchayat_id: '' });
+    }
+    if (formType === 'church' || !formType) {
+      this.churchregsiterform.patchValue({ district_id: '', constituency_id: '', mandal_id: '', village_id: '' });
+    }
+    if (formType === 'organisation' || !formType) {
+      this.independentorgainsationform.patchValue({ districts: '', constituencyname: '', mandals: '', panchayati: '' });
+    }
+    if (formType === 'association' || !formType) {
+      this.pastorsassociations.patchValue({ district_id: '', constituency_id: '', mandal_id: '', village_id: '' });
+    }
+
+    if (sid) {
+      this.getdistric(sid);
+    } else {
+      this.districts = [];
+    }
+  }
+
+  onResStateChange(event: any) {
+    const sid = event;
+    this.studentform.patchValue({
+      resdistricts: '',
+      resconstituencyname: '',
+      resmandals: '',
+      respanchayati: ''
+    });
+    this.resDistricts = [];
+    this.resConstituency = [];
+    this.resMandals = [];
+    this.resPanchayati = [];
+
+    if (sid) {
+      this.service.getdistrict(sid).subscribe((res: any) => {
+        this.resDistricts = res && res.data ? res.data : [];
+      }, () => {
+        this.resDistricts = [];
+      });
+    }
+  }
+
+  getconstency(event: any, formType?: string) {
+    const id = event;
+    this.mandals = [];
+    this.panchayati = [];
+    if (formType === 'believer') {
+      this.beliverform.patchValue({ constituencyname: '', mandals: '', panchayati: '' });
+    } else if (formType === 'student') {
+      this.studentform.patchValue({ constituency_id: '', mandal_id: '', village_id: '' });
+    } else if (formType === 'ministry') {
+      this.updateprofileministry.patchValue({ constituency_id: '', mandal_id: '', panchayat_id: '' });
+      if (this.ministryform) this.ministryform.patchValue({ constituency_id: '', mandal_id: '', panchayat_id: '' });
+    } else if (formType === 'pastor') {
+      this.pastorform.patchValue({ constituency_id: '', mandal_id: '', panchayat_id: '' });
+    } else if (formType === 'church') {
+      this.churchregsiterform.patchValue({ constituency_id: '', mandal_id: '', village_id: '' });
+    } else if (formType === 'organisation') {
+      this.independentorgainsationform.patchValue({ constituencyname: '', mandals: '', panchayati: '' });
+    } else if (formType === 'association') {
+      this.pastorsassociations.patchValue({ constituency_id: '', mandal_id: '', village_id: '' });
+    }
+    if (!id || id == 0) {
+      this.constituency = [];
+      return;
     }
     this.service.getconsistencys().subscribe((res: any) => {
-      if (event == 0) {
-        this.constituency = res.data;
-      } else {
-        this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
-      }
-    })
+      this.constituency = res && res.data ? res.data.filter((data: any) => data.dstrct_id == id) : [];
+    }, () => {
+      this.constituency = [];
+    });
   }
 
-  getmandals(event: any) {
-    if (event != 0) {
-      var id = event;
+  getmandals(event: any, formType?: string) {
+    const id = event;
+    this.panchayati = [];
+    if (formType === 'believer') {
+      this.beliverform.patchValue({ mandals: '', panchayati: '' });
+    } else if (formType === 'student') {
+      this.studentform.patchValue({ mandal_id: '', village_id: '' });
+    } else if (formType === 'ministry') {
+      this.updateprofileministry.patchValue({ mandal_id: '', panchayat_id: '' });
+      if (this.ministryform) this.ministryform.patchValue({ mandal_id: '', panchayat_id: '' });
+    } else if (formType === 'pastor') {
+      this.pastorform.patchValue({ mandal_id: '', panchayat_id: '' });
+    } else if (formType === 'church') {
+      this.churchregsiterform.patchValue({ mandal_id: '', village_id: '' });
+    } else if (formType === 'organisation') {
+      this.independentorgainsationform.patchValue({ mandals: '', panchayati: '' });
+    } else if (formType === 'association') {
+      this.pastorsassociations.patchValue({ mandal_id: '', village_id: '' });
+    }
+    if (!id || id == 0) {
+      this.mandals = [];
+      return;
     }
     this.service.getmandals().subscribe((res: any) => {
-      if (event == 0) {
-        this.mandals = res.data;
-      } else {
-        this.mandals = res.data.filter((data: any) => data.const_id == id);
-      }
-    })
+      this.mandals = res && res.data ? res.data.filter((data: any) => data.const_id == id) : [];
+    }, () => {
+      this.mandals = [];
+    });
   }
 
-  gepanchayati(event: any) {
-    var id = event;
+  gepanchayati(event: any, formType?: string) {
+    const id = event;
+    if (formType === 'believer') {
+      this.beliverform.patchValue({ panchayati: '' });
+    } else if (formType === 'student') {
+      this.studentform.patchValue({ village_id: '' });
+    } else if (formType === 'ministry') {
+      this.updateprofileministry.patchValue({ panchayat_id: '' });
+      if (this.ministryform) this.ministryform.patchValue({ panchayat_id: '' });
+    } else if (formType === 'pastor') {
+      this.pastorform.patchValue({ panchayat_id: '' });
+    } else if (formType === 'church') {
+      this.churchregsiterform.patchValue({ village_id: '' });
+    } else if (formType === 'organisation') {
+      this.independentorgainsationform.patchValue({ panchayati: '' });
+    } else if (formType === 'association') {
+      this.pastorsassociations.patchValue({ village_id: '' });
+    }
+    if (!id || id == 0) {
+      this.panchayati = [];
+      return;
+    }
     this.service.gepanchayatis().subscribe((res: any) => {
-      if (event == 0 || !id) {
-        this.panchayati = res && res.data ? res.data : [];
-      } else {
-        this.panchayati = res && res.data ? res.data.filter((data: any) => data.mndl_id == id) : [];
-      }
-    }, error => {
-      console.log(error);
+      this.panchayati = res && res.data ? res.data.filter((data: any) => data.mndl_id == id) : [];
+    }, () => {
+      this.panchayati = [];
+    });
+  }
+
+  getconstency1(event: any) {
+    const id = event;
+    this.studentform.patchValue({ resconstituencyname: '', resmandals: '', respanchayati: '' });
+    this.resMandals = [];
+    this.resPanchayati = [];
+    if (!id || id == 0) {
+      this.resConstituency = [];
+      return;
+    }
+    this.service.getconsistencys().subscribe((res: any) => {
+      this.resConstituency = res && res.data ? res.data.filter((data: any) => data.dstrct_id == id) : [];
+    }, () => {
+      this.resConstituency = [];
+    });
+  }
+
+  getmandals1(event: any) {
+    const id = event;
+    this.studentform.patchValue({ resmandals: '', respanchayati: '' });
+    this.resPanchayati = [];
+    if (!id || id == 0) {
+      this.resMandals = [];
+      return;
+    }
+    this.service.getmandals().subscribe((res: any) => {
+      this.resMandals = res && res.data ? res.data.filter((data: any) => data.const_id == id) : [];
+    }, () => {
+      this.resMandals = [];
+    });
+  }
+
+  gepanchayati1(event: any) {
+    const id = event;
+    this.studentform.patchValue({ respanchayati: '' });
+    if (!id || id == 0) {
+      this.resPanchayati = [];
+      return;
+    }
+    this.service.gepanchayatis().subscribe((res: any) => {
+      this.resPanchayati = res && res.data ? res.data.filter((data: any) => data.mndl_id == id) : [];
+    }, () => {
+      this.resPanchayati = [];
     });
   }
 
@@ -741,13 +913,67 @@ export class ProfilePage {
         description: this.details.description,
       })
 
-            // Pre-populate cascading location dropdowns
+      // Pre-populate state and cascading location dropdowns
       const distId = this.details.district_id || this.details.districts || this.details.districtname;
+      let stateId = this.details.state_id ? Number(this.details.state_id) : (distId && Number(distId) >= 31 ? 2 : 1);
+      if (!stateId) stateId = 1;
+
+      this.pastorform.patchValue({ state_id: stateId });
+      this.churchregsiterform.patchValue({ state_id: stateId });
+      this.updateprofileministry.patchValue({ state_id: stateId });
+      this.beliverform.patchValue({ state_id: stateId });
+      this.studentform.patchValue({ state_id: stateId });
+      this.independentorgainsationform.patchValue({ state_id: stateId });
+      this.pastorsassociations.patchValue({ state_id: stateId });
+      this.ministryform.patchValue({ state_id: stateId });
+
+      this.getdistric(stateId);
+
       const constId = this.details.constituency_id || this.details.constituencyname;
       const mandalId = this.details.mandal_id || this.details.mandals;
-      if (distId) this.getconstency(distId);
-      if (constId) this.getmandals(constId);
-      if (mandalId) this.gepanchayati(mandalId);
+      if (distId) {
+        this.service.getconsistencys().subscribe((r: any) => {
+          if (r && r.data) this.constituency = r.data.filter((d: any) => d.dstrct_id == distId);
+        });
+      }
+      if (constId) {
+        this.service.getmandals().subscribe((r: any) => {
+          if (r && r.data) this.mandals = r.data.filter((d: any) => d.const_id == constId);
+        });
+      }
+      if (mandalId) {
+        this.service.gepanchayatis().subscribe((r: any) => {
+          if (r && r.data) this.panchayati = r.data.filter((d: any) => d.mndl_id == mandalId);
+        });
+      }
+
+      // Pre-populate Student Residential Address
+      const resDistId = this.details.resdistricts;
+      let resStateId = this.details.res_state_id ? Number(this.details.res_state_id) : (resDistId && Number(resDistId) >= 31 ? 2 : 1);
+      if (!resStateId) resStateId = stateId;
+      this.studentform.patchValue({ res_state_id: resStateId });
+      if (resStateId) {
+        this.service.getdistrict(resStateId).subscribe((r: any) => {
+          this.resDistricts = r && r.data ? r.data : [];
+        });
+      }
+      const resConstId = this.details.resconstituencyname;
+      const resMandalId = this.details.resmandals;
+      if (resDistId) {
+        this.service.getconsistencys().subscribe((r: any) => {
+          if (r && r.data) this.resConstituency = r.data.filter((d: any) => d.dstrct_id == resDistId);
+        });
+      }
+      if (resConstId) {
+        this.service.getmandals().subscribe((r: any) => {
+          if (r && r.data) this.resMandals = r.data.filter((d: any) => d.const_id == resConstId);
+        });
+      }
+      if (resMandalId) {
+        this.service.gepanchayatis().subscribe((r: any) => {
+          if (r && r.data) this.resPanchayati = r.data.filter((d: any) => d.mndl_id == resMandalId);
+        });
+      }
 
       this.ministryform.patchValue({
         ministryname: this.details.ministryname || this.details.headname || this.details.name,

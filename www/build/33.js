@@ -1,6 +1,6 @@
 webpackJsonp([33],{
 
-/***/ 453:
+/***/ 451:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EntryFormPageModule", function() { return EntryFormPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__entry_form__ = __webpack_require__(509);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__entry_form__ = __webpack_require__(507);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,7 +38,7 @@ var EntryFormPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 509:
+/***/ 507:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -117,7 +117,7 @@ var EntryFormPage = /** @class */ (function () {
             name: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
             number: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
             category: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
-            state_id: ['1', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+            state_id: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
             district_id: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
             constituency_id: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
             mandal_id: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
@@ -125,13 +125,23 @@ var EntryFormPage = /** @class */ (function () {
             password: ['']
         });
         this.getstates();
-        this.getdistric(1);
     }
     EntryFormPage.prototype.gotoprivacy = function () {
         this.navCtrl.push('PagesPrivacyPage');
     };
     EntryFormPage.prototype.closeModal = function () {
-        this.viewCtrl.dismiss();
+        var _this = this;
+        if (this.navCtrl.canGoBack()) {
+            this.navCtrl.pop();
+        }
+        else if (this.viewCtrl) {
+            this.viewCtrl.dismiss().catch(function () {
+                _this.navCtrl.setRoot('HomePage');
+            });
+        }
+        else {
+            this.navCtrl.setRoot('HomePage');
+        }
     };
     EntryFormPage.prototype.getstates = function () {
         var _this = this;
@@ -148,93 +158,99 @@ var EntryFormPage = /** @class */ (function () {
             mandal_id: '',
             village_id: ''
         });
+        this.districts = [];
         this.constituency = [];
         this.mandals = [];
         this.getvillages = [];
-        this.getdistric(event);
+        if (event) {
+            this.getdistric(event);
+        }
     };
     EntryFormPage.prototype.getdistric = function (stateId) {
         var _this = this;
-        var sid = stateId || (this.form.get('state_id') ? this.form.get('state_id').value : 1);
+        var sid = stateId || (this.form.get('state_id') ? this.form.get('state_id').value : null);
+        if (!sid) {
+            this.districts = [];
+            return;
+        }
         this.service.getdistrict(sid).subscribe(function (res) {
-            _this.districts = res.data;
-        });
-    };
-    EntryFormPage.prototype.getmandals = function (event) {
-        var _this = this;
-        this.loading = this.loadingCtrl.create({
-            spinner: 'ios',
-            content: 'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...'
-        });
-        this.loading.present();
-        var id = event;
-        this.service.getmandals().subscribe(function (res) {
-            _this.mandals = res.data.filter(function (data) { return data.const_id == id; });
-            if (_this.mandals.length) {
-                _this.loading.dismiss();
-                _this.isSubmitting = false;
-            }
+            _this.districts = res && res.data ? res.data : [];
+        }, function () {
+            _this.districts = [];
         });
     };
     EntryFormPage.prototype.getconstency = function (event) {
         var _this = this;
-        this.loading = this.loadingCtrl.create({
-            spinner: 'ios',
-            content: 'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...'
+        this.form.patchValue({
+            constituency_id: '',
+            mandal_id: '',
+            village_id: ''
         });
-        this.loading.present();
+        this.constituency = [];
+        this.mandals = [];
+        this.getvillages = [];
         var id = event;
+        if (!id)
+            return;
         this.service.getconsistencys().subscribe(function (res) {
-            _this.constituency = res.data.filter(function (data) { return data.dstrct_id == id; });
-            if (_this.constituency.length) {
-                _this.loading.dismiss();
-                _this.isSubmitting = false;
-            }
+            _this.constituency = res && res.data ? res.data.filter(function (data) { return data.dstrct_id == id; }) : [];
+        }, function () {
+            _this.constituency = [];
+        });
+    };
+    EntryFormPage.prototype.getmandals = function (event) {
+        var _this = this;
+        this.form.patchValue({
+            mandal_id: '',
+            village_id: ''
+        });
+        this.mandals = [];
+        this.getvillages = [];
+        var id = event;
+        if (!id)
+            return;
+        this.service.getmandals().subscribe(function (res) {
+            _this.mandals = res && res.data ? res.data.filter(function (data) { return data.const_id == id; }) : [];
+        }, function () {
+            _this.mandals = [];
         });
     };
     EntryFormPage.prototype.gepanchayati = function (event) {
         var _this = this;
-        this.loading = this.loadingCtrl.create({
-            spinner: 'ios',
-            content: 'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...'
+        this.form.patchValue({
+            village_id: ''
         });
-        this.loading.present();
+        this.getvillages = [];
         var id = event;
+        if (!id)
+            return;
         this.service.gepanchayatis().subscribe(function (res) {
-            _this.getvillages = res.data.filter(function (data) { return data.mndl_id == id; });
-            if (_this.getvillages.length) {
-                _this.loading.dismiss();
-                _this.isSubmitting = false;
-            }
+            _this.getvillages = res && res.data ? res.data.filter(function (data) { return data.mndl_id == id; }) : [];
+        }, function () {
+            _this.getvillages = [];
         });
     };
     EntryFormPage.prototype.poorp = function (id) {
-        if (id == 1) {
-            if (this.form.value.district_id == '') {
-                var toast = this.alertCtrl.create({
-                    message: 'జిల్లాను ఎంచుకోండి',
-                    mode: 'ios',
-                    buttons: ['Ok']
-                });
-                toast.present();
-                this.form.reset({ name: '', number: '', category: '', district_id: '', constituency_id: '', mandal_id: '', village_id: '', password: '' });
-                this.mandals = [];
-                this.constituency = [];
-                this.getvillages = [];
-            }
+        if (id == 1 && !this.form.value.district_id) {
+            var toast = this.alertCtrl.create({
+                message: 'దయచేసి మొదట జిల్లాను ఎంచుకోండి',
+                mode: 'ios',
+                buttons: ['Ok']
+            });
+            toast.present();
         }
         else if (id == 2) {
-            if (this.form.value.district_id == '') {
+            if (!this.form.value.district_id) {
                 var toast = this.alertCtrl.create({
-                    message: 'జిల్లాను ఎంచుకోండి',
+                    message: 'దయచేసి మొదట జిల్లాను ఎంచుకోండి',
                     mode: 'ios',
                     buttons: ['Ok']
                 });
                 toast.present();
             }
-            else if (this.form.value.constituency_id == '') {
+            else if (!this.form.value.constituency_id) {
                 var toast = this.alertCtrl.create({
-                    message: 'నియోజకవర్గాన్ని ఎంచుకోండి',
+                    message: 'దయచేసి మొదట నియోజకవర్గాన్ని ఎంచుకోండి',
                     mode: 'ios',
                     buttons: ['Ok']
                 });
@@ -242,25 +258,25 @@ var EntryFormPage = /** @class */ (function () {
             }
         }
         else if (id == 3) {
-            if (this.form.value.district_id == '') {
+            if (!this.form.value.district_id) {
                 var toast = this.alertCtrl.create({
-                    message: 'జిల్లాను ఎంచుకోండి',
+                    message: 'దయచేసి మొదట జిల్లాను ఎంచుకోండి',
                     mode: 'ios',
                     buttons: ['Ok']
                 });
                 toast.present();
             }
-            else if (this.form.value.constituency_id == '') {
+            else if (!this.form.value.constituency_id) {
                 var toast = this.alertCtrl.create({
-                    message: 'నియోజకవర్గాన్ని ఎంచుకోండి',
+                    message: 'దయచేసి మొదట నియోజకవర్గాన్ని ఎంచుకోండి',
                     mode: 'ios',
                     buttons: ['Ok']
                 });
                 toast.present();
             }
-            else if (this.form.value.mandal_id == '') {
+            else if (!this.form.value.mandal_id) {
                 var toast = this.alertCtrl.create({
-                    message: 'మండలాన్ని ఎంచుకోండి',
+                    message: 'దయచేసి మొదట మండలాన్ని ఎంచుకోండి',
                     mode: 'ios',
                     buttons: ['Ok']
                 });
@@ -372,10 +388,10 @@ var EntryFormPage = /** @class */ (function () {
     };
     EntryFormPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-entry-form',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\entry-form\entry-form.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-row style="background-color: #f8f8f8;">\n\n      <ion-col col-11\n\n        style="text-align: center;font-weight: 900;color: #1f376e;">\n\n        JBAC యాప్ యాక్టివేషన్ ఫారమ్\n\n      </ion-col>\n\n      <!-- <ion-col col-1 (click)="closeModal()">\n\n        <ion-icon style="color:1f376e" name="home"></ion-icon>\n\n      </ion-col> -->\n\n    </ion-row>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="content">\n\n  <form [formGroup]="form" class="form" style="background-color: #1f376e;">\n\n    <ion-row>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked >మీ క్యాటగిరి ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="category">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option value="1">విశ్వాసి</ion-option>\n\n            <ion-option value="2">విద్యార్థి</ion-option>\n\n            <ion-option value="3">మినిస్ట్రీస్ (ఎక్కువ చర్చిలు ఉంటే)</ion-option>\n\n            <ion-option value="4">పాస్టర్</ion-option>\n\n            <ion-option value="5">చర్చి</ion-option>\n\n            <ion-option value="6">క్రిస్టియన్ ఆర్గనైజెషన్ / కంపెనీ</ion-option>\n\n             <ion-option value="7">పాస్టర్ల అసోసియేషన్</ion-option> \n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మీ పేరు(ఇంటి పేరు తో సహా) </ion-label>\n\n          <ion-input type="text" placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి" formControlName="name"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మీ ఫోన్ నంబర్ (10 అంకెలు మాత్రమే, లాగిన్ కు ఫోన్ నెంబర్ & పాస్వర్డ్ అవసరము)</ion-label>\n\n          <ion-input type="tel" placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి" formControlName="number" maxlength="10"\n\n            minlength="10"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>సెట్ పాస్వర్డ్ (కనీసము 4 నుంచి గరిష్టం 16 నెంబర్, అక్షరాల వరకు పెట్టుకోవచ్చు)</ion-label>\n\n          <ion-input type="password" placeholder="ఇక్కడ క్లిక్ చేసి పాస్‌వర్డ్ సెట్ చేసుకోండి" formControlName="password" maxlength="16"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <h4 Style="color:whitesmoke;text-align: center;font-weight: 600;">మీ అడ్రస్</h4>\n\n        <ion-item>\n\n          <ion-label stacked>రాష్ట్రం / State</ion-label>\n\n          <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">\n\n            <ion-option *ngFor="let s of states" [value]="s.id">{{s.state_name}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>జిల్లా</ion-label>\n\n          <ion-select formControlName="district_id" (ionChange)="getconstency($event)" >\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి జిల్లా ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>నియోజకవర్గం</ion-label>\n\n          <ion-select formControlName="constituency_id" (ionChange)="getmandals($event)" (click)="poorp(1)">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి నియోజకవర్గం ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మండలం / మున్సిపాలిటీ</ion-label>\n\n          <ion-select formControlName="mandal_id" (ionChange)="gepanchayati($event);" (click)="poorp(2)">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి మండలం ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>పంచాయితీ / వార్డ్ నంబర్</ion-label>\n\n          <ion-select formControlName="village_id" (click)="poorp(3)">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి పంచాయితీ ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of getvillages" [value]="item.id">{{item.pnchyt_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n    </ion-row>\n\n\n\n    \n\n     \n\n      <ion-row class="button">\n\n      \n\n        <button ion-button color="secondary" (click)="submit()" [disabled]="isSubmitting">\n\n          <ion-spinner *ngIf="isSubmitting" name="crescent" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"></ion-spinner>\n\n          <b>{{ isSubmitting ? \'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...\' : \'సబ్మిట్\' }}</b>\n\n        </button>\n\n      \n\n    </ion-row>\n\n    \n\n      <p >ఇంతకుముందే రిజిస్టర్ ఐతే <a (click)="gotologin()">లాగిన్  కొరకు క్లిక్</a></p>\n\n     \n\n       <p > <a (click)="gotoprivacy()">Privacy Policy</a></p> \n\n       <br><br>\n\n  </form>\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\entry-form\entry-form.html"*/,
+            selector: 'page-entry-form',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\entry-form\entry-form.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons start>\n\n      <button ion-button icon-only (click)="closeModal()" class="back-button" aria-label="Go Back">\n\n        <ion-icon style="font-size: 24px; color: #1f376e;" name="arrow-back"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center; font-weight: 900; color: #1f376e;">\n\n      JBAC యాప్ యాక్టివేషన్ ఫారమ్\n\n    </ion-title>\n\n    <ion-buttons end>\n\n      <button ion-button icon-only (click)="closeModal()" aria-label="Home">\n\n        <ion-icon style="font-size: 22px; color: #1f376e;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="content">\n\n  <form [formGroup]="form" class="form" style="background-color: #1f376e;">\n\n    <ion-row>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked >మీ క్యాటగిరి ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="category">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option value="1">విశ్వాసి</ion-option>\n\n            <ion-option value="2">విద్యార్థి</ion-option>\n\n            <ion-option value="3">మినిస్ట్రీస్ (ఎక్కువ చర్చిలు ఉంటే)</ion-option>\n\n            <ion-option value="4">పాస్టర్</ion-option>\n\n            <ion-option value="5">చర్చి</ion-option>\n\n            <ion-option value="6">క్రిస్టియన్ ఆర్గనైజెషన్ / కంపెనీ</ion-option>\n\n             <ion-option value="7">పాస్టర్ల అసోసియేషన్</ion-option> \n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మీ పేరు(ఇంటి పేరు తో సహా) </ion-label>\n\n          <ion-input type="text" placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి" formControlName="name"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మీ ఫోన్ నంబర్ (10 అంకెలు మాత్రమే, లాగిన్ కు ఫోన్ నెంబర్ & పాస్వర్డ్ అవసరము)</ion-label>\n\n          <ion-input type="tel" placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి" formControlName="number" maxlength="10"\n\n            minlength="10"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>సెట్ పాస్వర్డ్ (కనీసము 4 నుంచి గరిష్టం 16 నెంబర్, అక్షరాల వరకు పెట్టుకోవచ్చు)</ion-label>\n\n          <ion-input type="password" placeholder="ఇక్కడ క్లిక్ చేసి పాస్‌వర్డ్ సెట్ చేసుకోండి" formControlName="password" maxlength="16"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <h4 Style="color:whitesmoke;text-align: center;font-weight: 600;">మీ అడ్రస్</h4>\n\n        <ion-item>\n\n          <ion-label stacked>1). సెలెక్ట్ రాష్ట్రం / State</ion-label>\n\n          <ion-select formControlName="state_id" (ionChange)="onStateChange($event)" placeholder="రాష్ట్రం ఎంచుకోండి">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి రాష్ట్రం ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let s of states" [value]="s.id">{{s.state_name}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>2). సెలెక్ట్ జిల్లా</ion-label>\n\n          <ion-select formControlName="district_id" [disabled]="!form.value.state_id || !districts || districts.length === 0" (ionChange)="getconstency($event)">\n\n            <ion-option value="" disabled selected>{{ !form.value.state_id ? \'దయచేసి మొదట రాష్ట్రాన్ని ఎంచుకోండి\' : \'ఇక్కడ క్లిక్ చేసి జిల్లా ఎంచుకోండి\' }}</ion-option>\n\n            <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>3). సెలెక్ట్ నియోజకవర్గం</ion-label>\n\n          <ion-select formControlName="constituency_id" [disabled]="!form.value.district_id || !constituency || constituency.length === 0" (ionChange)="getmandals($event)" (click)="poorp(1)">\n\n            <ion-option value="" disabled selected>{{ !form.value.district_id ? \'దయచేసి మొదట జిల్లాను ఎంచుకోండి\' : \'ఇక్కడ క్లిక్ చేసి నియోజకవర్గం ఎంచుకోండి\' }}</ion-option>\n\n            <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>4). సెలెక్ట్ మండలం / మున్సిపాలిటీ</ion-label>\n\n          <ion-select formControlName="mandal_id" [disabled]="!form.value.constituency_id || !mandals || mandals.length === 0" (ionChange)="gepanchayati($event);" (click)="poorp(2)">\n\n            <ion-option value="" disabled selected>{{ !form.value.constituency_id ? \'దయచేసి మొదట నియోజకవర్గాన్ని ఎంచుకోండి\' : \'ఇక్కడ క్లిక్ చేసి మండలం ఎంచుకోండి\' }}</ion-option>\n\n            <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>5). సెలెక్ట్ పంచాయితీ / వార్డ్ నంబర్</ion-label>\n\n          <ion-select formControlName="village_id" [disabled]="!form.value.mandal_id || !getvillages || getvillages.length === 0" (click)="poorp(3)">\n\n            <ion-option value="" disabled selected>{{ !form.value.mandal_id ? \'దయచేసి మొదట మండలాన్ని ఎంచుకోండి\' : \'ఇక్కడ క్లిక్ చేసి పంచాయితీ ఎంచుకోండి\' }}</ion-option>\n\n            <ion-option *ngFor="let item of getvillages" [value]="item.id">{{item.pnchyt_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n    </ion-row>\n\n\n\n    \n\n     \n\n      <ion-row class="button">\n\n      \n\n        <button ion-button color="secondary" (click)="submit()" [disabled]="isSubmitting">\n\n          <ion-spinner *ngIf="isSubmitting" name="crescent" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"></ion-spinner>\n\n          <b>{{ isSubmitting ? \'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...\' : \'సబ్మిట్\' }}</b>\n\n        </button>\n\n      \n\n    </ion-row>\n\n    \n\n      <p >ఇంతకుముందే రిజిస్టర్ ఐతే <a (click)="gotologin()">లాగిన్  కొరకు క్లిక్</a></p>\n\n     \n\n       <p > <a (click)="gotoprivacy()">Privacy Policy</a></p> \n\n       <br><br>\n\n  </form>\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\entry-form\entry-form.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["x" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_service_service__["a" /* ServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["v" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["y" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_service_service__["a" /* ServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["w" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */]])
     ], EntryFormPage);
     return EntryFormPage;
 }());

@@ -33,7 +33,7 @@ export class EntryFormPage {
       name: ['', Validators.required],
       number: ['', Validators.required],
       category: ['', Validators.required],
-      state_id: ['1', Validators.required],
+      state_id: ['', Validators.required],
       district_id: ['', Validators.required],
       constituency_id: ['', Validators.required],
       mandal_id: ['', Validators.required],
@@ -41,21 +41,25 @@ export class EntryFormPage {
       password: ['']
     });
 
-
-
     this.getstates();
-    this.getdistric(1);
   }
   gotoprivacy() {
     this.navCtrl.push('PagesPrivacyPage')
   }
 
-
   closeModal() {
-    this.viewCtrl.dismiss();
+    if (this.navCtrl.canGoBack()) {
+      this.navCtrl.pop();
+    } else if (this.viewCtrl) {
+      this.viewCtrl.dismiss().catch(() => {
+        this.navCtrl.setRoot('HomePage');
+      });
+    } else {
+      this.navCtrl.setRoot('HomePage');
+    }
   }
 
-    getstates() {
+  getstates() {
     this.service.getstates().subscribe((res: any) => {
       if (res && res.data) {
         this.states = res.data;
@@ -70,115 +74,118 @@ export class EntryFormPage {
       mandal_id: '',
       village_id: ''
     });
+    this.districts = [];
     this.constituency = [];
     this.mandals = [];
     this.getvillages = [];
-    this.getdistric(event);
+    if (event) {
+      this.getdistric(event);
+    }
   }
 
   getdistric(stateId?: any) {
-    const sid = stateId || (this.form.get('state_id') ? this.form.get('state_id').value : 1);
+    const sid = stateId || (this.form.get('state_id') ? this.form.get('state_id').value : null);
+    if (!sid) {
+      this.districts = [];
+      return;
+    }
     this.service.getdistrict(sid).subscribe((res: any) => {
-      this.districts = res.data;
+      this.districts = res && res.data ? res.data : [];
+    }, () => {
+      this.districts = [];
+    });
+  }
+
+  getconstency(event: any) {
+    this.form.patchValue({
+      constituency_id: '',
+      mandal_id: '',
+      village_id: ''
+    });
+    this.constituency = [];
+    this.mandals = [];
+    this.getvillages = [];
+    var id = event;
+    if (!id) return;
+    this.service.getconsistencys().subscribe((res: any) => {
+      this.constituency = res && res.data ? res.data.filter((data: any) => data.dstrct_id == id) : [];
+    }, () => {
+      this.constituency = [];
     });
   }
 
   getmandals(event: any) {
-    this.loading = this.loadingCtrl.create({
-      spinner: 'ios',
-      content: 'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...'
+    this.form.patchValue({
+      mandal_id: '',
+      village_id: ''
     });
-    this.loading.present();
+    this.mandals = [];
+    this.getvillages = [];
     var id = event;
+    if (!id) return;
     this.service.getmandals().subscribe((res: any) => {
-      this.mandals = res.data.filter((data: any) => data.const_id == id);
-      if (this.mandals.length) {
-        this.loading.dismiss();
-      this.isSubmitting = false;
-      }
-    })
-  }
-
-  getconstency(event: any) {
-    this.loading = this.loadingCtrl.create({
-      spinner: 'ios',
-      content: 'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...'
+      this.mandals = res && res.data ? res.data.filter((data: any) => data.const_id == id) : [];
+    }, () => {
+      this.mandals = [];
     });
-    this.loading.present();
-    var id = event;
-    this.service.getconsistencys().subscribe((res: any) => {
-      this.constituency = res.data.filter((data: any) => data.dstrct_id == id);
-      if (this.constituency.length) {
-        this.loading.dismiss();
-      this.isSubmitting = false;
-      }
-    })
   }
 
   gepanchayati(event: any) {
-    this.loading = this.loadingCtrl.create({
-      spinner: 'ios',
-      content: 'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...'
+    this.form.patchValue({
+      village_id: ''
     });
-    this.loading.present();
+    this.getvillages = [];
     var id = event;
+    if (!id) return;
     this.service.gepanchayatis().subscribe((res: any) => {
-      this.getvillages = res.data.filter((data: any) => data.mndl_id == id);
-      if (this.getvillages.length) {
-        this.loading.dismiss();
-      this.isSubmitting = false;
-      }
-    })
+      this.getvillages = res && res.data ? res.data.filter((data: any) => data.mndl_id == id) : [];
+    }, () => {
+      this.getvillages = [];
+    });
   }
 
   poorp(id: any) {
-    if (id == 1) {
-      if (this.form.value.district_id == '') {
-        const toast = this.alertCtrl.create({
-          message: 'జిల్లాను ఎంచుకోండి',
-          mode: 'ios',
-          buttons: ['Ok']
-        });
-        toast.present();
-          this.form.reset({ name: '', number: '', category: '', district_id: '', constituency_id: '', mandal_id: '', village_id: '', password: '' });
-          this.mandals = [];
-          this.constituency = [];
-          this.getvillages = [];
-      }
+    if (id == 1 && !this.form.value.district_id) {
+      const toast = this.alertCtrl.create({
+        message: 'దయచేసి మొదట జిల్లాను ఎంచుకోండి',
+        mode: 'ios',
+        buttons: ['Ok']
+      });
+      toast.present();
     } else if (id == 2) {
-      if (this.form.value.district_id == '') {
+      if (!this.form.value.district_id) {
         const toast = this.alertCtrl.create({
-          message: 'జిల్లాను ఎంచుకోండి',
+          message: 'దయచేసి మొదట జిల్లాను ఎంచుకోండి',
           mode: 'ios',
           buttons: ['Ok']
         });
         toast.present();
-      } else if (this.form.value.constituency_id == '') {
+      } else if (!this.form.value.constituency_id) {
         const toast = this.alertCtrl.create({
-          message: 'నియోజకవర్గాన్ని ఎంచుకోండి',
+          message: 'దయచేసి మొదట నియోజకవర్గాన్ని ఎంచుకోండి',
           mode: 'ios',
           buttons: ['Ok']
         });
         toast.present();
       }
     } else if (id == 3) {
-      if (this.form.value.district_id == '') {
+      if (!this.form.value.district_id) {
         const toast = this.alertCtrl.create({
-          message: 'జిల్లాను ఎంచుకోండి',
+          message: 'దయచేసి మొదట జిల్లాను ఎంచుకోండి',
           mode: 'ios',
           buttons: ['Ok']
         });
         toast.present();
-      } else if (this.form.value.constituency_id == '') {
+      } else if (!this.form.value.constituency_id) {
         const toast = this.alertCtrl.create({
-          message: 'నియోజకవర్గాన్ని ఎంచుకోండి',
+          message: 'దయచేసి మొదట నియోజకవర్గాన్ని ఎంచుకోండి',
           mode: 'ios',
           buttons: ['Ok']
         });
         toast.present();
-      } else if (this.form.value.mandal_id == '') {
+      } else if (!this.form.value.mandal_id) {
         const toast = this.alertCtrl.create({
-          message: 'మండలాన్ని ఎంచుకోండి',
+          message: 'దయచేసి మొదట మండలాన్ని ఎంచుకోండి',
           mode: 'ios',
           buttons: ['Ok']
         });

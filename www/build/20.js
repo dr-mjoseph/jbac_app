@@ -1,6 +1,6 @@
 webpackJsonp([20],{
 
-/***/ 433:
+/***/ 432:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -75,7 +75,7 @@ var ModalpagePage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-modalpage',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\modalpage\modalpage.html"*/'<ion-header>\n\n  <ion-toolbar>\n\n    <ion-buttons end>\n\n      <button ion-button color="warning" (click)="dismiss()">Close Image</button>\n\n    </ion-buttons>\n\n  </ion-toolbar>\n\n</ion-header>\n\n\n\n<ion-content padding class="pagecss">\n\n  <img [src]="imageUrl" (click)="dismiss()" class="modal-image" />\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\modalpage\modalpage.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["x" /* ViewController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["y" /* ViewController */]])
     ], ModalpagePage);
     return ModalpagePage;
 }());

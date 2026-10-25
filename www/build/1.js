@@ -1,6 +1,6 @@
 webpackJsonp([1],{
 
-/***/ 426:
+/***/ 424:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HomePageModule", function() { return HomePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home__ = __webpack_require__(462);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home__ = __webpack_require__(461);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -122,7 +122,7 @@ var win = (typeof window === 'undefined') ? {
 
 /***/ }),
 
-/***/ 462:
+/***/ 461:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -130,7 +130,7 @@ var win = (typeof window === 'undefined') ? {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_swiper__ = __webpack_require__(463);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_swiper__ = __webpack_require__(462);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_service_service__ = __webpack_require__(128);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -423,7 +423,7 @@ var HomePage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-home',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\home\home.html"*/'<ion-header>\n\n  <!-- <ion-navbar> -->\n\n  <ion-row>\n\n    <ion-col col-2>\n\n      <p style="text-align: center;" menuToggle>\n\n        <ion-icon style="color:white;font-size: 30px;" name="menu"></ion-icon>\n\n      </p>\n\n    </ion-col>\n\n    <ion-col col-8 style="font-weight: bolder;text-align: center;font-weight: 1000;color:white">\n\n      <h2>JBAC-AP</h2>\n\n    </ion-col>\n\n\n\n    <ion-col col-2 style="text-align: center;" (click)="logout()" *ngIf="maintrue">\n\n      <br>\n\n      <ion-icon style="color:white;font-size: 30px;" name="log-out"></ion-icon>\n\n    </ion-col>\n\n\n\n    <ion-col col-2 style="text-align: center;" (click)="login()" *ngIf="!maintrue">\n\n      <br>\n\n      <ion-icon style="color:white;font-size: 30px;" name="person"></ion-icon>\n\n    </ion-col>\n\n  </ion-row>\n\n  <!-- </ion-navbar> -->\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n  <div style="padding: 1%;">\n\n    <div class="swiper-container">\n\n      <div class="swiper-wrapper">\n\n        <div class="swiper-slide" *ngFor="let i of banners">\n\n          <img src="{{i.banner}}" style="width:100%;border-radius:10px;height: 195px;">\n\n        </div>\n\n      </div>\n\n      <div class="swiper-pagination"></div>\n\n    </div>\n\n  </div>\n\n\n\n  <div class="marquee">\n\n    <h3>\n\n      <span style="color:red;font-weight:bolder;font-family: \'Ramabhadra\', sans-serif;"> News </span>\n\n      : <span (click)="gotopage(12)">చర్చి పర్మిషన్ గవర్నమెంట్ ఆర్డర్స్ .</span>\n\n      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n\n      <span (click)="gotopage(14)">మీ చర్చికి మా టెక్నికల్ సొల్లుషన్స్ .</span>\n\n      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n\n      <span (click)="gotopage(19)" style="color:#00548F;font-weight:bolder;">✨ నూతన సేవ: ఫ్యామిలీ కౌన్సిలింగ్ & డాక్టర్ అపాయింట్‌మెంట్లు .</span>\n\n\n\n    </h3>\n\n  </div>\n\n\n\n  \n\n  \n\n  \n\n  <div tappable style="margin: 8px 12px; padding: 12px 14px; background: linear-gradient(135deg, #00548F, #1f376e); border-radius: 12px; color: white; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 10px rgba(0,84,143,0.25); cursor: pointer;" (click)="gotopage(19)">\n\n    <div style="display: flex; align-items: center;">\n\n      <div style="background: rgba(255,255,255,0.2); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 22px;">\n\n        💍\n\n      </div>\n\n      <div>\n\n        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; color: #ffeb3b;">\n\n          📢 నూతన సేవ • NEW SERVICE\n\n        </div>\n\n        <div style="font-size: 14px; font-weight: bold; margin-top: 2px;">\n\n          వివాహ & కుటుంబ కౌన్సిలింగ్ (Marriage Counselling)\n\n        </div>\n\n      </div>\n\n    </div>\n\n    <div style="font-size: 20px; font-weight: bold; padding-left: 8px; color: #ffeb3b;">\n\n      ➔\n\n    </div>\n\n  </div>\n\n\n\n  <ion-row style="text-align: center;">\n\n\n\n    <ion-col col-3 class="made" tappable (click)="gotopage(19)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/couple.svg" onerror="this.onerror=null;this.src=\'assets/icon/svg/helping-hand.svg\';">\n\n      <b>వివాహ & కుటుంబ<br>కౌన్సిలింగ్</b>\n\n    </ion-col>\n\n    <ion-col col-3 class="made" tappable (click)="gotopage(20)">\n      <img style="padding:3%;width:100%" src="assets/icon/svg/register.svg" onerror="this.onerror=null;this.src=\'assets/icon/svg/services.svg\';">\n      <b>వివాహ<br>సంబంధాలు</b>\n    </ion-col>\n\n\n\n    \n\n    <ion-col col-3 class="made" tappable (click)="gotopage(1)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/information.svg">\n\n      <b>నా గురించి</b>\n\n    </ion-col>\n\n\n\n    <ion-col col-3 class="made" tappable (click)="gotopage(3)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/register.svg">\n\n      <b> రిజిస్ట్రేషన్ </b>\n\n    </ion-col>\n\n\n\n    <ion-col col-3 class="made" tappable (click)="gotopage(10)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/helping-hand.svg">\n\n      <b>మా సహాయం </b>\n\n    </ion-col>\n\n\n\n\n\n    <ion-col col-3 class="made" tappable (click)="gotopage(2)">\n\n      <img style="padding:3%;width:100%" src=\'assets/icon/meetview.png\'>\n\n      <b>జరగబోయే మీటింగ్స్ </b>\n\n    </ion-col>\n\n\n\n    <ion-col col-3 class="made" tappable (click)="gotopage(8)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/meetsub.png">\n\n      <b>సబ్మిట్ మీటింగ్ పోస్టర్</b>\n\n    </ion-col>\n\n\n\n    <ion-col col-3 class="made" tappable (click)="gotopage(14)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/employee.svg">\n\n      <b>టెక్నికల్<br> సోలుషన్స్ </b>\n\n    </ion-col>\n\n\n\n    <ion-col col-3 class="made" tappable (click)="gotopage(17)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/news.svg">\n\n      <b> వార్తలు చుడానికి </b>\n\n    </ion-col>\n\n\n\n    <ion-col col-3 class="made" tappable (click)="gotopage(7)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/tv.svg">\n\n      <b> వార్తలు నమోదు </b>\n\n    </ion-col>\n\n\n\n    <ion-col col-3 class="made" tappable (click)="gotopage(15)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/picture.svg">\n\n      <b>ఫోటో గ్యాలరీ </b>\n\n    </ion-col>\n\n\n\n\n\n    <ion-col col-3 class="made" tappable (click)="gotopage(11)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/contact-us.svg">\n\n      <b> మమ్మల్ని<br>సంప్రదించండి </b>\n\n    </ion-col>\n\n\n\n    <ion-col col-3 class="made" tappable (click)="gotopage(9)">\n\n      <img style="padding:3%;width:100%" src=" assets/icon/download.png">\n\n      <b> చర్చి<br>సమయాలు </b>\n\n    </ion-col>\n\n\n\n    <ion-col col-3 class="made" tappable (click)="gotopage(12)">\n\n      <img style="padding:3%;width:100%" src=" assets/icon/svg/permission.svg">\n\n      <b>చర్చి<br>పర్మిషన్</b>\n\n    </ion-col>\n\n    <ion-col col-3 class="made" tappable (click)="gotopage(4)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/services.svg">\n\n      <b> ఇతర సర్వీసెస్ చుడానికి </b>\n\n    </ion-col>\n\n\n\n    <ion-col col-3 class="made" tappable (click)="gotopage(5)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/myaccount.svg">\n\n      <b> ఇతర సర్వీసెస్ రిజిస్టర్</b>\n\n    </ion-col>\n\n\n\n    \n\n\n\n\n\n    <ion-col col-3 class="made" tappable (click)="gotopage(16)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/video.svg">\n\n      <b>వీడియో<br>గ్యాలరీ </b>\n\n    </ion-col>\n\n\n\n    <ion-col col-3 class="made" tappable (click)="gotopage(6)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/project-manager.svg">\n\n      <b> లీడర్స్ </b>\n\n    </ion-col>\n\n\n\n    <ion-col col-3 class="made" tappable (click)="gotopage(18)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/123.svg">\n\n      <b> దాడుల నమోదు </b>\n\n    </ion-col><br> \n\n    <!-- <ion-col col-3 class="made" (click)="gotopage(13)">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/cloud-computing.svg">\n\n      <b>వెబ్-సైట్ </b>\n\n    </ion-col> -->\n\n\n\n    <ion-col col-3 *ngIf="maintrue" class="made" tappable (click)="logout()">\n\n      <img style="padding:3%;width:100%" src="assets/icon/svg/exit.svg">\n\n      <b> లాగ్ అవుట్ </b>\n\n    </ion-col>\n\n  </ion-row>\n\n  \n\n <br>\n\n  <ion-row>\n\n    <ion-col col-2></ion-col>\n\n    <ion-col col-8 style="background-color: white;text-align: center;border-radius: 10px;">\n\n      Application Visitors Count : <b>{{count}}</b>\n\n    </ion-col>\n\n    <ion-col col-2></ion-col>\n\n  </ion-row>\n\n  <br>\n\n  <ion-row>\n\n    <ion-col col-2></ion-col>\n\n    <ion-col col-8 style="background-color: white;text-align: center;border-radius: 10px;">\n\n      <b> <a (click)="gotoprivacy()">Privacy Policy</a></b>\n\n    </ion-col>\n\n    <ion-col col-2></ion-col>\n\n  </ion-row>\n\n  <br><br>\n\n</ion-content>\n\n\n\n<ion-footer\n\n  style="background-color: white; border-radius: 15px 15px 0px 0px;font-family: \'Ramabhadra\', sans-serif!important;">\n\n  <ion-row style="text-align: center;color:#1f376e">\n\n    <ion-col col-3>\n\n      <ion-icon style="font-size:34px;color:#1f376e" name="home"></ion-icon>\n\n      <br><b>హోమ్</b>\n\n    </ion-col>\n\n    <ion-col col-6>\n\n      <img style="margin-top:-18%;width:36%;" src="assets/icon/footer_logo.png">\n\n      <p style="font-size: 9px; font-weight: 1000; color: red;">\n\n        జీసస్ బిలీవర్స్ అసోసియేషన్, ఆంధ్ర ప్రదేశ్\n\n      </p>\n\n    </ion-col>\n\n    <ion-col col-3 tappable (click)="gotoprofile()">\n\n      <ion-icon style="font-size:34px;color:#1f376e" name="person"></ion-icon>\n\n      <br>\n\n      <b *ngIf="maintrue">ప్రొఫైల్</b>\n\n      <b *ngIf="!maintrue">లాగిన్</b>\n\n    </ion-col>\n\n  </ion-row>\n\n</ion-footer>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\home\home.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["v" /* ToastController */], __WEBPACK_IMPORTED_MODULE_4__providers_service_service__["a" /* ServiceProvider */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["p" /* ModalController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["s" /* NavController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["w" /* ToastController */], __WEBPACK_IMPORTED_MODULE_4__providers_service_service__["a" /* ServiceProvider */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["q" /* ModalController */]])
     ], HomePage);
     return HomePage;
 }());
@@ -432,11 +432,11 @@ var HomePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 463:
+/***/ 462:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_dom7_dist_dom7_modular__ = __webpack_require__(464);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_dom7_dist_dom7_modular__ = __webpack_require__(463);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ssr_window__ = __webpack_require__(459);
 /**
  * Swiper 4.5.1
@@ -7607,7 +7607,7 @@ Swiper.use(components);
 
 /***/ }),
 
-/***/ 464:
+/***/ 463:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

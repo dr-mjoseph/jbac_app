@@ -1,6 +1,6 @@
 webpackJsonp([2],{
 
-/***/ 442:
+/***/ 437:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,8 +8,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VideoGalleryPageModule", function() { return VideoGalleryPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__video_gallery__ = __webpack_require__(497);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pipes_youtube_youtube__ = __webpack_require__(498);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__video_gallery__ = __webpack_require__(491);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pipes_youtube_youtube__ = __webpack_require__(492);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,7 +41,7 @@ var VideoGalleryPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 497:
+/***/ 491:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -97,7 +97,7 @@ var VideoGalleryPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-video-gallery',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\video-gallery\video-gallery.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>Video-Gallery</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding class="pagecss">\n\n\n\n  <div *ngFor="let o of filteredData">\n\n    <br>\n\n    <p style="color: white; display: flex; justify-content: space-between; text-transform: capitalize;">\n\n      <span>{{o.category_nm}}</span>\n\n      <span (click)="opensub(o.category_id)">More</span>\n\n    </p>\n\n\n\n    <div style="text-align: center;">\n\n      <iframe [src]="o.banner_url | youtube" allow="autoplay; encrypted-media"\n\n        style="height:250px;width:333px"></iframe>\n\n    </div>\n\n  </div>\n\n\n\n  <!-- <div>\n\n    <br>\n\n    <p style="color: white;text-transform: capitalize;">Churchs <span style="text-align: left">More</span></p>\n\n    <div style="text-align: center;">\n\n      <iframe src=" https://www.youtube.com/embed/Kz5pscwuTF8?si=GCFQfS8y6jiyzRVD" allow="autoplay; encrypted-media"\n\n        allowfullscreen style="height:250px;width:333px"></iframe>\n\n    </div>\n\n  </div> -->\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\video-gallery\video-gallery.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_service_service__["a" /* ServiceProvider */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_service_service__["a" /* ServiceProvider */]])
     ], VideoGalleryPage);
     return VideoGalleryPage;
 }());
@@ -106,7 +106,7 @@ var VideoGalleryPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 498:
+/***/ 492:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -1,6 +1,6 @@
 webpackJsonp([27],{
 
-/***/ 423:
+/***/ 422:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HelpPageModule", function() { return HelpPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__help__ = __webpack_require__(480);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__help__ = __webpack_require__(479);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,7 +38,7 @@ var HelpPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 480:
+/***/ 479:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -268,7 +268,7 @@ var HelpPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-help',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\help\help.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>మా సహాయం</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding class="pagecss">\n\n  <form [formGroup]="form">\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>వివరణ<span style="color:red;">*</span></ion-label>\n\n          <ion-textarea type="text" formControlName="description" placeholder="వివరణను ఎంచుకోండి"></ion-textarea>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>ఏ రకం సహాయం <span style="color:red;">*</span></ion-label>\n\n          <ion-select formControlName="help" placeholder="సహాయం ఎంచుకోండి">\n\n            <ion-option value="" disabled>సహాయం ఎంచుకోండి</ion-option>\n\n            <ion-option value="CommunitySupport Help">కమ్యూనిటీ మద్దతు సహాయం</ion-option>\n\n            <ion-option value="Education Help">విద్యా సహాయం</ion-option>\n\n            <ion-option value="Financial Help">ఆర్థిక సహాయం</ion-option>\n\n            <ion-option value="ForChurchConstruction Help">చర్చి నిర్మాణ సహాయం</ion-option>\n\n            <ion-option value="Legal Help">చట్టపరమైన సహాయం</ion-option>\n\n            <ion-option value="Medical Help">మెడికల్ సహాయం</ion-option>\n\n            <ion-option value="PoliceDepartmental Help">పోలీసు విభాగ సహాయం</ion-option>\n\n            <ion-option value="Political Help">రాజకీయ సహాయం</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <div class="imgerdt" style="padding: 12px; text-align: center; border: 2px dashed #00548F; border-radius: 8px; background: #fafafa;">\n\n          <img src="assets/icon/upload.svg" style="height: 60px; width: 60px; display: block; margin: 0 auto 6px;">\n\n          <p style="margin: 4px 0 10px; font-weight: bold; color: #00548F; font-size: 14px;">చిత్రం అప్‌లోడ్ చేయండి (Choose File / Camera)</p>\n\n          <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: block; width: 100%; max-width: 290px; margin: 0 auto 10px; padding: 6px; background: #fff; border: 1px solid #ccc; border-radius: 4px;">\n\n          <button ion-button small outline icon-start type="button" (click)="openphoto()" style="margin: 0 auto; display: inline-block;">\n\n            <ion-icon name="camera"></ion-icon> Camera / Gallery\n\n          </button>\n\n          <div *ngIf="imagesdata.length" style="margin-top: 12px;">\n\n            <img style="max-height: 200px; max-width: 100%; border-radius: 8px; border: 1px solid #00548F;" [src]="imagesdata[0].reviewimg || imagesdata[0].reviewImg">\n\n          </div>\n\n        </div>\n\n      </ion-col>\n\n      <ion-col col-12 style="text-align: center;">\n\n        <button ion-button color="secondary" (click)="postmeetings()" style="letter-spacing: 1px;">నమోదు చేయండి</button>\n\n      </ion-col>\n\n\n\n    </ion-row>\n\n  </form>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\help\help.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["r" /* NavController */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["s" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["s" /* NavController */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["t" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_4__providers_service_service__["a" /* ServiceProvider */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */]])
     ], HelpPage);
     return HelpPage;
