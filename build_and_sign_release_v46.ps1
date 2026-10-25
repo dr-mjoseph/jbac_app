@@ -57,9 +57,11 @@ if (Test-Path $alignedApk) { Remove-Item -Force $alignedApk }
 & $zipalign -v -p -f 4 $rawApk.FullName $alignedApk
 
 $finalApk = "$appDir\jbacApp-0.0.46.apk"
-if (Test-Path $finalApk) { Remove-Item -Force $finalApk }
-& $apksigner sign --ks $keystore --ks-pass "pass:$password" --ks-key-alias $alias --key-pass "pass:$password" --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true --out $finalApk $alignedApk
+& $apksigner sign --ks $keystore --ks-pass "pass:$password" --ks-key-alias $alias --key-pass "pass:$password" --min-sdk-version 21 --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true --out $finalApk $alignedApk
 if ($LASTEXITCODE -ne 0) { throw "APK signing failed" }
+if (Test-Path $alignedApk) { Remove-Item -Force $alignedApk }
+Write-Host "Verifying APK alignment..." -ForegroundColor Yellow
+& $zipalign -c -v 4 $finalApk | Select-String "Verification"
 
 # Step 6: Sign AAB (Jarsigner)
 Write-Host "`n[5/6] Signing AAB with jarsigner..." -ForegroundColor Yellow
