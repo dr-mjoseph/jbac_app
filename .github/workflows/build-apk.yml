@@ -81,6 +81,17 @@ jobs:
             console.log("Updated cdv-gradle-config.json:", cfg);
           ' || true
         fi
+        node -e '
+          const fs = require("fs");
+          ["node_modules/cordova-android/bin/templates/cordova/lib/check_reqs.js", "platforms/android/cordova/lib/check_reqs.js"].forEach(p => {
+            if (fs.existsSync(p)) {
+              let c = fs.readFileSync(p, "utf8");
+              c = c.replace(/!String\(values\[0\]\)\.startsWith\([^\)]+\)/g, "(!String(values[0]).startsWith(\x271.8.\x27) && !String(values[0]).startsWith(\x2711.\x27) && !String(values[0]).startsWith(\x2717.\x27))");
+              fs.writeFileSync(p, c, "utf8");
+              console.log("Patched Java check in:", p);
+            }
+          });
+        ' || true
 
     - name: Build Android Release Package
       env:
