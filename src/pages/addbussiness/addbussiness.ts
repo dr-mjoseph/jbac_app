@@ -311,7 +311,10 @@ export class AddbussinessPage {
       alert('దయచేసి ఖాళీ ఫీల్డ్‌లను పూరించండి ');
       this.loading.dismiss();
     } else {
+      const sId = Number(this.addingbusiness.value.state_id) || (Number(this.addingbusiness.value.districtname) >= 31 && Number(this.addingbusiness.value.districtname) <= 63 ? 2 : 1);
       var data = {
+        state_id: sId,
+        state: sId === 2 ? 'Telangana' : 'Andhra Pradesh',
         type: this.addingbusiness.value.type,
         title: this.addingbusiness.value.title,
         description: this.addingbusiness.value.description,

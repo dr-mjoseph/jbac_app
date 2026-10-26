@@ -180,6 +180,7 @@ export class NewsPage {
         description: this.addingnews.value.description,
         news: this.addingnews.value.news,
         mobilenumber:localStorage.getItem('mobile_number'),
+        image: (this.imagesdata && this.imagesdata[0]) ? this.imagesdata[0].reviewimg : '',
         reviewImg: this.imagesdata
       }
       // console.log(data)

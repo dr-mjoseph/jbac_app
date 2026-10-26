@@ -242,6 +242,9 @@ export class PastorPage {
     // }
 
     else {
+      const sId = Number(this.form.value.state_id) || (Number(this.form.value.district_id) >= 31 && Number(this.form.value.district_id) <= 63 ? 2 : 1);
+      this.form.value.state_id = sId;
+      this.form.value.state = sId === 2 ? 'Telangana' : 'Andhra Pradesh';
       this.service.postpastor(this.form.value).subscribe((res: any) => {
         this.showSpinner = false;
           if (res.status == 451) {

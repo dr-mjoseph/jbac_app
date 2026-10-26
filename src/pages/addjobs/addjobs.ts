@@ -311,7 +311,10 @@ export class AddjobsPage {
     alert('దయచేసి ఖాళీ ఫీల్డ్‌లను పూరించండి');
     this.loading.dismiss();
     } else {
+      const sId = Number(this.jobsadding.value.state_id) || (Number(this.jobsadding.value.districtname) >= 31 && Number(this.jobsadding.value.districtname) <= 63 ? 2 : 1);
       var data = {
+        state_id: sId,
+        state: sId === 2 ? 'Telangana' : 'Andhra Pradesh',
         jobname: this.jobsadding.value.jobname,
         qualification: this.jobsadding.value.qualification,
         experience: this.jobsadding.value.experience,

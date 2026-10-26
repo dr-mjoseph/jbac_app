@@ -333,7 +333,10 @@ export class AddmarriagePage {
       alert('please fiil the details ');
       this.loading.dismiss();
     } else {
+      const sId = Number(this.addingmarriages.value.state_id) || (Number(this.addingmarriages.value.districtname) >= 31 && Number(this.addingmarriages.value.districtname) <= 63 ? 2 : 1);
       var data = {
+        state_id: sId,
+        state: sId === 2 ? 'Telangana' : 'Andhra Pradesh',
         description: this.addingmarriages.value.description,
         height: this.addingmarriages.value.height,
         color: this.addingmarriages.value.color,
