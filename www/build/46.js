@@ -1,6 +1,6 @@
 webpackJsonp([46],{
 
-/***/ 445:
+/***/ 446:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddbussinessPageModule", function() { return AddbussinessPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__addbussiness__ = __webpack_require__(501);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__addbussiness__ = __webpack_require__(502);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,7 +38,7 @@ var AddbussinessPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 501:
+/***/ 502:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -399,7 +399,10 @@ var AddbussinessPage = /** @class */ (function () {
             this.loading.dismiss();
         }
         else {
+            var sId = Number(this.addingbusiness.value.state_id) || (Number(this.addingbusiness.value.districtname) >= 31 && Number(this.addingbusiness.value.districtname) <= 63 ? 2 : 1);
             var data = {
+                state_id: sId,
+                state: sId === 2 ? 'Telangana' : 'Andhra Pradesh',
                 type: this.addingbusiness.value.type,
                 title: this.addingbusiness.value.title,
                 description: this.addingbusiness.value.description,

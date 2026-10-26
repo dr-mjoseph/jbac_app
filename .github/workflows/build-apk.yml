@@ -26,22 +26,45 @@ jobs:
 
     - name: Clean Preview Android SDK Platforms & Unset NDK
       run: |
-        echo "Removing preview SDK platforms and cmdline-tools causing XML schema validation errors..."
-        sudo rm -rf /usr/local/lib/android/sdk/platforms/android-3[5-9]* /usr/local/lib/android/sdk/platforms/android-4* /usr/local/lib/android/sdk/platforms/android-T* /usr/local/lib/android/sdk/platforms/android-U* /usr/local/lib/android/sdk/platforms/android-V* || true
-        echo "Removing incompatible runner NDK..."
-        sudo rm -rf /usr/local/lib/android/sdk/ndk /usr/local/lib/android/sdk/ndk-bundle || true
+        echo "Taking ownership of Android SDK..."
+        sudo chown -R $USER:$USER /usr/local/lib/android/sdk
+
+        echo "Removing NDK, system images, sources, emulator..."
+        sudo rm -rf /usr/local/lib/android/sdk/ndk* /usr/local/lib/android/sdk/system-images /usr/local/lib/android/sdk/sources /usr/local/lib/android/sdk/cmake /usr/local/lib/android/sdk/emulator /usr/local/lib/android/sdk/extras || true
         echo "ANDROID_NDK_HOME=" >> $GITHUB_ENV
         echo "ANDROID_NDK_ROOT=" >> $GITHUB_ENV
-        echo "Remaining platforms:"
-        ls -la /usr/local/lib/android/sdk/platforms/ || true
+
+        echo "Removing all platforms except android-28..."
+        find /usr/local/lib/android/sdk/platforms/ -mindepth 1 -maxdepth 1 ! -name 'android-28' -exec sudo rm -rf {} + || true
+
+        echo "Removing all build-tools except 30.0.3..."
+        find /usr/local/lib/android/sdk/build-tools/ -mindepth 1 -maxdepth 1 ! -name '30.0.3' -exec sudo rm -rf {} + || true
+
+        echo "Purging any remaining files containing 34x or extension-level..."
+        grep -rl "34x" /usr/local/lib/android/sdk 2>/dev/null | while read -r file; do
+          echo "Removing $file directory: $(dirname "$file")"
+          rm -rf "$(dirname "$file")"
+        done || true
+
+        grep -rl "extension-level" /usr/local/lib/android/sdk 2>/dev/null | while read -r file; do
+          echo "Removing $file directory: $(dirname "$file")"
+          rm -rf "$(dirname "$file")"
+        done || true
+
+        sudo chmod -R 777 /usr/local/lib/android/sdk
 
     - name: Install Android Build Tools 30.0.3
       run: |
-        curl -fsSL https://dl.google.com/android/repository/build-tools_r30.0.3-linux.zip -o /tmp/build-tools.zip
-        unzip -q /tmp/build-tools.zip -d /tmp/build-tools
-        sudo mkdir -p /usr/local/lib/android/sdk/build-tools/30.0.3
-        sudo cp -r /tmp/build-tools/android-11/* /usr/local/lib/android/sdk/build-tools/30.0.3/
-        sudo chmod -R a+rx /usr/local/lib/android/sdk/build-tools/30.0.3
+        if [ ! -f /usr/local/lib/android/sdk/build-tools/30.0.3/aapt ]; then
+          curl -fsSL https://dl.google.com/android/repository/build-tools_r30.0.3-linux.zip -o /tmp/build-tools.zip
+          unzip -q /tmp/build-tools.zip -d /tmp/build-tools
+          sudo mkdir -p /usr/local/lib/android/sdk/build-tools/30.0.3
+          sudo cp -r /tmp/build-tools/android-11/* /usr/local/lib/android/sdk/build-tools/30.0.3/
+        fi
+        cat << 'EOF' > /usr/local/lib/android/sdk/build-tools/30.0.3/package.xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><ns2:repository xmlns:ns2="http://schemas.android.com/repository/android/common/01" xmlns:ns3="http://schemas.android.com/repository/android/generic/01"><license id="android-sdk-license" type="text">Terms and Conditions</license><localPackage path="build-tools;30.0.3" obsolete="false"><type-details xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns3:genericDetailsType"/><revision><major>30</major><minor>0</minor><micro>3</micro></revision><display-name>Android SDK Build-Tools 30.0.3</display-name><uses-license ref="android-sdk-license"/></localPackage></ns2:repository>
+EOF
+        sudo chmod -R 777 /usr/local/lib/android/sdk/build-tools/30.0.3
         echo "=== Installed Build Tools ==="
         ls -la /usr/local/lib/android/sdk/build-tools/30.0.3/aapt
 
@@ -75,9 +98,18 @@ jobs:
         npm config set production false
         npm install --production=false
 
+    - name: Patch Cordova Android Templates
+      run: |
+        node scripts/patch-android-build.js
+
+    - name: Compile Ionic Web Assets
+      run: |
+        npm run build
+
     - name: Add Android Platform
       run: |
         cordova platform add android --no-interactive
+        node scripts/patch-android-build.js
         if [ -f platforms/android/cdv-gradle-config.json ]; then
           node -e '
             const fs = require("fs");
@@ -110,15 +142,16 @@ jobs:
       run: |
         ALIGN="/usr/local/lib/android/sdk/build-tools/30.0.3/zipalign"
         SIGNER="/usr/local/lib/android/sdk/build-tools/30.0.3/apksigner"
-        UNSIGNED="platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk"
+        RAW_APK=$(find platforms/android/app/build/outputs/apk/release/ -type f -name "*.apk" ! -name "*unaligned*" | head -n 1)
         ALIGNED="platforms/android/app/build/outputs/apk/release/app-release-aligned.apk"
         SIGNED="platforms/android/app/build/outputs/apk/release/app-release.apk"
 
+        echo "Found raw APK: $RAW_APK"
         echo "Aligning APK..."
-        $ALIGN -f -p 4 "$UNSIGNED" "$ALIGNED"
+        $ALIGN -f -p 4 "$RAW_APK" "$ALIGNED"
 
         echo "Signing APK with Jbac.keystore..."
-        $SIGNER sign --ks Jbac.keystore --ks-pass pass:123456 --ks-key-alias jbac --key-pass pass:123456 --out "$SIGNED" "$ALIGNED"
+        $SIGNER sign --ks Jbac.keystore --ks-pass pass:123456 --ks-key-alias jbac --key-pass pass:123456 --min-sdk-version 21 --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true --out "$SIGNED" "$ALIGNED"
 
         echo "Verifying signature..."
         $SIGNER verify --verbose "$SIGNED"

@@ -1,6 +1,6 @@
 webpackJsonp([43],{
 
-/***/ 447:
+/***/ 448:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddjobsPageModule", function() { return AddjobsPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__addjobs__ = __webpack_require__(503);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__addjobs__ = __webpack_require__(504);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,7 +38,7 @@ var AddjobsPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 503:
+/***/ 504:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -401,7 +401,10 @@ var AddjobsPage = /** @class */ (function () {
             this.loading.dismiss();
         }
         else {
+            var sId = Number(this.jobsadding.value.state_id) || (Number(this.jobsadding.value.districtname) >= 31 && Number(this.jobsadding.value.districtname) <= 63 ? 2 : 1);
             var data = {
+                state_id: sId,
+                state: sId === 2 ? 'Telangana' : 'Andhra Pradesh',
                 jobname: this.jobsadding.value.jobname,
                 qualification: this.jobsadding.value.qualification,
                 experience: this.jobsadding.value.experience,
