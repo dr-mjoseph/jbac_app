@@ -453,44 +453,6 @@ export class AddmeetingsPage {
     );
   }
 
-  triggerFileInput() {
-    const input = document.getElementById('meetingFileInput') as HTMLInputElement;
-    if (input) {
-      input.value = '';
-      input.click();
-    }
-  }
-
-  triggerCameraInput() {
-    const input = document.getElementById('meetingCameraInput') as HTMLInputElement;
-    if (input) {
-      input.value = '';
-      input.click();
-    }
-  }
-
-  onFileSelected(event: any) {
-    const file = event.target.files && event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.zone.run(() => {
-          this.imagesData = [{
-            reviewimg: e.target.result,
-            filetype: 'jpeg'
-          }];
-          if (this.form) {
-            this.form.patchValue({ image: e.target.result });
-          }
-          if (this.cdr) {
-            this.cdr.detectChanges();
-          }
-        });
-      };
-      reader.readAsDataURL(file);
-    }
-  }
-
   async openphoto() {
     const actionSheet = this.actionSheetCtrl.create({
       title: 'ఫోటో ఎంచుకోండి (Select Photo)',
