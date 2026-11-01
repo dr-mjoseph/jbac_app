@@ -14,31 +14,24 @@
     <b>{{ generals }} {{ wingtypes }} {{ leaders }}</b>
   </p>
 
-  <!-- Clean User Type Filter Buttons -->
-  <ion-row style="padding: 0 5px;">
-    <ion-col col-4 text-center (click)="make(1)">
-      <button ion-button block [color]="formshow == 1 ? 'primary' : 'light'" style="font-size: 11px; font-weight: 600;">
-        👥 విశ్వాసులు
+  <!-- User Specific Request Header Button -->
+  <ion-row style="padding: 0 15px;" justify-content-center>
+    <ion-col col-12 text-center *ngIf="formshow == 1">
+      <button ion-button block color="primary" style="font-size: 13px; font-weight: 600; height: 42px;">
+        👥 Believers Requests (విశ్వాసులు)
       </button>
     </ion-col>
-    <ion-col col-4 text-center (click)="make(3)">
-      <button ion-button block [color]="formshow == 3 ? 'danger' : 'light'" style="font-size: 11px; font-weight: 600;">
-        ✝️ పాస్టర్లు
+    <ion-col col-12 text-center *ngIf="formshow == 3">
+      <button ion-button block color="danger" style="font-size: 13px; font-weight: 600; height: 42px;">
+        ✝️ Pastors Requests (పాస్టర్లు)
       </button>
     </ion-col>
-    <ion-col col-4 text-center (click)="make(2)">
-      <button ion-button block [color]="formshow == 2 ? 'secondary' : 'light'" style="font-size: 11px; font-weight: 600;">
-        🎓 విద్యార్థులు
+    <ion-col col-12 text-center *ngIf="formshow == 2">
+      <button ion-button block color="secondary" style="font-size: 13px; font-weight: 600; height: 42px;">
+        🎓 Students Requests (విద్యార్థులు)
       </button>
     </ion-col>
   </ion-row>
-
-  <!-- Filter Indicator Badge -->
-  <div style="text-align: center; margin: 8px 10px;">
-    <span style="display: inline-block; padding: 6px 14px; border-radius: 16px; font-size: 11px; font-weight: 600; background: #ffffff; color: #00548F; box-shadow: 0 1px 3px rgba(0,0,0,0.12);">
-      📌 {{ formshow == 1 ? 'విశ్వాసులు (Believers)' : (formshow == 3 ? 'పాస్టర్లు (Pastors)' : 'విద్యార్థులు (Students)') }} రిక్వెస్ట్‌లు మాత్రమే
-    </span>
-  </div>
 
   <!-- Believers Requests Card -->
   <ion-card *ngIf="formshow == 1">
