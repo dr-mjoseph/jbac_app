@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
 // import { HomePage } from '../home/home';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ServiceProvider } from '../../providers/service/service';
@@ -20,7 +20,7 @@ export class JobsPage {
   searchconts: any;
   jobs: any
   fromshow: any = 1
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formbuilder: FormBuilder, private service: ServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formbuilder: FormBuilder, private service: ServiceProvider, public loadingCtrl: LoadingController) {
     this.form = this.formbuilder.group({
       state_id: [''],
       jobtile: ['', [Validators.required]],
@@ -216,7 +216,10 @@ export class JobsPage {
   }
 
   search() {
+    let loader = this.loadingCtrl.create({ content: 'ఉద్యోగాల సమాచారం లోడ్ అవుతోంది...' });
+    loader.present().catch(() => {});
     this.service.getjobs(this.form.value).subscribe((res: any) => {
+      loader.dismiss().catch(() => {});
       this.jobs = [];
       if (res.status == 200) {
         this.jobs = res.data;

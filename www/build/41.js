@@ -1,6 +1,6 @@
 webpackJsonp([41],{
 
-/***/ 456:
+/***/ 417:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddmeetingsPageModule", function() { return AddmeetingsPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__addmeetings__ = __webpack_require__(512);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__addmeetings__ = __webpack_require__(474);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,7 +38,7 @@ var AddmeetingsPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 512:
+/***/ 474:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -614,17 +614,17 @@ var AddmeetingsPage = /** @class */ (function () {
         });
     };
     AddmeetingsPage.prototype.triggerFileInput = function () {
-        var input = document.getElementById('meetingFileInput');
-        if (input) {
-            input.value = '';
-            input.click();
+        var fileInput = document.getElementById('meetingFileInput');
+        if (fileInput) {
+            fileInput.value = '';
+            fileInput.click();
         }
     };
     AddmeetingsPage.prototype.triggerCameraInput = function () {
-        var input = document.getElementById('meetingCameraInput');
-        if (input) {
-            input.value = '';
-            input.click();
+        var cameraInput = document.getElementById('meetingCameraInput');
+        if (cameraInput) {
+            cameraInput.value = '';
+            cameraInput.click();
         }
     };
     AddmeetingsPage.prototype.onFileSelected = function (event) {
@@ -634,12 +634,10 @@ var AddmeetingsPage = /** @class */ (function () {
             var reader = new FileReader();
             reader.onload = function (e) {
                 _this.zone.run(function () {
-                    _this.imagesData = [{
-                            reviewimg: e.target.result,
-                            filetype: 'jpeg'
-                        }];
+                    var ing = e.target.result;
+                    _this.imagesData = [{ reviewimg: ing, filetype: file.type || 'image/jpeg' }];
                     if (_this.form) {
-                        _this.form.patchValue({ image: e.target.result });
+                        _this.form.patchValue({ image: ing });
                     }
                     if (_this.cdr) {
                         _this.cdr.detectChanges();

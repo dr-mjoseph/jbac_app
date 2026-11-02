@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AlertController, IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
 
 @IonicPage()
@@ -24,7 +24,7 @@ export class WingcommandPage {
   myresdata: any;
   cachedUserRes: any = null;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public service: ServiceProvider, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public service: ServiceProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
     this.formshow = 1;
   }
 
@@ -106,6 +106,11 @@ export class WingcommandPage {
     }
     this.myresdata = u.generaltype;
 
+    let loader = this.loadingCtrl.create({
+      content: 'డేటా లోడ్ అవుతోంది... (Loading data...)'
+    });
+    loader.present().catch(() => {});
+
     if (u.leadertype == 1) {
       if (u.generaltype == 0) {
         this.generals = "State";
@@ -147,15 +152,15 @@ export class WingcommandPage {
         const rawStudents = result.data[3] || [];
 
         if (this.selectedUserType === 'pastor') {
-          this.pastorarr = rawPastors.filter((x: any) => Number(x?.approval_ind) !== 2);
+          this.pastorarr = rawPastors.filter((x: any) => Number((x && x.approval_ind)) !== 2);
           this.belearr = [];
           this.studentarr = [];
         } else if (this.selectedUserType === 'student') {
-          this.studentarr = rawStudents.filter((x: any) => Number(x?.approval_ind) !== 2);
+          this.studentarr = rawStudents.filter((x: any) => Number((x && x.approval_ind)) !== 2);
           this.belearr = [];
           this.pastorarr = [];
         } else {
-          this.belearr = rawBelievers.filter((x: any) => Number(x?.approval_ind) !== 2);
+          this.belearr = rawBelievers.filter((x: any) => Number((x && x.approval_ind)) !== 2);
           this.pastorarr = [];
           this.studentarr = [];
         }
@@ -198,20 +203,22 @@ export class WingcommandPage {
       };
 
       this.service.getLeaderswebsitewing(data4).subscribe((result: any) => {
+        loader.dismiss().catch(() => {});
+        loader.dismiss().catch(() => {});
         const rawBelievers = result.data[0] || [];
         const rawStudents = result.data[1] || [];
         const rawPastors = result.data[2] || [];
 
         if (this.selectedUserType === 'pastor') {
-          this.pastorarr = rawPastors.filter((x: any) => Number(x?.approval_ind) !== 2);
+          this.pastorarr = rawPastors.filter((x: any) => Number((x && x.approval_ind)) !== 2);
           this.belearr = [];
           this.studentarr = [];
         } else if (this.selectedUserType === 'student') {
-          this.studentarr = rawStudents.filter((x: any) => Number(x?.approval_ind) !== 2);
+          this.studentarr = rawStudents.filter((x: any) => Number((x && x.approval_ind)) !== 2);
           this.belearr = [];
           this.pastorarr = [];
         } else {
-          this.belearr = rawBelievers.filter((x: any) => Number(x?.approval_ind) !== 2);
+          this.belearr = rawBelievers.filter((x: any) => Number((x && x.approval_ind)) !== 2);
           this.pastorarr = [];
           this.studentarr = [];
         }

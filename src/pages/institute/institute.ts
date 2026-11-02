@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 // import { HomePage } from '../home/home';
@@ -37,7 +37,7 @@ export class InstitutePage {
   institutedata: any = []
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public service: ServiceProvider, public frombuilder: FormBuilder) {
+  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public navParams: NavParams, public service: ServiceProvider, public frombuilder: FormBuilder) {
     this.form = this.frombuilder.group({
       state_id: [''],
       denomination_id: [''],

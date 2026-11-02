@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
 // import { HomePage } from '../home/home';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ServiceProvider } from '../../providers/service/service';
@@ -23,7 +23,7 @@ export class MarriagePage {
   ministryname: any;
   denomation: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formbuilder: FormBuilder, public service: ServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formbuilder: FormBuilder, public service: ServiceProvider, public loadingCtrl: LoadingController) {
 
     this.form = this.formbuilder.group({
       denomation_id: [''],
