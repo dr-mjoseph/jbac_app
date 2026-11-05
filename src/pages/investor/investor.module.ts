@@ -11,3 +11,4 @@ import { InvestorPage } from './investor';
   ],
 })
 export class InvestorPageModule {}
+
