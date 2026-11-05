@@ -38,6 +38,10 @@ export class FormsPage {
       this.navCtrl.push('AssociationPage');
     } else if (id == 8) {
       this.navCtrl.push('DoctorregisterPage');
+    } else if (id == 9) {
+      this.navCtrl.push('EntrepreneurPage');
+    } else if (id == 10) {
+      this.navCtrl.push('InvestorPage');
     }
     else if (id == 27) {
       this.navCtrl.push('PrivacyPage');

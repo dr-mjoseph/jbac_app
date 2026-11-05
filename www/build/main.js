@@ -1,4 +1,4 @@
-webpackJsonp([51],{
+webpackJsonp([53],{
 
 /***/ 128:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -18,7 +18,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-var testApi = "https://1a8kqxawxd.execute-api.ap-southeast-2.amazonaws.com/dashboardapi/";
+var testApi = 'https://1a8kqxawxd.execute-api.ap-southeast-2.amazonaws.com/dashboardapi/';
 var ServiceProvider = /** @class */ (function () {
     // testApi = 'http://localhost:2303/dashboardapi/'
     function ServiceProvider(http) {
@@ -288,6 +288,16 @@ var ServiceProvider = /** @class */ (function () {
     ServiceProvider.prototype.getcatewebsitegallery = function () {
         return this.http.get(this.testApi + 'getcatewebsitegallery');
     };
+    // Entrepreneur & Investor API methods
+    ServiceProvider.prototype.getBusinessTypes = function () {
+        return this.http.post(this.testApi + 'business-types', {});
+    };
+    ServiceProvider.prototype.registerEntrepreneur = function (data) {
+        return this.http.post(this.testApi + 'entrepreneur-register', data);
+    };
+    ServiceProvider.prototype.registerInvestor = function (data) {
+        return this.http.post(this.testApi + 'investor-register', data);
+    };
     ServiceProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
@@ -321,207 +331,215 @@ webpackEmptyAsyncContext.id = 139;
 
 var map = {
 	"../pages/about/about.module": [
-		408,
-		50
+		409,
+		52
 	],
 	"../pages/account/account.module": [
-		409,
-		49
+		408,
+		51
 	],
 	"../pages/addads/addads.module": [
 		410,
-		48
+		50
 	],
 	"../pages/addattacks/addattacks.module": [
 		411,
-		47
+		49
 	],
 	"../pages/addbussiness/addbussiness.module": [
 		412,
-		46
+		48
 	],
 	"../pages/addchurchtimings/addchurchtimings.module": [
 		413,
-		45
+		47
 	],
 	"../pages/addinstitute/addinstitute.module": [
 		414,
-		44
+		46
 	],
 	"../pages/addjobs/addjobs.module": [
 		415,
-		43
+		45
 	],
 	"../pages/addmarriage/addmarriage.module": [
 		416,
-		42
+		44
 	],
 	"../pages/addmeetings/addmeetings.module": [
 		417,
-		41
+		43
 	],
 	"../pages/association/association.module": [
 		418,
-		40
+		42
 	],
 	"../pages/believer/believer.module": [
-		419,
-		39
+		420,
+		41
 	],
 	"../pages/church-timings/church-timings.module": [
-		420,
-		38
+		419,
+		40
 	],
 	"../pages/church/church.module": [
 		421,
-		37
+		39
 	],
 	"../pages/churchgo/churchgo.module": [
 		422,
-		36
+		38
 	],
 	"../pages/contact/contact.module": [
 		423,
-		35
+		37
 	],
 	"../pages/doctorregister/doctorregister.module": [
 		424,
-		34
+		36
+	],
+	"../pages/entrepreneur/entrepreneur.module": [
+		425,
+		35
 	],
 	"../pages/entry-form/entry-form.module": [
-		425,
-		33
+		426,
+		34
 	],
 	"../pages/family-councelling/family-councelling.module": [
-		426,
-		32
+		427,
+		33
 	],
 	"../pages/forgot-password/forgot-password.module": [
-		427,
-		31
+		428,
+		32
 	],
 	"../pages/forms/forms.module": [
-		428,
-		29
-	],
-	"../pages/forms2/forms2.module": [
 		429,
 		30
 	],
-	"../pages/gallery/gallery.module": [
+	"../pages/forms2/forms2.module": [
 		430,
-		28
+		31
+	],
+	"../pages/gallery/gallery.module": [
+		431,
+		29
 	],
 	"../pages/help/help.module": [
-		431,
-		27
+		432,
+		28
 	],
 	"../pages/helpinghands/helpinghands.module": [
-		432,
-		26
+		433,
+		27
 	],
 	"../pages/home/home.module": [
-		433,
+		435,
 		1
 	],
 	"../pages/imagemodal/imagemodal.module": [
 		434,
-		25
+		26
 	],
 	"../pages/institute/institute.module": [
-		435,
+		436,
+		25
+	],
+	"../pages/investor/investor.module": [
+		437,
 		24
 	],
 	"../pages/jobs/jobs.module": [
-		436,
+		438,
 		23
 	],
 	"../pages/login/login.module": [
-		437,
+		439,
 		0
 	],
 	"../pages/marriage/marriage.module": [
-		438,
+		440,
 		22
 	],
 	"../pages/meeting/meeting.module": [
-		439,
+		441,
 		5
 	],
 	"../pages/ministry/ministry.module": [
-		440,
+		442,
 		21
 	],
 	"../pages/modalpage/modalpage.module": [
-		441,
+		443,
 		20
 	],
 	"../pages/news-view/news-view.module": [
-		442,
+		444,
 		4
 	],
 	"../pages/news/news.module": [
-		443,
+		445,
 		19
 	],
 	"../pages/organisation/organisation.module": [
-		444,
+		446,
 		18
 	],
 	"../pages/pages-privacy/pages-privacy.module": [
-		445,
+		447,
 		17
 	],
 	"../pages/pastor/pastor.module": [
-		446,
+		448,
 		16
 	],
 	"../pages/profile/profile.module": [
-		448,
+		449,
 		15
 	],
 	"../pages/searchhouse/searchhouse.module": [
-		447,
+		450,
 		14
 	],
 	"../pages/searchorganisation/searchorganisation.module": [
-		449,
+		451,
 		13
 	],
 	"../pages/student/student.module": [
-		450,
+		452,
 		12
 	],
 	"../pages/sub-gallery/sub-gallery.module": [
-		452,
+		453,
 		6
 	],
 	"../pages/techsol/techsol.module": [
-		451,
+		454,
 		11
 	],
 	"../pages/video-gallery-sub/video-gallery-sub.module": [
-		453,
+		455,
 		3
 	],
 	"../pages/video-gallery/video-gallery.module": [
-		454,
+		457,
 		2
 	],
 	"../pages/webhelp/webhelp.module": [
-		455,
+		456,
 		10
 	],
 	"../pages/whatsapp/whatsapp.module": [
-		456,
+		458,
 		9
 	],
 	"../pages/wing/wing.module": [
-		458,
+		459,
 		8
 	],
 	"../pages/wingcommand/wingcommand.module": [
-		457,
+		460,
 		7
 	]
 };
@@ -600,8 +618,8 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */], {}, {
                     links: [
-                        { loadChildren: '../pages/about/about.module#AboutPageModule', name: 'AboutPage', segment: 'about', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/account/account.module#AccountPageModule', name: 'AccountPage', segment: 'account', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/about/about.module#AboutPageModule', name: 'AboutPage', segment: 'about', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/addads/addads.module#AddadsPageModule', name: 'AddadsPage', segment: 'addads', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/addattacks/addattacks.module#AddattacksPageModule', name: 'AddattacksPage', segment: 'addattacks', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/addbussiness/addbussiness.module#AddbussinessPageModule', name: 'AddbussinessPage', segment: 'addbussiness', priority: 'low', defaultHistory: [] },
@@ -611,12 +629,13 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/addmarriage/addmarriage.module#AddmarriagePageModule', name: 'AddmarriagePage', segment: 'addmarriage', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/addmeetings/addmeetings.module#AddmeetingsPageModule', name: 'AddmeetingsPage', segment: 'addmeetings', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/association/association.module#AssociationPageModule', name: 'AssociationPage', segment: 'association', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/believer/believer.module#BelieverPageModule', name: 'BelieverPage', segment: 'believer', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/church-timings/church-timings.module#ChurchTimingsPageModule', name: 'ChurchTimingsPage', segment: 'church-timings', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/believer/believer.module#BelieverPageModule', name: 'BelieverPage', segment: 'believer', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/church/church.module#ChurchPageModule', name: 'ChurchPage', segment: 'church', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/churchgo/churchgo.module#ChurchgoPageModule', name: 'ChurchgoPage', segment: 'churchgo', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/contact/contact.module#ContactPageModule', name: 'ContactPage', segment: 'contact', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/doctorregister/doctorregister.module#DoctorregisterPageModule', name: 'DoctorregisterPage', segment: 'doctorregister', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/entrepreneur/entrepreneur.module#EntrepreneurPageModule', name: 'EntrepreneurPage', segment: 'entrepreneur', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/entry-form/entry-form.module#EntryFormPageModule', name: 'EntryFormPage', segment: 'entry-form', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/family-councelling/family-councelling.module#FamilyCouncellingPageModule', name: 'FamilyCouncellingPage', segment: 'family-councelling', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/forgot-password/forgot-password.module#ForgotPasswordPageModule', name: 'ForgotPasswordPage', segment: 'forgot-password', priority: 'low', defaultHistory: [] },
@@ -625,9 +644,10 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/gallery/gallery.module#GalleryPageModule', name: 'GalleryPage', segment: 'gallery', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/help/help.module#HelpPageModule', name: 'HelpPage', segment: 'help', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/helpinghands/helpinghands.module#HelpinghandsPageModule', name: 'HelpinghandsPage', segment: 'helpinghands', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/home/home.module#HomePageModule', name: 'HomePage', segment: 'home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/imagemodal/imagemodal.module#ImagemodalPageModule', name: 'ImagemodalPage', segment: 'imagemodal', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/home/home.module#HomePageModule', name: 'HomePage', segment: 'home', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/institute/institute.module#InstitutePageModule', name: 'InstitutePage', segment: 'institute', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/investor/investor.module#InvestorPageModule', name: 'InvestorPage', segment: 'investor', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/jobs/jobs.module#JobsPageModule', name: 'JobsPage', segment: 'jobs', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/marriage/marriage.module#MarriagePageModule', name: 'MarriagePage', segment: 'marriage', priority: 'low', defaultHistory: [] },
@@ -639,18 +659,18 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/organisation/organisation.module#OrganisationPageModule', name: 'OrganisationPage', segment: 'organisation', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/pages-privacy/pages-privacy.module#PagesPrivacyPageModule', name: 'PagesPrivacyPage', segment: 'pages-privacy', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/pastor/pastor.module#PastorPageModule', name: 'PastorPage', segment: 'pastor', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/searchhouse/searchhouse.module#SearchhousePageModule', name: 'SearchhousePage', segment: 'searchhouse', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/profile/profile.module#ProfilePageModule', name: 'ProfilePage', segment: 'profile', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/searchhouse/searchhouse.module#SearchhousePageModule', name: 'SearchhousePage', segment: 'searchhouse', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/searchorganisation/searchorganisation.module#SearchorganisationPageModule', name: 'SearchorganisationPage', segment: 'searchorganisation', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/student/student.module#StudentPageModule', name: 'StudentPage', segment: 'student', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/techsol/techsol.module#TechsolPageModule', name: 'TechsolPage', segment: 'techsol', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/sub-gallery/sub-gallery.module#SubGalleryPageModule', name: 'SubGalleryPage', segment: 'sub-gallery', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/techsol/techsol.module#TechsolPageModule', name: 'TechsolPage', segment: 'techsol', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/video-gallery-sub/video-gallery-sub.module#VideoGallerySubPageModule', name: 'VideoGallerySubPage', segment: 'video-gallery-sub', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/video-gallery/video-gallery.module#VideoGalleryPageModule', name: 'VideoGalleryPage', segment: 'video-gallery', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/webhelp/webhelp.module#WebhelpPageModule', name: 'WebhelpPage', segment: 'webhelp', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/video-gallery/video-gallery.module#VideoGalleryPageModule', name: 'VideoGalleryPage', segment: 'video-gallery', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/whatsapp/whatsapp.module#WhatsappPageModule', name: 'WhatsappPage', segment: 'whatsapp', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/wingcommand/wingcommand.module#WingcommandPageModule', name: 'WingcommandPage', segment: 'wingcommand', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/wing/wing.module#WingPageModule', name: 'WingPage', segment: 'wing', priority: 'low', defaultHistory: [] }
+                        { loadChildren: '../pages/wing/wing.module#WingPageModule', name: 'WingPage', segment: 'wing', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/wingcommand/wingcommand.module#WingcommandPageModule', name: 'WingcommandPage', segment: 'wingcommand', priority: 'low', defaultHistory: [] }
                     ]
                 }),
                 __WEBPACK_IMPORTED_MODULE_7__angular_common_http__["b" /* HttpClientModule */],

@@ -1,0 +1,174 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title style="text-align: center; font-size: 15px;">
+      <b>ఎంటర్‌ప్రెన్యూర్ రిజిస్ట్రేషన్ (Entrepreneur)</b>
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="gotohome()">
+        <ion-icon name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="pagecss">
+  <div class="form-card">
+    <div class="header-box">
+      <div style="font-size: 30px; margin-bottom: 6px;">🚀</div>
+      <h3 style="margin: 0; font-size: 16px; font-weight: bold;">వ్యాపార ఔత్సాహికుల నమోదు</h3>
+      <p style="margin: 4px 0 0 0; font-size: 11.5px; opacity: 0.9;">
+        నూతన వ్యాపార ఏర్పాటు & పెట్టుబడిదారుల సహాయం కొరకు (Startup & Financial Matching)
+      </p>
+    </div>
+
+    <form [formGroup]="entrepreneurForm" (ngSubmit)="submitEntrepreneur()">
+
+      <!-- SECTION 1: PERSONAL DETAILS -->
+      <div class="section-heading">1. వ్యక్తిగత వివరాలు (Personal Details)</div>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>పూర్తి పేరు (Full Name) <span class="req">*</span></ion-label>
+        <ion-input type="text" formControlName="name" placeholder="ఉదా: Samuel Kumar"></ion-input>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>మొబైల్ నంబర్ (Mobile Number) <span class="req">*</span></ion-label>
+        <ion-input type="tel" maxlength="10" formControlName="mobile" placeholder="10 అంకెల మొబైల్ నంబర్"></ion-input>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>ఈమెయిల్ (Email Address)</ion-label>
+        <ion-input type="email" formControlName="email" placeholder="name@example.com"></ion-input>
+      </ion-item>
+
+      <!-- SECTION 2: PERSONAL RESIDENCE ADDRESS -->
+      <div class="section-heading">2. వ్యక్తిగత నివాస చిరునామా (Personal Residence)</div>
+
+      <!-- State -->
+      <ion-item class="custom-item">
+        <ion-label stacked>రాష్ట్రం (State) <span class="req">*</span></ion-label>
+        <ion-select formControlName="state_id" (ionChange)="onPersonalStateChange($event)" okText="సరే" cancelText="రద్దు" placeholder="రాష్ట్రాన్ని ఎంచుకోండి">
+          <ion-option *ngFor="let s of states" [value]="s.id">{{ s.state_name || s.name }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- District -->
+      <ion-item class="custom-item">
+        <ion-label stacked>జిల్లా (District) <span class="req">*</span></ion-label>
+        <ion-select formControlName="districts" (ionChange)="onPersonalDistrictChange($event)" [disabled]="!entrepreneurForm.get('state_id').value" okText="సరే" cancelText="రద్దు" placeholder="జిల్లాను ఎంచుకోండి">
+          <ion-option *ngFor="let d of personalDistricts" [value]="d.id">{{ d.distrct_nm || d.districtname }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Constituency -->
+      <ion-item class="custom-item">
+        <ion-label stacked>నియోజకవర్గం (Constituency) <span class="req">*</span></ion-label>
+        <ion-select formControlName="constituencyname" (ionChange)="onPersonalConstituencyChange($event)" [disabled]="!entrepreneurForm.get('districts').value" okText="సరే" cancelText="రద్దు" placeholder="నియోజకవర్గం ఎంచుకోండి">
+          <ion-option *ngFor="let c of personalConstituencies" [value]="c.id">{{ c.const_nm || c.name }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Mandal -->
+      <ion-item class="custom-item">
+        <ion-label stacked>మండలం (Mandal) <span class="req">*</span></ion-label>
+        <ion-select formControlName="mandals" (ionChange)="onPersonalMandalChange($event)" [disabled]="!entrepreneurForm.get('constituencyname').value" okText="సరే" cancelText="రద్దు" placeholder="మండలం ఎంచుకోండి">
+          <ion-option *ngFor="let m of personalMandals" [value]="m.id">{{ m.mndl_nm || m.name }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Panchayat -->
+      <ion-item class="custom-item">
+        <ion-label stacked>పంచాయతీ / గ్రామం (Panchayat / Village) <span class="req">*</span></ion-label>
+        <ion-select formControlName="panchayati" [disabled]="!entrepreneurForm.get('mandals').value" okText="సరే" cancelText="రద్దు" placeholder="పంచాయతీ ఎంచుకోండి">
+          <ion-option *ngFor="let p of personalPanchayatis" [value]="p.id">{{ p.pnchyt_nm || p.name }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- SECTION 3: BUSINESS SETUP LOCATION -->
+      <div class="section-heading">3. వ్యాపార ఏర్పాటు చేయు స్థలం (Business Setup Location)</div>
+
+      <!-- Business State -->
+      <ion-item class="custom-item">
+        <ion-label stacked>వ్యాపార రాష్ట్రం (Business State) <span class="req">*</span></ion-label>
+        <ion-select formControlName="business_state_id" (ionChange)="onBusinessStateChange($event)" okText="సరే" cancelText="రద్దు" placeholder="రాష్ట్రాన్ని ఎంచుకోండి">
+          <ion-option *ngFor="let s of states" [value]="s.id">{{ s.state_name || s.name }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Business District -->
+      <ion-item class="custom-item">
+        <ion-label stacked>వ్యాపార జిల్లా (Business District) <span class="req">*</span></ion-label>
+        <ion-select formControlName="business_districts" (ionChange)="onBusinessDistrictChange($event)" [disabled]="!entrepreneurForm.get('business_state_id').value" okText="సరే" cancelText="రద్దు" placeholder="జిల్లాను ఎంచుకోండి">
+          <ion-option *ngFor="let d of businessDistricts" [value]="d.id">{{ d.distrct_nm || d.districtname }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Business Constituency -->
+      <ion-item class="custom-item">
+        <ion-label stacked>వ్యాపార నియోజకవర్గం (Business Constituency) <span class="req">*</span></ion-label>
+        <ion-select formControlName="business_constituencyname" (ionChange)="onBusinessConstituencyChange($event)" [disabled]="!entrepreneurForm.get('business_districts').value" okText="సరే" cancelText="రద్దు" placeholder="నియోజకవర్గం ఎంచుకోండి">
+          <ion-option *ngFor="let c of businessConstituencies" [value]="c.id">{{ c.const_nm || c.name }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Business Mandal -->
+      <ion-item class="custom-item">
+        <ion-label stacked>వ్యాపార మండలం (Business Mandal) <span class="req">*</span></ion-label>
+        <ion-select formControlName="business_mandals" (ionChange)="onBusinessMandalChange($event)" [disabled]="!entrepreneurForm.get('business_constituencyname').value" okText="సరే" cancelText="రద్దు" placeholder="మండలం ఎంచుకోండి">
+          <ion-option *ngFor="let m of businessMandals" [value]="m.id">{{ m.mndl_nm || m.name }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Business Panchayat -->
+      <ion-item class="custom-item">
+        <ion-label stacked>వ్యాపార పంచాయతీ (Business Panchayat) <span class="req">*</span></ion-label>
+        <ion-select formControlName="business_panchayati" [disabled]="!entrepreneurForm.get('business_mandals').value" okText="సరే" cancelText="రద్దు" placeholder="పంచాయతీ ఎంచుకోండి">
+          <ion-option *ngFor="let p of businessPanchayatis" [value]="p.id">{{ p.pnchyt_nm || p.name }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- SECTION 4: BUSINESS TYPE & FINANCE -->
+      <div class="section-heading">4. వ్యాపార రంగం & పెట్టుబడి (Business & Capital)</div>
+
+      <!-- Type of Business -->
+      <ion-item class="custom-item">
+        <ion-label stacked>వ్యాపార రంగం (Type of Business) <span class="req">*</span></ion-label>
+        <ion-select formControlName="business_type_id" okText="సరే" cancelText="రద్దు" placeholder="వ్యాపార రంగాన్ని ఎంచుకోండి">
+          <ion-option *ngFor="let t of businessTypes" [value]="t.id">{{ t.business_type || t.type_english }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Christian Denomination -->
+      <ion-item class="custom-item">
+        <ion-label stacked>క్రైస్తవ డినామినేషన్ (Denomination) <span class="req">*</span></ion-label>
+        <ion-select formControlName="denomination_id" okText="సరే" cancelText="రద్దు" placeholder="డినామినేషన్ ఎంచుకోండి">
+          <ion-option *ngFor="let d of denominations" [value]="d.id">{{ d.denomation_name || d.denomination_name }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Self Fund -->
+      <ion-item class="custom-item">
+        <ion-label stacked>స్వంత పెట్టుబడి (Self Fund / Own Investment) ₹ <span class="req">*</span></ion-label>
+        <ion-input type="text" formControlName="self_fund" placeholder="ఉదా: 2,00,000"></ion-input>
+      </ion-item>
+
+      <!-- Capital Need -->
+      <ion-item class="custom-item">
+        <ion-label stacked>అవసరమైన పెట్టుబడి (Capital Needed from Investors) ₹ <span class="req">*</span></ion-label>
+        <ion-input type="text" formControlName="capital_need" placeholder="ఉదా: 10,00,000"></ion-input>
+      </ion-item>
+
+      <!-- Description -->
+      <ion-item class="custom-item">
+        <ion-label stacked>వ్యాపార ప్రణాళిక వివరణ (Business Concept / Plan)</ion-label>
+        <ion-textarea rows="3" formControlName="description" placeholder="మీ వ్యాపార ఆలోచన గురించి క్లుప్తంగా వివరించండి..."></ion-textarea>
+      </ion-item>
+
+      <!-- Submit Button -->
+      <button ion-button block type="submit" class="submit-btn">
+        🚀 ఎంటర్‌ప్రెన్యూర్ సబ్మిట్ చేయండి (Submit)
+      </button>
+
+    </form>
+  </div>
+</ion-content>

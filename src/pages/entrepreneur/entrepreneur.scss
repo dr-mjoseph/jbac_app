@@ -1,0 +1,53 @@
+page-entrepreneur {
+  .pagecss {
+    background-color: #f4f5f8;
+  }
+
+  .form-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 16px;
+    margin: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  .header-box {
+    background: linear-gradient(135deg, #1e293b, #312e81);
+    color: #ffffff;
+    border-radius: 12px;
+    padding: 18px 14px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .section-heading {
+    font-size: 14px;
+    font-weight: bold;
+    color: #312e81;
+    margin: 18px 0 8px 4px;
+    border-left: 3px solid #6366f1;
+    padding-left: 8px;
+  }
+
+  .custom-item {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+  }
+
+  .req {
+    color: #ef4444;
+    font-weight: bold;
+  }
+
+  .submit-btn {
+    margin-top: 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 15px;
+    height: 48px;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  }
+}

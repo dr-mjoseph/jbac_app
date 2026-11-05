@@ -1,0 +1,125 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title style="text-align: center; font-size: 15px;">
+      <b>ఇన్వెస్టర్ రిజిస్ట్రేషన్ (Investor)</b>
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="gotohome()">
+        <ion-icon name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="pagecss">
+  <div class="form-card">
+    <div class="header-box">
+      <div style="font-size: 30px; margin-bottom: 6px;">💰</div>
+      <h3 style="margin: 0; font-size: 16px; font-weight: bold;">పెట్టుబడిదారుల నమోదు</h3>
+      <p style="margin: 4px 0 0 0; font-size: 11.5px; opacity: 0.9;">
+        నూతన వ్యాపార ఆలోచనలలో పెట్టుబడి & భాగస్వామ్యం కొరకు (Angel Investment & Growth)
+      </p>
+    </div>
+
+    <form [formGroup]="investorForm" (ngSubmit)="submitInvestor()">
+
+      <!-- SECTION 1: PERSONAL DETAILS -->
+      <div class="section-heading">1. వ్యక్తిగత వివరాలు (Personal Details)</div>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>పూర్తి పేరు (Full Name) <span class="req">*</span></ion-label>
+        <ion-input type="text" formControlName="name" placeholder="ఉదా: John Wesley"></ion-input>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>మొబైల్ నంబర్ (Mobile Number) <span class="req">*</span></ion-label>
+        <ion-input type="tel" maxlength="10" formControlName="mobile" placeholder="10 అంకెల మొబైల్ నంబర్"></ion-input>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>ఈమెయిల్ (Email Address)</ion-label>
+        <ion-input type="email" formControlName="email" placeholder="investor@example.com"></ion-input>
+      </ion-item>
+
+      <!-- SECTION 2: RESIDENCE ADDRESS -->
+      <div class="section-heading">2. నివాస చిరునామా (Residence Address)</div>
+
+      <!-- State -->
+      <ion-item class="custom-item">
+        <ion-label stacked>రాష్ట్రం (State) <span class="req">*</span></ion-label>
+        <ion-select formControlName="state_id" (ionChange)="onStateChange($event)" okText="సరే" cancelText="రద్దు" placeholder="రాష్ట్రాన్ని ఎంచుకోండి">
+          <ion-option *ngFor="let s of states" [value]="s.id">{{ s.state_name || s.name }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- District -->
+      <ion-item class="custom-item">
+        <ion-label stacked>జిల్లా (District) <span class="req">*</span></ion-label>
+        <ion-select formControlName="districts" (ionChange)="onDistrictChange($event)" [disabled]="!investorForm.get('state_id').value" okText="సరే" cancelText="రద్దు" placeholder="జిల్లాను ఎంచుకోండి">
+          <ion-option *ngFor="let d of districts" [value]="d.id">{{ d.distrct_nm || d.districtname }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Constituency -->
+      <ion-item class="custom-item">
+        <ion-label stacked>నియోజకవర్గం (Constituency) <span class="req">*</span></ion-label>
+        <ion-select formControlName="constituencyname" (ionChange)="onConstituencyChange($event)" [disabled]="!investorForm.get('districts').value" okText="సరే" cancelText="రద్దు" placeholder="నియోజకవర్గం ఎంచుకోండి">
+          <ion-option *ngFor="let c of constituencies" [value]="c.id">{{ c.const_nm || c.name }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Mandal -->
+      <ion-item class="custom-item">
+        <ion-label stacked>మండలం (Mandal) <span class="req">*</span></ion-label>
+        <ion-select formControlName="mandals" (ionChange)="onMandalChange($event)" [disabled]="!investorForm.get('constituencyname').value" okText="సరే" cancelText="రద్దు" placeholder="మండలం ఎంచుకోండి">
+          <ion-option *ngFor="let m of mandals" [value]="m.id">{{ m.mndl_nm || m.name }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Panchayat -->
+      <ion-item class="custom-item">
+        <ion-label stacked>పంచాయతీ / గ్రామం (Panchayat / Village) <span class="req">*</span></ion-label>
+        <ion-select formControlName="panchayati" [disabled]="!investorForm.get('mandals').value" okText="సరే" cancelText="రద్దు" placeholder="పంచాయతీ ఎంచుకోండి">
+          <ion-option *ngFor="let p of panchayatis" [value]="p.id">{{ p.pnchyt_nm || p.name }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- SECTION 3: INVESTMENT PREFERENCES -->
+      <div class="section-heading">3. పెట్టుబడి ప్రాధాన్యతలు (Investment Preferences)</div>
+
+      <!-- Interested Business Type -->
+      <ion-item class="custom-item">
+        <ion-label stacked>ఆసక్తి గల వ్యాపార రంగం (Interested Business Type) <span class="req">*</span></ion-label>
+        <ion-select formControlName="business_type_id" okText="సరే" cancelText="రద్దు" placeholder="వ్యాపార రంగాన్ని ఎంచుకోండి">
+          <ion-option *ngFor="let t of businessTypes" [value]="t.id">{{ t.business_type || t.type_english }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Christian Denomination -->
+      <ion-item class="custom-item">
+        <ion-label stacked>క్రైస్తవ డినామినేషన్ (Denomination) <span class="req">*</span></ion-label>
+        <ion-select formControlName="denomination_id" okText="సరే" cancelText="రద్దు" placeholder="డినామినేషన్ ఎంచుకోండి">
+          <ion-option *ngFor="let d of denominations" [value]="d.id">{{ d.denomation_name || d.denomination_name }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Capital to Invest -->
+      <ion-item class="custom-item">
+        <ion-label stacked>పెట్టుబడి పెట్టదలచిన మొత్తం (Capital Willing to Invest) ₹ <span class="req">*</span></ion-label>
+        <ion-input type="text" formControlName="capital_to_invest" placeholder="ఉదా: 5,00,000 to 25,00,000"></ion-input>
+      </ion-item>
+
+      <!-- Description -->
+      <ion-item class="custom-item">
+        <ion-label stacked>పెట్టుబడి ప్రాధాన్యతలు / నిబంధనలు (Investment Criteria)</ion-label>
+        <ion-textarea rows="3" formControlName="description" placeholder="భాగస్వామ్య నిబంధనలు లేదా ప్రాధాన్యతల గురించి వివరించండి..."></ion-textarea>
+      </ion-item>
+
+      <!-- Submit Button -->
+      <button ion-button block type="submit" class="submit-btn">
+        💰 ఇన్వెస్టర్ ప్రొఫైల్ సబ్మిట్ చేయండి (Submit)
+      </button>
+
+    </form>
+  </div>
+</ion-content>

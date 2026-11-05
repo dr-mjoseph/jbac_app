@@ -372,4 +372,18 @@ export class ServiceProvider {
   getcatewebsitegallery() {
     return this.http.get(this.testApi + 'getcatewebsitegallery');
   }
+
+  // Entrepreneur & Investor API methods
+  getBusinessTypes() {
+    return this.http.post(this.testApi + 'business-types', {});
+  }
+
+  registerEntrepreneur(data: any) {
+    return this.http.post(this.testApi + 'entrepreneur-register', data);
+  }
+
+  registerInvestor(data: any) {
+    return this.http.post(this.testApi + 'investor-register', data);
+  }
 }
+

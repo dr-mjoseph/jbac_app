@@ -25358,6 +25358,53 @@ page-doctorregister .custom-item ion-textarea:focus-within {
   box-shadow: 0 0 0 3px rgba(0, 84, 143, 0.15) !important;
 }
 
+page-entrepreneur .pagecss {
+  background-color: #f4f5f8;
+}
+page-entrepreneur .form-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px;
+  margin: 10px;
+  -webkit-box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+page-entrepreneur .header-box {
+  background: linear-gradient(135deg, #1e293b, #312e81);
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 18px 14px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+page-entrepreneur .section-heading {
+  font-size: 14px;
+  font-weight: bold;
+  color: #312e81;
+  margin: 18px 0 8px 4px;
+  border-left: 3px solid #6366f1;
+  padding-left: 8px;
+}
+page-entrepreneur .custom-item {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+}
+page-entrepreneur .req {
+  color: #ef4444;
+  font-weight: bold;
+}
+page-entrepreneur .submit-btn {
+  margin-top: 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 15px;
+  height: 48px;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+}
+
 page-entry-form .header-row {
   display: -webkit-box;
   display: -webkit-flex;
@@ -25784,6 +25831,53 @@ page-imagemodal .image-container {
 page-imagemodal img {
   max-width: 100%;
   max-height: 100%;
+}
+
+page-investor .pagecss {
+  background-color: #f4f5f8;
+}
+page-investor .form-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px;
+  margin: 10px;
+  -webkit-box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+page-investor .header-box {
+  background: linear-gradient(135deg, #064e3b, #111827);
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 18px 14px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+page-investor .section-heading {
+  font-size: 14px;
+  font-weight: bold;
+  color: #065f46;
+  margin: 18px 0 8px 4px;
+  border-left: 3px solid #10b981;
+  padding-left: 8px;
+}
+page-investor .custom-item {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+}
+page-investor .req {
+  color: #ef4444;
+  font-weight: bold;
+}
+page-investor .submit-btn {
+  margin-top: 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 15px;
+  height: 48px;
+  background: linear-gradient(135deg, #059669, #10b981);
 }
 
 page-login .jabc {
