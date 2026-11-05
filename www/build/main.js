@@ -18,7 +18,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-var testApi = "https://1a8kqxawxd.execute-api.ap-southeast-2.amazonaws.com/dashboardapi/";
+var testApi = 'https://1a8kqxawxd.execute-api.ap-southeast-2.amazonaws.com/dashboardapi/';
 var ServiceProvider = /** @class */ (function () {
     // testApi = 'http://localhost:2303/dashboardapi/'
     function ServiceProvider(http) {
@@ -365,11 +365,11 @@ var map = {
 		40
 	],
 	"../pages/believer/believer.module": [
-		420,
+		419,
 		39
 	],
 	"../pages/church-timings/church-timings.module": [
-		419,
+		420,
 		38
 	],
 	"../pages/church/church.module": [
@@ -377,11 +377,11 @@ var map = {
 		37
 	],
 	"../pages/churchgo/churchgo.module": [
-		423,
+		422,
 		36
 	],
 	"../pages/contact/contact.module": [
-		422,
+		423,
 		35
 	],
 	"../pages/doctorregister/doctorregister.module": [
@@ -397,11 +397,11 @@ var map = {
 		32
 	],
 	"../pages/forgot-password/forgot-password.module": [
-		428,
+		427,
 		31
 	],
 	"../pages/forms/forms.module": [
-		427,
+		428,
 		29
 	],
 	"../pages/forms2/forms2.module": [
@@ -505,23 +505,23 @@ var map = {
 		3
 	],
 	"../pages/video-gallery/video-gallery.module": [
-		456,
+		454,
 		2
 	],
 	"../pages/webhelp/webhelp.module": [
-		454,
+		455,
 		10
 	],
 	"../pages/whatsapp/whatsapp.module": [
-		455,
+		456,
 		9
 	],
 	"../pages/wing/wing.module": [
-		457,
+		458,
 		8
 	],
 	"../pages/wingcommand/wingcommand.module": [
-		458,
+		457,
 		7
 	]
 };
@@ -611,16 +611,16 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/addmarriage/addmarriage.module#AddmarriagePageModule', name: 'AddmarriagePage', segment: 'addmarriage', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/addmeetings/addmeetings.module#AddmeetingsPageModule', name: 'AddmeetingsPage', segment: 'addmeetings', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/association/association.module#AssociationPageModule', name: 'AssociationPage', segment: 'association', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/church-timings/church-timings.module#ChurchTimingsPageModule', name: 'ChurchTimingsPage', segment: 'church-timings', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/believer/believer.module#BelieverPageModule', name: 'BelieverPage', segment: 'believer', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/church-timings/church-timings.module#ChurchTimingsPageModule', name: 'ChurchTimingsPage', segment: 'church-timings', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/church/church.module#ChurchPageModule', name: 'ChurchPage', segment: 'church', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/contact/contact.module#ContactPageModule', name: 'ContactPage', segment: 'contact', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/churchgo/churchgo.module#ChurchgoPageModule', name: 'ChurchgoPage', segment: 'churchgo', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/contact/contact.module#ContactPageModule', name: 'ContactPage', segment: 'contact', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/doctorregister/doctorregister.module#DoctorregisterPageModule', name: 'DoctorregisterPage', segment: 'doctorregister', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/entry-form/entry-form.module#EntryFormPageModule', name: 'EntryFormPage', segment: 'entry-form', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/family-councelling/family-councelling.module#FamilyCouncellingPageModule', name: 'FamilyCouncellingPage', segment: 'family-councelling', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/forms/forms.module#FormsPageModule', name: 'FormsPage', segment: 'forms', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/forgot-password/forgot-password.module#ForgotPasswordPageModule', name: 'ForgotPasswordPage', segment: 'forgot-password', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/forms/forms.module#FormsPageModule', name: 'FormsPage', segment: 'forms', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/forms2/forms2.module#Forms2PageModule', name: 'Forms2Page', segment: 'forms2', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/gallery/gallery.module#GalleryPageModule', name: 'GalleryPage', segment: 'gallery', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/help/help.module#HelpPageModule', name: 'HelpPage', segment: 'help', priority: 'low', defaultHistory: [] },
@@ -646,11 +646,11 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/techsol/techsol.module#TechsolPageModule', name: 'TechsolPage', segment: 'techsol', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/sub-gallery/sub-gallery.module#SubGalleryPageModule', name: 'SubGalleryPage', segment: 'sub-gallery', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/video-gallery-sub/video-gallery-sub.module#VideoGallerySubPageModule', name: 'VideoGallerySubPage', segment: 'video-gallery-sub', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/video-gallery/video-gallery.module#VideoGalleryPageModule', name: 'VideoGalleryPage', segment: 'video-gallery', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/webhelp/webhelp.module#WebhelpPageModule', name: 'WebhelpPage', segment: 'webhelp', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/whatsapp/whatsapp.module#WhatsappPageModule', name: 'WhatsappPage', segment: 'whatsapp', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/video-gallery/video-gallery.module#VideoGalleryPageModule', name: 'VideoGalleryPage', segment: 'video-gallery', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/wing/wing.module#WingPageModule', name: 'WingPage', segment: 'wing', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/wingcommand/wingcommand.module#WingcommandPageModule', name: 'WingcommandPage', segment: 'wingcommand', priority: 'low', defaultHistory: [] }
+                        { loadChildren: '../pages/wingcommand/wingcommand.module#WingcommandPageModule', name: 'WingcommandPage', segment: 'wingcommand', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/wing/wing.module#WingPageModule', name: 'WingPage', segment: 'wing', priority: 'low', defaultHistory: [] }
                     ]
                 }),
                 __WEBPACK_IMPORTED_MODULE_7__angular_common_http__["b" /* HttpClientModule */],

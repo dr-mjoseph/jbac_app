@@ -314,12 +314,12 @@ export class WingcommandPage {
     const isWing = String(x.leadertype) === '2' || (x.wingtype && x.wingtype !== 'null' && String(x.wingtype).trim() !== '') || (x.wingtypes && x.wingtypes !== 'null' && String(x.wingtypes).trim() !== '');
     if (isWing) return (x.wing_name || 'వింగ్') + ' లీడర్';
     const gType = String(x.generaltype || '').trim();
-    if (gType === '0') return 'రాష్ట్ర లీడర్';
-    if (gType === '1') return 'జిల్లా లీడర్';
-    if (gType === '2') return 'నియోజకవర్గ లీడర్';
-    if (gType === '3') return 'మండల లీడర్';
-    if (gType === '4') return 'గ్రామ / పంచాయితీ లీడర్';
-    if (gType === '5' || gType === '6') return 'వార్డు లీడర్';
+    if (gType === '0' || gType.toLowerCase().includes('state')) return 'రాష్ట్ర లీడర్';
+    if (gType === '1' || gType.toLowerCase().includes('dist')) return 'జిల్లా లీడర్';
+    if (gType === '2' || gType.toLowerCase().includes('const')) return 'నియోజకవర్గ లీడర్';
+    if (gType === '3' || gType.toLowerCase().includes('mandal') || gType.toLowerCase().includes('municip')) return 'మండల లీడర్';
+    if (gType === '4' || gType.toLowerCase().includes('panchayat') || gType.toLowerCase().includes('village')) return 'గ్రామ / పంచాయితీ లీడర్';
+    if (gType === '5' || gType === '6' || gType.toLowerCase().includes('ward')) return 'వార్డు లీడర్';
     return 'జనరల్ లీడర్';
   }
 

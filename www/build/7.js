@@ -1,6 +1,6 @@
 webpackJsonp([7],{
 
-/***/ 458:
+/***/ 457:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WingcommandPageModule", function() { return WingcommandPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__wingcommand__ = __webpack_require__(514);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__wingcommand__ = __webpack_require__(513);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,7 +38,7 @@ var WingcommandPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 514:
+/***/ 513:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -381,17 +381,17 @@ var WingcommandPage = /** @class */ (function () {
         if (isWing)
             return (x.wing_name || 'వింగ్') + ' లీడర్';
         var gType = String(x.generaltype || '').trim();
-        if (gType === '0')
+        if (gType === '0' || gType.toLowerCase().includes('state'))
             return 'రాష్ట్ర లీడర్';
-        if (gType === '1')
+        if (gType === '1' || gType.toLowerCase().includes('dist'))
             return 'జిల్లా లీడర్';
-        if (gType === '2')
+        if (gType === '2' || gType.toLowerCase().includes('const'))
             return 'నియోజకవర్గ లీడర్';
-        if (gType === '3')
+        if (gType === '3' || gType.toLowerCase().includes('mandal') || gType.toLowerCase().includes('municip'))
             return 'మండల లీడర్';
-        if (gType === '4')
+        if (gType === '4' || gType.toLowerCase().includes('panchayat') || gType.toLowerCase().includes('village'))
             return 'గ్రామ / పంచాయితీ లీడర్';
-        if (gType === '5' || gType === '6')
+        if (gType === '5' || gType === '6' || gType.toLowerCase().includes('ward'))
             return 'వార్డు లీడర్';
         return 'జనరల్ లీడర్';
     };
