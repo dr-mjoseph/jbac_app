@@ -47,7 +47,7 @@
       <!-- State -->
       <ion-item class="custom-item">
         <ion-label stacked>రాష్ట్రం (State) <span class="req">*</span></ion-label>
-        <ion-select formControlName="state_id" (ionChange)="onStateChange($event)" okText="సరే" cancelText="రద్దు" placeholder="రాష్ట్రాన్ని ఎంచుకోండి">
+        <ion-select formControlName="state_id" (ionChange)="onStateChange($event)" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">
           <ion-option *ngFor="let s of states" [value]="s.id">{{ s.state_name || s.name }}</ion-option>
         </ion-select>
       </ion-item>
@@ -55,7 +55,7 @@
       <!-- District -->
       <ion-item class="custom-item">
         <ion-label stacked>జిల్లా (District) <span class="req">*</span></ion-label>
-        <ion-select formControlName="districts" (ionChange)="onDistrictChange($event)" [disabled]="!investorForm.get('state_id').value" okText="సరే" cancelText="రద్దు" placeholder="జిల్లాను ఎంచుకోండి">
+        <ion-select formControlName="districts" (ionChange)="onDistrictChange($event)" [disabled]="!investorForm.get('state_id').value" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">
           <ion-option *ngFor="let d of districts" [value]="d.id">{{ d.distrct_nm || d.districtname }}</ion-option>
         </ion-select>
       </ion-item>
@@ -98,7 +98,7 @@
       <!-- Christian Denomination -->
       <ion-item class="custom-item">
         <ion-label stacked>క్రైస్తవ డినామినేషన్ (Denomination) <span class="req">*</span></ion-label>
-        <ion-select formControlName="denomination_id" okText="సరే" cancelText="రద్దు" placeholder="డినామినేషన్ ఎంచుకోండి">
+        <ion-select formControlName="denomination_id" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">
           <ion-option *ngFor="let d of denominations" [value]="d.id">{{ d.denomation_name || d.denomination_name }}</ion-option>
         </ion-select>
       </ion-item>
