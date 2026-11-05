@@ -80,3 +80,4 @@ uses-permission: name='android.permission.WRITE_EXTERNAL_STORAGE'
 uses-permission: name='android.permission.ACCESS_COARSE_LOCATION'
 uses-permission: name='android.permission.ACCESS_FINE_LOCATION'
 ```
+
