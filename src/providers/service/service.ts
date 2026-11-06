@@ -385,5 +385,14 @@ export class ServiceProvider {
   registerInvestor(data: any) {
     return this.http.post(this.testApi + 'investor-register', data);
   }
+
+  // Teacher Registration API methods
+  registerTeacher(data: any) {
+    return this.http.post(this.testApi + 'teacher-register', data);
+  }
+
+  getTeachingMasterData() {
+    return this.http.get(this.testApi + 'teaching-master-data');
+  }
 }
 

@@ -1,14 +1,14 @@
 webpackJsonp([35],{
 
-/***/ 425:
+/***/ 426:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EntrepreneurPageModule", function() { return EntrepreneurPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EntryFormPageModule", function() { return EntryFormPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__entrepreneur__ = __webpack_require__(484);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__entry_form__ = __webpack_require__(486);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,31 +18,31 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var EntrepreneurPageModule = /** @class */ (function () {
-    function EntrepreneurPageModule() {
+var EntryFormPageModule = /** @class */ (function () {
+    function EntryFormPageModule() {
     }
-    EntrepreneurPageModule = __decorate([
+    EntryFormPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__entrepreneur__["a" /* EntrepreneurPage */],
+                __WEBPACK_IMPORTED_MODULE_2__entry_form__["a" /* EntryFormPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__entrepreneur__["a" /* EntrepreneurPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__entry_form__["a" /* EntryFormPage */]),
             ],
         })
-    ], EntrepreneurPageModule);
-    return EntrepreneurPageModule;
+    ], EntryFormPageModule);
+    return EntryFormPageModule;
 }());
 
-//# sourceMappingURL=entrepreneur.module.js.map
+//# sourceMappingURL=entry-form.module.js.map
 
 /***/ }),
 
-/***/ 484:
+/***/ 486:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EntrepreneurPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EntryFormPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
@@ -56,342 +56,347 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
 
 
 
 
-var EntrepreneurPage = /** @class */ (function () {
-    function EntrepreneurPage(navCtrl, fb, alertCtrl, loadingCtrl, toastCtrl, service) {
+var EntryFormPage = /** @class */ (function () {
+    function EntryFormPage(navCtrl, navParams, viewCtrl, formBuilder, service, toastCtrl, alertCtrl, loadingCtrl) {
         this.navCtrl = navCtrl;
-        this.fb = fb;
+        this.navParams = navParams;
+        this.viewCtrl = viewCtrl;
+        this.formBuilder = formBuilder;
+        this.service = service;
+        this.toastCtrl = toastCtrl;
         this.alertCtrl = alertCtrl;
         this.loadingCtrl = loadingCtrl;
-        this.toastCtrl = toastCtrl;
-        this.service = service;
-        this.showSpinner = false;
-        // Personal Location Lists
-        this.states = [];
-        this.personalDistricts = [];
-        this.personalConstituencies = [];
-        this.personalMandals = [];
-        this.personalPanchayatis = [];
-        // Business Location Lists
-        this.businessDistricts = [];
-        this.businessConstituencies = [];
-        this.businessMandals = [];
-        this.businessPanchayatis = [];
-        // Metadata
-        this.businessTypes = [];
-        this.denominations = [];
-        this.entrepreneurForm = this.fb.group({
-            name: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(3)]],
-            mobile: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].pattern(/^[0-9]{10}$/)]],
-            email: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].email]],
-            // Personal Address
-            state_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            districts: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            constituencyname: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            mandals: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            panchayati: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            // Business Setup Place
-            business_state_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            business_districts: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            business_constituencyname: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            business_mandals: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            business_panchayati: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            // Business & Finance
-            business_type_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            denomination_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            self_fund: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            capital_need: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            description: ['']
+        this.isSubmitting = false;
+        this.states = [
+            { id: 1, state_name: 'ఆంధ్రప్రదేశ్ (Andhra Pradesh - AP)' },
+            { id: 2, state_name: 'తెలంగాణ (Telangana - TG)' }
+        ];
+        this.mandals = [];
+        this.constituency = [];
+        this.getvillages = [];
+        this.form = this.formBuilder.group({
+            name: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+            number: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+            category: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+            state_id: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+            district_id: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+            constituency_id: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+            mandal_id: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+            village_id: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+            password: ['']
         });
+        this.getstates();
     }
-    EntrepreneurPage.prototype.ionViewDidLoad = function () {
-        this.loadStates();
-        this.loadBusinessTypes();
-        this.loadDenominations();
+    EntryFormPage.prototype.gotoprivacy = function () {
+        this.navCtrl.push('PagesPrivacyPage');
     };
-    EntrepreneurPage.prototype.gotohome = function () {
-        this.navCtrl.setRoot('HomePage');
+    EntryFormPage.prototype.closeModal = function () {
+        var _this = this;
+        if (this.navCtrl.canGoBack()) {
+            this.navCtrl.pop();
+        }
+        else if (this.viewCtrl) {
+            this.viewCtrl.dismiss().catch(function () {
+                _this.navCtrl.setRoot('HomePage');
+            });
+        }
+        else {
+            this.navCtrl.setRoot('HomePage');
+        }
     };
-    EntrepreneurPage.prototype.loadStates = function () {
+    EntryFormPage.prototype.getstates = function () {
         var _this = this;
         this.service.getstates().subscribe(function (res) {
             if (res && res.data) {
                 _this.states = res.data;
             }
-            else {
-                _this.states = [
-                    { id: 1, state_name: 'Andhra Pradesh-ఆంధ్రప్రదేశ్ (AP)', name: 'Andhra Pradesh (AP)' },
-                    { id: 2, state_name: 'Telangana-తెలంగాణ (TG)', name: 'Telangana (TG)' }
-                ];
-            }
-        }, function () {
-            _this.states = [
-                { id: 1, state_name: 'Andhra Pradesh-ఆంధ్రప్రదేశ్ (AP)', name: 'Andhra Pradesh (AP)' },
-                { id: 2, state_name: 'Telangana-తెలంగాణ (TG)', name: 'Telangana (TG)' }
-            ];
         });
     };
-    EntrepreneurPage.prototype.loadBusinessTypes = function () {
-        var _this = this;
-        this.service.getBusinessTypes().subscribe(function (res) {
-            if (res && res.data) {
-                _this.businessTypes = res.data;
-            }
-        }, function (err) { return console.log('Error loading business types', err); });
-    };
-    EntrepreneurPage.prototype.loadDenominations = function () {
-        var _this = this;
-        this.service.getdenomation().subscribe(function (res) {
-            if (res && res.data) {
-                _this.denominations = res.data;
-            }
-        }, function (err) { return console.log('Error loading denominations', err); });
-    };
-    // Personal Address Cascade
-    EntrepreneurPage.prototype.onPersonalStateChange = function (stateId) {
-        var _this = this;
-        this.entrepreneurForm.patchValue({
-            districts: '',
-            constituencyname: '',
-            mandals: '',
-            panchayati: ''
+    EntryFormPage.prototype.onStateChange = function (event) {
+        this.form.patchValue({
+            district_id: '',
+            constituency_id: '',
+            mandal_id: '',
+            village_id: ''
         });
-        this.personalDistricts = [];
-        this.personalConstituencies = [];
-        this.personalMandals = [];
-        this.personalPanchayatis = [];
-        if (stateId) {
-            this.service.getdistrict(stateId).subscribe(function (res) {
-                _this.personalDistricts = (res && res.data) ? res.data : [];
-            });
+        this.districts = [];
+        this.constituency = [];
+        this.mandals = [];
+        this.getvillages = [];
+        if (event) {
+            this.getdistric(event);
         }
     };
-    EntrepreneurPage.prototype.onPersonalDistrictChange = function (distId) {
+    EntryFormPage.prototype.getdistric = function (stateId) {
         var _this = this;
-        this.entrepreneurForm.patchValue({
-            constituencyname: '',
-            mandals: '',
-            panchayati: ''
-        });
-        this.personalConstituencies = [];
-        this.personalMandals = [];
-        this.personalPanchayatis = [];
-        if (distId) {
-            this.service.getconsistencys(distId).subscribe(function (res) {
-                var list = (res && res.data) ? res.data : [];
-                _this.personalConstituencies = list.filter(function (item) { return item.dstrct_id == distId; });
-            });
-        }
-    };
-    EntrepreneurPage.prototype.onPersonalConstituencyChange = function (constId) {
-        var _this = this;
-        this.entrepreneurForm.patchValue({
-            mandals: '',
-            panchayati: ''
-        });
-        this.personalMandals = [];
-        this.personalPanchayatis = [];
-        if (constId) {
-            this.service.getmandals(constId).subscribe(function (res) {
-                var list = (res && res.data) ? res.data : [];
-                _this.personalMandals = list.filter(function (item) { return item.const_id == constId; });
-            });
-        }
-    };
-    EntrepreneurPage.prototype.onPersonalMandalChange = function (mandalId) {
-        var _this = this;
-        this.entrepreneurForm.patchValue({
-            panchayati: ''
-        });
-        this.personalPanchayatis = [];
-        if (mandalId) {
-            this.service.gepanchayatis(mandalId).subscribe(function (res) {
-                var list = (res && res.data) ? res.data : [];
-                _this.personalPanchayatis = list.filter(function (item) { return !mandalId || item.mndl_id == mandalId; });
-            });
-        }
-    };
-    // Business Setup Place Cascade
-    EntrepreneurPage.prototype.onBusinessStateChange = function (stateId) {
-        var _this = this;
-        this.entrepreneurForm.patchValue({
-            business_districts: '',
-            business_constituencyname: '',
-            business_mandals: '',
-            business_panchayati: ''
-        });
-        this.businessDistricts = [];
-        this.businessConstituencies = [];
-        this.businessMandals = [];
-        this.businessPanchayatis = [];
-        if (stateId) {
-            this.service.getdistrict(stateId).subscribe(function (res) {
-                _this.businessDistricts = (res && res.data) ? res.data : [];
-            });
-        }
-    };
-    EntrepreneurPage.prototype.onBusinessDistrictChange = function (distId) {
-        var _this = this;
-        this.entrepreneurForm.patchValue({
-            business_constituencyname: '',
-            business_mandals: '',
-            business_panchayati: ''
-        });
-        this.businessConstituencies = [];
-        this.businessMandals = [];
-        this.businessPanchayatis = [];
-        if (distId) {
-            this.service.getconsistencys(distId).subscribe(function (res) {
-                var list = (res && res.data) ? res.data : [];
-                _this.businessConstituencies = list.filter(function (item) { return item.dstrct_id == distId; });
-            });
-        }
-    };
-    EntrepreneurPage.prototype.onBusinessConstituencyChange = function (constId) {
-        var _this = this;
-        this.entrepreneurForm.patchValue({
-            business_mandals: '',
-            business_panchayati: ''
-        });
-        this.businessMandals = [];
-        this.businessPanchayatis = [];
-        if (constId) {
-            this.service.getmandals(constId).subscribe(function (res) {
-                var list = (res && res.data) ? res.data : [];
-                _this.businessMandals = list.filter(function (item) { return item.const_id == constId; });
-            });
-        }
-    };
-    EntrepreneurPage.prototype.onBusinessMandalChange = function (mandalId) {
-        var _this = this;
-        this.entrepreneurForm.patchValue({
-            business_panchayati: ''
-        });
-        this.businessPanchayatis = [];
-        if (mandalId) {
-            this.service.gepanchayatis(mandalId).subscribe(function (res) {
-                var list = (res && res.data) ? res.data : [];
-                _this.businessPanchayatis = list.filter(function (item) { return !mandalId || item.mndl_id == mandalId; });
-            });
-        }
-    };
-    EntrepreneurPage.prototype.submitEntrepreneur = function () {
-        if (this.entrepreneurForm.invalid) {
-            var alert_1 = this.alertCtrl.create({
-                title: 'దయచేసి అన్ని వివరాలు పూరించండి',
-                subTitle: 'Please fill all required fields before submitting.',
-                buttons: ['సరే (OK)']
-            });
-            alert_1.present();
+        var sid = stateId || (this.form.get('state_id') ? this.form.get('state_id').value : null);
+        if (!sid) {
+            this.districts = [];
             return;
         }
-        var loader = this.loadingCtrl.create({
-            content: 'నమోదు చేయబడుతుంది... (Submitting Entrepreneur Profile)...'
-        });
-        loader.present();
-        var formVal = this.entrepreneurForm.value;
-        var selPersonalState = this.states.find(function (s) { return s.id == formVal.state_id; });
-        var selPersonalDist = this.personalDistricts.find(function (d) { return d.id == formVal.districts; });
-        var selPersonalConst = this.personalConstituencies.find(function (c) { return c.id == formVal.constituencyname; });
-        var selPersonalMndl = this.personalMandals.find(function (m) { return m.id == formVal.mandals; });
-        var selPersonalPanch = this.personalPanchayatis.find(function (p) { return p.id == formVal.panchayati; });
-        var selBizState = this.states.find(function (s) { return s.id == formVal.business_state_id; });
-        var selBizDist = this.businessDistricts.find(function (d) { return d.id == formVal.business_districts; });
-        var selBizConst = this.businessConstituencies.find(function (c) { return c.id == formVal.business_constituencyname; });
-        var selBizMndl = this.businessMandals.find(function (m) { return m.id == formVal.business_mandals; });
-        var selBizPanch = this.businessPanchayatis.find(function (p) { return p.id == formVal.business_panchayati; });
-        var selBizType = this.businessTypes.find(function (t) { return t.id == formVal.business_type_id; });
-        var selDenom = this.denominations.find(function (d) { return d.id == formVal.denomination_id; });
-        var payload = {
-            name: formVal.name,
-            mobile: formVal.mobile,
-            email: formVal.email,
-            // Personal Address
-            state_id: formVal.state_id,
-            state_name: selPersonalState ? (selPersonalState.state_name || selPersonalState.name || '') : '',
-            district_id: formVal.districts,
-            district_name: selPersonalDist ? (selPersonalDist.distrct_nm || selPersonalDist.districtname || '') : '',
-            constituency_id: formVal.constituencyname,
-            constituency_name: selPersonalConst ? (selPersonalConst.const_nm || selPersonalConst.name || '') : '',
-            mandal_id: formVal.mandals,
-            mandal_name: selPersonalMndl ? (selPersonalMndl.mndl_nm || selPersonalMndl.name || '') : '',
-            panchayat_id: formVal.panchayati,
-            panchayat_name: selPersonalPanch ? (selPersonalPanch.pnchyt_nm || selPersonalPanch.name || '') : '',
-            // Business Setup Location
-            business_state_id: formVal.business_state_id,
-            business_state_name: selBizState ? (selBizState.state_name || selBizState.name || '') : '',
-            business_district_id: formVal.business_districts,
-            business_district_name: selBizDist ? (selBizDist.distrct_nm || selBizDist.districtname || '') : '',
-            business_constituency_id: formVal.business_constituencyname,
-            business_constituency_name: selBizConst ? (selBizConst.const_nm || selBizConst.name || '') : '',
-            business_mandal_id: formVal.business_mandals,
-            business_mandal_name: selBizMndl ? (selBizMndl.mndl_nm || selBizMndl.name || '') : '',
-            business_panchayat_id: formVal.business_panchayati,
-            business_panchayat_name: selBizPanch ? (selBizPanch.pnchyt_nm || selBizPanch.name || '') : '',
-            // Business & Finance
-            business_type_id: formVal.business_type_id,
-            business_type: selBizType ? (selBizType.business_type || '') : '',
-            denomination_id: formVal.denomination_id,
-            denomination: selDenom ? (selDenom.denomation_name || selDenom.denomination_name || '') : '',
-            self_fund: formVal.self_fund,
-            capital_need: formVal.capital_need,
-            description: formVal.description
-        };
-        var self = this;
-        this.service.registerEntrepreneur(payload).subscribe(function (res) {
-            loader.dismiss();
-            if (res && res.status === 200) {
-                var successAlert = self.alertCtrl.create({
-                    title: 'నమోదు పూర్తయింది! (Success)',
-                    subTitle: 'మీ ఎంటర్‌ప్రెన్యూర్ ప్రొఫైల్ విజయవంతంగా నమోదు చేయబడింది. (Entrepreneur registration submitted successfully)',
-                    buttons: [
-                        {
-                            text: 'సరే (OK)',
-                            handler: function () {
-                                self.navCtrl.setRoot('FormsPage');
-                            }
-                        }
-                    ]
-                });
-                successAlert.present();
-            }
-            else {
-                var msg = (res && res.message) ? res.message : 'Submission failed. Please try again.';
-                var errAlert = self.alertCtrl.create({
-                    title: 'విఫలమైంది (Failed)',
-                    subTitle: msg,
-                    buttons: ['సరే (OK)']
-                });
-                errAlert.present();
-            }
+        this.service.getdistrict(sid).subscribe(function (res) {
+            _this.districts = res && res.data ? res.data : [];
         }, function () {
-            loader.dismiss();
-            var netAlert = self.alertCtrl.create({
-                title: 'నెట్‌వర్క్ లోపం (Network Error)',
-                subTitle: 'Unable to connect to server. Please try again.',
-                buttons: ['సరే (OK)']
-            });
-            netAlert.present();
+            _this.districts = [];
         });
     };
-    EntrepreneurPage = __decorate([
+    EntryFormPage.prototype.getconstency = function (event) {
+        var _this = this;
+        this.form.patchValue({
+            constituency_id: '',
+            mandal_id: '',
+            village_id: ''
+        });
+        this.constituency = [];
+        this.mandals = [];
+        this.getvillages = [];
+        var id = event;
+        if (!id)
+            return;
+        this.service.getconsistencys().subscribe(function (res) {
+            _this.constituency = res && res.data ? res.data.filter(function (data) { return data.dstrct_id == id; }) : [];
+        }, function () {
+            _this.constituency = [];
+        });
+    };
+    EntryFormPage.prototype.getmandals = function (event) {
+        var _this = this;
+        this.form.patchValue({
+            mandal_id: '',
+            village_id: ''
+        });
+        this.mandals = [];
+        this.getvillages = [];
+        var id = event;
+        if (!id)
+            return;
+        this.service.getmandals().subscribe(function (res) {
+            _this.mandals = res && res.data ? res.data.filter(function (data) { return data.const_id == id; }) : [];
+        }, function () {
+            _this.mandals = [];
+        });
+    };
+    EntryFormPage.prototype.gepanchayati = function (event) {
+        var _this = this;
+        this.form.patchValue({
+            village_id: ''
+        });
+        this.getvillages = [];
+        var id = event;
+        if (!id)
+            return;
+        this.service.gepanchayatis().subscribe(function (res) {
+            _this.getvillages = res && res.data ? res.data.filter(function (data) { return data.mndl_id == id; }) : [];
+        }, function () {
+            _this.getvillages = [];
+        });
+    };
+    EntryFormPage.prototype.poorp = function (id) {
+        if (id == 1 && !this.form.value.district_id) {
+            var toast = this.alertCtrl.create({
+                message: 'దయచేసి మొదట జిల్లాను ఎంచుకోండి',
+                mode: 'ios',
+                buttons: ['Ok']
+            });
+            toast.present();
+        }
+        else if (id == 2) {
+            if (!this.form.value.district_id) {
+                var toast = this.alertCtrl.create({
+                    message: 'దయచేసి మొదట జిల్లాను ఎంచుకోండి',
+                    mode: 'ios',
+                    buttons: ['Ok']
+                });
+                toast.present();
+            }
+            else if (!this.form.value.constituency_id) {
+                var toast = this.alertCtrl.create({
+                    message: 'దయచేసి మొదట నియోజకవర్గాన్ని ఎంచుకోండి',
+                    mode: 'ios',
+                    buttons: ['Ok']
+                });
+                toast.present();
+            }
+        }
+        else if (id == 3) {
+            if (!this.form.value.district_id) {
+                var toast = this.alertCtrl.create({
+                    message: 'దయచేసి మొదట జిల్లాను ఎంచుకోండి',
+                    mode: 'ios',
+                    buttons: ['Ok']
+                });
+                toast.present();
+            }
+            else if (!this.form.value.constituency_id) {
+                var toast = this.alertCtrl.create({
+                    message: 'దయచేసి మొదట నియోజకవర్గాన్ని ఎంచుకోండి',
+                    mode: 'ios',
+                    buttons: ['Ok']
+                });
+                toast.present();
+            }
+            else if (!this.form.value.mandal_id) {
+                var toast = this.alertCtrl.create({
+                    message: 'దయచేసి మొదట మండలాన్ని ఎంచుకోండి',
+                    mode: 'ios',
+                    buttons: ['Ok']
+                });
+                toast.present();
+            }
+        }
+    };
+    EntryFormPage.prototype.submit = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            var confirm_1, confirm_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this.isSubmitting = true;
+                        this.loading = this.loadingCtrl.create({
+                            spinner: 'ios',
+                            content: 'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...'
+                        });
+                        this.loading.present();
+                        if (!this.form.invalid) return [3 /*break*/, 3];
+                        return [4 /*yield*/, this.alertCtrl.create({
+                                mode: 'ios',
+                                subTitle: 'దయచేసి ఖాళీ ఫీల్డ్‌లను పూరించండి',
+                                buttons: ['OK']
+                            })];
+                    case 1:
+                        confirm_1 = _a.sent();
+                        return [4 /*yield*/, confirm_1.present()];
+                    case 2:
+                        _a.sent();
+                        this.loading.dismiss();
+                        this.isSubmitting = false;
+                        return [3 /*break*/, 7];
+                    case 3:
+                        if (!(this.form.value.password.length < 4 || this.form.value.password.length > 16)) return [3 /*break*/, 6];
+                        return [4 /*yield*/, this.alertCtrl.create({
+                                mode: 'ios',
+                                subTitle: 'పాస్వర్డ్ 4 నుండి 16 అక్షరాల మధ్య ఉండాలి',
+                                buttons: ['OK']
+                            })];
+                    case 4:
+                        confirm_2 = _a.sent();
+                        return [4 /*yield*/, confirm_2.present()];
+                    case 5:
+                        _a.sent();
+                        this.loading.dismiss();
+                        this.isSubmitting = false;
+                        return [3 /*break*/, 7];
+                    case 6:
+                        this.service.postinfo(this.form.value).subscribe(function (res) {
+                            if (res.status == 200) {
+                                var toast = _this.alertCtrl.create({
+                                    title: 'రిజిస్ట్రేషన్ విజయవంతం! (Registration Successful)',
+                                    message: 'registered successfully, you can login with username and password with the same mobile number and if you want to change you can change while login or by clicking forgot password.\n\nనమోదు విజయవంతంగా పూర్తయింది. మీరు అదే మొబైల్ నంబరును యూజర్‌నేమ్ మరియు పాస్‌వర్డ్‌గా ఉపయోగించి లాగిన్ అవ్వవచ్చు. పాస్‌వర్డ్ మార్చుకోవాలనుకుంటే లాగిన్ సమయంలో లేదా Forgot Password ద్వారా మార్చుకోవచ్చు.',
+                                    mode: 'ios',
+                                    buttons: [
+                                        {
+                                            text: 'OK',
+                                            handler: function () {
+                                                _this.navCtrl.push('LoginPage');
+                                            }
+                                        }
+                                    ]
+                                });
+                                toast.present();
+                                _this.loading.dismiss();
+                                _this.isSubmitting = false;
+                            }
+                            else if (res.status == 606) {
+                                var confirm_3 = _this.alertCtrl.create({
+                                    mode: 'ios',
+                                    title: 'ఈ ఫోన్ నెంబర్ తో ఇంతకుముందే యాప్ ఆక్టివేట్ అయినది, లాగిన్ అవ్వండి, ',
+                                    buttons: [
+                                        {
+                                            text: 'OK',
+                                            handler: function () {
+                                                _this.navCtrl.push('LoginPage');
+                                            }
+                                        }
+                                    ]
+                                });
+                                confirm_3.present();
+                                _this.loading.dismiss();
+                                _this.isSubmitting = false;
+                            }
+                            else {
+                                var toast = _this.alertCtrl.create({
+                                    message: 'Server Error',
+                                    mode: 'ios',
+                                    buttons: ['OK']
+                                });
+                                toast.present();
+                                _this.loading.dismiss();
+                                _this.isSubmitting = false;
+                            }
+                        });
+                        _a.label = 7;
+                    case 7: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    EntryFormPage.prototype.gotologin = function () {
+        this.navCtrl.push('LoginPage');
+    };
+    EntryFormPage.prototype.home = function () {
+        this.navCtrl.push('HomePage');
+    };
+    EntryFormPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-entrepreneur',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\entrepreneur\entrepreneur.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n\n    <ion-title style="text-align: center; font-size: 15px;">\n\n      <b>ఎంటర్‌ప్రెన్యూర్ రిజిస్ట్రేషన్ (Entrepreneur)</b>\n\n    </ion-title>\n\n    <ion-buttons end>\n\n      <button ion-button icon-only (click)="gotohome()">\n\n        <ion-icon name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n  <div class="form-card">\n\n    <div class="header-box">\n\n      <div style="font-size: 30px; margin-bottom: 6px;">🚀</div>\n\n      <h3 style="margin: 0; font-size: 16px; font-weight: bold;">వ్యాపార ఔత్సాహికుల నమోదు</h3>\n\n      <p style="margin: 4px 0 0 0; font-size: 11.5px; opacity: 0.9;">\n\n        నూతన వ్యాపార ఏర్పాటు & పెట్టుబడిదారుల సహాయం కొరకు (Startup & Financial Matching)\n\n      </p>\n\n    </div>\n\n\n\n    <form [formGroup]="entrepreneurForm" (ngSubmit)="submitEntrepreneur()">\n\n\n\n      <!-- SECTION 1: PERSONAL DETAILS -->\n\n      <div class="section-heading">1. వ్యక్తిగత వివరాలు (Personal Details)</div>\n\n\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>పూర్తి పేరు (Full Name) <span class="req">*</span></ion-label>\n\n        <ion-input type="text" formControlName="name" placeholder="ఉదా: Samuel Kumar"></ion-input>\n\n      </ion-item>\n\n\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>మొబైల్ నంబర్ (Mobile Number) <span class="req">*</span></ion-label>\n\n        <ion-input type="tel" maxlength="10" formControlName="mobile" placeholder="10 అంకెల మొబైల్ నంబర్"></ion-input>\n\n      </ion-item>\n\n\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>ఈమెయిల్ (Email Address)</ion-label>\n\n        <ion-input type="email" formControlName="email" placeholder="name@example.com"></ion-input>\n\n      </ion-item>\n\n\n\n      <!-- SECTION 2: PERSONAL RESIDENCE ADDRESS -->\n\n      <div class="section-heading">2. వ్యక్తిగత నివాస చిరునామా (Personal Residence)</div>\n\n\n\n      <!-- State -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>రాష్ట్రం (State) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="state_id" (ionChange)="onPersonalStateChange($event)" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">\n\n          <ion-option *ngFor="let s of states" [value]="s.id">{{ s.state_name || s.name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- District -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>జిల్లా (District) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="districts" (ionChange)="onPersonalDistrictChange($event)" [disabled]="!entrepreneurForm.get(\'state_id\').value" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">\n\n          <ion-option *ngFor="let d of personalDistricts" [value]="d.id">{{ d.distrct_nm || d.districtname }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Constituency -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>నియోజకవర్గం (Constituency) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="constituencyname" (ionChange)="onPersonalConstituencyChange($event)" [disabled]="!entrepreneurForm.get(\'districts\').value" okText="సరే" cancelText="రద్దు" placeholder="నియోజకవర్గం ఎంచుకోండి">\n\n          <ion-option *ngFor="let c of personalConstituencies" [value]="c.id">{{ c.const_nm || c.name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Mandal -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>మండలం (Mandal) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="mandals" (ionChange)="onPersonalMandalChange($event)" [disabled]="!entrepreneurForm.get(\'constituencyname\').value" okText="సరే" cancelText="రద్దు" placeholder="మండలం ఎంచుకోండి">\n\n          <ion-option *ngFor="let m of personalMandals" [value]="m.id">{{ m.mndl_nm || m.name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Panchayat -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>పంచాయతీ / గ్రామం (Panchayat / Village) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="panchayati" [disabled]="!entrepreneurForm.get(\'mandals\').value" okText="సరే" cancelText="రద్దు" placeholder="పంచాయతీ ఎంచుకోండి">\n\n          <ion-option *ngFor="let p of personalPanchayatis" [value]="p.id">{{ p.pnchyt_nm || p.name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- SECTION 3: BUSINESS SETUP LOCATION -->\n\n      <div class="section-heading">3. వ్యాపార ఏర్పాటు చేయు స్థలం (Business Setup Location)</div>\n\n\n\n      <!-- Business State -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>వ్యాపార రాష్ట్రం (Business State) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="business_state_id" (ionChange)="onBusinessStateChange($event)" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">\n\n          <ion-option *ngFor="let s of states" [value]="s.id">{{ s.state_name || s.name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Business District -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>వ్యాపార జిల్లా (Business District) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="business_districts" (ionChange)="onBusinessDistrictChange($event)" [disabled]="!entrepreneurForm.get(\'business_state_id\').value" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">\n\n          <ion-option *ngFor="let d of businessDistricts" [value]="d.id">{{ d.distrct_nm || d.districtname }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Business Constituency -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>వ్యాపార నియోజకవర్గం (Business Constituency) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="business_constituencyname" (ionChange)="onBusinessConstituencyChange($event)" [disabled]="!entrepreneurForm.get(\'business_districts\').value" okText="సరే" cancelText="రద్దు" placeholder="నియోజకవర్గం ఎంచుకోండి">\n\n          <ion-option *ngFor="let c of businessConstituencies" [value]="c.id">{{ c.const_nm || c.name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Business Mandal -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>వ్యాపార మండలం (Business Mandal) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="business_mandals" (ionChange)="onBusinessMandalChange($event)" [disabled]="!entrepreneurForm.get(\'business_constituencyname\').value" okText="సరే" cancelText="రద్దు" placeholder="మండలం ఎంచుకోండి">\n\n          <ion-option *ngFor="let m of businessMandals" [value]="m.id">{{ m.mndl_nm || m.name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Business Panchayat -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>వ్యాపార పంచాయతీ (Business Panchayat) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="business_panchayati" [disabled]="!entrepreneurForm.get(\'business_mandals\').value" okText="సరే" cancelText="రద్దు" placeholder="పంచాయతీ ఎంచుకోండి">\n\n          <ion-option *ngFor="let p of businessPanchayatis" [value]="p.id">{{ p.pnchyt_nm || p.name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- SECTION 4: BUSINESS TYPE & FINANCE -->\n\n      <div class="section-heading">4. వ్యాపార రంగం & పెట్టుబడి (Business & Capital)</div>\n\n\n\n      <!-- Type of Business -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>వ్యాపార రంగం (Type of Business) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="business_type_id" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">\n\n          <ion-option *ngFor="let t of businessTypes" [value]="t.id">{{ t.business_type || t.type_english }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Christian Denomination -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>క్రైస్తవ డినామినేషన్ (Denomination) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="denomination_id" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">\n\n          <ion-option *ngFor="let d of denominations" [value]="d.id">{{ d.denomation_name || d.denomination_name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Self Fund -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>స్వంత పెట్టుబడి (Self Fund / Own Investment) ₹ <span class="req">*</span></ion-label>\n\n        <ion-input type="text" formControlName="self_fund" placeholder="ఉదా: 2,00,000"></ion-input>\n\n      </ion-item>\n\n\n\n      <!-- Capital Need -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>అవసరమైన పెట్టుబడి (Capital Needed from Investors) ₹ <span class="req">*</span></ion-label>\n\n        <ion-input type="text" formControlName="capital_need" placeholder="ఉదా: 10,00,000"></ion-input>\n\n      </ion-item>\n\n\n\n      <!-- Description -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>వ్యాపార ప్రణాళిక వివరణ (Business Concept / Plan)</ion-label>\n\n        <ion-textarea rows="3" formControlName="description" placeholder="మీ వ్యాపార ఆలోచన గురించి క్లుప్తంగా వివరించండి..."></ion-textarea>\n\n      </ion-item>\n\n\n\n      <!-- Submit Button -->\n\n      <button ion-button block type="submit" class="submit-btn">\n\n        🚀 ఎంటర్‌ప్రెన్యూర్ సబ్మిట్ చేయండి (Submit)\n\n      </button>\n\n\n\n    </form>\n\n  </div>\n\n</ion-content>\n\n\n\n'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\entrepreneur\entrepreneur.html"*/,
+            selector: 'page-entry-form',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\entry-form\entry-form.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons start>\n\n      <button ion-button icon-only (click)="closeModal()" class="back-button" aria-label="Go Back">\n\n        <ion-icon style="font-size: 24px; color: #1f376e;" name="arrow-back"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center; font-weight: 900; color: #1f376e;">\n\n      JBAC యాప్ యాక్టివేషన్ ఫారమ్\n\n    </ion-title>\n\n    <ion-buttons end>\n\n      <button ion-button icon-only (click)="closeModal()" aria-label="Home">\n\n        <ion-icon style="font-size: 22px; color: #1f376e;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="content">\n\n  <form [formGroup]="form" class="form" style="background-color: #1f376e;">\n\n    <ion-row>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked >మీ క్యాటగిరి ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="category">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option value="1">విశ్వాసి</ion-option>\n\n            <ion-option value="2">విద్యార్థి</ion-option>\n\n            <ion-option value="3">మినిస్ట్రీస్ (ఎక్కువ చర్చిలు ఉంటే)</ion-option>\n\n            <ion-option value="4">పాస్టర్</ion-option>\n\n            <ion-option value="5">చర్చి</ion-option>\n\n            <ion-option value="6">క్రిస్టియన్ ఆర్గనైజెషన్ / కంపెనీ</ion-option>\n\n             <ion-option value="7">పాస్టర్ల అసోసియేషన్</ion-option> \n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మీ పేరు(ఇంటి పేరు తో సహా) </ion-label>\n\n          <ion-input type="text" placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి" formControlName="name"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మీ ఫోన్ నంబర్ (10 అంకెలు మాత్రమే, లాగిన్ కు ఫోన్ నెంబర్ & పాస్వర్డ్ అవసరము)</ion-label>\n\n          <ion-input type="tel" placeholder="ఇక్కడ క్లిక్ చేసి ఎంటర్ చేయండి" formControlName="number" maxlength="10"\n\n            minlength="10"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>సెట్ పాస్వర్డ్ (కనీసము 4 నుంచి గరిష్టం 16 నెంబర్, అక్షరాల వరకు పెట్టుకోవచ్చు)</ion-label>\n\n          <ion-input type="password" placeholder="ఇక్కడ క్లిక్ చేసి పాస్‌వర్డ్ సెట్ చేసుకోండి" formControlName="password" maxlength="16"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <h4 Style="color:whitesmoke;text-align: center;font-weight: 600;">మీ అడ్రస్</h4>\n\n        <ion-item>\n\n          <ion-label stacked>1). సెలెక్ట్ రాష్ట్రం / State</ion-label>\n\n          <ion-select formControlName="state_id" (ionChange)="onStateChange($event)" placeholder="రాష్ట్రం ఎంచుకోండి">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి రాష్ట్రం ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let s of states" [value]="s.id">{{s.state_name}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>2). సెలెక్ట్ జిల్లా</ion-label>\n\n          <ion-select formControlName="district_id" [disabled]="!form.value.state_id || !districts || districts.length === 0" (ionChange)="getconstency($event)">\n\n            <ion-option value="" disabled selected>{{ !form.value.state_id ? \'దయచేసి మొదట రాష్ట్రాన్ని ఎంచుకోండి\' : \'ఇక్కడ క్లిక్ చేసి జిల్లా ఎంచుకోండి\' }}</ion-option>\n\n            <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>3). సెలెక్ట్ నియోజకవర్గం</ion-label>\n\n          <ion-select formControlName="constituency_id" [disabled]="!form.value.district_id || !constituency || constituency.length === 0" (ionChange)="getmandals($event)" (click)="poorp(1)">\n\n            <ion-option value="" disabled selected>{{ !form.value.district_id ? \'దయచేసి మొదట జిల్లాను ఎంచుకోండి\' : \'ఇక్కడ క్లిక్ చేసి నియోజకవర్గం ఎంచుకోండి\' }}</ion-option>\n\n            <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>4). సెలెక్ట్ మండలం / మున్సిపాలిటీ</ion-label>\n\n          <ion-select formControlName="mandal_id" [disabled]="!form.value.constituency_id || !mandals || mandals.length === 0" (ionChange)="gepanchayati($event);" (click)="poorp(2)">\n\n            <ion-option value="" disabled selected>{{ !form.value.constituency_id ? \'దయచేసి మొదట నియోజకవర్గాన్ని ఎంచుకోండి\' : \'ఇక్కడ క్లిక్ చేసి మండలం ఎంచుకోండి\' }}</ion-option>\n\n            <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>5). సెలెక్ట్ పంచాయితీ / వార్డ్ నంబర్</ion-label>\n\n          <ion-select formControlName="village_id" [disabled]="!form.value.mandal_id || !getvillages || getvillages.length === 0" (click)="poorp(3)">\n\n            <ion-option value="" disabled selected>{{ !form.value.mandal_id ? \'దయచేసి మొదట మండలాన్ని ఎంచుకోండి\' : \'ఇక్కడ క్లిక్ చేసి పంచాయితీ ఎంచుకోండి\' }}</ion-option>\n\n            <ion-option *ngFor="let item of getvillages" [value]="item.id">{{item.pnchyt_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n    </ion-row>\n\n\n\n    \n\n     \n\n      <ion-row class="button">\n\n      \n\n        <button ion-button color="secondary" (click)="submit()" [disabled]="isSubmitting">\n\n          <ion-spinner *ngIf="isSubmitting" name="crescent" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"></ion-spinner>\n\n          <b>{{ isSubmitting ? \'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...\' : \'సబ్మిట్\' }}</b>\n\n        </button>\n\n      \n\n    </ion-row>\n\n    \n\n      <p >ఇంతకుముందే రిజిస్టర్ ఐతే <a (click)="gotologin()">లాగిన్  కొరకు క్లిక్</a></p>\n\n     \n\n       <p > <a (click)="gotoprivacy()">Privacy Policy</a></p> \n\n       <br><br>\n\n  </form>\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\entry-form\entry-form.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["w" /* ToastController */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_service_service__["a" /* ServiceProvider */]])
-    ], EntrepreneurPage);
-    return EntrepreneurPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["y" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_service_service__["a" /* ServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["w" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */]])
+    ], EntryFormPage);
+    return EntryFormPage;
 }());
 
-//# sourceMappingURL=entrepreneur.js.map
+//# sourceMappingURL=entry-form.js.map
 
 /***/ })
 

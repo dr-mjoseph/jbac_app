@@ -1,14 +1,14 @@
 webpackJsonp([14],{
 
-/***/ 450:
+/***/ 451:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SearchhousePageModule", function() { return SearchhousePageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SearchorganisationPageModule", function() { return SearchorganisationPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__searchhouse__ = __webpack_require__(506);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__searchorganisation__ = __webpack_require__(508);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,31 +18,31 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var SearchhousePageModule = /** @class */ (function () {
-    function SearchhousePageModule() {
+var SearchorganisationPageModule = /** @class */ (function () {
+    function SearchorganisationPageModule() {
     }
-    SearchhousePageModule = __decorate([
+    SearchorganisationPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__searchhouse__["a" /* SearchhousePage */],
+                __WEBPACK_IMPORTED_MODULE_2__searchorganisation__["a" /* SearchorganisationPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__searchhouse__["a" /* SearchhousePage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__searchorganisation__["a" /* SearchorganisationPage */]),
             ],
         })
-    ], SearchhousePageModule);
-    return SearchhousePageModule;
+    ], SearchorganisationPageModule);
+    return SearchorganisationPageModule;
 }());
 
-//# sourceMappingURL=searchhouse.module.js.map
+//# sourceMappingURL=searchorganisation.module.js.map
 
 /***/ }),
 
-/***/ 506:
+/***/ 508:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SearchhousePage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SearchorganisationPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(24);
@@ -69,34 +69,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 // import { HomePage } from '../home/home';
-var SearchhousePage = /** @class */ (function () {
-    function SearchhousePage(navCtrl, navParams, formBuilder, service) {
+/**
+ * Generated class for the SearchorganisationPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var SearchorganisationPage = /** @class */ (function () {
+    function SearchorganisationPage(navCtrl, navParams, formBuilder, service) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.formBuilder = formBuilder;
         this.service = service;
-        this.showSpinner = false;
         this.fromshow = 1;
-        this.searchdenomation = this.formBuilder.group({
-            denomation: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
-            type: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
-            title: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
-            ministry_id: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
-        });
+        this.isShowDiv = true;
         this.serachMeetingform = this.formBuilder.group({
             state_id: [''],
+            denomation_id: [''],
+            ministry_id: [''],
+            service_name: [''],
             district_id: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
             constenncy_id: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
             mandal_id: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
             panchayati_id: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
         });
     }
-    SearchhousePage.prototype.callNumber = function (num) {
-        if (num) {
-            window.open('tel:' + num, '_system');
-        }
-    };
-    SearchhousePage.prototype.onStateChange = function (event) {
+    SearchorganisationPage.prototype.onStateChange = function (event) {
         var _this = this;
         var stateId = event;
         this.serachMeetingform.patchValue({
@@ -110,23 +108,54 @@ var SearchhousePage = /** @class */ (function () {
         this.constituency = [];
         this.mandals = [];
         this.panchayati = [];
+        this.service.getdistrict(stateId).subscribe(function (res) {
+            if (res && res.status == 200) {
+                _this.districts = res.data;
+            }
+        });
         if (stateId) {
-            this.service.getdistrict(stateId).subscribe(function (res) {
-                if (res && res.status == 200) {
-                    _this.districts = res.data;
+            this.service.getorganizations({ state_id: stateId }).subscribe(function (res) {
+                if (res && res.status == 200 && Array.isArray(res.data)) {
+                    _this.marriagedata = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
                 }
             });
         }
+        else {
+            this.defaultdata();
+        }
     };
-    SearchhousePage.prototype.ionViewDidLoad = function () {
-        this.searechevents();
+    SearchorganisationPage.prototype.defaultdata = function () {
+        var _this = this;
+        this.service.getorganizations().subscribe(function (res) {
+            console.log(res.data);
+            _this.marriagedata = [];
+            if (res.status == 200) {
+                _this.marriagedata = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
+            }
+            else {
+                alert('server down');
+                console.log(_this.marriagedata);
+            }
+        }, function (error) {
+        });
+    };
+    SearchorganisationPage.prototype.onSearch = function () {
+        if (this.fromshow == 1) {
+            this.fromshow = 2;
+        }
+        else {
+            this.fromshow = 1;
+        }
+    };
+    SearchorganisationPage.prototype.ionViewDidLoad = function () {
+        this.defaultdata();
         this.getdenomations();
         this.getbeliver();
     };
-    SearchhousePage.prototype.gotohome = function () {
+    SearchorganisationPage.prototype.gotohome = function () {
         this.navCtrl.push('HomePage');
     };
-    SearchhousePage.prototype.getdistric = function () {
+    SearchorganisationPage.prototype.getdistric = function () {
         var _this = this;
         this.service.getdistrict().subscribe(function (res) {
             if (res.status == 202) {
@@ -137,10 +166,7 @@ var SearchhousePage = /** @class */ (function () {
             }
         });
     };
-    SearchhousePage.prototype.formshow = function (id) {
-        this.form_ind = id;
-    };
-    SearchhousePage.prototype.getbeliver = function () {
+    SearchorganisationPage.prototype.getbeliver = function () {
         var _this = this;
         this.service.getbeliversdata().subscribe(function (res) {
             if (res.status == 202) {
@@ -153,13 +179,55 @@ var SearchhousePage = /** @class */ (function () {
             console.log(error);
         });
     };
-    SearchhousePage.prototype.getdenomations = function () {
+    SearchorganisationPage.prototype.getservice = function () {
+        var _this = this;
+        this.service.getservices().subscribe(function (res) {
+            if (res.status == 202) {
+                alert(res.message);
+            }
+            else if (res.status == 200) {
+                _this.services = res.data;
+            }
+        }, function (error) {
+        });
+    };
+    SearchorganisationPage.prototype.getdenomations = function () {
         var _this = this;
         this.service.getdenomation().subscribe(function (res) {
             _this.denomation = res.data;
         });
     };
-    SearchhousePage.prototype.getconstency = function (event) {
+    SearchorganisationPage.prototype.toggleDisplayDiv = function () {
+        this.isShowDiv = !this.isShowDiv;
+    };
+    SearchorganisationPage.prototype.getmandals = function (event) {
+        var _this = this;
+        var id = event;
+        this.serachMeetingform.patchValue({
+            mandal_id: '',
+            panchayati_id: ''
+        });
+        this.mandals = [];
+        this.panchayati = [];
+        if (id) {
+            this.service.getmandals().subscribe(function (res) {
+                if (res.status == 202) {
+                    alert(res.message);
+                }
+                else if (res.status == 200) {
+                    _this.mandals = res.data.filter(function (data) { return data.const_id == id; });
+                }
+            }, function (error) {
+                console.log(error);
+            });
+        }
+    };
+    SearchorganisationPage.prototype.trimString = function (string, length) {
+        return string.length > length
+            ? string.substring(0, length) + "..."
+            : string;
+    };
+    SearchorganisationPage.prototype.getconstency = function (event) {
         var _this = this;
         var id = event;
         this.serachMeetingform.patchValue({
@@ -176,35 +244,9 @@ var SearchhousePage = /** @class */ (function () {
                     _this.constituency = res.data.filter(function (data) { return data.dstrct_id == id; });
                 }
             });
-            this.searchdistric(id);
         }
     };
-    SearchhousePage.prototype.getmandals = function (event) {
-        var _this = this;
-        var id = event;
-        this.serachMeetingform.patchValue({
-            mandal_id: '',
-            panchayati_id: ''
-        });
-        this.mandals = [];
-        this.panchayati = [];
-        if (id) {
-            this.service.getmandals().subscribe(function (res) {
-                if (res && res.data) {
-                    _this.mandals = res.data.filter(function (data) { return data.const_id == id; });
-                }
-            }, function (error) {
-                console.log(error);
-            });
-            this.searchconstenct(id);
-        }
-    };
-    SearchhousePage.prototype.trimString = function (string, length) {
-        return string.length > length
-            ? string.substring(0, length) + "..."
-            : string;
-    };
-    SearchhousePage.prototype.gepanchayati = function (event) {
+    SearchorganisationPage.prototype.gepanchayati = function (event) {
         var _this = this;
         var id = event;
         this.serachMeetingform.patchValue({
@@ -213,44 +255,46 @@ var SearchhousePage = /** @class */ (function () {
         this.panchayati = [];
         if (id) {
             this.service.gepanchayatis().subscribe(function (res) {
-                if (res && res.data) {
+                if (res.status == 202) {
+                    alert(res.message);
+                }
+                else if (res.status == 200) {
                     _this.panchayati = res.data.filter(function (data) { return data.mndl_id == id; });
                 }
-            }, function (error) {
-                console.log(error);
             });
-            this.searchmandals(id);
         }
     };
-    SearchhousePage.prototype.searchchange = function (event) {
+    SearchorganisationPage.prototype.serachcaste = function (event) {
         var _this = this;
-        this.type = event;
+        this.denomation_id = event;
         var data = {
-            type: event,
+            denomation_id: event,
             df: 1,
         };
-        this.service.searchingbusiness(data).subscribe(function (res) {
-            _this.searchevents = [];
+        this.service.searchorganization(data).subscribe(function (res) {
+            _this.marriagedata = [];
             if (res.status == 200) {
-                _this.searchevents = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
+                _this.marriagedata = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
             }
             else {
                 alert('server down');
             }
+        }, function (error) {
         });
     };
-    SearchhousePage.prototype.searchdenomationdata = function (event) {
+    SearchorganisationPage.prototype.serachgender = function (event) {
         var _this = this;
-        this.searchdeno = event;
+        this.ministry_id = event;
         var data = {
-            type: this.type,
-            denomation: this.searchdeno,
+            denomation_id: this.denomation_id,
+            ministry_id: this.ministry_id,
             df: 2
         };
-        this.service.searchingbusiness(data).subscribe(function (res) {
-            _this.searchevents = [];
+        this.service.searchorganization(data).subscribe(function (res) {
+            console.log(data);
+            _this.marriagedata = [];
             if (res.status == 200) {
-                _this.searchevents = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
+                _this.marriagedata = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
             }
             else {
                 alert('server down');
@@ -258,78 +302,20 @@ var SearchhousePage = /** @class */ (function () {
         }, function (error) {
         });
     };
-    SearchhousePage.prototype.searchspeak = function (event) {
+    SearchorganisationPage.prototype.servicessearch = function (event) {
         var _this = this;
-        this.titles = event;
+        this.service_name = event;
         var data = {
-            type: this.type,
-            denomation: this.searchdeno,
-            title: this.titles,
+            denomation_id: this.denomation_id,
+            ministry_id: this.ministry_id,
+            service_name: this.service_name,
             df: 3,
-        };
-        this.service.searchingbusiness(data).subscribe(function (res) {
-            _this.searchevents = [];
-            if (res.status == 200) {
-                _this.searchevents = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
-            }
-            else {
-                alert('No Data');
-            }
-        }, function (error) {
-        });
-    };
-    SearchhousePage.prototype.ministry = function (event) {
-        var _this = this;
-        var data = {
-            type: this.type,
-            denomation: this.searchdeno,
-            title: this.titles,
-            ministry_id: event,
-            df: 4,
         };
         console.log(data);
-        this.service.searchingdemonationdata(data).subscribe(function (res) {
-            _this.searchevents = [];
+        this.service.searchorganization(data).subscribe(function (res) {
+            _this.marriagedata = [];
             if (res.status == 200) {
-                _this.searchevents = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
-            }
-            else {
-                alert('server down');
-            }
-        }, function (error) {
-        });
-    };
-    SearchhousePage.prototype.searchdistric = function (event) {
-        var _this = this;
-        this.searchdist = event;
-        var data = {
-            district_id: this.searchdist,
-            df: 2
-        };
-        this.service.searchingdata(data).subscribe(function (res) {
-            _this.searchevents = [];
-            if (res.status == 200) {
-                _this.searchevents = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
-            }
-            else {
-                alert('server down');
-            }
-        }, function (error) {
-        });
-    };
-    SearchhousePage.prototype.searchconstenct = function (event) {
-        var _this = this;
-        this.searchconts = event;
-        var data = {
-            // mettingtype: this.mettingtype,
-            district_id: this.searchdist,
-            constenncy_id: this.searchconts,
-            df: 3,
-        };
-        this.service.searchingdata(data).subscribe(function (res) {
-            _this.searchevents = [];
-            if (res.status == 200) {
-                _this.searchevents = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
+                _this.marriagedata = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
             }
             else {
                 alert('No Data');
@@ -337,19 +323,33 @@ var SearchhousePage = /** @class */ (function () {
         }, function (error) {
         });
     };
-    SearchhousePage.prototype.searchmandals = function (event) {
+    SearchorganisationPage.prototype.serachgenders = function (event, tableid) {
         var _this = this;
         var data = {
-            // mettingtype: this.mettingtype,
-            district_id: this.searchdist,
-            constenncy_id: this.searchconts,
-            mandal_id: event,
-            df: 4,
+            name: event,
+            columnid: tableid
         };
-        this.service.searchingdata(data).subscribe(function (res) {
-            _this.searchevents = [];
+        console.log(data);
+        this.service.searchinorganizations(data).subscribe(function (res) {
+            _this.marriagedata = res.data;
+        });
+    };
+    SearchorganisationPage.prototype.searchdistric = function (event) {
+        var _this = this;
+        this.district_id = event;
+        var data = {
+            denomation_id: this.denomation_id,
+            ministry_id: this.ministry_id,
+            service_name: this.service_name,
+            district_id: this.district_id,
+            df: 4
+        };
+        console.log(data);
+        this.service.searchorganization(data).subscribe(function (res) {
+            _this.marriagedata = [];
             if (res.status == 200) {
-                _this.searchevents = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
+                _this.marriagedata = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
+                console.log(_this.marriagedata);
             }
             else {
                 alert('server down');
@@ -357,13 +357,45 @@ var SearchhousePage = /** @class */ (function () {
         }, function (error) {
         });
     };
-    SearchhousePage.prototype.search = function () {
+    SearchorganisationPage.prototype.searchconstenct = function (event) {
         var _this = this;
-        this.service.searchingdata(this.serachMeetingform.value).subscribe(function (res) {
-            _this.searchevents = [];
+        this.constenncy_id = event;
+        var data = {
+            denomation_id: this.denomation_id,
+            ministry_id: this.ministry_id,
+            service_name: this.service_name,
+            district_id: this.district_id,
+            constenncy_id: this.constenncy_id,
+            df: 5,
+        };
+        console.log(data);
+        this.service.searchorganization(data).subscribe(function (res) {
+            _this.marriagedata = [];
             if (res.status == 200) {
-                _this.searchevents = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
-                _this.fromshow = 1;
+                _this.marriagedata = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
+            }
+            else {
+                alert('No Data');
+            }
+        }, function (error) {
+        });
+    };
+    SearchorganisationPage.prototype.searchmandals = function (event) {
+        var _this = this;
+        this.mandal_id = event;
+        var data = {
+            denomation_id: this.denomation_id,
+            ministry_id: this.ministry_id,
+            service_name: this.service_name,
+            district_id: this.district_id,
+            constenncy_id: this.searchconts,
+            mandal_id: this.mandal_id,
+            df: 6,
+        };
+        this.service.searchorganization(data).subscribe(function (res) {
+            _this.marriagedata = [];
+            if (res.status == 200) {
+                _this.marriagedata = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
             }
             else {
                 alert('server down');
@@ -371,12 +403,24 @@ var SearchhousePage = /** @class */ (function () {
         }, function (error) {
         });
     };
-    SearchhousePage.prototype.searchdenomationalldata = function () {
+    SearchorganisationPage.prototype.searchvillages = function (event) {
         var _this = this;
-        this.service.searchingdemonationdata(this.serachMeetingform.value).subscribe(function (res) {
-            _this.searchevents = [];
+        this.panchayati_id = event;
+        var data = {
+            denomation_id: this.denomation_id,
+            ministry_id: this.ministry_id,
+            service_name: this.service_name,
+            district_id: this.district_id,
+            constenncy_id: this.searchconts,
+            mandal_id: this.mandal_id,
+            panchayati_id: this.panchayati_id,
+            df: 6,
+        };
+        console.log(data);
+        this.service.searchorganization(data).subscribe(function (res) {
+            _this.marriagedata = [];
             if (res.status == 200) {
-                _this.searchevents = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
+                _this.marriagedata = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
             }
             else {
                 alert('server down');
@@ -384,49 +428,33 @@ var SearchhousePage = /** @class */ (function () {
         }, function (error) {
         });
     };
-    SearchhousePage.prototype.searechevents = function () {
+    SearchorganisationPage.prototype.search = function () {
         var _this = this;
-        this.service.getbusiness().subscribe(function (res) {
-            console.log("dfkgkdj", res.data);
-            if (res.status == 202) {
-                alert(res.message);
+        var data = {
+            id: this.serachMeetingform.value.village_id
+        };
+        console.log(data);
+        this.service.searchorganization(data).subscribe(function (res) {
+            _this.marriagedata = [];
+            if (res.status == 200) {
+                _this.marriagedata = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
             }
-            else if (res.status == 200) {
-                _this.searchevents = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
+            else {
+                alert('server down');
             }
         }, function (error) {
         });
     };
-    SearchhousePage.prototype.reset = function () {
-        this.serachMeetingform.reset();
-        window.location.reload();
-    };
-    SearchhousePage.prototype.filterData = function () {
-        var _this = this;
-        this.searchevents = this.searchevents.filter(function (item) {
-            return JSON.stringify(item)
-                .toLowerCase()
-                .includes(_this.searchTerm.toLowerCase());
-        });
-    };
-    SearchhousePage.prototype.onSearch = function () {
-        if (this.fromshow == 1) {
-            this.fromshow = 2;
-        }
-        else {
-            this.fromshow = 1;
-        }
-    };
-    SearchhousePage = __decorate([
+    SearchorganisationPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-searchhouse',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\searchhouse\searchhouse.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>Search Business / Rent</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n\n\n  <ion-searchbar (click)="onSearch()" *ngIf="fromshow==1"></ion-searchbar>\n\n\n\n  <form [formGroup]="searchdenomation" *ngIf="fromshow==2">\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="type" (ionChange)="searchchange($event)">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option value="Sales">అమ్మకాయ</ion-option>\n\n            <ion-option value="Purchase">కొనుగోలు</ion-option>\n\n            <ion-option value="Rent">అద్దె</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>డెనమినేషన్‌లను ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="denomation" (ionChange)="searchdenomationdata($event)"\n\n            style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of denomation" [value]="item.id">{{item.denomation_name}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>ఫ్లాట్‌ల రకాలు</ion-label>\n\n          <ion-select formControlName="title" (ionChange)="searchspeak($event)">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option value="1bhk">1BHK</ion-option>\n\n            <ion-option value="2bhk">2BHK</ion-option>\n\n            <ion-option value="3bhk">3BHK</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మంత్రిస్థానం ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="ministry_id" (ionChange)="ministry($event)" style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let i of ministryname" [value]="i.ministryname">{{i.ministryname}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n    </ion-row>\n\n  </form>\n\n\n\n  <form [formGroup]="serachMeetingform" *ngIf="fromshow==2">\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>రాష్ట్రం / State</ion-label>\n\n          <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">\n\n            <ion-option value="" disabled selected>రాష్ట్రం ఎంచుకోండి</ion-option>\n\n            <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>\n\n            <ion-option value="2">తెలంగాణ (TG)</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>జిల్లాలను ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="district_id" [disabled]="!serachMeetingform.get(\'state_id\').value" (ionChange)="getconstency($event)" style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>జిల్లా ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మండలాను ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="constenncy_id" [disabled]="!serachMeetingform.get(\'district_id\').value" (ionChange)="getmandals($event)" style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మండలాలను ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="mandal_id" [disabled]="!serachMeetingform.get(\'constenncy_id\').value" (ionChange)="gepanchayati($event)"\n\n            style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>మండలo ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>పంచాయితీలను ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="panchayati_id" [disabled]="!serachMeetingform.get(\'mandal_id\').value" style="height:37px;width: 273px;">\n\n            <ion-option value="" disabled selected>పంచాయితీ ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 style="text-align: center;">\n\n        <button ion-button type="submit" color="secondary" (click)="search()"\n\n          class="default-btn user-all-btn"><b>వెతకండి</b></button>\n\n      </ion-col>\n\n    </ion-row>\n\n  </form>\n\n\n\n  <ion-row>\n\n    <ion-col col-12 *ngFor="let item of searchevents">\n\n      <div class="flex justify-center items-center h-screen">\n\n        <div class="main">\n\n          <ion-list>\n\n            <ion-item>\n\n              <ion-card (click)="openimg(item.image,openmodel)">\n\n                <img *ngIf="!item.image || item.image == \'\'" src="../../../assets/images/no.jpg">\n\n                <img *ngIf="item.image" [src]="item.image" style="width:212px;height:250px;">\n\n                <ion-card-content>\n\n                  <p>రకం: <strong>{{item.type}}</strong></p>\n\n                  <p>శీర్షిక: <strong>{{item.title}}</strong></p>\n\n                  <p><b>చిరునామా: {{item.address}}</b></p>\n\n                  <button ion-button fill="clear" (click)="callNumber(\'+91\' + item.number)">\n\n                    <img src="assets/images/phone.png" style="width:45px;">\n\n                  </button>\n\n                  <br>\n\n                  <p *ngIf="item.showMore"><b>{{item.description}}</b></p>\n\n                  <button ion-button fill="clear" (click)="item.showMore = !item.showMore" *ngIf="!item.showMore"\n\n                    color="danger">\n\n                    <b>మరింత చూపు</b>\n\n                  </button>\n\n                  <button ion-button fill="clear" (click)="item.showMore = !item.showMore" *ngIf="item.showMore"\n\n                    color="danger">\n\n                    <b>కనిపించు లేదు</b>\n\n                  </button>\n\n                </ion-card-content>\n\n              </ion-card>\n\n            </ion-item>\n\n          </ion-list>\n\n        </div>\n\n      </div>\n\n    </ion-col>\n\n  </ion-row>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\searchhouse\searchhouse.html"*/,
+            selector: 'page-searchorganisation',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\searchorganisation\searchorganisation.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>Search Organistaion</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n\n\n  <ion-searchbar (click)="onSearch()" *ngIf="fromshow==1"></ion-searchbar>\n\n\n\n  <form [formGroup]="serachMeetingform" *ngIf="fromshow==2">\n\n    <ion-row>\n\n        <ion-col col-12>\n\n            <ion-item>\n\n                <ion-label stacked for="pattern_name">దేనోమినేషన్\n\n                    <span style="color:red;">*</span>\n\n                </ion-label>\n\n                <ion-select formControlName="denomation_id" (ionChange)="serachcaste($event); serachgenders($event,1);">\n\n                    <ion-option value="" disabled selected>దేనోమినేషన్ ఎంచుకోండి</ion-option>\n\n                    <ion-option *ngFor="let i of denomation" [value]="i.id">{{i.denomation_name}}</ion-option>\n\n                </ion-select>\n\n            </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12>\n\n            <ion-item>\n\n               <ion-label stacked>మంత్రిస్థాయి</ion-label>\n\n                <ion-select formControlName="ministry_id" (ionChange)="serachgenders($event,2); serachgender($event);">\n\n                    <ion-option value="" disabled selected>మంత్రిస్థాయి ఎంచుకోండి</ion-option>\n\n                    <ion-option *ngFor="let i of ministryname" [value]="i.id">{{i.ministryname}}</ion-option>\n\n                </ion-select>\n\n            </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12>\n\n            <ion-item>\n\n               <ion-label stacked>సేవా పేరు</ion-label>\n\n                <ion-select formControlName="service_name" (ionChange)="serachgenders($event,3); servicessearch($event);">\n\n                    <ion-option value="" disabled selected>సేవ ఎంచుకోండి</ion-option>\n\n                    <ion-option *ngFor="let item of services" [value]="item.id">{{item.servicename}}</ion-option>\n\n                </ion-select>\n\n            </ion-item>\n\n        </ion-col>\n\n    </ion-row>\n\n    <ion-row>\n\n        <ion-col col-12>\n\n            <ion-item>\n\n               <ion-label stacked>రాష్ట్రం / State</ion-label>\n\n                <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">\n\n                    <ion-option value="" disabled selected>రాష్ట్రం ఎంచుకోండి</ion-option>\n\n                    <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>\n\n                    <ion-option value="2">తెలంగాణ (TG)</ion-option>\n\n                </ion-select>\n\n            </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12>\n\n            <ion-item>\n\n               <ion-label stacked>జిల్లాలను ఎంచుకోండి</ion-label>\n\n                <ion-select formControlName="district_id" [disabled]="!serachMeetingform.value.state_id" (ionChange)="getconstency($event); searchdistric($event); serachgenders($event,4);">\n\n                    <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n                    <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>\n\n                </ion-select>\n\n            </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12>\n\n            <ion-item>\n\n               <ion-label stacked>నియోజకవర్గం ఎంచుకోండి</ion-label>\n\n                <ion-select formControlName="constenncy_id" [disabled]="!serachMeetingform.value.district_id" (ionChange)="getmandals($event); searchconstenct($event); serachgenders($event,5);">\n\n                    <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n                    <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>\n\n                </ion-select>\n\n            </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12>\n\n            <ion-item>\n\n               <ion-label stacked>మండలాలను ఎంచుకోండి</ion-label>\n\n                <ion-select formControlName="mandal_id" [disabled]="!serachMeetingform.value.constenncy_id" (ionChange)="gepanchayati($event); searchmandals($event); serachgenders($event,6);">\n\n                    <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n                    <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>\n\n                </ion-select>\n\n            </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12>\n\n            <ion-item>\n\n               <ion-label stacked>పంచాయతీ ఎంచుకోండి</ion-label>\n\n                <ion-select formControlName="panchayati_id" [disabled]="!serachMeetingform.value.mandal_id" (ionChange)="searchvillages($event); serachgenders($event,7);">\n\n                    <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n                    <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>\n\n                </ion-select>\n\n            </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 style="text-align: center;">\n\n            <button  ion-button color="primary" (click)="search()">శోధన</button>\n\n        </ion-col>\n\n    </ion-row>\n\n</form>\n\n\n\n\n\n<div class="row">\n\n  <ion-col col-12  *ngFor="let item of marriagedata" style="text-align: center;">\n\n      <ion-card >\n\n          <img *ngIf="!item.image || item.image === \'\'" src="assets/icon/svg/photo.svg"\n\n             style="width:200px; height:200px" >\n\n          <img  *ngIf="item.image" [src]="item.image" style="width:212px;height:251px;"\n\n              (click)="openimg(item.image, openmodel)">\n\n          <ion-card-content>\n\n              <ion-card-title>Organisation Name: <strong>{{item.organisation_name}}</strong></ion-card-title>\n\n              <p>Street name: <strong>{{item.ward}}</strong></p>\n\n              <p>Local address: <strong>{{item.org_address}}</strong></p>\n\n              <!-- <a (click)="toggleDisplayDiv()" style="color:rgb(175, 15, 15)">READMORE</a> -->\n\n              <!-- <a [href]="item.location" [hidden]="isShowDiv">\n\n                  <img src="assets/images/marker.png" style="width:45px;">\n\n              </a>\n\n              <a [href]="\'tel:+91\' + item.contact_num" [hidden]="isShowDiv">\n\n                  <img src="assets/images/phone.png" style="width:45px;">\n\n              </a> -->\n\n          </ion-card-content>\n\n      </ion-card>\n\n  </ion-col>\n\n</div>\n\n\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\searchorganisation\searchorganisation.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["s" /* NavController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["t" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__providers_service_service__["a" /* ServiceProvider */]])
-    ], SearchhousePage);
-    return SearchhousePage;
+    ], SearchorganisationPage);
+    return SearchorganisationPage;
 }());
 
-//# sourceMappingURL=searchhouse.js.map
+//# sourceMappingURL=searchorganisation.js.map
 
 /***/ })
 

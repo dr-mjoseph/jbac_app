@@ -26283,6 +26283,61 @@ page-sub-gallery .custom-modal .modal-wrapper {
   height: 100%;
 }
 
+page-teacher {
+  font-family: "Ramabhadra", sans-serif !important;
+}
+page-teacher * {
+  font-family: "Ramabhadra", sans-serif !important;
+}
+
+page-teacher .pagecss {
+  background-color: #f4f5f8;
+}
+page-teacher .form-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px;
+  margin: 10px;
+  -webkit-box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+page-teacher .header-box {
+  background: linear-gradient(135deg, #0f172a, #0369a1);
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 18px 14px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+page-teacher .section-heading {
+  font-size: 14px;
+  font-weight: bold;
+  color: #0369a1;
+  margin: 18px 0 8px 4px;
+  border-left: 3px solid #0284c7;
+  padding-left: 8px;
+}
+page-teacher .custom-item {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+}
+page-teacher .req {
+  color: #ef4444;
+  font-weight: bold;
+}
+page-teacher .submit-btn {
+  margin-top: 20px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  -webkit-box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+}
+
 page-techsol .mat {
   font-weight: 900;
   text-align: justify;

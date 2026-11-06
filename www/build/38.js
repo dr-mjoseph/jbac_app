@@ -5,10 +5,10 @@ webpackJsonp([38],{
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChurchgoPageModule", function() { return ChurchgoPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ContactPageModule", function() { return ContactPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__churchgo__ = __webpack_require__(482);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__contact__ = __webpack_require__(483);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,31 +18,31 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var ChurchgoPageModule = /** @class */ (function () {
-    function ChurchgoPageModule() {
+var ContactPageModule = /** @class */ (function () {
+    function ContactPageModule() {
     }
-    ChurchgoPageModule = __decorate([
+    ContactPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__churchgo__["a" /* ChurchgoPage */],
+                __WEBPACK_IMPORTED_MODULE_2__contact__["a" /* ContactPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__churchgo__["a" /* ChurchgoPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__contact__["a" /* ContactPage */]),
             ],
         })
-    ], ChurchgoPageModule);
-    return ChurchgoPageModule;
+    ], ContactPageModule);
+    return ContactPageModule;
 }());
 
-//# sourceMappingURL=churchgo.module.js.map
+//# sourceMappingURL=contact.module.js.map
 
 /***/ }),
 
-/***/ 482:
+/***/ 483:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChurchgoPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ContactPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -57,47 +57,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 // import { HomePage } from '../home/home';
-/**
- * Generated class for the ChurchgoPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var ChurchgoPage = /** @class */ (function () {
-    function ChurchgoPage(navCtrl, navParams) {
+var ContactPage = /** @class */ (function () {
+    function ContactPage(navCtrl, navParams) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
     }
-    ChurchgoPage.prototype.openYoutube = function () {
-        var url = 'https://www.youtube.com/channel/UCnk2hURhesjDM7SuOxgmt5A/about';
-        try {
-            if (window.cordova && window.cordova.InAppBrowser) {
-                window.cordova.InAppBrowser.open(url, '_system', 'location=yes');
-            }
-            else {
-                window.open(url, '_system');
-            }
-        }
-        catch (e) {
-            window.location.href = url;
-        }
-    };
-    ChurchgoPage.prototype.gotoAbout = function () {
-        this.navCtrl.push('AboutPage');
-    };
-    ChurchgoPage.prototype.gotohome = function () {
+    ContactPage.prototype.gotohome = function () {
         this.navCtrl.push('HomePage');
     };
-    ChurchgoPage = __decorate([
+    ContactPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad ContactPage');
+    };
+    ContactPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-churchgo',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\churchgo\churchgo.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-title style="text-align: center;font-family: Ramabhadra,sans-serif!important;"><b>చర్చి పర్మిషన్</b></ion-title>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding class="pagecss">\n\n\n\n  <div class="row" style="background-color: #857474;padding: 2%;border-radius: 8px;">\n\n    <h2\n\n      style="text-align: center;color: #dbd8d8;font-weight: 900;font-family: cursive;font-family: Ramabhadra,sans-serif!important;">\n\n      <u>ఆంధ్రరాష్ట్ర చర్చి పర్మిషన్ గవర్నమెంట్ ఆర్డర్స్</u>\n\n    </h2>\n\n    <hr>\n\n    <div class="col-lg-12">\n\n      <img src="assets/images/rc1.jpg" style="width: 100%; margin-bottom: 10px; border-radius: 4px;">\n\n      <img src="assets/images/rc2.jpg" style="width: 100%; border-radius: 4px;">\n\n    </div>\n\n  </div>\n\n  <div style="background-color: #e4e3e3;border-radius: 8px; margin-top: 15px;">\n\n    <p style="text-align: justify;text-align: center; font-size:20px;font-weight: 900;padding: 1%;">\n\n      నేను పెట్టే వీడియోలు మీరు చూచు నట్లు, వీడియో ఛానల్ సబ్ స్క్రైబ్ చేసుకోండి<br>\n\n    </p>\n\n\n\n    <div style="text-align: center; margin: 20px 0;">\n\n      <button ion-button color="danger" (click)="openYoutube()" style="border-radius: 5px; font-weight: bold;">\n\n        <ion-icon name="logo-youtube" style="margin-right: 8px;"></ion-icon>\n\n        YouTube ఛానల్ సందర్శించండి\n\n      </button>\n\n    </div>\n\n\n\n    <p style="text-align: justify;text-align: center; font-size:20px;font-weight: 900;padding: 1%;">\n\n      నా గురుంచి తెలుసుకొనుటకు\n\n      <a href="javascript:void(0)" (click)="gotoAbout()" style="color: blue; text-decoration: underline;">ఇక్కడ క్లిక్ చేయండి</a>\n\n      <br>\n\n      ప్రొఫెసర్ డాక్టర్.జోసఫ్ పి మోసిగంటి. <br> B.Tech, M.Tech, Ph.D<br>\n\n      చైర్మన్ , ఆంధ్రప్రదేశ్ జీసస్ బిలీవర్స్ అసోసియేషన్ కౌన్సిల్ (JBAC)<br>\n\n      డైరెక్టర్ , సెయింట్ మేరీస్ గ్రూప్ ఆఫ్ ఇంజినీరింగ్ కాలేజెస్, చేబ్రోలు, గుంటూరు . <br>\n\n      Number : (+91)-7075482182 <br>\n\n      (సేవ్ చేసుకొని మెసేజ్-SMS మాత్రమే చేయండి) .\n\n    </p>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\churchgo\churchgo.html"*/,
+            selector: 'page-contact',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\contact\contact.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>మమ్మల్ని సంప్రదించండి</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss" padding>\n\n\n\n  <ion-row>\n\n    <ion-col col-12 style="background-color: white;border-radius:5px;margin-bottom:10px;text-align: center;">\n\n      <div class="contact-card">\n\n        <ion-icon name="flaticon-position"></ion-icon>\n\n\n\n        <ion-title text-center><b><u>నా చిరునామా</u></b></ion-title>\n\n\n\n        <h4> <b>ప్రొఫెసర్ డాక్టర్ జోసఫ్ పి. మోసిగంటి, B.Tech, M.Tech, Ph.D\n\n          ఫౌండర్ & చైర్మన్, జీసస్ బిలీవర్స్ అసోసియేషన్ కౌన్సిల్ (JBAC). <br>\n\n          డైరెక్టర్, సెయింట్ మేరీస్ గ్రూప్ ఆఫ్ ఇంజినీరింగ్ కాలేజెస్ చేబ్రోలు, గుంటూరు </b></h4>\n\n        <h4> Phone : 7075482182, email: mjosephp7@gmail.com</h4>\n\n\n\n       </div>\n\n    </ion-col>\n\n\n\n    <ion-col col-12 style="background-color: white; border-radius: 5px; margin-bottom: 10px;">\n\n      <ion-title text-center>\n\n        <b><u>సోషల్ మీడియా అకౌంట్స్</u></b>\n\n      </ion-title>\n\n      <ion-row>\n\n        <ion-col col-4 class="social-label">\n\n          <i class="fab fa-twitter twitter-icon"></i> \n\n        </ion-col>\n\n        <ion-col col-8 class="social-value"><br><b><a target="_blank" href="https://www.youtube.com/c/DrJOSEPHPRAKASHMOSIGANTI7">@Mjosephp7</a></b></ion-col>\n\n    \n\n        <ion-col col-4 class="social-label">\n\n          <i class="fab fa-instagram instagram-icon"></i> \n\n        </ion-col>\n\n        <ion-col col-8 class="social-value"><br><b>Josephpmosiganti</b></ion-col>\n\n    \n\n        <ion-col col-4 class="social-label">\n\n          <i class="fab fa-facebook facebook-icon"></i> \n\n        </ion-col>\n\n        <ion-col col-8 class="social-value"><br><b>Joseph P. Mosiganti</b></ion-col>\n\n    \n\n        <ion-col col-4 class="social-label">\n\n          <i class="fab fa-youtube youtube-icon"></i>\n\n        </ion-col>\n\n        <ion-col col-8 class="social-value"><br><b> <a target="_blank" href="https://www.youtube.com/c/DrJOSEPHPRAKASHMOSIGANTI7">Dr. JOSEPH PRAKASH MOSIGANTI7</a></b></ion-col>\n\n      </ion-row>\n\n    </ion-col>\n\n    \n\n    <style>\n\n      .social-label {\n\n        font-weight: bold;\n\n        color: #333;\n\n        display: flex;\n\n        align-items: center;\n\n      }\n\n      .social-label i {\n\n        margin-right: 8px;\n\n        font-size: 1.2em;\n\n      }\n\n      .twitter-icon {\n\n        color: #1DA1F2; /* Twitter color */\n\n      }\n\n      .instagram-icon {\n\n        color: #C13584; /* Instagram color */\n\n      }\n\n      .facebook-icon {\n\n        color: #1877F2; /* Facebook color */\n\n      }\n\n      .youtube-icon {\n\n        color: #FF0000; /* YouTube color */\n\n      }\n\n      .social-value {\n\n        color: #555;\n\n      }\n\n    </style>\n\n    \n\n    \n\n\n\n    <ion-col col-12 style="background-color: white;border-radius:5px;margin-bottom:10px">\n\n      <div class="contact-card">\n\n        <ion-title text-center><b><u>సంప్రదించవలసిన నెంబర్</u></b></ion-title>\n\n        <h4>Email : <a href="mailto:jbac7ap@gmail.Com"> <b> jbac7ap@gmail.com </b></a></h4>\n\n        <h4>ఫోన్ నెంబర్ : <a href="tel:+(91) – 7075482182"> <b> 7075482182 </b></a></h4>\n\n        <h4>వెబ్ సైట్ : <a href="https://jbac.in/"> <b> www.jbac.in </b></a></h4>\n\n      </div>\n\n    </ion-col>\n\n  </ion-row>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\contact\contact.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* NavParams */]])
-    ], ChurchgoPage);
-    return ChurchgoPage;
+    ], ContactPage);
+    return ContactPage;
 }());
 
-//# sourceMappingURL=churchgo.js.map
+//# sourceMappingURL=contact.js.map
 
 /***/ })
 

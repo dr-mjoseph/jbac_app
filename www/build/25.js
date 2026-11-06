@@ -5,10 +5,10 @@ webpackJsonp([25],{
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InstitutePageModule", function() { return InstitutePageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InvestorPageModule", function() { return InvestorPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__institute__ = __webpack_require__(493);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__investor__ = __webpack_require__(495);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,35 +18,35 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var InstitutePageModule = /** @class */ (function () {
-    function InstitutePageModule() {
+var InvestorPageModule = /** @class */ (function () {
+    function InvestorPageModule() {
     }
-    InstitutePageModule = __decorate([
+    InvestorPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__institute__["a" /* InstitutePage */],
+                __WEBPACK_IMPORTED_MODULE_2__investor__["a" /* InvestorPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__institute__["a" /* InstitutePage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__investor__["a" /* InvestorPage */]),
             ],
         })
-    ], InstitutePageModule);
-    return InstitutePageModule;
+    ], InvestorPageModule);
+    return InvestorPageModule;
 }());
 
-//# sourceMappingURL=institute.module.js.map
+//# sourceMappingURL=investor.module.js.map
 
 /***/ }),
 
-/***/ 493:
+/***/ 495:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InstitutePage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestorPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(128);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_service_service__ = __webpack_require__(128);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -60,181 +60,245 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-// import { HomePage } from '../home/home';
-/**
- * Generated class for the InstitutePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var InstitutePage = /** @class */ (function () {
-    function InstitutePage(navCtrl, loadingCtrl, navParams, service, frombuilder) {
+var InvestorPage = /** @class */ (function () {
+    function InvestorPage(navCtrl, fb, alertCtrl, loadingCtrl, toastCtrl, service) {
         this.navCtrl = navCtrl;
+        this.fb = fb;
+        this.alertCtrl = alertCtrl;
         this.loadingCtrl = loadingCtrl;
-        this.navParams = navParams;
+        this.toastCtrl = toastCtrl;
         this.service = service;
-        this.frombuilder = frombuilder;
-        this.isShowDiv = true;
-        this.institutesdata = [];
-        this.fromshow = 1;
-        this.institutedata = [];
-        this.submitted = false;
-        this.form = this.frombuilder.group({
-            state_id: [''],
-            denomination_id: [''],
-            ministry_id: [''],
-            district_id: [''],
-            constenncy_id: [''],
-            mandal_id: [''],
-            panchayati_id: [''],
-            course_offered: [''],
-            college_type: ['']
+        this.showSpinner = false;
+        // Location Lists
+        this.states = [];
+        this.districts = [];
+        this.constituencies = [];
+        this.mandals = [];
+        this.panchayatis = [];
+        // Metadata
+        this.businessTypes = [];
+        this.denominations = [];
+        this.investorForm = this.fb.group({
+            name: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(3)]],
+            mobile: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].pattern(/^[0-9]{10}$/)]],
+            email: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].email]],
+            // Address
+            state_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            districts: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            constituencyname: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            mandals: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            panchayati: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            // Investment Details
+            business_type_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            denomination_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            capital_to_invest: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            description: ['']
         });
     }
-    InstitutePage.prototype.toggleDisplayDiv = function () {
-        this.isShowDiv = !this.isShowDiv;
+    InvestorPage.prototype.ionViewDidLoad = function () {
+        this.loadStates();
+        this.loadBusinessTypes();
+        this.loadDenominations();
     };
-    InstitutePage.prototype.onStateChange = function (event) {
+    InvestorPage.prototype.gotohome = function () {
+        this.navCtrl.setRoot('HomePage');
+    };
+    InvestorPage.prototype.loadStates = function () {
         var _this = this;
-        var stateId = event;
-        this.form.patchValue({
-            state_id: stateId,
-            district_id: '',
-            constenncy_id: '',
-            mandal_id: '',
-            panchayati_id: ''
+        this.service.getstates().subscribe(function (res) {
+            if (res && res.data) {
+                _this.states = res.data;
+            }
+            else {
+                _this.states = [
+                    { id: 1, state_name: 'Andhra Pradesh-ఆంధ్రప్రదేశ్ (AP)', name: 'Andhra Pradesh (AP)' },
+                    { id: 2, state_name: 'Telangana-తెలంగాణ (TG)', name: 'Telangana (TG)' }
+                ];
+            }
+        }, function () {
+            _this.states = [
+                { id: 1, state_name: 'Andhra Pradesh-ఆంధ్రప్రదేశ్ (AP)', name: 'Andhra Pradesh (AP)' },
+                { id: 2, state_name: 'Telangana-తెలంగాణ (TG)', name: 'Telangana (TG)' }
+            ];
+        });
+    };
+    InvestorPage.prototype.loadBusinessTypes = function () {
+        var _this = this;
+        this.service.getBusinessTypes().subscribe(function (res) {
+            if (res && res.data) {
+                _this.businessTypes = res.data;
+            }
+        }, function (err) { return console.log('Error loading business types', err); });
+    };
+    InvestorPage.prototype.loadDenominations = function () {
+        var _this = this;
+        this.service.getdenomation().subscribe(function (res) {
+            if (res && res.data) {
+                _this.denominations = res.data;
+            }
+        }, function (err) { return console.log('Error loading denominations', err); });
+    };
+    // Address Cascading
+    InvestorPage.prototype.onStateChange = function (stateId) {
+        var _this = this;
+        this.investorForm.patchValue({
+            districts: '',
+            constituencyname: '',
+            mandals: '',
+            panchayati: ''
         });
         this.districts = [];
-        this.constituency = [];
+        this.constituencies = [];
         this.mandals = [];
-        this.panchayati = [];
+        this.panchayatis = [];
         if (stateId) {
             this.service.getdistrict(stateId).subscribe(function (res) {
-                if (res && res.status == 200) {
-                    _this.districts = res.data;
-                }
+                _this.districts = (res && res.data) ? res.data : [];
             });
         }
     };
-    InstitutePage.prototype.ionViewDidLoad = function () {
-        this.getbeliver();
-        this.getinstitutes();
-    };
-    InstitutePage.prototype.gotohome = function () {
-        this.navCtrl.push('HomePage');
-    };
-    InstitutePage.prototype.getinstitutes = function () {
+    InvestorPage.prototype.onDistrictChange = function (distId) {
         var _this = this;
-        this.service.institutes().subscribe(function (res) {
-            _this.institutesdata = res.data;
+        this.investorForm.patchValue({
+            constituencyname: '',
+            mandals: '',
+            panchayati: ''
         });
-    };
-    InstitutePage.prototype.getbeliver = function () {
-        var _this = this;
-        this.service.getbeliversdata().subscribe(function (res) {
-            if (res.status == 202) {
-                alert(res.message);
-            }
-            else if (res.status == 200) {
-                _this.ministryname = res.data;
-            }
-        });
-    };
-    InstitutePage.prototype.getdistric = function () {
-        var _this = this;
-        this.service.getdistrict(this.form.value.state_id || 1).subscribe(function (res) {
-            _this.districts = res.data;
-        });
-    };
-    InstitutePage.prototype.getconstituency = function (event) {
-        var _this = this;
-        var id = event;
-        this.form.patchValue({
-            constenncy_id: '',
-            mandal_id: '',
-            panchayati_id: ''
-        });
-        this.constituency = [];
+        this.constituencies = [];
         this.mandals = [];
-        this.panchayati = [];
-        if (id) {
-            this.service.getconsistencys().subscribe(function (res) {
-                if (res && res.data) {
-                    _this.constituency = res.data.filter(function (data) { return data.dstrct_id == id; });
-                }
+        this.panchayatis = [];
+        if (distId) {
+            this.service.getconsistencys(distId).subscribe(function (res) {
+                var list = (res && res.data) ? res.data : [];
+                _this.constituencies = list.filter(function (item) { return item.dstrct_id == distId; });
             });
         }
     };
-    InstitutePage.prototype.getmandals = function (event) {
+    InvestorPage.prototype.onConstituencyChange = function (constId) {
         var _this = this;
-        var id = event;
-        this.form.patchValue({
-            mandal_id: '',
-            panchayati_id: ''
+        this.investorForm.patchValue({
+            mandals: '',
+            panchayati: ''
         });
         this.mandals = [];
-        this.panchayati = [];
-        if (id) {
-            this.service.getmandals().subscribe(function (res) {
-                if (res && res.data) {
-                    _this.mandals = res.data.filter(function (data) { return data.const_id == id; });
-                }
+        this.panchayatis = [];
+        if (constId) {
+            this.service.getmandals(constId).subscribe(function (res) {
+                var list = (res && res.data) ? res.data : [];
+                _this.mandals = list.filter(function (item) { return item.const_id == constId; });
             });
         }
     };
-    InstitutePage.prototype.getpanchayati = function (event) {
+    InvestorPage.prototype.onMandalChange = function (mandalId) {
         var _this = this;
-        var id = event;
-        this.form.patchValue({
-            panchayati_id: ''
+        this.investorForm.patchValue({
+            panchayati: ''
         });
-        this.panchayati = [];
-        if (id) {
-            this.service.gepanchayatis().subscribe(function (res) {
-                if (res && res.data) {
-                    _this.panchayati = res.data.filter(function (data) { return data.mndl_id == id; });
-                }
+        this.panchayatis = [];
+        if (mandalId) {
+            this.service.gepanchayatis(mandalId).subscribe(function (res) {
+                var list = (res && res.data) ? res.data : [];
+                _this.panchayatis = list.filter(function (item) { return !mandalId || item.mndl_id == mandalId; });
             });
         }
     };
-    InstitutePage.prototype.onSearch = function () {
-        if (this.fromshow == 1) {
-            this.fromshow = 2;
-        }
-        else {
-            this.fromshow = 1;
-        }
-    };
-    InstitutePage.prototype.search = function () {
-        var _this = this;
-        this.submitted = true;
-        if (this.form.invalid) {
-            alert('దయచేసి ఖాళీ ఫీల్డ్‌లను పూరించండి ');
-        }
-        else {
-            this.service.Searchinstitute(this.form.value).subscribe(function (res) {
-                _this.institutedata = [];
-                if (res.status == 200) {
-                    _this.institutedata = res.data;
-                    _this.submitted = false;
-                    _this.fromshow = 1;
-                }
-                else {
-                    alert('no data');
-                }
+    InvestorPage.prototype.submitInvestor = function () {
+        if (this.investorForm.invalid) {
+            var alert_1 = this.alertCtrl.create({
+                title: 'దయచేసి అన్ని వివరాలు పూరించండి',
+                subTitle: 'Please fill all required fields before submitting.',
+                buttons: ['సరే (OK)']
             });
+            alert_1.present();
+            return;
         }
+        var loader = this.loadingCtrl.create({
+            content: 'నమోదు చేయబడుతుంది... (Submitting Investor Profile)...'
+        });
+        loader.present();
+        var formVal = this.investorForm.value;
+        var selState = this.states.find(function (s) { return s.id == formVal.state_id; });
+        var selDist = this.districts.find(function (d) { return d.id == formVal.districts; });
+        var selConst = this.constituencies.find(function (c) { return c.id == formVal.constituencyname; });
+        var selMndl = this.mandals.find(function (m) { return m.id == formVal.mandals; });
+        var selPanch = this.panchayatis.find(function (p) { return p.id == formVal.panchayati; });
+        var selBizType = this.businessTypes.find(function (t) { return t.id == formVal.business_type_id; });
+        var selDenom = this.denominations.find(function (d) { return d.id == formVal.denomination_id; });
+        var payload = {
+            name: formVal.name,
+            mobile: formVal.mobile,
+            email: formVal.email,
+            // Address
+            state_id: formVal.state_id,
+            state_name: selState ? (selState.state_name || selState.name || '') : '',
+            district_id: formVal.districts,
+            district_name: selDist ? (selDist.distrct_nm || selDist.districtname || '') : '',
+            constituency_id: formVal.constituencyname,
+            constituency_name: selConst ? (selConst.const_nm || selConst.name || '') : '',
+            mandal_id: formVal.mandals,
+            mandal_name: selMndl ? (selMndl.mndl_nm || selMndl.name || '') : '',
+            panchayat_id: formVal.panchayati,
+            panchayat_name: selPanch ? (selPanch.pnchyt_nm || selPanch.name || '') : '',
+            // Investment Details
+            business_type_id: formVal.business_type_id,
+            business_type: selBizType ? (selBizType.business_type || '') : '',
+            denomination_id: formVal.denomination_id,
+            denomination: selDenom ? (selDenom.denomation_name || selDenom.denomination_name || '') : '',
+            capital_to_invest: formVal.capital_to_invest,
+            description: formVal.description
+        };
+        var self = this;
+        this.service.registerInvestor(payload).subscribe(function (res) {
+            loader.dismiss();
+            if (res && res.status === 200) {
+                var successAlert = self.alertCtrl.create({
+                    title: 'నమోదు పూర్తయింది! (Success)',
+                    subTitle: 'మీ ఇన్వెస్టర్ ప్రొఫైల్ విజయవంతంగా నమోదు చేయబడింది. (Investor registration submitted successfully)',
+                    buttons: [
+                        {
+                            text: 'సరే (OK)',
+                            handler: function () {
+                                self.navCtrl.setRoot('FormsPage');
+                            }
+                        }
+                    ]
+                });
+                successAlert.present();
+            }
+            else {
+                var msg = (res && res.message) ? res.message : 'Submission failed. Please try again.';
+                var errAlert = self.alertCtrl.create({
+                    title: 'విఫలమైంది (Failed)',
+                    subTitle: msg,
+                    buttons: ['సరే (OK)']
+                });
+                errAlert.present();
+            }
+        }, function () {
+            loader.dismiss();
+            var netAlert = self.alertCtrl.create({
+                title: 'నెట్‌వర్క్ లోపం (Network Error)',
+                subTitle: 'Unable to connect to server. Please try again.',
+                buttons: ['సరే (OK)']
+            });
+            netAlert.present();
+        });
     };
-    InstitutePage = __decorate([
+    InvestorPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-institute',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\institute\institute.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>ఇన్‌స్టిట్యూట్‌</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content class="pagecss">\n\n\n\n  <ion-searchbar (click)="onSearch()" *ngIf="fromshow==1"></ion-searchbar>\n\n\n\n  <form [formGroup]="form" *ngIf="fromshow==2">\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>సెలెక్ట్ డినామినేషన్ మోడల్‌</ion-label>\n\n          <ion-select formControlName="denomination_id">\n\n            <ion-option value="" disabled selected>డినామినేషన్ ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of denomation" [value]="item.id">{{ item.denomation_name }}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మంత్రిస్తానం ఎంచుకోండండి</ion-label>\n\n          <ion-select formControlName="ministry_id">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let i of ministryname" [value]="i.id">{{ i.ministryname }}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n    </ion-row>\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>అంచును అంచని కోర్సులు</ion-label>\n\n          <ion-select formControlName="course_offered">\n\n            <ion-option value="" disabled selected>ఇన్స్టిట్యూట్‌ను ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of institutesdata" [value]="item.course_offered">{{ item.course_offered\n\n              }}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n    </ion-row>\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>కళాశాల రకం</ion-label>\n\n          <ion-select formControlName="college_type">\n\n            <ion-option value="" disabled selected>కళాశాల ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of institutesdata"\n\n              [value]="item.college_type">{{item.college_type}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n    </ion-row>\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>రాష్ట్రం / State</ion-label>\n\n          <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">\n\n            <ion-option value="" disabled selected>రాష్ట్రం ఎంచుకోండి</ion-option>\n\n            <ion-option value="1">Andhra Pradesh</ion-option>\n\n            <ion-option value="2">Telangana</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>జిల్లాలను ఎంచుకోండండి</ion-label>\n\n          <ion-select formControlName="district_id" [disabled]="!form.get(\'state_id\').value" (ionChange)="getconstituency($event)">\n\n            <ion-option value="" disabled selected>జిల్లాలను ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>నియోజకవర్గం ఎంచుకోండండి</ion-label>\n\n          <ion-select formControlName="constenncy_id" [disabled]="!form.get(\'district_id\').value" (ionChange)="getmandals($event)">\n\n            <ion-option value="" disabled selected>నియోజకవర్గం ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మండలాలను ఎంచుకోండండి</ion-label>\n\n          <ion-select formControlName="mandal_id" [disabled]="!form.get(\'constenncy_id\').value" (ionChange)="getpanchayati($event)">\n\n            <ion-option value="" disabled selected>మండలాలను ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of mandals" [value]="item.id">{{ item.mndl_nm }}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>పంచాయతీ ఎంచుకోండండి</ion-label>\n\n          <ion-select formControlName="panchayati_id" [disabled]="!form.get(\'mandal_id\').value">\n\n            <ion-option value="" disabled selected>పంచాయతీ ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n    </ion-row>\n\n    <ion-row>\n\n      <ion-col col-12 (click)="search()">\n\n        <button ion-button type="submit" block color="primary"><ion-icon name="search"></ion-icon>శోధించు</button>\n\n      </ion-col>\n\n    </ion-row>\n\n\n\n  </form>\n\n  <ion-grid>\n\n    <ion-row *ngIf="institutedata.length!=0">\n\n      <ion-col col-12 *ngFor="let item of institutedata" style="margin-bottom: 16px;">\n\n        <ion-card>\n\n          <ion-img *ngIf="!item.image || item.image === \'\'" src="assets/images/no.jpg"></ion-img>\n\n          <ion-img *ngIf="item.image" [src]="item.image"></ion-img>\n\n          <ion-card-content>\n\n            <p>ఇన్స్టిట్యూట్ పేరు: <strong>{{item.institutename}}</strong></p>\n\n            <p>అంచని అంచని కోర్సులు: <b>{{item.course_offered}}</b></p>\n\n            <p>కళాశాల రకం: <strong>{{item.college_type}}</strong></p>\n\n            <a (click)="toggleDisplayDiv()" style="color: rgb(175, 15, 15)">మరింత చదవండి</a>\n\n            <p [hidden]="isShowDiv">ఫోన్ నంబర్: <strong>{{item.phonenumber}}</strong></p>\n\n            <a href="{{item.location}}" [hidden]="isShowDiv"><ion-icon name="pin"></ion-icon></a>\n\n            <a href="{{item.youtube}}" [hidden]="isShowDiv"><ion-icon name="logo-youtube"></ion-icon></a>\n\n            <a href="{{item.facebook}}" [hidden]="isShowDiv"><ion-icon name="logo-facebook"></ion-icon></a>\n\n            <a href="tel:+91{{item.phonenumber}}" [hidden]="isShowDiv"><ion-icon name="call"></ion-icon></a>\n\n          </ion-card-content>\n\n        </ion-card>\n\n      </ion-col>\n\n    </ion-row>\n\n    <ion-row *ngIf="institutedata.length==0">\n\n      <h2 style="margin-top: 50%;color: white;margin-left: 25%;">\n\n        డేటా దొరకలేదు\n\n      </h2>\n\n    </ion-row>\n\n  </ion-grid>\n\n\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\institute\institute.html"*/,
+            selector: 'page-investor',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\investor\investor.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n\n    <ion-title style="text-align: center; font-size: 15px;">\n\n      <b>ఇన్వెస్టర్ రిజిస్ట్రేషన్ (Investor)</b>\n\n    </ion-title>\n\n    <ion-buttons end>\n\n      <button ion-button icon-only (click)="gotohome()">\n\n        <ion-icon name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n  <div class="form-card">\n\n    <div class="header-box">\n\n      <div style="font-size: 30px; margin-bottom: 6px;">💰</div>\n\n      <h3 style="margin: 0; font-size: 16px; font-weight: bold;">పెట్టుబడిదారుల నమోదు</h3>\n\n      <p style="margin: 4px 0 0 0; font-size: 11.5px; opacity: 0.9;">\n\n        నూతన వ్యాపార ఆలోచనలలో పెట్టుబడి & భాగస్వామ్యం కొరకు (Angel Investment & Growth)\n\n      </p>\n\n    </div>\n\n\n\n    <form [formGroup]="investorForm" (ngSubmit)="submitInvestor()">\n\n\n\n      <!-- SECTION 1: PERSONAL DETAILS -->\n\n      <div class="section-heading">1. వ్యక్తిగత వివరాలు (Personal Details)</div>\n\n\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>పూర్తి పేరు (Full Name) <span class="req">*</span></ion-label>\n\n        <ion-input type="text" formControlName="name" placeholder="ఉదా: John Wesley"></ion-input>\n\n      </ion-item>\n\n\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>మొబైల్ నంబర్ (Mobile Number) <span class="req">*</span></ion-label>\n\n        <ion-input type="tel" maxlength="10" formControlName="mobile" placeholder="10 అంకెల మొబైల్ నంబర్"></ion-input>\n\n      </ion-item>\n\n\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>ఈమెయిల్ (Email Address)</ion-label>\n\n        <ion-input type="email" formControlName="email" placeholder="investor@example.com"></ion-input>\n\n      </ion-item>\n\n\n\n      <!-- SECTION 2: RESIDENCE ADDRESS -->\n\n      <div class="section-heading">2. నివాస చిరునామా (Residence Address)</div>\n\n\n\n      <!-- State -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>రాష్ట్రం (State) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="state_id" (ionChange)="onStateChange($event)" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">\n\n          <ion-option *ngFor="let s of states" [value]="s.id">{{ s.state_name || s.name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- District -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>జిల్లా (District) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="districts" (ionChange)="onDistrictChange($event)" [disabled]="!investorForm.get(\'state_id\').value" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">\n\n          <ion-option *ngFor="let d of districts" [value]="d.id">{{ d.distrct_nm || d.districtname }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Constituency -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>నియోజకవర్గం (Constituency) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="constituencyname" (ionChange)="onConstituencyChange($event)" [disabled]="!investorForm.get(\'districts\').value" okText="సరే" cancelText="రద్దు" placeholder="నియోజకవర్గం ఎంచుకోండి">\n\n          <ion-option *ngFor="let c of constituencies" [value]="c.id">{{ c.const_nm || c.name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Mandal -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>మండలం (Mandal) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="mandals" (ionChange)="onMandalChange($event)" [disabled]="!investorForm.get(\'constituencyname\').value" okText="సరే" cancelText="రద్దు" placeholder="మండలం ఎంచుకోండి">\n\n          <ion-option *ngFor="let m of mandals" [value]="m.id">{{ m.mndl_nm || m.name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Panchayat -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>పంచాయతీ / గ్రామం (Panchayat / Village) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="panchayati" [disabled]="!investorForm.get(\'mandals\').value" okText="సరే" cancelText="రద్దు" placeholder="పంచాయతీ ఎంచుకోండి">\n\n          <ion-option *ngFor="let p of panchayatis" [value]="p.id">{{ p.pnchyt_nm || p.name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- SECTION 3: INVESTMENT PREFERENCES -->\n\n      <div class="section-heading">3. పెట్టుబడి ప్రాధాన్యతలు (Investment Preferences)</div>\n\n\n\n      <!-- Interested Business Type -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>ఆసక్తి గల వ్యాపార రంగం (Interested Business Type) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="business_type_id" okText="సరే" cancelText="రద్దు" placeholder="వ్యాపార రంగాన్ని ఎంచుకోండి">\n\n          <ion-option *ngFor="let t of businessTypes" [value]="t.id">{{ t.business_type || t.type_english }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Christian Denomination -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>క్రైస్తవ డినామినేషన్ (Denomination) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="denomination_id" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">\n\n          <ion-option *ngFor="let d of denominations" [value]="d.id">{{ d.denomation_name || d.denomination_name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Capital to Invest -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>పెట్టుబడి పెట్టదలచిన మొత్తం (Capital Willing to Invest) ₹ <span class="req">*</span></ion-label>\n\n        <ion-input type="text" formControlName="capital_to_invest" placeholder="ఉదా: 5,00,000 to 25,00,000"></ion-input>\n\n      </ion-item>\n\n\n\n      <!-- Description -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>పెట్టుబడి ప్రాధాన్యతలు / నిబంధనలు (Investment Criteria)</ion-label>\n\n        <ion-textarea rows="3" formControlName="description" placeholder="భాగస్వామ్య నిబంధనలు లేదా ప్రాధాన్యతల గురించి వివరించండి..."></ion-textarea>\n\n      </ion-item>\n\n\n\n      <!-- Submit Button -->\n\n      <button ion-button block type="submit" class="submit-btn">\n\n        💰 ఇన్వెస్టర్ ప్రొఫైల్ సబ్మిట్ చేయండి (Submit)\n\n      </button>\n\n\n\n    </form>\n\n  </div>\n\n</ion-content>\n\n\n\n'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\investor\investor.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_service_service__["a" /* ServiceProvider */], __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */]])
-    ], InstitutePage);
-    return InstitutePage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["w" /* ToastController */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_service_service__["a" /* ServiceProvider */]])
+    ], InvestorPage);
+    return InvestorPage;
 }());
 
-//# sourceMappingURL=institute.js.map
+//# sourceMappingURL=investor.js.map
 
 /***/ })
 

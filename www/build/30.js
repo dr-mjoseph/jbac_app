@@ -1,14 +1,14 @@
 webpackJsonp([30],{
 
-/***/ 429:
+/***/ 431:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FormsPageModule", function() { return FormsPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GalleryPageModule", function() { return GalleryPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__forms__ = __webpack_require__(488);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__gallery__ = __webpack_require__(491);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,33 +18,34 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var FormsPageModule = /** @class */ (function () {
-    function FormsPageModule() {
+var GalleryPageModule = /** @class */ (function () {
+    function GalleryPageModule() {
     }
-    FormsPageModule = __decorate([
+    GalleryPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__forms__["a" /* FormsPage */],
+                __WEBPACK_IMPORTED_MODULE_2__gallery__["a" /* GalleryPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__forms__["a" /* FormsPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__gallery__["a" /* GalleryPage */]),
             ],
         })
-    ], FormsPageModule);
-    return FormsPageModule;
+    ], GalleryPageModule);
+    return GalleryPageModule;
 }());
 
-//# sourceMappingURL=forms.module.js.map
+//# sourceMappingURL=gallery.module.js.map
 
 /***/ }),
 
-/***/ 488:
+/***/ 491:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FormsPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GalleryPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(128);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -56,73 +57,52 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 // import { HomePage } from '../home/home';
-var FormsPage = /** @class */ (function () {
-    function FormsPage(navCtrl, navParams, alertCtrl) {
+var GalleryPage = /** @class */ (function () {
+    function GalleryPage(navCtrl, navParams, service) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.alertCtrl = alertCtrl;
+        this.service = service;
     }
-    FormsPage.prototype.gotohome = function () {
+    GalleryPage.prototype.ionViewDidLoad = function () {
+        this.getimages();
+    };
+    GalleryPage.prototype.getimages = function () {
+        var _this = this;
+        this.service.getimages().subscribe(function (res) {
+            if (res && res.data && Array.isArray(res.data)) {
+                _this.imagesget = res.data;
+            }
+            else {
+                _this.imagesget = [];
+            }
+        }, function (error) {
+            console.log('Error fetching gallery images', error);
+            _this.imagesget = [];
+        });
+    };
+    GalleryPage.prototype.onImgError = function (event, item) {
+        var fallbackId = (item && item.id) ? (Math.abs(item.id) % 12) : 1;
+        event.target.src = 'assets/images/meet-fig' + fallbackId + '.png';
+    };
+    GalleryPage.prototype.gotohome = function () {
         this.navCtrl.push('HomePage');
     };
-    FormsPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad FormsPage');
+    GalleryPage.prototype.gotosub = function (id) {
+        console.log(id);
+        this.navCtrl.push('SubGalleryPage', { id: id }); // Pass the id as a parameter
     };
-    FormsPage.prototype.gotopage = function (id) {
-        if (id == 1) {
-            this.navCtrl.push('BelieverPage');
-        }
-        else if (id == 2) {
-            this.navCtrl.push('StudentPage');
-        }
-        else if (id == 3) {
-            this.navCtrl.push('MinistryPage');
-        }
-        else if (id == 4) {
-            this.navCtrl.push('PastorPage');
-        }
-        else if (id == 5) {
-            this.navCtrl.push('ChurchPage');
-        }
-        else if (id == 6) {
-            this.navCtrl.push('OrganisationPage');
-        }
-        else if (id == 7) {
-            this.navCtrl.push('AssociationPage');
-        }
-        else if (id == 8) {
-            this.navCtrl.push('DoctorregisterPage');
-        }
-        else if (id == 9) {
-            this.navCtrl.push('EntrepreneurPage');
-        }
-        else if (id == 10) {
-            this.navCtrl.push('InvestorPage');
-        }
-        else if (id == 27) {
-            this.navCtrl.push('PrivacyPage');
-        }
-        else {
-            var confirm_1 = this.alertCtrl.create({
-                mode: 'ios',
-                title: 'Coming Soon..!',
-                buttons: ['Ok']
-            });
-            confirm_1.present();
-            setTimeout(function () { confirm_1.dismiss(); }, 2000);
-        }
-    };
-    FormsPage = __decorate([
+    GalleryPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-forms',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\forms\forms.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>రిజిస్ట్రేషన్</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n  <br>\n\n  <ion-card class="hesd" tappable (click)="gotopage(1)">\n\n    <ion-card-header>\n\n      బిలీవర్ రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(2)">\n\n    <ion-card-header>\n\n      విద్యార్థుల రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(3)">\n\n    <ion-card-header>\n\n      మినిస్ట్రీ రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(4)">\n\n    <ion-card-header>\n\n      పాస్టర్ రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(5)">\n\n    <ion-card-header>\n\n      చర్చి రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(6)">\n\n    <ion-card-header>\n\n      సంస్థ రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(7)">\n\n    <ion-card-header>\n\n      పాస్టర్ అసోసియేషన్ రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(8)" style="border-left: 5px solid #00548F; background: linear-gradient(135deg, #e0f2fe, #ffffff);">\n\n    <ion-card-header style="color: #00548F; font-weight: bold;">\n\n      🩺 డాక్టర్ / కౌన్సిలర్ రిజిస్టర్ (Doctor Register)\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(9)" style="border-left: 5px solid #6366f1; background: linear-gradient(135deg, #e0e7ff, #ffffff);">\n\n    <ion-card-header style="color: #4338ca; font-weight: bold;">\n\n      🚀 ఎంటర్‌ప్రెన్యూర్ రిజిస్టర్ (Entrepreneur Register)\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(10)" style="border-left: 5px solid #10b981; background: linear-gradient(135deg, #d1fae5, #ffffff);">\n\n    <ion-card-header style="color: #047857; font-weight: bold;">\n\n      💰 ఇన్వెస్టర్ రిజిస్టర్ (Investor Register)\n\n    </ion-card-header>\n\n  </ion-card>\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\forms\forms.html"*/,
+            selector: 'page-gallery',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\gallery\gallery.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>ఫోటో గేలరీ</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n\n\n  <ion-row>\n\n\n\n    <ion-col col-12 *ngFor="let gt of imagesget" style="text-align: center;">\n\n      <img style="height: 200px; max-width: 100%; object-fit: cover; border-radius: 8px;" [src]="gt.image" (error)="onImgError($event, gt)" (click)="gotosub(gt.id)">\n\n      <h3 style="color:white;">{{gt.categoryname}}</h3>\n\n    </ion-col>\n\n\n\n    <ion-col col-12 *ngIf="imagesget && imagesget.length === 0" style="text-align: center; padding: 40px 16px;">\n\n      <ion-icon name="images" style="font-size: 48px; color: #ffeb3b;"></ion-icon>\n\n      <p style="color: white; font-size: 18px;">ప్రస్తుతానికి ఫోటోలు ఏవీ లేవు</p>\n\n    </ion-col>\n\n\n\n  </ion-row>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\gallery\gallery.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]])
-    ], FormsPage);
-    return FormsPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_service_service__["a" /* ServiceProvider */]])
+    ], GalleryPage);
+    return GalleryPage;
 }());
 
-//# sourceMappingURL=forms.js.map
+//# sourceMappingURL=gallery.js.map
 
 /***/ })
 

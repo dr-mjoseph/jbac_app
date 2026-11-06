@@ -1,14 +1,14 @@
 webpackJsonp([23],{
 
-/***/ 438:
+/***/ 440:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "JobsPageModule", function() { return JobsPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MarriagePageModule", function() { return MarriagePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__jobs__ = __webpack_require__(495);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__marriage__ = __webpack_require__(498);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,31 +18,31 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var JobsPageModule = /** @class */ (function () {
-    function JobsPageModule() {
+var MarriagePageModule = /** @class */ (function () {
+    function MarriagePageModule() {
     }
-    JobsPageModule = __decorate([
+    MarriagePageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__jobs__["a" /* JobsPage */],
+                __WEBPACK_IMPORTED_MODULE_2__marriage__["a" /* MarriagePage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__jobs__["a" /* JobsPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__marriage__["a" /* MarriagePage */]),
             ],
         })
-    ], JobsPageModule);
-    return JobsPageModule;
+    ], MarriagePageModule);
+    return MarriagePageModule;
 }());
 
-//# sourceMappingURL=jobs.module.js.map
+//# sourceMappingURL=marriage.module.js.map
 
 /***/ }),
 
-/***/ 495:
+/***/ 498:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return JobsPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MarriagePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
@@ -69,30 +69,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 // import { HomePage } from '../home/home';
 
 
-var JobsPage = /** @class */ (function () {
-    function JobsPage(navCtrl, navParams, formbuilder, service, loadingCtrl) {
+var MarriagePage = /** @class */ (function () {
+    function MarriagePage(navCtrl, navParams, formbuilder, service, loadingCtrl) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.formbuilder = formbuilder;
         this.service = service;
         this.loadingCtrl = loadingCtrl;
         this.fromshow = 1;
+        this.isShowDiv = true;
         this.form = this.formbuilder.group({
+            denomation_id: [''],
+            ministry_id: [''],
+            gender: [''],
+            status: [''],
+            caste: [''],
+            spirti: [''],
             state_id: [''],
-            jobtile: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            qual: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            experience: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
             district_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
             constenncy_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
             mandal_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
             panchayati_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
         });
     }
-    JobsPage.prototype.onStateChange = function (event) {
+    MarriagePage.prototype.gotohome = function () {
+        this.navCtrl.push('HomePage');
+    };
+    MarriagePage.prototype.onStateChange = function (event) {
         var _this = this;
         var stateId = event;
-        this.searchdist = '';
-        this.searchconts = '';
         this.form.patchValue({
             state_id: stateId,
             district_id: '',
@@ -104,32 +109,40 @@ var JobsPage = /** @class */ (function () {
         this.constituency = [];
         this.mandals = [];
         this.panchayati = [];
-        this.service.getdistrict(stateId).subscribe(function (res) {
-            if (res && res.status == 200) {
-                _this.districts = res.data;
-            }
-        }, function (error) {
-            console.log(error);
-        });
         if (stateId) {
-            this.service.searchjobswise({ state_id: stateId }).subscribe(function (res) {
-                if (res && res.status == 200 && Array.isArray(res.data)) {
-                    _this.jobs = res.data;
+            this.service.getdistrict(stateId).subscribe(function (res) {
+                if (res && res.status == 200) {
+                    _this.districts = res.data;
                 }
             });
         }
-        else {
-            this.getjobs();
-        }
     };
-    JobsPage.prototype.gotohome = function () {
-        this.navCtrl.push('HomePage');
+    MarriagePage.prototype.ionViewDidLoad = function () {
+        this.defaultdata();
+        this.getbeliver();
+        this.getdenomations();
     };
-    JobsPage.prototype.ionViewDidLoad = function () {
-        this.getjobs();
-        this.getjob();
+    MarriagePage.prototype.trimString = function (string, length) {
+        return string.length > length
+            ? string.substring(0, length) + "..."
+            : string;
     };
-    JobsPage.prototype.getdistric = function () {
+    MarriagePage.prototype.serach = function (event, tableid) {
+    };
+    MarriagePage.prototype.defaultdata = function () {
+        var _this = this;
+        var data = { df: 0 };
+        this.service.searchmarriages(data).subscribe(function (res) {
+            _this.marriagedata = [];
+            if (res.status == 200) {
+                _this.marriagedata = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
+            }
+            else {
+                console.warn('Backend server down - handled gracefully');
+            }
+        });
+    };
+    MarriagePage.prototype.getdistric = function () {
         var _this = this;
         this.service.getdistrict().subscribe(function (res) {
             if (res.status == 202) {
@@ -138,11 +151,9 @@ var JobsPage = /** @class */ (function () {
             else if (res.status == 200) {
                 _this.districts = res.data;
             }
-        }, function (error) {
-            console.log(error);
         });
     };
-    JobsPage.prototype.getconstency = function (event) {
+    MarriagePage.prototype.getconstency = function (event) {
         var _this = this;
         var id = event;
         this.form.patchValue({
@@ -162,7 +173,25 @@ var JobsPage = /** @class */ (function () {
             this.searchdistric(id);
         }
     };
-    JobsPage.prototype.getmandals = function (event) {
+    MarriagePage.prototype.gepanchayati = function (event) {
+        var _this = this;
+        var id = event;
+        this.form.patchValue({
+            panchayati_id: ''
+        });
+        this.panchayati = [];
+        if (id) {
+            this.service.gepanchayatis().subscribe(function (res) {
+                if (res && res.data) {
+                    _this.panchayati = res.data.filter(function (data) { return data.mndl_id == id; });
+                }
+            }, function (error) {
+                console.log(error);
+            });
+            this.searchmandals(id);
+        }
+    };
+    MarriagePage.prototype.getmandals = function (event) {
         var _this = this;
         var id = event;
         this.form.patchValue({
@@ -182,59 +211,25 @@ var JobsPage = /** @class */ (function () {
             this.searchconstenct(id);
         }
     };
-    JobsPage.prototype.gepanchayati = function (event) {
-        var _this = this;
-        var id = event;
-        this.form.patchValue({
-            panchayati_id: ''
-        });
-        this.panchayati = [];
-        if (id) {
-            this.service.gepanchayatis().subscribe(function (res) {
-                if (res && res.data) {
-                    _this.panchayati = res.data.filter(function (data) { return data.mndl_id == id; });
-                }
-            }, function (error) {
-                console.log(error);
-            });
-            this.searchmandals(id);
-        }
-    };
-    JobsPage.prototype.getjobs = function () {
-        var _this = this;
-        var data = {
-            df: 0
-        };
-        this.service.getjobs(data).subscribe(function (res) {
-            _this.jobs = [];
-            if (res.status == 200) {
-                _this.jobs = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
-            }
-            else {
-                alert('server down');
-            }
-        }, function (error) {
-        });
-    };
-    JobsPage.prototype.searchdistric = function (event) {
+    MarriagePage.prototype.searchdistric = function (event) {
         var _this = this;
         this.searchdist = event;
         var data = {
             district_id: this.searchdist,
             df: 1
         };
-        this.service.getjobs(data).subscribe(function (res) {
-            _this.jobs = [];
+        this.service.searchmarriages(data).subscribe(function (res) {
+            _this.marriagedata = [];
             if (res.status == 200) {
-                _this.jobs = res.data;
+                _this.marriagedata = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
             }
             else {
-                alert('server down');
+                console.warn('Backend server down - handled gracefully');
             }
         }, function (error) {
         });
     };
-    JobsPage.prototype.searchconstenct = function (event) {
+    MarriagePage.prototype.searchconstenct = function (event) {
         var _this = this;
         this.searchconts = event;
         var data = {
@@ -242,76 +237,18 @@ var JobsPage = /** @class */ (function () {
             constenncy_id: this.searchconts,
             df: 2,
         };
-        this.service.getjobs(data).subscribe(function (res) {
-            _this.jobs = [];
+        console.log(data);
+        this.service.searchmarriages(data).subscribe(function (res) {
+            _this.marriagedata = res.data;
             if (res.status == 200) {
-                _this.jobs = res.data;
+                _this.marriagedata = res.data;
             }
             else {
-                alert('No Data');
+                console.warn('No Data found');
             }
         });
     };
-    JobsPage.prototype.searchmandals = function (event) {
-        var _this = this;
-        var data = {
-            district_id: this.searchdist,
-            constenncy_id: this.searchconts,
-            mandal_id: event,
-            df: 3,
-        };
-        this.service.getjobs(data).subscribe(function (res) {
-            _this.jobs = [];
-            if (res.status == 200) {
-                _this.jobs = res.data;
-            }
-            else {
-                alert('server down');
-            }
-        });
-    };
-    JobsPage.prototype.search = function () {
-        var _this = this;
-        var loader = this.loadingCtrl.create({ content: 'ఉద్యోగాల సమాచారం లోడ్ అవుతోంది...' });
-        loader.present().catch(function () { });
-        this.service.getjobs(this.form.value).subscribe(function (res) {
-            loader.dismiss().catch(function () { });
-            _this.jobs = [];
-            if (res.status == 200) {
-                _this.jobs = res.data;
-                _this.fromshow = 1;
-            }
-            else {
-                alert('server down');
-            }
-        });
-    };
-    JobsPage.prototype.filterData = function () {
-        var _this = this;
-        this.jobs = this.jobs.filter(function (item) {
-            return JSON.stringify(item)
-                .toLowerCase()
-                .includes(_this.searchTerm.toLowerCase());
-        });
-    };
-    JobsPage.prototype.getjob = function () {
-        var _this = this;
-        this.service.getjob().subscribe(function (res) {
-            _this.jobswe = res.data;
-            console.log(_this.jobswe);
-        });
-    };
-    JobsPage.prototype.searchjobswise = function (event, colid) {
-        var _this = this;
-        var data = {
-            name: event,
-            colid: colid
-        };
-        this.service.searchjobswise(data).subscribe(function (res) {
-            _this.jobs = res.data;
-        });
-    };
-    JobsPage.prototype.onSearch = function () {
+    MarriagePage.prototype.onSearch = function () {
         if (this.fromshow == 1) {
             this.fromshow = 2;
         }
@@ -319,16 +256,125 @@ var JobsPage = /** @class */ (function () {
             this.fromshow = 1;
         }
     };
-    JobsPage = __decorate([
+    MarriagePage.prototype.searchmandals = function (event) {
+        var _this = this;
+        this.searchmand = event;
+        var data = {
+            district_id: this.searchdist,
+            constenncy_id: this.searchconts,
+            mandal_id: event,
+            df: 3,
+        };
+        this.service.searchmarriages(data).subscribe(function (res) {
+            _this.marriagedata = [];
+            if (res.status == 200) {
+                _this.marriagedata = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
+            }
+            else {
+                console.warn('Backend server down - handled gracefully');
+            }
+        });
+    };
+    MarriagePage.prototype.searchvillages = function (event) {
+        var _this = this;
+        var data = {
+            district_id: this.searchdist,
+            constenncy_id: this.searchconts,
+            mandal_id: this.searchmand,
+            village_id: event,
+            df: 4,
+        };
+        this.service.searchmarriages(data).subscribe(function (res) {
+            _this.marriagedata = [];
+            if (res.status == 200) {
+                _this.marriagedata = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
+            }
+            else {
+                console.warn('Backend server down - handled gracefully');
+            }
+        });
+    };
+    MarriagePage.prototype.search = function () {
+        var _this = this;
+        var data = {
+            id: this.form.value.village_id
+        };
+        this.service.searchmarriages(data).subscribe(function (res) {
+            _this.marriagedata = [];
+            if (res.status == 200) {
+                _this.marriagedata = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
+                console.log(_this.marriagedata);
+                _this.fromshow = 1;
+            }
+            else {
+                console.warn('Backend server down - handled gracefully');
+            }
+        });
+    };
+    MarriagePage.prototype.getbeliver = function () {
+        var _this = this;
+        this.service.getbeliversdata().subscribe(function (res) {
+            if (res.status == 202) {
+                alert(res.message);
+            }
+            else if (res.status == 200) {
+                _this.ministryname = res.data;
+            }
+        }, function (error) {
+            console.log(error);
+        });
+    };
+    MarriagePage.prototype.getdenomations = function () {
+        var _this = this;
+        this.service.getdenomation().subscribe(function (res) {
+            _this.denomation = res.data;
+            console.log(res.data);
+        });
+    };
+    MarriagePage.prototype.serachgender = function (event, tableid) {
+        var _this = this;
+        console.log(event);
+        var data = {
+            name: event,
+            columnid: tableid
+        };
+        this.service.searchingmarriages(data).subscribe(function (res) {
+            _this.marriagedata = res.data;
+        });
+    };
+    MarriagePage.prototype.serachcaste = function (event, tableid) {
+        var _this = this;
+        var data = {
+            name: event,
+            columnid: tableid
+        };
+        this.service.searchingmarriages(data).subscribe(function (res) {
+            _this.marriagedata = res.data;
+        });
+    };
+    MarriagePage.prototype.spirit = function (event, tableid) {
+        var _this = this;
+        var data = {
+            name: event,
+            columnid: tableid
+        };
+        this.service.searchingmarriages(data).subscribe(function (res) {
+            _this.marriagedata = res.data;
+        });
+    };
+    MarriagePage.prototype.toggleDisplayDiv = function (item) {
+        item.isShowDiv = !item.isShowDiv;
+    };
+    MarriagePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-jobs',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\jobs\jobs.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>ఉద్యోగాలు</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n  <ion-searchbar (click)="onSearch()" *ngIf="fromshow==1"></ion-searchbar>\n\n\n\n  <form [formGroup]="form" *ngIf="fromshow==2">\n\n    <ion-grid>\n\n\n\n      <ion-row>\n\n        <ion-col col-12 col-md-4>\n\n          <ion-item>\n\n            <ion-label stacked>ఉద్యోగ పేరు</ion-label>\n\n            <ion-select formControlName="jobtile" interface="popover" style="width: 273px;"\n\n              (ionChange)="searchjobswise($event, 1)">\n\n              <ion-option value="" disabled selected>పేరు ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of jobswe" [value]="item.jobtitle">{{item.jobtitle}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-4>\n\n          <ion-item>\n\n            <ion-label stacked>అర్హత</ion-label>\n\n            <ion-select formControlName="qual" interface="popover" style="width: 273px;"\n\n              (ionChange)="searchjobswise($event, 2)">\n\n              <ion-option value="" disabled selected>అర్హత ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of jobswe" [value]="item.qualification">{{item.qualification}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-4>\n\n          <ion-item>\n\n            <ion-label stacked>అనుభవం</ion-label>\n\n            <ion-select formControlName="experience" interface="popover" style="width: 273px;"\n\n              (ionChange)="searchjobswise($event, 3)">\n\n              <ion-option value="" disabled selected>మీ అనుభవం ఎంచుకోండి</ion-option>\n\n              <ion-option value="fresher">ఫ్రెషర్</ion-option>\n\n              <ion-option value="1-2">1-2</ion-option>\n\n              <ion-option value="2-3">2-3</ion-option>\n\n              <ion-option value="3-5">3-5</ion-option>\n\n              <ion-option value="Above 5YEARS">5 ఏళ్ళ మీరున్నారు</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n      </ion-row>\n\n\n\n      <ion-row>\n\n        <ion-col col-12 col-md-3>\n\n          <ion-item>\n\n            <ion-label stacked>రాష్ట్రం / State</ion-label>\n\n            <ion-select formControlName="state_id" interface="popover" style="width: 273px;"\n\n              (ionChange)="onStateChange($event)">\n\n              <ion-option value="" disabled selected>రాష్ట్రం ఎంచుకోండి</ion-option>\n\n              <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>\n\n              <ion-option value="2">తెలంగాణ (TG)</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-3>\n\n          <ion-item>\n\n            <ion-label stacked>జిల్లాలను ఎంచుకోండండి</ion-label>\n\n            <ion-select formControlName="district_id" [disabled]="!form.get(\'state_id\').value" interface="popover" style="width: 273px;"\n\n              (ionChange)="getconstency($event)">\n\n              <ion-option value="" disabled selected>జిల్లా ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-2>\n\n          <ion-item>\n\n            <ion-label stacked>నియోజకవర్గం ఎంచుకోండండి</ion-label>\n\n            <ion-select formControlName="constenncy_id" [disabled]="!form.get(\'district_id\').value" interface="popover" style="width: 273px;"\n\n              (ionChange)="getmandals($event)">\n\n              <ion-option value="" disabled selected>నియోజకవర్గం ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-2>\n\n          <ion-item>\n\n            <ion-label stacked>మండలాలను ఎంచుకోండండి</ion-label>\n\n            <ion-select formControlName="mandal_id" [disabled]="!form.get(\'constenncy_id\').value" interface="popover" style="width: 273px;"\n\n              (ionChange)="gepanchayati($event)">\n\n              <ion-option value="" disabled selected>మండల ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-2>\n\n          <ion-item>\n\n            <ion-label stacked>పంచాయతీ ఎంచుకోండండి</ion-label>\n\n            <ion-select formControlName="panchayati_id" [disabled]="!form.get(\'mandal_id\').value" interface="popover" style="width: 273px;">\n\n              <ion-option value="" disabled selected>పంచాయతీ ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-2>\n\n          <button type="submit" (click)="search()" ion-button block color="primary"> శోధించు </button>\n\n        </ion-col>\n\n      </ion-row>\n\n\n\n    </ion-grid>\n\n  </form>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\jobs\jobs.html"*/,
+            selector: 'page-marriage',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\marriage\marriage.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>Marriage</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n  <ion-searchbar (click)="onSearch()" *ngIf="fromshow==1"></ion-searchbar>\n\n\n\n  <form [formGroup]="form" *ngIf="fromshow==2">\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked> సెలెక్ట్ డినామినేషన్ మోడల్</ion-label>\n\n          <ion-select formControlName="denomation_id" (ionChange)="serachgender($event, 1)">\n\n            <ion-option value="" disabled selected>డినామినేషన్  ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let i of denomation" [value]="i.id">{{ i.denomation_name }}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked> సేవలు</ion-label>\n\n          <ion-select formControlName="ministry_id" (ionChange)="serachgender($event, 2)">\n\n            <ion-option value="" disabled selected>సేవ ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let i of ministryname" [value]="i.id">{{ i.ministryname }}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked> జెండర్</ion-label>\n\n          <ion-select formControlName="gender" (ionChange)="serachgender($event, 3)">\n\n            <ion-option value="" disabled selected>జెండర్ ఎంచుకోండి</ion-option>\n\n            <ion-option value="Male">పురుషుడు</ion-option>\n\n            <ion-option value="Female">స్త్రీ</ion-option>\n\n\n\n\n\n            <ion-option value="transgender">ట్రాన్స్ జెండర్</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మీ వివాహ స్థితి</ion-label>\n\n          <ion-select formControlName="status" (ionChange)="serachcaste($event, 4)">\n\n            <ion-option value="" disabled selected>మీ వివాహ స్థితి ఎంచుకోండి</ion-option>\n\n            <ion-option value="వివాహం కాలేదు">వివాహం కాలేదు</ion-option>\n\n            <ion-option value="వివాహం అయినది">వివాహం అయినది</ion-option>\n\n            <ion-option value="విడాకులు అయినది">విడాకులు అయినది</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked> జాతి</ion-label>\n\n          <ion-select formControlName="caste" (ionChange)="serach($event, 5)">\n\n            <ion-option value="" disabled selected>జాతి ఎంచుకోండి</ion-option>\n\n            <ion-option value="SC">జాతి లేదు</ion-option>\n\n            <ion-option value="SC">ఎస్సి</ion-option>\n\n            <ion-option value="ST">ఎస్టి</ion-option>\n\n            <ion-option value="BC">బీసీ - ఏ</ion-option>\n\n            <ion-option value="BC">బీసీ - బీ</ion-option>\n\n            <ion-option value="BC">బీసీ - సీ</ion-option>\n\n            <ion-option value="BC">బీసీ - డీ</ion-option>\n\n            <ion-option value="BC">బీసీ - ఇ</ion-option>\n\n            <ion-option value="OC">ఒసీ</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked> ఆధ్యాత్మిక స్థితి</ion-label>\n\n          <ion-select formControlName="spirti" (ionChange)="spirit($event, 6)">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option value="practicingchristian">అభ్యాస చేసే క్రిస్తవుడు</ion-option>\n\n            <ion-option value="nominalchristian">పేరు కేవలం క్రిస్తవుడు</ion-option>\n\n            <ion-option value="festivalchristian">పండుగ క్రిస్తవుడు</ion-option>\n\n            <ion-option value="justbelievingjesus">కేవలం యేసుని నమ్మినట్లే</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>రాష్ట్రం / State</ion-label>\n\n          <ion-select formControlName="state_id" (ionChange)="onStateChange($event)">\n\n            <ion-option value="" disabled selected>రాష్ట్రం ఎంచుకోండి</ion-option>\n\n            <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>\n\n            <ion-option value="2">తెలంగాణ (TG)</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked> జిల్లాలను ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="district_id" [disabled]="!form.get(\'state_id\').value" (ionChange)="getconstency($event)">\n\n            <ion-option value="" disabled selected>జిల్లాలను ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of districts" [value]="item.id">{{ item.distrct_nm }}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked> ఎన్నికల మండలాను ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="constenncy_id" [disabled]="!form.get(\'district_id\').value" (ionChange)="getmandals($event)">\n\n            <ion-option value="" disabled selected>ఎన్నికల మండలాను ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of constituency" [value]="item.id">{{ item.const_nm }}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked> మండలాలను ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="mandal_id" [disabled]="!form.get(\'constenncy_id\').value" (ionChange)="gepanchayati($event)">\n\n            <ion-option value="" disabled selected>మండలాలను ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of mandals" [value]="item.id">{{ item.mndl_nm }}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked> పంచాయతీ ఎంచుకోండి</ion-label>\n\n          <ion-select formControlName="panchayati_id" [disabled]="!form.get(\'mandal_id\').value" (ionChange)="searchvillages($event)">\n\n            <ion-option value="" disabled selected>పంచాయతీ ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of panchayati" [value]="item.id">{{ item.pnchyt_nm }}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <button ion-button block color="secondary" (click)="search()">శోధించు</button>\n\n      </ion-col>\n\n    </ion-row>\n\n  </form>\n\n\n\n  <ion-row>\n\n    <ion-col col-12 *ngFor="let item of marriagedata">\n\n      <ion-card>\n\n        <img src="{{item.image}}" style="width:100%;height: 250px;"  onerror="this.onerror=null;this.src=\'assets/icon/svg/image.svg\';">\n\n        <table class="styled-table" style="text-transform: capitalize;">\n\n          <tbody>\n\n            <tr>\n\n              <th>పేరు</th>\n\n              <td><strong>{{item.name}}</strong></td>\n\n            </tr>\n\n            <tr>\n\n              <th>పని</th>\n\n              <td><strong>{{item.work}}</strong></td>\n\n            </tr>\n\n            <tr>\n\n              <th>చిరునామా</th>\n\n              <td><strong>{{item.address}}</strong></td>\n\n            </tr>\n\n            <tr >\n\n              <th >రంగు</th>\n\n              <td ><strong>{{item.color}}</strong></td>\n\n            </tr>\n\n            <tr >\n\n              <th >ఎత్తు</th>\n\n              <td ><strong>{{item.height}}</strong></td>\n\n            </tr>\n\n            <tr >\n\n              <th >జెండర్</th>\n\n              <td ><strong>{{item.gender}}</strong></td>\n\n            </tr>\n\n            <tr >\n\n              <th >పుట్టిన తేదీ</th>\n\n              <td ><strong>{{item.dob}}</strong></td>\n\n            </tr>\n\n            <tr >\n\n              <th >మీ వివాహ స్థితి</th>\n\n              <td ><strong>{{item.status}}</strong></td>\n\n            </tr>\n\n            <tr >\n\n              <th >స్థలం</th>\n\n              <td ><strong>{{item.location}}</strong></td>\n\n            </tr>\n\n            <tr >\n\n              <th >వివరణ</th>\n\n              <td ><strong>{{item.description}}</strong></td>\n\n            </tr>\n\n            <tr >\n\n              <th >ఉప జాతి</th>\n\n              <td ><strong>{{item.subcaste}}</strong></td>\n\n            </tr>\n\n            <tr >\n\n              <th >చర్యలు</th>\n\n              <td >\n\n                <a href="{{item.location}}" class="icon-link"><ion-icon name="location"></ion-icon></a>\n\n                <a href="tel:+91{{item.phonenumber}}" class="icon-link"><ion-icon name="call"></ion-icon></a>\n\n              </td>\n\n            </tr>\n\n          </tbody>\n\n        </table>\n\n\n\n      </ion-card>\n\n    </ion-col>\n\n  </ion-row>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\marriage\marriage.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__providers_service_service__["a" /* ServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */]])
-    ], JobsPage);
-    return JobsPage;
+    ], MarriagePage);
+    return MarriagePage;
 }());
 
-//# sourceMappingURL=jobs.js.map
+//# sourceMappingURL=marriage.js.map
 
 /***/ })
 

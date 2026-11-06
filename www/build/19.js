@@ -1,14 +1,14 @@
 webpackJsonp([19],{
 
-/***/ 445:
+/***/ 446:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NewsPageModule", function() { return NewsPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OrganisationPageModule", function() { return OrganisationPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__news__ = __webpack_require__(501);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__organisation__ = __webpack_require__(503);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,36 +18,35 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var NewsPageModule = /** @class */ (function () {
-    function NewsPageModule() {
+var OrganisationPageModule = /** @class */ (function () {
+    function OrganisationPageModule() {
     }
-    NewsPageModule = __decorate([
+    OrganisationPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__news__["a" /* NewsPage */],
+                __WEBPACK_IMPORTED_MODULE_2__organisation__["a" /* OrganisationPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__news__["a" /* NewsPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__organisation__["a" /* OrganisationPage */]),
             ],
         })
-    ], NewsPageModule);
-    return NewsPageModule;
+    ], OrganisationPageModule);
+    return OrganisationPageModule;
 }());
 
-//# sourceMappingURL=news.module.js.map
+//# sourceMappingURL=organisation.module.js.map
 
 /***/ }),
 
-/***/ 501:
+/***/ 503:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NewsPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return OrganisationPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__ = __webpack_require__(246);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_service_service__ = __webpack_require__(128);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(128);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(21);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -57,252 +56,232 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [0, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
 
 
 
 
-
-// import { HomePage } from '../home/home';
-/**
- * Generated class for the NewsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var NewsPage = /** @class */ (function () {
-    function NewsPage(navCtrl, navParams, camera, actionSheetCtrl, formBuilder, service, loadingCtrl, zone) {
+var OrganisationPage = /** @class */ (function () {
+    function OrganisationPage(navCtrl, navParams, service, formBuilder) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.camera = camera;
-        this.actionSheetCtrl = actionSheetCtrl;
-        this.formBuilder = formBuilder;
         this.service = service;
-        this.loadingCtrl = loadingCtrl;
-        this.zone = zone;
-        this.imagesdata = [];
+        this.formBuilder = formBuilder;
+        this.showSpinner = false;
+        this.getorganizationpastors = [];
         this.submitted = false;
-        this.addingnews = this.formBuilder.group({
-            image: [''],
-            description: [''],
-            news: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
+        this.form = this.formBuilder.group({
+            organisation_name: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required]],
+            checkbox: [''],
+            believer_id: [''],
+            pastor_id: [''],
+            denomation: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required]],
+            org_address: [''],
+            location: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required]],
+            contact_num: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].maxLength(10)]],
+            email: [''],
+            website: [''],
+            service_name: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required]],
+            organizationtype: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required]],
+            ministry_id: [''],
+            password: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].minLength(6)]],
+            retypepassword: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].minLength(6)]],
+            state_id: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required]],
+            districts: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required]],
+            constituencyname: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required]],
+            mandals: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required]],
+            panchayati: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required]],
+            villagename: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required]],
+            ward: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required]],
+            term: [true]
         });
     }
-    NewsPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad NewsPage');
-    };
-    NewsPage.prototype.triggerFileInput = function () {
-        var input = document.getElementById('newsFileInput');
-        if (input) {
-            input.value = '';
-            input.click();
-        }
-    };
-    NewsPage.prototype.triggerCameraInput = function () {
-        var input = document.getElementById('newsCameraInput');
-        if (input) {
-            input.value = '';
-            input.click();
-        }
-    };
-    NewsPage.prototype.onFileSelected = function (event) {
+    OrganisationPage.prototype.onStateChange = function (event) {
         var _this = this;
-        var file = event.target.files && event.target.files[0];
-        if (file) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                _this.zone.run(function () {
-                    _this.imagesdata = [{
-                            reviewimg: e.target.result,
-                            filetype: 'jpeg'
-                        }];
-                    if (_this.addingnews) {
-                        _this.addingnews.patchValue({ image: e.target.result });
-                    }
-                });
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-    NewsPage.prototype.openphoto = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            var actionSheet;
-            return __generator(this, function (_a) {
-                actionSheet = this.actionSheetCtrl.create({
-                    title: 'ఫోటో ఎంచుకోండి (Select Photo)',
-                    buttons: [
-                        {
-                            icon: 'ios-folder-open',
-                            text: 'Gallery',
-                            handler: function () {
-                                if (!(window.navigator && window.navigator.camera)) {
-                                    _this.triggerFileInput();
-                                    return;
-                                }
-                                try {
-                                    var options = {
-                                        quality: 70,
-                                        destinationType: _this.camera.DestinationType.DATA_URL,
-                                        sourceType: _this.camera.PictureSourceType.PHOTOLIBRARY,
-                                        saveToPhotoAlbum: false
-                                    };
-                                    _this.camera.getPicture(options).then(function (imaged) {
-                                        _this.zone.run(function () {
-                                            var ing = "data:image/jpeg;base64," + imaged;
-                                            var imagedata = {
-                                                reviewimg: ing,
-                                                filetype: 'jpeg',
-                                            };
-                                            _this.imagesdata = [imagedata];
-                                            if (_this.addingnews) {
-                                                _this.addingnews.patchValue({ image: ing });
-                                            }
-                                        });
-                                    }, function (err) {
-                                        console.log('Gallery picker error, triggering file fallback', err);
-                                        _this.triggerFileInput();
-                                    });
-                                }
-                                catch (err) {
-                                    _this.triggerFileInput();
-                                }
-                            }
-                        }, {
-                            icon: 'ios-camera',
-                            text: 'Camera',
-                            handler: function () {
-                                if (!(window.navigator && window.navigator.camera)) {
-                                    _this.triggerCameraInput();
-                                    return;
-                                }
-                                try {
-                                    var options = {
-                                        quality: 70,
-                                        correctOrientation: true,
-                                        destinationType: _this.camera.DestinationType.DATA_URL,
-                                        encodingType: _this.camera.EncodingType.JPEG,
-                                        mediaType: _this.camera.MediaType.PICTURE
-                                    };
-                                    _this.camera.getPicture(options).then(function (imageD) {
-                                        _this.zone.run(function () {
-                                            var img = "data:image/jpeg;base64," + imageD;
-                                            var imagedata = {
-                                                reviewimg: img,
-                                                filetype: 'jpeg',
-                                            };
-                                            _this.imagesdata = [imagedata];
-                                            if (_this.addingnews) {
-                                                _this.addingnews.patchValue({ image: img });
-                                            }
-                                        });
-                                    }, function (err) {
-                                        console.log('Camera error, triggering camera fallback', err);
-                                        _this.triggerCameraInput();
-                                    });
-                                }
-                                catch (err) {
-                                    _this.triggerCameraInput();
-                                }
-                            }
-                        }, {
-                            icon: 'ios-close',
-                            text: 'Cancel',
-                            role: 'cancel',
-                            handler: function () {
-                            }
-                        }
-                    ]
-                });
-                actionSheet.present();
-                return [2 /*return*/];
+        var stateId = event;
+        this.form.patchValue({
+            state_id: stateId,
+            districts: '',
+            constituencyname: '',
+            mandals: '',
+            panchayati: ''
+        });
+        this.districts = [];
+        this.constituency = [];
+        this.mandals = [];
+        this.panchayati = [];
+        if (stateId) {
+            this.service.getdistrict(stateId).subscribe(function (res) {
+                if (res && res.status == 200) {
+                    _this.districts = res.data;
+                }
             });
-        });
+        }
     };
-    NewsPage.prototype.gotohome = function () {
-        this.navCtrl.push('HomePage');
-    };
-    NewsPage.prototype.postnews = function () {
+    OrganisationPage.prototype.getorgnaziationpstorsget = function () {
         var _this = this;
-        this.loading = this.loadingCtrl.create({
-            spinner: 'ios',
-            content: 'ప్రాసెస్ అవుతుంది దయచేసి ఆగండి'
+        this.service.getpastor().subscribe(function (res) {
+            _this.getorganizationpastors = res && res.data ? res.data : [];
         });
-        this.loading.present();
-        if (this.addingnews.invalid) {
-            alert('దయచేసి ఖాళీ ఫీల్డ్‌లను పూరించండి ');
-            this.loading.dismiss();
+    };
+    OrganisationPage.prototype.ionViewDidLoad = function () {
+        this.getorgnaziationpstorsget();
+        this.getdenomations();
+        this.getbelivers();
+        this.getbeliver();
+        this.getservice();
+    };
+    OrganisationPage.prototype.getbelivers = function () {
+        var _this = this;
+        this.service.getbelivers().subscribe(function (res) {
+            _this.bliversdata = res.data;
+        });
+    };
+    OrganisationPage.prototype.gotohome = function () {
+        this.navCtrl.push('FormsPage');
+    };
+    OrganisationPage.prototype.getdenomations = function () {
+        var _this = this;
+        this.service.getdenomation().subscribe(function (res) {
+            _this.denomation = res.data;
+        });
+    };
+    OrganisationPage.prototype.getconstency = function (event) {
+        var _this = this;
+        var id = event;
+        this.form.patchValue({
+            constituencyname: '',
+            mandals: '',
+            panchayati: ''
+        });
+        this.constituency = [];
+        this.mandals = [];
+        this.panchayati = [];
+        if (!id)
+            return;
+        this.service.getconsistencys().subscribe(function (res) {
+            _this.constituency = res.data.filter(function (data) { return data.dstrct_id == id; });
+        });
+    };
+    OrganisationPage.prototype.getmandals = function (event) {
+        var _this = this;
+        var id = event;
+        this.form.patchValue({
+            mandals: '',
+            panchayati: ''
+        });
+        this.mandals = [];
+        this.panchayati = [];
+        if (!id)
+            return;
+        this.service.getmandals().subscribe(function (res) {
+            _this.mandals = res.data.filter(function (data) { return data.const_id == id; });
+        });
+    };
+    OrganisationPage.prototype.gepanchayati = function (event) {
+        var _this = this;
+        var id = event;
+        this.form.patchValue({
+            panchayati: ''
+        });
+        this.panchayati = [];
+        if (!id)
+            return;
+        this.service.gepanchayatis().subscribe(function (res) {
+            _this.panchayati = res.data.filter(function (data) { return data.mndl_id == id; });
+        });
+    };
+    OrganisationPage.prototype.filterbelivers = function (inputValue) {
+        var val = inputValue.value;
+        if (val && val.trim() != '') {
+            var reportdata = this.bliversdata.filter(function (item) {
+                return (item.fname.toLowerCase().indexOf(val.toLowerCase()) > -1);
+            });
+            this.bliversdata = reportdata;
+        }
+        else if (val == "") {
+            this.getbelivers();
+        }
+    };
+    // Accept Input As a Number Only
+    OrganisationPage.prototype.numericOnly = function (event) {
+        var patt = /^([0-9])$/;
+        var result = patt.test(event.key);
+        return result;
+    };
+    OrganisationPage.prototype.getservice = function () {
+        var _this = this;
+        this.service.getservices().subscribe(function (res) {
+            if (res.status == 202) {
+                alert(res.message);
+            }
+            else
+                _this.showSpinner = false;
+            if (res.status == 200) {
+                _this.services = res.data;
+            }
+        });
+    };
+    OrganisationPage.prototype.getbeliver = function () {
+        var _this = this;
+        this.service.getbeliversdata().subscribe(function (res) {
+            if (res.status == 202) {
+                alert(res.message);
+            }
+            else
+                _this.showSpinner = false;
+            if (res.status == 200) {
+                _this.ministryname = res.data;
+            }
+        });
+    };
+    OrganisationPage.prototype.postindepedentorganisation = function () {
+        var _this = this;
+        this.showSpinner = true;
+        this.submitted = true;
+        if (!this.form.get('term') || !this.form.get('term').value) {
+            this.form.patchValue({ term: true });
+        }
+        if (this.form.invalid) {
+            alert('please fiil the details ');
+            return;
+        }
+        else if (this.form.value.password != this.form.value.retypepassword) {
+            alert("Passwords are Unmatched");
         }
         else {
-            var data = {
-                description: this.addingnews.value.description,
-                news: this.addingnews.value.news,
-                mobilenumber: localStorage.getItem('mobile_number'),
-                image: (this.imagesdata && this.imagesdata[0]) ? this.imagesdata[0].reviewimg : '',
-                reviewImg: this.imagesdata
-            };
-            // console.log(data)
-            this.service.postupdatenews(data).subscribe(function (res) {
+            this.service.postindepedentorganisation(this.form.value).subscribe(function (res) {
+                _this.showSpinner = false;
+                if (res.status == 451) {
+                    alert('ఇదే ఫోన్ నెంబర్ తో ఇంతకుముందే రిజిస్టర్ అయ్యారు');
+                }
+                else
+                    _this.showSpinner = false;
                 if (res.status == 200) {
                     alert('విజయవంతముగా సబ్మిట్ అయింది');
-                    _this.addingnews.reset();
-                    _this.imagesdata = [];
+                    _this.form.reset({
+                        term: true
+                    });
+                    _this.mandals = [];
+                    _this.constituency = [];
+                    _this.panchayati = [];
                     _this.submitted = false;
-                    _this.loading.dismiss();
-                    // this.getnews();
                 }
                 else {
-                    alert('server down');
-                    _this.loading.dismiss();
+                    alert('Error');
                 }
             });
         }
     };
-    NewsPage = __decorate([
+    OrganisationPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-news',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\news\news.html"*/'<!-- <ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;font-family:ramabhadra;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;font-family:ramabhadra;"><b> వార్తలు నమోదు </b></ion-title>\n\n  </ion-navbar>\n\n</ion-header> -->\n\n<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;font-size: 12px;font-family:ramabhadra;">ఆంధ్రలోని క్రైస్తవ వార్తలు నమోదు చేయండి </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n  <ion-row>\n\n    <ion-col col-12>\n\n      <form [formGroup]="addingnews">\n\n        <ion-row>\n\n          <ion-col col-12>\n\n            <ion-item>\n\n              <ion-label stacked>అప్లోడ్ చేసే న్యూస్ ఏ కేటగిరీ క్రింద వస్తుంది<span style="color:red; font-family:ramabhadra;">*</span></ion-label>\n\n              <ion-select formControlName="news" [ngClass]="{\'is-invalid\': submitted && h[\'news\'].errors }">\n\n                <ion-option value="" selected disabled>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n                <ion-option value="క్రైస్తవుల మీద దాడులు">క్రైస్తవుల మీద దాడులు సంబంధించిన న్యూస్</ion-option>\n\n                <ion-option value="జనరల్ న్యూస్">జనరల్ న్యూస్</ion-option>\n\n                <ion-option value="దళిత్ క్రిస్టియన్స్ షెడ్యూల్ కాస్ట్ స్టేటస్ న్యూస్">దళిత్ క్రిస్టియన్స్ షెడ్యూల్ కాస్ట్ స్టేటస్ న్యూస్</ion-option>      \n\n                <ion-option value="గౌరవ వేతనం, ప్రభుత్వ పథకాలు సంబంధించిన న్యూస్">గౌరవ వేతనం, ప్రభుత్వ పథకాలు సంబంధించిన న్యూస్</ion-option>\n\n                <ion-option value="క్రైస్తవులకు సంబంధించిన న్యూస్">క్రైస్తవులకు సంబంధించిన న్యూస్</ion-option>\n\n                <ion-option value="చదువుకి సంబంధించి">చదువుకి సంబంధించి</ion-option>\n\n                <ion-option value="ట్రైనింగ్ కి సంబంధించి">ట్రైనింగ్ కి సంబంధించి</ion-option>\n\n                <ion-option value="ఉద్యోగాలకు సంబంధించి">ఉద్యోగాలకు సంబంధించి</ion-option>\n\n                <ion-option value="ఆరోగ్యం కి సంబంధించి">ఆరోగ్యం కి సంబంధించి</ion-option>\n\n                <ion-option value="సమాజం లోని సమస్యలు కి సంబంధించి న్యూస్">సమాజం లోని సమస్యలు కి సంబంధించి న్యూస్</ion-option>\n\n                <ion-option value="డా|| జోసెఫ్ గారి వార్తలు">డా|| జోసెఫ్ గారి వార్తలు</ion-option>\n\n                \n\n              </ion-select>\n\n            </ion-item>\n\n            <div *ngIf="submitted && h[\'news\'].errors" class="invalid-feedback">\n\n              <div *ngIf="h[\'news\'].errors[\'required\']">న్యూస్ ఏ కేటగిరీ క్రింద వస్తుంది ఎంచుకోండి </div>\n\n            </div>\n\n          </ion-col>\n\n                  \n\n          <ion-col col-12>\n\n            <div class="imgerdt" style="padding: 12px; text-align: center; border: 2px dashed #00548F; border-radius: 8px; background: #fafafa;">\n\n              <img src="assets/icon/upload.svg" style="height: 60px; width: 60px; display: block; margin: 0 auto 6px;">\n\n              <p style="margin: 4px 0 10px; font-weight: bold; color: #00548F; font-size: 14px;">వార్తల పేపర్ కటింగ్ / ఫోటో అప్‌లోడ్ చేయండి (Choose File / Camera)</p>\n\n              <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: block; width: 100%; max-width: 290px; margin: 0 auto 10px; padding: 6px; background: #fff; border: 1px solid #ccc; border-radius: 4px;">\n\n              <button ion-button small outline icon-start type="button" (click)="openphoto()" style="margin: 0 auto; display: inline-block;">\n\n                <ion-icon name="camera"></ion-icon> Camera / Gallery\n\n              </button>\n\n              <div *ngIf="imagesdata.length" style="margin-top: 12px;">\n\n                <img style="max-height: 200px; max-width: 100%; border-radius: 8px; border: 1px solid #00548F;" [src]="imagesdata[0].reviewimg || imagesdata[0].reviewImg">\n\n              </div>\n\n            </div>\n\n          </ion-col>\n\n          <ion-col col-12>\n\n             <ion-col col-12>\n\n            <ion-item>\n\n              <ion-label  stacked>మీరు అప్లోడ్ చేసిన వార్తల గురించి వివరణ (ఏ పేపర్)<span style="color:red;font-family:ramabhadra; "></span></ion-label>\n\n              <ion-textarea type="text" formControlName="description" placeholder="ఇక్కడ క్లిక్ చేసి అప్లోడ్ చేయండి"\n\n                [ngClass]="{\'is-invalid\': submitted && h[\'description\'].errors }"></ion-textarea>\n\n            </ion-item>\n\n            <!-- <div *ngIf="submitted && h[\'description\'].errors" class="invalid-feedback">\n\n              <div *ngIf="h[\'description\'].errors[\'required\']">మీరు అప్లోడ్ చేసిన న్యూస్ గురించి వివరణ (ఏ పేపర్)</div> \n\n            </div> -->\n\n          </ion-col>\n\n\n\n            <div style="text-align: center;">\n\n              <button ion-button color="secondary" (click)="postnews()" style="font-size: 20px;letter-spacing: 1px;font-family:ramabhadra;">సబ్మిట్</button>\n\n            </div>\n\n          </ion-col>\n\n        </ion-row>\n\n      </form>\n\n    </ion-col>\n\n  </ion-row>\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\news\news.html"*/,
+            selector: 'page-organisation',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\organisation\organisation.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>సంస్థ రిజిస్ట్రేషన్</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding class="pagecss">\n\n  \n\n  <form [formGroup]="form">\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>సంస్థ పేరు <span style="color:red; ">*</span></ion-label>\n\n          <ion-input formControlName="organisation_name" type="text" placeholder="సంస్థ పేరు"></ion-input>\n\n        </ion-item>\n\n        <div *ngIf="submitted && form.get(\'organisation_name\').errors" class="invalid-feedback">\n\n          <div *ngIf="form.get(\'organisation_name\').errors[\'required\']">సంస్థ పేరు అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-list>\n\n          <ion-label>సంస్థ యజమాని రకం <span style="color:red;"> * </span></ion-label>\n\n          <ion-item>\n\n            <input type="radio" value="1" formControlName="checkbox">\n\n            <label>విశ్వాసి</label>\n\n          </ion-item>\n\n          <ion-item>\n\n            <input type="radio" value="2" formControlName="checkbox" />\n\n            <label> పాస్టర్ </label>\n\n          </ion-item>\n\n        </ion-list>\n\n      </ion-col>\n\n\n\n      <ion-col col-12 *ngIf="form.get(\'checkbox\').value === \'1\'">\n\n        <ion-item>\n\n          <ion-label stacked>విశ్వాసి పేరు కోసం శోధించండి</ion-label>\n\n          <ion-input type="text" (keyup)="filterbelivers($event.target)"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12 *ngIf="form.get(\'checkbox\').value === \'1\'">\n\n        <ion-item>\n\n          <ion-label stacked>విశ్వాసి</ion-label>\n\n          <ion-select formControlName="believer_id" placeholder="విశ్వాసి పేరు ఎంచుకోండి">\n\n            <ion-option *ngFor="let i of bliversdata" [value]="i.id">{{i.fname}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>వాట్సాప్ నంబర్</ion-label>\n\n          <ion-input formControlName="org_address" type="text" placeholder="వాట్సాప్ నంబర్" maxlength="10"\n\n            minlength="10" (keypress)="numericOnly($event)"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>స్థలం <span style="color:red; ">*</span></ion-label>\n\n          <ion-input formControlName="location" type="text" placeholder="స్థలం"></ion-input>\n\n        </ion-item>\n\n        <div *ngIf="submitted && form.get(\'location\').errors" class="invalid-feedback">\n\n          <div *ngIf="form.get(\'location\').errors[\'required\']">స్థలం అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n    </ion-row>\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>సంస్థ సంప్రదించండి నెంబర్ <span\n\n              style="color:red; ">*</span></ion-label>\n\n          <ion-input formControlName="contact_num" type="text" placeholder="సంస్థ సంప్రదించండి నంబర్" maxlength="10"\n\n            minlength="10" (keypress)="numericOnly($event)"></ion-input>\n\n        </ion-item>\n\n        <div *ngIf="submitted && form.get(\'contact_num\').errors" class="invalid-feedback">\n\n          <div *ngIf="form.get(\'contact_num\').errors[\'required\']">సంస్థ సంప్రదించండి నెంబర్ అవసరం</div>\n\n          <div *ngIf="form.get(\'contact_num\').errors[\'maxlength\']">10 అంకెల నెంబర్ అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>ఇమెయిల్</ion-label>\n\n          <ion-input formControlName="email" type="text" placeholder="ఇమెయిల్"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>సంస్థ వెబ్‌సైట్</ion-label>\n\n          <ion-input formControlName="website" type="text" placeholder="సంస్థ వెబ్‌సైట్"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>సేవా పేరు <span style="color:red; ">*</span></ion-label>\n\n          <ion-select formControlName="service_name">\n\n            <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of services" [value]="item?.id">{{item?.servicename}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n        <div *ngIf="submitted && form.get(\'service_name\').errors" class="invalid-feedback">\n\n          <div *ngIf="form.get(\'service_name\').errors[\'required\']">సేవా పేరు అవసరం\n\n          </div>\n\n        </div>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-list>\n\n          <ion-label>సంస్థ రకం <span style="color:red;"> * </span></ion-label>\n\n          <ion-item>\n\n            <input type="radio" value="Ministry" formControlName="organizationtype">\n\n            <label>మంత్రివర్గ సంస్థ </label>\n\n          </ion-item>\n\n          <ion-item>\n\n            <input type="radio" value="Independentchurch" formControlName="organizationtype" />\n\n            <label> స్వతంత్ర సంస్థ </label>\n\n          </ion-item>\n\n        </ion-list>\n\n\n\n        <div *ngIf="submitted && form.get(\'organizationtype\').errors" class="invalid-feedback">\n\n          <div *ngIf="form.get(\'organizationtype\').errors[\'organizationtype\']">సంస్థ రకం అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n\n\n      <ion-col col-12 *ngIf="form.get(\'organizationtype\').value === \'Ministry\'">\n\n        <ion-item>\n\n          <ion-label>మంత్రివర్గం</ion-label>\n\n          <ion-select formControlName="ministry_id">\n\n            <ion-option value="" disabled selected>మంత్రివర్గం ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let i of ministryname" [value]="i.id">{{i.ministryname}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n    </ion-row>\n\n\n\n    <ion-card>\n\n      <p>చిరునామా</p>\n\n      <ion-row>\n\n        <ion-col col-12>\n\n          <ion-item>\n\n            <ion-label stacked>రాష్ట్రం / State <span style="color:red; ">*</span></ion-label>\n\n            <ion-select formControlName="state_id" (ionChange)="onStateChange($event)" placeholder="రాష్ట్రం ఎంచుకోండి">\n\n              <ion-option value="" disabled selected>రాష్ట్రం ఎంచుకోండి</ion-option>\n\n              <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>\n\n              <ion-option value="2">తెలంగాణ (TG)</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12>\n\n          <ion-item>\n\n            <ion-label stacked>జిల్లాలను ఎంచుకోండి <span\n\n                style="color:red; ">*</span></ion-label>\n\n            <ion-select formControlName="districts" [disabled]="!form.value.state_id" (ionChange)="getconstency($event)"\n\n              placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి" style="height:37px;width: 273px;">\n\n              <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n          <div *ngIf="submitted && form.get(\'districts\').errors" class="invalid-feedback">\n\n            <div *ngIf="form.get(\'districts\').errors[\'required\']">జిల్లాలు అవసరం\n\n            </div>\n\n          </div>\n\n        </ion-col>\n\n\n\n        <ion-col col-12>\n\n          <ion-item>\n\n            <ion-label stacked>నియోజకవర్గం ఎంచుకోండి <span\n\n                style="color:red; ">*</span></ion-label>\n\n            <ion-select formControlName="constituencyname" [disabled]="!form.value.districts" (ionChange)="getmandals($event)"\n\n              placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి" style="height:37px;width: 273px;">\n\n              <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n          <div *ngIf="submitted && form.get(\'constituencyname\').errors" class="invalid-feedback">\n\n            <div *ngIf="form.get(\'constituencyname\').errors[\'required\']">\n\n              నియోజకవర్గం అవసరం</div>\n\n          </div>\n\n        </ion-col>\n\n\n\n        <ion-col col-12>\n\n          <ion-item>\n\n            <ion-label stacked>మండలాను ఎంచుకోండి <span\n\n                style="color:red; ">*</span></ion-label>\n\n            <ion-select formControlName="mandals" [disabled]="!form.value.constituencyname" (ionChange)="gepanchayati($event)" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి" style="height:37px;width: 273px;">\n\n              <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n          <div *ngIf="submitted && form.get(\'mandals\').errors" class="invalid-feedback">\n\n            <div *ngIf="form.get(\'mandals\').errors[\'required\']">మండలం అవసరం</div>\n\n          </div>\n\n        </ion-col>\n\n\n\n        <ion-col col-12>\n\n          <ion-item>\n\n            <ion-label stacked>పంచాయితీ ఎంచుకోండి <span\n\n                style="color:red; ">*</span></ion-label>\n\n            <ion-select formControlName="panchayati" [disabled]="!form.value.mandals" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి" style="height:37px;width: 273px;">\n\n              <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n          <div *ngIf="submitted && form.get(\'panchayati\').errors" class="invalid-feedback">\n\n            <div *ngIf="form.get(\'panchayati\').errors[\'required\']">పంచాయితీ అవసరం</div>\n\n          </div>\n\n        </ion-col>\n\n\n\n        <ion-col col-12>\n\n          <ion-item>\n\n            <ion-label stacked>గ్రామం పేరు / స్ట్రీట్ పేరు <span\n\n                style="color:red; ">*</span></ion-label>\n\n            <ion-input formControlName="villagename" type="text" placeholder="ఇక్కడ క్లిక్ చేసి నమోదు చేయండి"></ion-input>\n\n          </ion-item>\n\n          <div *ngIf="submitted && form.get(\'villagename\').errors" class="invalid-feedback">\n\n            <div *ngIf="form.get(\'villagename\').errors[\'required\']">గ్రామం పేరు అవసరం</div>\n\n          </div>\n\n        </ion-col>\n\n\n\n        <ion-col col-12>\n\n          <ion-item>\n\n            <ion-label stacked>మీ స్థానిక చిరునామా / హౌస్ నంబర్ <span\n\n                style="color:red; ">*</span></ion-label>\n\n            <ion-input formControlName="ward" type="text" placeholder="మీ స్ట్రీట్ పేరు నమోదు చేయండి"></ion-input>\n\n          </ion-item>\n\n          <div *ngIf="submitted && form.get(\'ward\').errors" class="invalid-feedback">\n\n            <div *ngIf="form.get(\'ward\').errors[\'required\']">స్ట్రీట్ పేరు అవసరం</div>\n\n          </div>\n\n        </ion-col>\n\n\n\n        <ion-col col-12 *ngIf="form==2">\n\n          <ion-item>\n\n            <ion-label stacked>పాస్టర్</ion-label>\n\n            <ion-select formControlName="pastor_id" (click)="getorgnaziationpstorsget()">\n\n              <ion-option value="" disabled selected>పాస్టర్‌ను ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let i of getorganizationpastors" [value]="i.id">{{i.pastorname}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n\n\n        <ion-col col-12>\n\n          <ion-item>\n\n            <ion-label stacked>సెలెక్ట్ డినామినేషన్ మోడల్ <span\n\n                style="color:red; ">*</span></ion-label>\n\n            <ion-select formControlName="denomation" style="height:37px;width: 273px;">\n\n              <ion-option value="" disabled selected>ఇక్కడ క్లిక్ చేసి ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of denomation" [value]="item.id">{{item.denomation_name}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n          <div *ngIf="submitted && form.get(\'denomation\').errors" class="invalid-feedback">\n\n            <div *ngIf="form.get(\'denomation\').errors[\'required\']">\n\n              డినామినేషన్ అవసరం\n\n            </div>\n\n          </div>\n\n        </ion-col>\n\n      </ion-row>\n\n    </ion-card>\n\n    <ion-row>\n\n        <ion-col col-12>\n\n          <ion-item>\n\n            <ion-label stacked>పాస్వర్డ్ <span style="color:red; ">*</span></ion-label>\n\n            <ion-input formControlName="password" type="password" placeholder="మీ పాస్వర్డ్‌ను నమోదు చేయండి"\n\n              maxlength="16" minlength="6"></ion-input>\n\n            <div *ngIf="submitted && form.get(\'password\').errors" class="invalid-feedback">\n\n              <div *ngIf="form.get(\'password\').errors[\'required\']">పాస్వర్డ్ అవసరం\n\n              </div>\n\n              <div *ngIf="form.get(\'password\').errors[\'minlength\']">పాస్వర్డ్ మినిమం 6 నుండి 16 అక్షరాలలో\n\n                ఉండాలి/అంకెలు/ప్రత్యేక అక్షరాలు ఉండాలి\n\n              </div>\n\n            </div>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12>\n\n          <ion-item>\n\n            <ion-label stacked>పునఃనమోదు పాస్వర్డ్ <span\n\n                style="color:red; ">*</span></ion-label>\n\n            <ion-input formControlName="retypepassword" type="password"\n\n              placeholder="మీ పునఃనమోదు పాస్వర్డ్‌ను నమోదు చేయండి" maxlength="16" minlength="6"></ion-input>\n\n            <div *ngIf="submitted && form.get(\'retypepassword\').errors" class="invalid-feedback">\n\n              <div *ngIf="form.get(\'retypepassword\').errors[\'required\']">పునఃనమోదు పాస్వర్డ్ అవసరం\n\n              </div>\n\n              <div *ngIf="form.get(\'retypepassword\').errors[\'minlength\']">పాస్వర్డ్ మినిమం 6 నుండి 16 అక్షరాలలో\n\n                ఉండాలి/అంకెలు/ప్రత్యేక అక్షరాలు ఉండాలి\n\n              </div>\n\n            </div>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12>\n\n          <ion-item>\n\n            <input type="checkbox" value="yes" formControlName="term">\n\n            <label> &nbsp; మీరు సంగ్రహించి మరియు పంపు చేయుటకు అంగీకరిస్తున్నారు</label>\n\n          </ion-item>\n\n        </ion-col>\n\n    </ion-row>\n\n\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <div style="text-align: center;">\n\n          <button ion-button color="secondary" (click)="postindepedentorganisation()" [disabled]="showSpinner" style="letter-spacing: 1px;">\n\n            <ion-spinner *ngIf="showSpinner" name="crescent" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"></ion-spinner>\n\n            {{ showSpinner ? \'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...\' : \'నమోదు\' }}\n\n          </button>\n\n            </div>\n\n      </ion-col>\n\n    </ion-row>\n\n  </form>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\organisation\organisation.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["s" /* NavController */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["t" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_4__providers_service_service__["a" /* ServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["o" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */]])
-    ], NewsPage);
-    return NewsPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_service_service__["a" /* ServiceProvider */], __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */]])
+    ], OrganisationPage);
+    return OrganisationPage;
 }());
 
-//# sourceMappingURL=news.js.map
+//# sourceMappingURL=organisation.js.map
 
 /***/ })
 

@@ -5,10 +5,10 @@ webpackJsonp([24],{
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InvestorPageModule", function() { return InvestorPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "JobsPageModule", function() { return JobsPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__investor__ = __webpack_require__(494);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__jobs__ = __webpack_require__(496);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,35 +18,43 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var InvestorPageModule = /** @class */ (function () {
-    function InvestorPageModule() {
+var JobsPageModule = /** @class */ (function () {
+    function JobsPageModule() {
     }
-    InvestorPageModule = __decorate([
+    JobsPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__investor__["a" /* InvestorPage */],
+                __WEBPACK_IMPORTED_MODULE_2__jobs__["a" /* JobsPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__investor__["a" /* InvestorPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__jobs__["a" /* JobsPage */]),
             ],
         })
-    ], InvestorPageModule);
-    return InvestorPageModule;
+    ], JobsPageModule);
+    return JobsPageModule;
 }());
 
-//# sourceMappingURL=investor.module.js.map
+//# sourceMappingURL=jobs.module.js.map
 
 /***/ }),
 
-/***/ 494:
+/***/ 496:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestorPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return JobsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_service_service__ = __webpack_require__(128);
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -58,247 +66,269 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+// import { HomePage } from '../home/home';
 
 
-var InvestorPage = /** @class */ (function () {
-    function InvestorPage(navCtrl, fb, alertCtrl, loadingCtrl, toastCtrl, service) {
+var JobsPage = /** @class */ (function () {
+    function JobsPage(navCtrl, navParams, formbuilder, service, loadingCtrl) {
         this.navCtrl = navCtrl;
-        this.fb = fb;
-        this.alertCtrl = alertCtrl;
-        this.loadingCtrl = loadingCtrl;
-        this.toastCtrl = toastCtrl;
+        this.navParams = navParams;
+        this.formbuilder = formbuilder;
         this.service = service;
-        this.showSpinner = false;
-        // Location Lists
-        this.states = [];
-        this.districts = [];
-        this.constituencies = [];
-        this.mandals = [];
-        this.panchayatis = [];
-        // Metadata
-        this.businessTypes = [];
-        this.denominations = [];
-        this.investorForm = this.fb.group({
-            name: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(3)]],
-            mobile: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].pattern(/^[0-9]{10}$/)]],
-            email: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].email]],
-            // Address
-            state_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            districts: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            constituencyname: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            mandals: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            panchayati: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            // Investment Details
-            business_type_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            denomination_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            capital_to_invest: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            description: ['']
+        this.loadingCtrl = loadingCtrl;
+        this.fromshow = 1;
+        this.form = this.formbuilder.group({
+            state_id: [''],
+            jobtile: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            qual: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            experience: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            district_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            constenncy_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            mandal_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            panchayati_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
         });
     }
-    InvestorPage.prototype.ionViewDidLoad = function () {
-        this.loadStates();
-        this.loadBusinessTypes();
-        this.loadDenominations();
-    };
-    InvestorPage.prototype.gotohome = function () {
-        this.navCtrl.setRoot('HomePage');
-    };
-    InvestorPage.prototype.loadStates = function () {
+    JobsPage.prototype.onStateChange = function (event) {
         var _this = this;
-        this.service.getstates().subscribe(function (res) {
-            if (res && res.data) {
-                _this.states = res.data;
-            }
-            else {
-                _this.states = [
-                    { id: 1, state_name: 'Andhra Pradesh-ఆంధ్రప్రదేశ్ (AP)', name: 'Andhra Pradesh (AP)' },
-                    { id: 2, state_name: 'Telangana-తెలంగాణ (TG)', name: 'Telangana (TG)' }
-                ];
-            }
-        }, function () {
-            _this.states = [
-                { id: 1, state_name: 'Andhra Pradesh-ఆంధ్రప్రదేశ్ (AP)', name: 'Andhra Pradesh (AP)' },
-                { id: 2, state_name: 'Telangana-తెలంగాణ (TG)', name: 'Telangana (TG)' }
-            ];
-        });
-    };
-    InvestorPage.prototype.loadBusinessTypes = function () {
-        var _this = this;
-        this.service.getBusinessTypes().subscribe(function (res) {
-            if (res && res.data) {
-                _this.businessTypes = res.data;
-            }
-        }, function (err) { return console.log('Error loading business types', err); });
-    };
-    InvestorPage.prototype.loadDenominations = function () {
-        var _this = this;
-        this.service.getdenomation().subscribe(function (res) {
-            if (res && res.data) {
-                _this.denominations = res.data;
-            }
-        }, function (err) { return console.log('Error loading denominations', err); });
-    };
-    // Address Cascading
-    InvestorPage.prototype.onStateChange = function (stateId) {
-        var _this = this;
-        this.investorForm.patchValue({
-            districts: '',
-            constituencyname: '',
-            mandals: '',
-            panchayati: ''
+        var stateId = event;
+        this.searchdist = '';
+        this.searchconts = '';
+        this.form.patchValue({
+            state_id: stateId,
+            district_id: '',
+            constenncy_id: '',
+            mandal_id: '',
+            panchayati_id: ''
         });
         this.districts = [];
-        this.constituencies = [];
+        this.constituency = [];
         this.mandals = [];
-        this.panchayatis = [];
+        this.panchayati = [];
+        this.service.getdistrict(stateId).subscribe(function (res) {
+            if (res && res.status == 200) {
+                _this.districts = res.data;
+            }
+        }, function (error) {
+            console.log(error);
+        });
         if (stateId) {
-            this.service.getdistrict(stateId).subscribe(function (res) {
-                _this.districts = (res && res.data) ? res.data : [];
+            this.service.searchjobswise({ state_id: stateId }).subscribe(function (res) {
+                if (res && res.status == 200 && Array.isArray(res.data)) {
+                    _this.jobs = res.data;
+                }
             });
         }
+        else {
+            this.getjobs();
+        }
     };
-    InvestorPage.prototype.onDistrictChange = function (distId) {
+    JobsPage.prototype.gotohome = function () {
+        this.navCtrl.push('HomePage');
+    };
+    JobsPage.prototype.ionViewDidLoad = function () {
+        this.getjobs();
+        this.getjob();
+    };
+    JobsPage.prototype.getdistric = function () {
         var _this = this;
-        this.investorForm.patchValue({
-            constituencyname: '',
-            mandals: '',
-            panchayati: ''
+        this.service.getdistrict().subscribe(function (res) {
+            if (res.status == 202) {
+                alert(res.message);
+            }
+            else if (res.status == 200) {
+                _this.districts = res.data;
+            }
+        }, function (error) {
+            console.log(error);
         });
-        this.constituencies = [];
+    };
+    JobsPage.prototype.getconstency = function (event) {
+        var _this = this;
+        var id = event;
+        this.form.patchValue({
+            constenncy_id: '',
+            mandal_id: '',
+            panchayati_id: ''
+        });
+        this.constituency = [];
         this.mandals = [];
-        this.panchayatis = [];
-        if (distId) {
-            this.service.getconsistencys(distId).subscribe(function (res) {
-                var list = (res && res.data) ? res.data : [];
-                _this.constituencies = list.filter(function (item) { return item.dstrct_id == distId; });
+        this.panchayati = [];
+        if (id) {
+            this.service.getconsistencys().subscribe(function (res) {
+                if (res && res.data) {
+                    _this.constituency = res.data.filter(function (data) { return data.dstrct_id == id; });
+                }
             });
+            this.searchdistric(id);
         }
     };
-    InvestorPage.prototype.onConstituencyChange = function (constId) {
+    JobsPage.prototype.getmandals = function (event) {
         var _this = this;
-        this.investorForm.patchValue({
-            mandals: '',
-            panchayati: ''
+        var id = event;
+        this.form.patchValue({
+            mandal_id: '',
+            panchayati_id: ''
         });
         this.mandals = [];
-        this.panchayatis = [];
-        if (constId) {
-            this.service.getmandals(constId).subscribe(function (res) {
-                var list = (res && res.data) ? res.data : [];
-                _this.mandals = list.filter(function (item) { return item.const_id == constId; });
+        this.panchayati = [];
+        if (id) {
+            this.service.getmandals().subscribe(function (res) {
+                if (res && res.data) {
+                    _this.mandals = res.data.filter(function (data) { return data.const_id == id; });
+                }
+            }, function (error) {
+                console.log(error);
             });
+            this.searchconstenct(id);
         }
     };
-    InvestorPage.prototype.onMandalChange = function (mandalId) {
+    JobsPage.prototype.gepanchayati = function (event) {
         var _this = this;
-        this.investorForm.patchValue({
-            panchayati: ''
+        var id = event;
+        this.form.patchValue({
+            panchayati_id: ''
         });
-        this.panchayatis = [];
-        if (mandalId) {
-            this.service.gepanchayatis(mandalId).subscribe(function (res) {
-                var list = (res && res.data) ? res.data : [];
-                _this.panchayatis = list.filter(function (item) { return !mandalId || item.mndl_id == mandalId; });
+        this.panchayati = [];
+        if (id) {
+            this.service.gepanchayatis().subscribe(function (res) {
+                if (res && res.data) {
+                    _this.panchayati = res.data.filter(function (data) { return data.mndl_id == id; });
+                }
+            }, function (error) {
+                console.log(error);
             });
+            this.searchmandals(id);
         }
     };
-    InvestorPage.prototype.submitInvestor = function () {
-        if (this.investorForm.invalid) {
-            var alert_1 = this.alertCtrl.create({
-                title: 'దయచేసి అన్ని వివరాలు పూరించండి',
-                subTitle: 'Please fill all required fields before submitting.',
-                buttons: ['సరే (OK)']
-            });
-            alert_1.present();
-            return;
-        }
-        var loader = this.loadingCtrl.create({
-            content: 'నమోదు చేయబడుతుంది... (Submitting Investor Profile)...'
-        });
-        loader.present();
-        var formVal = this.investorForm.value;
-        var selState = this.states.find(function (s) { return s.id == formVal.state_id; });
-        var selDist = this.districts.find(function (d) { return d.id == formVal.districts; });
-        var selConst = this.constituencies.find(function (c) { return c.id == formVal.constituencyname; });
-        var selMndl = this.mandals.find(function (m) { return m.id == formVal.mandals; });
-        var selPanch = this.panchayatis.find(function (p) { return p.id == formVal.panchayati; });
-        var selBizType = this.businessTypes.find(function (t) { return t.id == formVal.business_type_id; });
-        var selDenom = this.denominations.find(function (d) { return d.id == formVal.denomination_id; });
-        var payload = {
-            name: formVal.name,
-            mobile: formVal.mobile,
-            email: formVal.email,
-            // Address
-            state_id: formVal.state_id,
-            state_name: selState ? (selState.state_name || selState.name || '') : '',
-            district_id: formVal.districts,
-            district_name: selDist ? (selDist.distrct_nm || selDist.districtname || '') : '',
-            constituency_id: formVal.constituencyname,
-            constituency_name: selConst ? (selConst.const_nm || selConst.name || '') : '',
-            mandal_id: formVal.mandals,
-            mandal_name: selMndl ? (selMndl.mndl_nm || selMndl.name || '') : '',
-            panchayat_id: formVal.panchayati,
-            panchayat_name: selPanch ? (selPanch.pnchyt_nm || selPanch.name || '') : '',
-            // Investment Details
-            business_type_id: formVal.business_type_id,
-            business_type: selBizType ? (selBizType.business_type || '') : '',
-            denomination_id: formVal.denomination_id,
-            denomination: selDenom ? (selDenom.denomation_name || selDenom.denomination_name || '') : '',
-            capital_to_invest: formVal.capital_to_invest,
-            description: formVal.description
+    JobsPage.prototype.getjobs = function () {
+        var _this = this;
+        var data = {
+            df: 0
         };
-        var self = this;
-        this.service.registerInvestor(payload).subscribe(function (res) {
-            loader.dismiss();
-            if (res && res.status === 200) {
-                var successAlert = self.alertCtrl.create({
-                    title: 'నమోదు పూర్తయింది! (Success)',
-                    subTitle: 'మీ ఇన్వెస్టర్ ప్రొఫైల్ విజయవంతంగా నమోదు చేయబడింది. (Investor registration submitted successfully)',
-                    buttons: [
-                        {
-                            text: 'సరే (OK)',
-                            handler: function () {
-                                self.navCtrl.setRoot('FormsPage');
-                            }
-                        }
-                    ]
-                });
-                successAlert.present();
+        this.service.getjobs(data).subscribe(function (res) {
+            _this.jobs = [];
+            if (res.status == 200) {
+                _this.jobs = res.data.map(function (item) { return (__assign({}, item, { showMore: false })); });
             }
             else {
-                var msg = (res && res.message) ? res.message : 'Submission failed. Please try again.';
-                var errAlert = self.alertCtrl.create({
-                    title: 'విఫలమైంది (Failed)',
-                    subTitle: msg,
-                    buttons: ['సరే (OK)']
-                });
-                errAlert.present();
+                alert('server down');
             }
-        }, function () {
-            loader.dismiss();
-            var netAlert = self.alertCtrl.create({
-                title: 'నెట్‌వర్క్ లోపం (Network Error)',
-                subTitle: 'Unable to connect to server. Please try again.',
-                buttons: ['సరే (OK)']
-            });
-            netAlert.present();
+        }, function (error) {
         });
     };
-    InvestorPage = __decorate([
+    JobsPage.prototype.searchdistric = function (event) {
+        var _this = this;
+        this.searchdist = event;
+        var data = {
+            district_id: this.searchdist,
+            df: 1
+        };
+        this.service.getjobs(data).subscribe(function (res) {
+            _this.jobs = [];
+            if (res.status == 200) {
+                _this.jobs = res.data;
+            }
+            else {
+                alert('server down');
+            }
+        }, function (error) {
+        });
+    };
+    JobsPage.prototype.searchconstenct = function (event) {
+        var _this = this;
+        this.searchconts = event;
+        var data = {
+            district_id: this.searchdist,
+            constenncy_id: this.searchconts,
+            df: 2,
+        };
+        this.service.getjobs(data).subscribe(function (res) {
+            _this.jobs = [];
+            if (res.status == 200) {
+                _this.jobs = res.data;
+            }
+            else {
+                alert('No Data');
+            }
+        });
+    };
+    JobsPage.prototype.searchmandals = function (event) {
+        var _this = this;
+        var data = {
+            district_id: this.searchdist,
+            constenncy_id: this.searchconts,
+            mandal_id: event,
+            df: 3,
+        };
+        this.service.getjobs(data).subscribe(function (res) {
+            _this.jobs = [];
+            if (res.status == 200) {
+                _this.jobs = res.data;
+            }
+            else {
+                alert('server down');
+            }
+        });
+    };
+    JobsPage.prototype.search = function () {
+        var _this = this;
+        var loader = this.loadingCtrl.create({ content: 'ఉద్యోగాల సమాచారం లోడ్ అవుతోంది...' });
+        loader.present().catch(function () { });
+        this.service.getjobs(this.form.value).subscribe(function (res) {
+            loader.dismiss().catch(function () { });
+            _this.jobs = [];
+            if (res.status == 200) {
+                _this.jobs = res.data;
+                _this.fromshow = 1;
+            }
+            else {
+                alert('server down');
+            }
+        });
+    };
+    JobsPage.prototype.filterData = function () {
+        var _this = this;
+        this.jobs = this.jobs.filter(function (item) {
+            return JSON.stringify(item)
+                .toLowerCase()
+                .includes(_this.searchTerm.toLowerCase());
+        });
+    };
+    JobsPage.prototype.getjob = function () {
+        var _this = this;
+        this.service.getjob().subscribe(function (res) {
+            _this.jobswe = res.data;
+            console.log(_this.jobswe);
+        });
+    };
+    JobsPage.prototype.searchjobswise = function (event, colid) {
+        var _this = this;
+        var data = {
+            name: event,
+            colid: colid
+        };
+        this.service.searchjobswise(data).subscribe(function (res) {
+            _this.jobs = res.data;
+        });
+    };
+    JobsPage.prototype.onSearch = function () {
+        if (this.fromshow == 1) {
+            this.fromshow = 2;
+        }
+        else {
+            this.fromshow = 1;
+        }
+    };
+    JobsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-investor',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\investor\investor.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n\n    <ion-title style="text-align: center; font-size: 15px;">\n\n      <b>ఇన్వెస్టర్ రిజిస్ట్రేషన్ (Investor)</b>\n\n    </ion-title>\n\n    <ion-buttons end>\n\n      <button ion-button icon-only (click)="gotohome()">\n\n        <ion-icon name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n  <div class="form-card">\n\n    <div class="header-box">\n\n      <div style="font-size: 30px; margin-bottom: 6px;">💰</div>\n\n      <h3 style="margin: 0; font-size: 16px; font-weight: bold;">పెట్టుబడిదారుల నమోదు</h3>\n\n      <p style="margin: 4px 0 0 0; font-size: 11.5px; opacity: 0.9;">\n\n        నూతన వ్యాపార ఆలోచనలలో పెట్టుబడి & భాగస్వామ్యం కొరకు (Angel Investment & Growth)\n\n      </p>\n\n    </div>\n\n\n\n    <form [formGroup]="investorForm" (ngSubmit)="submitInvestor()">\n\n\n\n      <!-- SECTION 1: PERSONAL DETAILS -->\n\n      <div class="section-heading">1. వ్యక్తిగత వివరాలు (Personal Details)</div>\n\n\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>పూర్తి పేరు (Full Name) <span class="req">*</span></ion-label>\n\n        <ion-input type="text" formControlName="name" placeholder="ఉదా: John Wesley"></ion-input>\n\n      </ion-item>\n\n\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>మొబైల్ నంబర్ (Mobile Number) <span class="req">*</span></ion-label>\n\n        <ion-input type="tel" maxlength="10" formControlName="mobile" placeholder="10 అంకెల మొబైల్ నంబర్"></ion-input>\n\n      </ion-item>\n\n\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>ఈమెయిల్ (Email Address)</ion-label>\n\n        <ion-input type="email" formControlName="email" placeholder="investor@example.com"></ion-input>\n\n      </ion-item>\n\n\n\n      <!-- SECTION 2: RESIDENCE ADDRESS -->\n\n      <div class="section-heading">2. నివాస చిరునామా (Residence Address)</div>\n\n\n\n      <!-- State -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>రాష్ట్రం (State) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="state_id" (ionChange)="onStateChange($event)" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">\n\n          <ion-option *ngFor="let s of states" [value]="s.id">{{ s.state_name || s.name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- District -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>జిల్లా (District) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="districts" (ionChange)="onDistrictChange($event)" [disabled]="!investorForm.get(\'state_id\').value" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">\n\n          <ion-option *ngFor="let d of districts" [value]="d.id">{{ d.distrct_nm || d.districtname }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Constituency -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>నియోజకవర్గం (Constituency) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="constituencyname" (ionChange)="onConstituencyChange($event)" [disabled]="!investorForm.get(\'districts\').value" okText="సరే" cancelText="రద్దు" placeholder="నియోజకవర్గం ఎంచుకోండి">\n\n          <ion-option *ngFor="let c of constituencies" [value]="c.id">{{ c.const_nm || c.name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Mandal -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>మండలం (Mandal) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="mandals" (ionChange)="onMandalChange($event)" [disabled]="!investorForm.get(\'constituencyname\').value" okText="సరే" cancelText="రద్దు" placeholder="మండలం ఎంచుకోండి">\n\n          <ion-option *ngFor="let m of mandals" [value]="m.id">{{ m.mndl_nm || m.name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Panchayat -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>పంచాయతీ / గ్రామం (Panchayat / Village) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="panchayati" [disabled]="!investorForm.get(\'mandals\').value" okText="సరే" cancelText="రద్దు" placeholder="పంచాయతీ ఎంచుకోండి">\n\n          <ion-option *ngFor="let p of panchayatis" [value]="p.id">{{ p.pnchyt_nm || p.name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- SECTION 3: INVESTMENT PREFERENCES -->\n\n      <div class="section-heading">3. పెట్టుబడి ప్రాధాన్యతలు (Investment Preferences)</div>\n\n\n\n      <!-- Interested Business Type -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>ఆసక్తి గల వ్యాపార రంగం (Interested Business Type) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="business_type_id" okText="సరే" cancelText="రద్దు" placeholder="వ్యాపార రంగాన్ని ఎంచుకోండి">\n\n          <ion-option *ngFor="let t of businessTypes" [value]="t.id">{{ t.business_type || t.type_english }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Christian Denomination -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>క్రైస్తవ డినామినేషన్ (Denomination) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="denomination_id" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">\n\n          <ion-option *ngFor="let d of denominations" [value]="d.id">{{ d.denomation_name || d.denomination_name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Capital to Invest -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>పెట్టుబడి పెట్టదలచిన మొత్తం (Capital Willing to Invest) ₹ <span class="req">*</span></ion-label>\n\n        <ion-input type="text" formControlName="capital_to_invest" placeholder="ఉదా: 5,00,000 to 25,00,000"></ion-input>\n\n      </ion-item>\n\n\n\n      <!-- Description -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>పెట్టుబడి ప్రాధాన్యతలు / నిబంధనలు (Investment Criteria)</ion-label>\n\n        <ion-textarea rows="3" formControlName="description" placeholder="భాగస్వామ్య నిబంధనలు లేదా ప్రాధాన్యతల గురించి వివరించండి..."></ion-textarea>\n\n      </ion-item>\n\n\n\n      <!-- Submit Button -->\n\n      <button ion-button block type="submit" class="submit-btn">\n\n        💰 ఇన్వెస్టర్ ప్రొఫైల్ సబ్మిట్ చేయండి (Submit)\n\n      </button>\n\n\n\n    </form>\n\n  </div>\n\n</ion-content>\n\n\n\n'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\investor\investor.html"*/,
+            selector: 'page-jobs',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\jobs\jobs.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>ఉద్యోగాలు</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n  <ion-searchbar (click)="onSearch()" *ngIf="fromshow==1"></ion-searchbar>\n\n\n\n  <form [formGroup]="form" *ngIf="fromshow==2">\n\n    <ion-grid>\n\n\n\n      <ion-row>\n\n        <ion-col col-12 col-md-4>\n\n          <ion-item>\n\n            <ion-label stacked>ఉద్యోగ పేరు</ion-label>\n\n            <ion-select formControlName="jobtile" interface="popover" style="width: 273px;"\n\n              (ionChange)="searchjobswise($event, 1)">\n\n              <ion-option value="" disabled selected>పేరు ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of jobswe" [value]="item.jobtitle">{{item.jobtitle}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-4>\n\n          <ion-item>\n\n            <ion-label stacked>అర్హత</ion-label>\n\n            <ion-select formControlName="qual" interface="popover" style="width: 273px;"\n\n              (ionChange)="searchjobswise($event, 2)">\n\n              <ion-option value="" disabled selected>అర్హత ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of jobswe" [value]="item.qualification">{{item.qualification}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-4>\n\n          <ion-item>\n\n            <ion-label stacked>అనుభవం</ion-label>\n\n            <ion-select formControlName="experience" interface="popover" style="width: 273px;"\n\n              (ionChange)="searchjobswise($event, 3)">\n\n              <ion-option value="" disabled selected>మీ అనుభవం ఎంచుకోండి</ion-option>\n\n              <ion-option value="fresher">ఫ్రెషర్</ion-option>\n\n              <ion-option value="1-2">1-2</ion-option>\n\n              <ion-option value="2-3">2-3</ion-option>\n\n              <ion-option value="3-5">3-5</ion-option>\n\n              <ion-option value="Above 5YEARS">5 ఏళ్ళ మీరున్నారు</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n      </ion-row>\n\n\n\n      <ion-row>\n\n        <ion-col col-12 col-md-3>\n\n          <ion-item>\n\n            <ion-label stacked>రాష్ట్రం / State</ion-label>\n\n            <ion-select formControlName="state_id" interface="popover" style="width: 273px;"\n\n              (ionChange)="onStateChange($event)">\n\n              <ion-option value="" disabled selected>రాష్ట్రం ఎంచుకోండి</ion-option>\n\n              <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>\n\n              <ion-option value="2">తెలంగాణ (TG)</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-3>\n\n          <ion-item>\n\n            <ion-label stacked>జిల్లాలను ఎంచుకోండండి</ion-label>\n\n            <ion-select formControlName="district_id" [disabled]="!form.get(\'state_id\').value" interface="popover" style="width: 273px;"\n\n              (ionChange)="getconstency($event)">\n\n              <ion-option value="" disabled selected>జిల్లా ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-2>\n\n          <ion-item>\n\n            <ion-label stacked>నియోజకవర్గం ఎంచుకోండండి</ion-label>\n\n            <ion-select formControlName="constenncy_id" [disabled]="!form.get(\'district_id\').value" interface="popover" style="width: 273px;"\n\n              (ionChange)="getmandals($event)">\n\n              <ion-option value="" disabled selected>నియోజకవర్గం ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-2>\n\n          <ion-item>\n\n            <ion-label stacked>మండలాలను ఎంచుకోండండి</ion-label>\n\n            <ion-select formControlName="mandal_id" [disabled]="!form.get(\'constenncy_id\').value" interface="popover" style="width: 273px;"\n\n              (ionChange)="gepanchayati($event)">\n\n              <ion-option value="" disabled selected>మండల ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-2>\n\n          <ion-item>\n\n            <ion-label stacked>పంచాయతీ ఎంచుకోండండి</ion-label>\n\n            <ion-select formControlName="panchayati_id" [disabled]="!form.get(\'mandal_id\').value" interface="popover" style="width: 273px;">\n\n              <ion-option value="" disabled selected>పంచాయతీ ఎంచుకోండి</ion-option>\n\n              <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-12 col-md-2>\n\n          <button type="submit" (click)="search()" ion-button block color="primary"> శోధించు </button>\n\n        </ion-col>\n\n      </ion-row>\n\n\n\n    </ion-grid>\n\n  </form>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\jobs\jobs.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["w" /* ToastController */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_service_service__["a" /* ServiceProvider */]])
-    ], InvestorPage);
-    return InvestorPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__providers_service_service__["a" /* ServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */]])
+    ], JobsPage);
+    return JobsPage;
 }());
 
-//# sourceMappingURL=investor.js.map
+//# sourceMappingURL=jobs.js.map
 
 /***/ })
 

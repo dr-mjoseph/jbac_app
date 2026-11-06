@@ -1,14 +1,14 @@
 webpackJsonp([36],{
 
-/***/ 424:
+/***/ 425:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DoctorregisterPageModule", function() { return DoctorregisterPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EntrepreneurPageModule", function() { return EntrepreneurPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__doctorregister__ = __webpack_require__(483);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__entrepreneur__ = __webpack_require__(485);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,31 +18,31 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var DoctorregisterPageModule = /** @class */ (function () {
-    function DoctorregisterPageModule() {
+var EntrepreneurPageModule = /** @class */ (function () {
+    function EntrepreneurPageModule() {
     }
-    DoctorregisterPageModule = __decorate([
+    EntrepreneurPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__doctorregister__["a" /* DoctorregisterPage */],
+                __WEBPACK_IMPORTED_MODULE_2__entrepreneur__["a" /* EntrepreneurPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__doctorregister__["a" /* DoctorregisterPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__entrepreneur__["a" /* EntrepreneurPage */]),
             ],
         })
-    ], DoctorregisterPageModule);
-    return DoctorregisterPageModule;
+    ], EntrepreneurPageModule);
+    return EntrepreneurPageModule;
 }());
 
-//# sourceMappingURL=doctorregister.module.js.map
+//# sourceMappingURL=entrepreneur.module.js.map
 
 /***/ }),
 
-/***/ 483:
+/***/ 485:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DoctorregisterPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EntrepreneurPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
@@ -60,8 +60,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var DoctorregisterPage = /** @class */ (function () {
-    function DoctorregisterPage(navCtrl, fb, alertCtrl, loadingCtrl, toastCtrl, service) {
+var EntrepreneurPage = /** @class */ (function () {
+    function EntrepreneurPage(navCtrl, fb, alertCtrl, loadingCtrl, toastCtrl, service) {
         this.navCtrl = navCtrl;
         this.fb = fb;
         this.alertCtrl = alertCtrl;
@@ -69,173 +69,317 @@ var DoctorregisterPage = /** @class */ (function () {
         this.toastCtrl = toastCtrl;
         this.service = service;
         this.showSpinner = false;
-        this.districts = [];
-        this.constituency = [];
-        this.mandals = [];
-        this.panchayati = [];
-        this.doctorForm = this.fb.group({
-            doctor_name: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(3)]],
-            license_number: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            specialization: ['Family Counsellor & Clinical Psychologist', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            qualification: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            experience_years: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            phone_number: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].pattern(/^[0-9]{10}$/)]],
+        // Personal Location Lists
+        this.states = [];
+        this.personalDistricts = [];
+        this.personalConstituencies = [];
+        this.personalMandals = [];
+        this.personalPanchayatis = [];
+        // Business Location Lists
+        this.businessDistricts = [];
+        this.businessConstituencies = [];
+        this.businessMandals = [];
+        this.businessPanchayatis = [];
+        // Metadata
+        this.businessTypes = [];
+        this.denominations = [];
+        this.entrepreneurForm = this.fb.group({
+            name: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(3)]],
+            mobile: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].pattern(/^[0-9]{10}$/)]],
             email: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].email]],
-            password: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(6)]],
-            consultation_fee: ['Free / Volunteer Service'],
-            available_days: ['Monday to Saturday', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            available_time_start: ['10:00 AM', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            available_time_end: ['05:00 PM', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            location: ['Vijayawada & Online Consultation', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            // Personal Address
             state_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            district_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            constituency_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            mandal_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            panchayat_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            address: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            bio: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
-            category_id: [8],
-            category: ['Doctor']
+            districts: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            constituencyname: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            mandals: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            panchayati: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            // Business Setup Place
+            business_state_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            business_districts: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            business_constituencyname: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            business_mandals: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            business_panchayati: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            // Business & Finance
+            business_type_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            denomination_id: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            self_fund: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            capital_need: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]],
+            description: ['']
         });
     }
-    DoctorregisterPage.prototype.onStateChange = function (event) {
+    EntrepreneurPage.prototype.ionViewDidLoad = function () {
+        this.loadStates();
+        this.loadBusinessTypes();
+        this.loadDenominations();
+    };
+    EntrepreneurPage.prototype.gotohome = function () {
+        this.navCtrl.setRoot('HomePage');
+    };
+    EntrepreneurPage.prototype.loadStates = function () {
         var _this = this;
-        var stateId = event;
-        this.doctorForm.patchValue({
-            state_id: stateId,
-            district_id: '',
-            constituency_id: '',
-            mandal_id: '',
-            panchayat_id: ''
+        this.service.getstates().subscribe(function (res) {
+            if (res && res.data) {
+                _this.states = res.data;
+            }
+            else {
+                _this.states = [
+                    { id: 1, state_name: 'Andhra Pradesh-ఆంధ్రప్రదేశ్ (AP)', name: 'Andhra Pradesh (AP)' },
+                    { id: 2, state_name: 'Telangana-తెలంగాణ (TG)', name: 'Telangana (TG)' }
+                ];
+            }
+        }, function () {
+            _this.states = [
+                { id: 1, state_name: 'Andhra Pradesh-ఆంధ్రప్రదేశ్ (AP)', name: 'Andhra Pradesh (AP)' },
+                { id: 2, state_name: 'Telangana-తెలంగాణ (TG)', name: 'Telangana (TG)' }
+            ];
         });
-        this.districts = [];
-        this.constituency = [];
-        this.mandals = [];
-        this.panchayati = [];
+    };
+    EntrepreneurPage.prototype.loadBusinessTypes = function () {
+        var _this = this;
+        this.service.getBusinessTypes().subscribe(function (res) {
+            if (res && res.data) {
+                _this.businessTypes = res.data;
+            }
+        }, function (err) { return console.log('Error loading business types', err); });
+    };
+    EntrepreneurPage.prototype.loadDenominations = function () {
+        var _this = this;
+        this.service.getdenomation().subscribe(function (res) {
+            if (res && res.data) {
+                _this.denominations = res.data;
+            }
+        }, function (err) { return console.log('Error loading denominations', err); });
+    };
+    // Personal Address Cascade
+    EntrepreneurPage.prototype.onPersonalStateChange = function (stateId) {
+        var _this = this;
+        this.entrepreneurForm.patchValue({
+            districts: '',
+            constituencyname: '',
+            mandals: '',
+            panchayati: ''
+        });
+        this.personalDistricts = [];
+        this.personalConstituencies = [];
+        this.personalMandals = [];
+        this.personalPanchayatis = [];
         if (stateId) {
             this.service.getdistrict(stateId).subscribe(function (res) {
-                if (res && res.status == 200) {
-                    _this.districts = res.data;
-                }
+                _this.personalDistricts = (res && res.data) ? res.data : [];
             });
         }
     };
-    DoctorregisterPage.prototype.getconstency = function (event) {
+    EntrepreneurPage.prototype.onPersonalDistrictChange = function (distId) {
         var _this = this;
-        var id = event;
-        this.doctorForm.patchValue({
-            constituency_id: '',
-            mandal_id: '',
-            panchayat_id: ''
+        this.entrepreneurForm.patchValue({
+            constituencyname: '',
+            mandals: '',
+            panchayati: ''
         });
-        this.constituency = [];
-        this.mandals = [];
-        this.panchayati = [];
-        if (!id)
-            return;
-        this.service.getconsistencys().subscribe(function (res) {
-            _this.constituency = (res && res.data) ? res.data.filter(function (data) { return data.dstrct_id == id; }) : [];
-        });
+        this.personalConstituencies = [];
+        this.personalMandals = [];
+        this.personalPanchayatis = [];
+        if (distId) {
+            this.service.getconsistencys(distId).subscribe(function (res) {
+                var list = (res && res.data) ? res.data : [];
+                _this.personalConstituencies = list.filter(function (item) { return item.dstrct_id == distId; });
+            });
+        }
     };
-    DoctorregisterPage.prototype.getmandals = function (event) {
+    EntrepreneurPage.prototype.onPersonalConstituencyChange = function (constId) {
         var _this = this;
-        var id = event;
-        this.doctorForm.patchValue({
-            mandal_id: '',
-            panchayat_id: ''
+        this.entrepreneurForm.patchValue({
+            mandals: '',
+            panchayati: ''
         });
-        this.mandals = [];
-        this.panchayati = [];
-        if (!id)
-            return;
-        this.service.getmandals().subscribe(function (res) {
-            _this.mandals = (res && res.data) ? res.data.filter(function (data) { return data.const_id == id; }) : [];
-        });
+        this.personalMandals = [];
+        this.personalPanchayatis = [];
+        if (constId) {
+            this.service.getmandals(constId).subscribe(function (res) {
+                var list = (res && res.data) ? res.data : [];
+                _this.personalMandals = list.filter(function (item) { return item.const_id == constId; });
+            });
+        }
     };
-    DoctorregisterPage.prototype.gepanchayati = function (event) {
+    EntrepreneurPage.prototype.onPersonalMandalChange = function (mandalId) {
         var _this = this;
-        var id = event;
-        this.doctorForm.patchValue({
-            panchayat_id: ''
+        this.entrepreneurForm.patchValue({
+            panchayati: ''
         });
-        this.panchayati = [];
-        if (!id)
-            return;
-        this.service.gepanchayatis().subscribe(function (res) {
-            _this.panchayati = (res && res.data) ? res.data.filter(function (data) { return data.mndl_id == id; }) : [];
-        });
+        this.personalPanchayatis = [];
+        if (mandalId) {
+            this.service.gepanchayatis(mandalId).subscribe(function (res) {
+                var list = (res && res.data) ? res.data : [];
+                _this.personalPanchayatis = list.filter(function (item) { return !mandalId || item.mndl_id == mandalId; });
+            });
+        }
     };
-    DoctorregisterPage.prototype.gotohome = function () {
-        this.navCtrl.setRoot('HomePage');
-    };
-    DoctorregisterPage.prototype.goToLogin = function () {
-        this.navCtrl.push('LoginPage');
-    };
-    DoctorregisterPage.prototype.submitDoctor = function () {
+    // Business Setup Place Cascade
+    EntrepreneurPage.prototype.onBusinessStateChange = function (stateId) {
         var _this = this;
-        if (this.doctorForm.invalid) {
+        this.entrepreneurForm.patchValue({
+            business_districts: '',
+            business_constituencyname: '',
+            business_mandals: '',
+            business_panchayati: ''
+        });
+        this.businessDistricts = [];
+        this.businessConstituencies = [];
+        this.businessMandals = [];
+        this.businessPanchayatis = [];
+        if (stateId) {
+            this.service.getdistrict(stateId).subscribe(function (res) {
+                _this.businessDistricts = (res && res.data) ? res.data : [];
+            });
+        }
+    };
+    EntrepreneurPage.prototype.onBusinessDistrictChange = function (distId) {
+        var _this = this;
+        this.entrepreneurForm.patchValue({
+            business_constituencyname: '',
+            business_mandals: '',
+            business_panchayati: ''
+        });
+        this.businessConstituencies = [];
+        this.businessMandals = [];
+        this.businessPanchayatis = [];
+        if (distId) {
+            this.service.getconsistencys(distId).subscribe(function (res) {
+                var list = (res && res.data) ? res.data : [];
+                _this.businessConstituencies = list.filter(function (item) { return item.dstrct_id == distId; });
+            });
+        }
+    };
+    EntrepreneurPage.prototype.onBusinessConstituencyChange = function (constId) {
+        var _this = this;
+        this.entrepreneurForm.patchValue({
+            business_mandals: '',
+            business_panchayati: ''
+        });
+        this.businessMandals = [];
+        this.businessPanchayatis = [];
+        if (constId) {
+            this.service.getmandals(constId).subscribe(function (res) {
+                var list = (res && res.data) ? res.data : [];
+                _this.businessMandals = list.filter(function (item) { return item.const_id == constId; });
+            });
+        }
+    };
+    EntrepreneurPage.prototype.onBusinessMandalChange = function (mandalId) {
+        var _this = this;
+        this.entrepreneurForm.patchValue({
+            business_panchayati: ''
+        });
+        this.businessPanchayatis = [];
+        if (mandalId) {
+            this.service.gepanchayatis(mandalId).subscribe(function (res) {
+                var list = (res && res.data) ? res.data : [];
+                _this.businessPanchayatis = list.filter(function (item) { return !mandalId || item.mndl_id == mandalId; });
+            });
+        }
+    };
+    EntrepreneurPage.prototype.submitEntrepreneur = function () {
+        if (this.entrepreneurForm.invalid) {
             var alert_1 = this.alertCtrl.create({
-                title: 'వివరాలు అసంపూర్ణం',
-                subTitle: 'దయచేసి పేరు, లైసెన్స్ నంబర్, మొబైల్ నంబర్ మరియు పాస్‌వర్డ్ మొదలైన తప్పనిసరి వివరాలను పూరించండి.',
-                buttons: ['Ok']
+                title: 'దయచేసి అన్ని వివరాలు పూరించండి',
+                subTitle: 'Please fill all required fields before submitting.',
+                buttons: ['సరే (OK)']
             });
             alert_1.present();
             return;
         }
-        this.showSpinner = true;
-        var payload = Object.assign({}, this.doctorForm.value, {
-            category_id: 8,
-            category: 'Doctor'
+        var loader = this.loadingCtrl.create({
+            content: 'నమోదు చేయబడుతుంది... (Submitting Entrepreneur Profile)...'
         });
-        this.service.registercouncellingdoctor(payload).subscribe(function (res) {
-            _this.showSpinner = false;
+        loader.present();
+        var formVal = this.entrepreneurForm.value;
+        var selPersonalState = this.states.find(function (s) { return s.id == formVal.state_id; });
+        var selPersonalDist = this.personalDistricts.find(function (d) { return d.id == formVal.districts; });
+        var selPersonalConst = this.personalConstituencies.find(function (c) { return c.id == formVal.constituencyname; });
+        var selPersonalMndl = this.personalMandals.find(function (m) { return m.id == formVal.mandals; });
+        var selPersonalPanch = this.personalPanchayatis.find(function (p) { return p.id == formVal.panchayati; });
+        var selBizState = this.states.find(function (s) { return s.id == formVal.business_state_id; });
+        var selBizDist = this.businessDistricts.find(function (d) { return d.id == formVal.business_districts; });
+        var selBizConst = this.businessConstituencies.find(function (c) { return c.id == formVal.business_constituencyname; });
+        var selBizMndl = this.businessMandals.find(function (m) { return m.id == formVal.business_mandals; });
+        var selBizPanch = this.businessPanchayatis.find(function (p) { return p.id == formVal.business_panchayati; });
+        var selBizType = this.businessTypes.find(function (t) { return t.id == formVal.business_type_id; });
+        var selDenom = this.denominations.find(function (d) { return d.id == formVal.denomination_id; });
+        var payload = {
+            name: formVal.name,
+            mobile: formVal.mobile,
+            email: formVal.email,
+            // Personal Address
+            state_id: formVal.state_id,
+            state_name: selPersonalState ? (selPersonalState.state_name || selPersonalState.name || '') : '',
+            district_id: formVal.districts,
+            district_name: selPersonalDist ? (selPersonalDist.distrct_nm || selPersonalDist.districtname || '') : '',
+            constituency_id: formVal.constituencyname,
+            constituency_name: selPersonalConst ? (selPersonalConst.const_nm || selPersonalConst.name || '') : '',
+            mandal_id: formVal.mandals,
+            mandal_name: selPersonalMndl ? (selPersonalMndl.mndl_nm || selPersonalMndl.name || '') : '',
+            panchayat_id: formVal.panchayati,
+            panchayat_name: selPersonalPanch ? (selPersonalPanch.pnchyt_nm || selPersonalPanch.name || '') : '',
+            // Business Setup Location
+            business_state_id: formVal.business_state_id,
+            business_state_name: selBizState ? (selBizState.state_name || selBizState.name || '') : '',
+            business_district_id: formVal.business_districts,
+            business_district_name: selBizDist ? (selBizDist.distrct_nm || selBizDist.districtname || '') : '',
+            business_constituency_id: formVal.business_constituencyname,
+            business_constituency_name: selBizConst ? (selBizConst.const_nm || selBizConst.name || '') : '',
+            business_mandal_id: formVal.business_mandals,
+            business_mandal_name: selBizMndl ? (selBizMndl.mndl_nm || selBizMndl.name || '') : '',
+            business_panchayat_id: formVal.business_panchayati,
+            business_panchayat_name: selBizPanch ? (selBizPanch.pnchyt_nm || selBizPanch.name || '') : '',
+            // Business & Finance
+            business_type_id: formVal.business_type_id,
+            business_type: selBizType ? (selBizType.business_type || '') : '',
+            denomination_id: formVal.denomination_id,
+            denomination: selDenom ? (selDenom.denomation_name || selDenom.denomination_name || '') : '',
+            self_fund: formVal.self_fund,
+            capital_need: formVal.capital_need,
+            description: formVal.description
+        };
+        var self = this;
+        this.service.registerEntrepreneur(payload).subscribe(function (res) {
+            loader.dismiss();
             if (res && res.status === 200) {
-                var alert_2 = _this.alertCtrl.create({
-                    title: 'రిజిస్ట్రేషన్ విజయవంతమైంది! 🎉',
-                    subTitle: 'స్వాగతం, ' + payload.doctor_name + '! మీరు ఇప్పుడు మీ మొబైల్ నంబర్ ' + payload.phone_number + ' తో లాగిన్ అయి మీ అపాయింట్‌మెంట్స్ చూడవచ్చు.',
-                    buttons: [{
-                            text: 'లాగిన్ అవ్వండి (Login)',
+                var successAlert = self.alertCtrl.create({
+                    title: 'నమోదు పూర్తయింది! (Success)',
+                    subTitle: 'మీ ఎంటర్‌ప్రెన్యూర్ ప్రొఫైల్ విజయవంతంగా నమోదు చేయబడింది. (Entrepreneur registration submitted successfully)',
+                    buttons: [
+                        {
+                            text: 'సరే (OK)',
                             handler: function () {
-                                _this.navCtrl.setRoot('LoginPage');
+                                self.navCtrl.setRoot('FormsPage');
                             }
-                        }]
+                        }
+                    ]
                 });
-                alert_2.present();
-            }
-            else if (res && res.status === 300) {
-                var alert_3 = _this.alertCtrl.create({
-                    title: 'మొబైల్ నంబర్ ఇప్పటికే ఉంది',
-                    subTitle: res.message || 'ఈ మొబైల్ నంబర్‌తో ఇప్పటికే డాక్టర్ అకౌంట్ ఉంది. దయచేసి నేరుగా లాగిన్ అవ్వండి.',
-                    buttons: [{
-                            text: 'లాగిన్ పేజీకి వెళ్లండి',
-                            handler: function () {
-                                _this.navCtrl.setRoot('LoginPage');
-                            }
-                        }]
-                });
-                alert_3.present();
+                successAlert.present();
             }
             else {
-                var alert_4 = _this.alertCtrl.create({
-                    title: 'లోపం సంభవించింది',
-                    subTitle: (res && res.message) ? res.message : 'రిజిస్ట్రేషన్ పూర్తి కాలేదు. దయచేసి మళ్లీ ప్రయత్నించండి.',
-                    buttons: ['Ok']
+                var msg = (res && res.message) ? res.message : 'Submission failed. Please try again.';
+                var errAlert = self.alertCtrl.create({
+                    title: 'విఫలమైంది (Failed)',
+                    subTitle: msg,
+                    buttons: ['సరే (OK)']
                 });
-                alert_4.present();
+                errAlert.present();
             }
-        }, function (err) {
-            _this.showSpinner = false;
-            var alert = _this.alertCtrl.create({
-                title: 'సర్వర్ సమస్య',
-                subTitle: 'నెట్‌వర్క్ లోపం సంభవించింది. దయచేసి మీ ఇంటర్నెట్ కనెక్షన్‌ను పరిశీలించి మళ్లీ ప్రయత్నించండి.',
-                buttons: ['Ok']
+        }, function () {
+            loader.dismiss();
+            var netAlert = self.alertCtrl.create({
+                title: 'నెట్‌వర్క్ లోపం (Network Error)',
+                subTitle: 'Unable to connect to server. Please try again.',
+                buttons: ['సరే (OK)']
             });
-            alert.present();
+            netAlert.present();
         });
     };
-    DoctorregisterPage = __decorate([
+    EntrepreneurPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-doctorregister',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\doctorregister\doctorregister.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <ion-title style="text-align: center; font-size: 16px;">\n      <b>డాక్టర్ రిజిస్ట్రేషన్ (Doctor Register)</b>\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="gotohome()">\n        <ion-icon name="home"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content class="pagecss">\n  <div class="form-card">\n    <div class="header-box">\n      <div style="font-size: 32px; margin-bottom: 6px;">🩺</div>\n      <h3 style="margin: 0; font-size: 17px; font-weight: bold;">క్రైస్తవ వైద్యులు & కౌన్సిలర్ల నమోదు</h3>\n      <p style="margin: 4px 0 0 0; font-size: 11.5px; opacity: 0.9;">\n        JBAC ఫ్యామిలీ కౌన్సిలింగ్ నెట్‌వర్క్‌లో చేరి క్రైస్తవ కుటుంబాలకు సహాయపడండి\n      </p>\n    </div>\n\n    <form [formGroup]="doctorForm" (ngSubmit)="submitDoctor()">\n      <ion-item class="custom-item">\n        <ion-label stacked>డాక్టర్ పూర్తి పేరు (Doctor Full Name) <span class="req">*</span></ion-label>\n        <ion-input type="text" formControlName="doctor_name" placeholder="ఉదా: Dr. Mary Grace, M.D."></ion-input>\n      </ion-item>\n\n      <ion-item class="custom-item">\n        <ion-label stacked>మెడికల్ కౌన్సిల్ లైసెన్స్ నంబర్ (License No) <span class="req">*</span></ion-label>\n        <ion-input type="text" formControlName="license_number" placeholder="ఉదా: APMC-2015-88421"></ion-input>\n      </ion-item>\n\n      <ion-item class="custom-item">\n        <ion-label stacked>స్పెషలైజేషన్ (Specialization) <span class="req">*</span></ion-label>\n        <ion-select formControlName="specialization" okText="ఎంచుకోండి" cancelText="రద్దు">\n          <ion-option value="Family Counsellor & Clinical Psychologist">Family Counsellor & Clinical Psychologist</ion-option>\n          <ion-option value="Marriage & Relationship Counsellor">Marriage & Relationship Counsellor</ion-option>\n          <ion-option value="Youth & Family Mental Wellness Counsellor">Youth & Family Mental Wellness Counsellor</ion-option>\n          <ion-option value="Parent-Child Dynamics Specialist">Parent-Child Dynamics Specialist</ion-option>\n          <ion-option value="Christian Spiritual & Emotional Healing">Christian Spiritual & Emotional Healing</ion-option>\n          <ion-option value="Addiction & Behavioral Therapy">Addiction & Behavioral Therapy</ion-option>\n          <ion-option value="General Family Physician & Counsellor">General Family Physician & Counsellor</ion-option>\n        </ion-select>\n      </ion-item>\n\n      <ion-item class="custom-item">\n        <ion-label stacked>విద్యార్హతలు (Qualifications) <span class="req">*</span></ion-label>\n        <ion-input type="text" formControlName="qualification" placeholder="ఉదా: MBBS, M.D., M.Sc Psychology"></ion-input>\n      </ion-item>\n\n      <ion-item class="custom-item">\n        <ion-label stacked>అనుభవం (Years of Experience) <span class="req">*</span></ion-label>\n        <ion-input type="text" formControlName="experience_years" placeholder="ఉదా: 8 Years"></ion-input>\n      </ion-item>\n\n      <ion-item class="custom-item">\n        <ion-label stacked>10 అంకెల మొబైల్ నంబర్ (Mobile Number) <span class="req">*</span></ion-label>\n        <ion-input type="tel" maxlength="10" formControlName="phone_number" placeholder="10-digit mobile"></ion-input>\n      </ion-item>\n\n      <ion-item class="custom-item">\n        <ion-label stacked>ఈమెయిల్ (Email Address)</ion-label>\n        <ion-input type="email" formControlName="email" placeholder="doctor@jbac.in"></ion-input>\n      </ion-item>\n\n      <ion-item class="custom-item">\n        <ion-label stacked>పాస్‌వర్డ్ (Password - కనీసం 6 అక్షరాలు) <span class="req">*</span></ion-label>\n        <ion-input type="password" maxlength="16" formControlName="password" placeholder="లాగిన్ పాస్‌వర్డ్"></ion-input>\n      </ion-item>\n\n      <ion-item class="custom-item">\n        <ion-label stacked>కన్సల్టేషన్ ఫీజు (Consultation Fee)</ion-label>\n        <ion-input type="text" formControlName="consultation_fee" placeholder="Free / Volunteer Service"></ion-input>\n      </ion-item>\n\n      <ion-item class="custom-item">\n        <ion-label stacked>అందుబాటులో ఉండే రోజులు (Available Days) <span class="req">*</span></ion-label>\n        <ion-input type="text" formControlName="available_days" placeholder="Monday to Saturday"></ion-input>\n      </ion-item>\n\n      <ion-item class="custom-item">\n        <ion-label stacked>ప్రారంభ సమయం (Start Time) <span class="req">*</span></ion-label>\n        <ion-input type="text" formControlName="available_time_start" placeholder="10:00 AM"></ion-input>\n      </ion-item>\n\n      <ion-item class="custom-item">\n        <ion-label stacked>ముగింపు సమయం (End Time) <span class="req">*</span></ion-label>\n        <ion-input type="text" formControlName="available_time_end" placeholder="05:00 PM"></ion-input>\n      </ion-item>\n\n      <ion-item class="custom-item">\n        <ion-label stacked>ప్రాంతం & కౌన్సిలింగ్ విధానం (Location) <span class="req">*</span></ion-label>\n        <ion-input type="text" formControlName="location" placeholder="ఉదా: Vijayawada & Online"></ion-input>\n      </ion-item>\n\n      <ion-item class="custom-item">\n        <ion-label stacked>రాష్ట్రం / State <span class="req">*</span></ion-label>\n        <ion-select formControlName="state_id" (ionChange)="onStateChange($event)" placeholder="రాష్ట్రం ఎంచుకోండి">\n          <ion-option value="" disabled selected>రాష్ట్రం ఎంచుకోండి</ion-option>\n          <ion-option value="1">ఆంధ్రప్రదేశ్ (AP)</ion-option>\n          <ion-option value="2">తెలంగాణ (TG)</ion-option>\n        </ion-select>\n      </ion-item>\n\n      <ion-item class="custom-item">\n        <ion-label stacked>జిల్లా (District) <span class="req">*</span></ion-label>\n        <ion-select formControlName="district_id" [disabled]="!doctorForm.value.state_id" (ionChange)="getconstency($event)" placeholder="జిల్లా ఎంచుకోండి">\n          <ion-option value="" disabled selected>జిల్లా ఎంచుకోండి</ion-option>\n          <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>\n        </ion-select>\n      </ion-item>\n\n      <ion-item class="custom-item">\n        <ion-label stacked>నియోజకవర్గం (Constituency) <span class="req">*</span></ion-label>\n        <ion-select formControlName="constituency_id" [disabled]="!doctorForm.value.district_id" (ionChange)="getmandals($event)" placeholder="నియోజకవర్గం ఎంచుకోండి">\n          <ion-option value="" disabled selected>నియోజకవర్గం ఎంచుకోండి</ion-option>\n          <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>\n        </ion-select>\n      </ion-item>\n\n      <ion-item class="custom-item">\n        <ion-label stacked>మండలం (Mandal) <span class="req">*</span></ion-label>\n        <ion-select formControlName="mandal_id" [disabled]="!doctorForm.value.constituency_id" (ionChange)="gepanchayati($event)" placeholder="మండలం ఎంచుకోండి">\n          <ion-option value="" disabled selected>మండలం ఎంచుకోండి</ion-option>\n          <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>\n        </ion-select>\n      </ion-item>\n\n      <ion-item class="custom-item">\n        <ion-label stacked>పంచాయతీ / గ్రామం (Panchayat) <span class="req">*</span></ion-label>\n        <ion-select formControlName="panchayat_id" [disabled]="!doctorForm.value.mandal_id" placeholder="పంచాయతీ ఎంచుకోండి">\n          <ion-option value="" disabled selected>పంచాయతీ ఎంచుకోండి</ion-option>\n          <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>\n        </ion-select>\n      </ion-item>\n\n      <ion-item class="custom-item">\n        <ion-label stacked>పూర్తి క్లినిక్ / చర్చి చిరునామా (Address) <span class="req">*</span></ion-label>\n        <ion-input type="text" formControlName="address" placeholder="క్లినిక్ లేదా ఆసుపత్రి చిరునామా"></ion-input>\n      </ion-item>\n\n      <ion-item class="custom-item">\n        <ion-label stacked>డాక్టర్ గురించిన సంక్షిప్త వివరణ (Bio) <span class="req">*</span></ion-label>\n        <ion-textarea rows="3" formControlName="bio" placeholder="మీ అనుభవం, కౌన్సిలింగ్ పద్ధతులు మరియు సేవా సంకల్పం..."></ion-textarea>\n      </ion-item>\n\n      <div style="margin-top: 16px;">\n        <button ion-button block color="primary" type="submit" [disabled]="showSpinner" style="border-radius: 8px; font-weight: bold; height: 44px;">\n          <ion-spinner *ngIf="showSpinner" name="crescent" style="margin-right: 8px;"></ion-spinner>\n          డాక్టర్ రిజిస్ట్రేషన్ పూర్తి చేయండి (Submit)\n        </button>\n      </div>\n\n      <div style="text-align: center; margin-top: 14px;">\n        <span style="font-size: 13px; color: #64748b;">ఇప్పటికే అకౌంట్ ఉందా?</span>\n        <button ion-button clear small color="primary" type="button" (click)="goToLogin()">\n          <b>ఇక్కడ లాగిన్ అవ్వండి (Login)</b>\n        </button>\n      </div>\n    </form>\n  </div>\n</ion-content>\n'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\doctorregister\doctorregister.html"*/,
+            selector: 'page-entrepreneur',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\entrepreneur\entrepreneur.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n\n    <ion-title style="text-align: center; font-size: 15px;">\n\n      <b>ఎంటర్‌ప్రెన్యూర్ రిజిస్ట్రేషన్ (Entrepreneur)</b>\n\n    </ion-title>\n\n    <ion-buttons end>\n\n      <button ion-button icon-only (click)="gotohome()">\n\n        <ion-icon name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n  <div class="form-card">\n\n    <div class="header-box">\n\n      <div style="font-size: 30px; margin-bottom: 6px;">🚀</div>\n\n      <h3 style="margin: 0; font-size: 16px; font-weight: bold;">వ్యాపార ఔత్సాహికుల నమోదు</h3>\n\n      <p style="margin: 4px 0 0 0; font-size: 11.5px; opacity: 0.9;">\n\n        నూతన వ్యాపార ఏర్పాటు & పెట్టుబడిదారుల సహాయం కొరకు (Startup & Financial Matching)\n\n      </p>\n\n    </div>\n\n\n\n    <form [formGroup]="entrepreneurForm" (ngSubmit)="submitEntrepreneur()">\n\n\n\n      <!-- SECTION 1: PERSONAL DETAILS -->\n\n      <div class="section-heading">1. వ్యక్తిగత వివరాలు (Personal Details)</div>\n\n\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>పూర్తి పేరు (Full Name) <span class="req">*</span></ion-label>\n\n        <ion-input type="text" formControlName="name" placeholder="ఉదా: Samuel Kumar"></ion-input>\n\n      </ion-item>\n\n\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>మొబైల్ నంబర్ (Mobile Number) <span class="req">*</span></ion-label>\n\n        <ion-input type="tel" maxlength="10" formControlName="mobile" placeholder="10 అంకెల మొబైల్ నంబర్"></ion-input>\n\n      </ion-item>\n\n\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>ఈమెయిల్ (Email Address)</ion-label>\n\n        <ion-input type="email" formControlName="email" placeholder="name@example.com"></ion-input>\n\n      </ion-item>\n\n\n\n      <!-- SECTION 2: PERSONAL RESIDENCE ADDRESS -->\n\n      <div class="section-heading">2. వ్యక్తిగత నివాస చిరునామా (Personal Residence)</div>\n\n\n\n      <!-- State -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>రాష్ట్రం (State) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="state_id" (ionChange)="onPersonalStateChange($event)" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">\n\n          <ion-option *ngFor="let s of states" [value]="s.id">{{ s.state_name || s.name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- District -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>జిల్లా (District) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="districts" (ionChange)="onPersonalDistrictChange($event)" [disabled]="!entrepreneurForm.get(\'state_id\').value" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">\n\n          <ion-option *ngFor="let d of personalDistricts" [value]="d.id">{{ d.distrct_nm || d.districtname }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Constituency -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>నియోజకవర్గం (Constituency) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="constituencyname" (ionChange)="onPersonalConstituencyChange($event)" [disabled]="!entrepreneurForm.get(\'districts\').value" okText="సరే" cancelText="రద్దు" placeholder="నియోజకవర్గం ఎంచుకోండి">\n\n          <ion-option *ngFor="let c of personalConstituencies" [value]="c.id">{{ c.const_nm || c.name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Mandal -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>మండలం (Mandal) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="mandals" (ionChange)="onPersonalMandalChange($event)" [disabled]="!entrepreneurForm.get(\'constituencyname\').value" okText="సరే" cancelText="రద్దు" placeholder="మండలం ఎంచుకోండి">\n\n          <ion-option *ngFor="let m of personalMandals" [value]="m.id">{{ m.mndl_nm || m.name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Panchayat -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>పంచాయతీ / గ్రామం (Panchayat / Village) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="panchayati" [disabled]="!entrepreneurForm.get(\'mandals\').value" okText="సరే" cancelText="రద్దు" placeholder="పంచాయతీ ఎంచుకోండి">\n\n          <ion-option *ngFor="let p of personalPanchayatis" [value]="p.id">{{ p.pnchyt_nm || p.name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- SECTION 3: BUSINESS SETUP LOCATION -->\n\n      <div class="section-heading">3. వ్యాపార ఏర్పాటు చేయు స్థలం (Business Setup Location)</div>\n\n\n\n      <!-- Business State -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>వ్యాపార రాష్ట్రం (Business State) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="business_state_id" (ionChange)="onBusinessStateChange($event)" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">\n\n          <ion-option *ngFor="let s of states" [value]="s.id">{{ s.state_name || s.name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Business District -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>వ్యాపార జిల్లా (Business District) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="business_districts" (ionChange)="onBusinessDistrictChange($event)" [disabled]="!entrepreneurForm.get(\'business_state_id\').value" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">\n\n          <ion-option *ngFor="let d of businessDistricts" [value]="d.id">{{ d.distrct_nm || d.districtname }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Business Constituency -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>వ్యాపార నియోజకవర్గం (Business Constituency) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="business_constituencyname" (ionChange)="onBusinessConstituencyChange($event)" [disabled]="!entrepreneurForm.get(\'business_districts\').value" okText="సరే" cancelText="రద్దు" placeholder="నియోజకవర్గం ఎంచుకోండి">\n\n          <ion-option *ngFor="let c of businessConstituencies" [value]="c.id">{{ c.const_nm || c.name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Business Mandal -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>వ్యాపార మండలం (Business Mandal) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="business_mandals" (ionChange)="onBusinessMandalChange($event)" [disabled]="!entrepreneurForm.get(\'business_constituencyname\').value" okText="సరే" cancelText="రద్దు" placeholder="మండలం ఎంచుకోండి">\n\n          <ion-option *ngFor="let m of businessMandals" [value]="m.id">{{ m.mndl_nm || m.name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Business Panchayat -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>వ్యాపార పంచాయతీ (Business Panchayat) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="business_panchayati" [disabled]="!entrepreneurForm.get(\'business_mandals\').value" okText="సరే" cancelText="రద్దు" placeholder="పంచాయతీ ఎంచుకోండి">\n\n          <ion-option *ngFor="let p of businessPanchayatis" [value]="p.id">{{ p.pnchyt_nm || p.name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- SECTION 4: BUSINESS TYPE & FINANCE -->\n\n      <div class="section-heading">4. వ్యాపార రంగం & పెట్టుబడి (Business & Capital)</div>\n\n\n\n      <!-- Type of Business -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>వ్యాపార రంగం (Type of Business) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="business_type_id" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">\n\n          <ion-option *ngFor="let t of businessTypes" [value]="t.id">{{ t.business_type || t.type_english }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Christian Denomination -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>క్రైస్తవ డినామినేషన్ (Denomination) <span class="req">*</span></ion-label>\n\n        <ion-select formControlName="denomination_id" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">\n\n          <ion-option *ngFor="let d of denominations" [value]="d.id">{{ d.denomation_name || d.denomination_name }}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <!-- Self Fund -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>స్వంత పెట్టుబడి (Self Fund / Own Investment) ₹ <span class="req">*</span></ion-label>\n\n        <ion-input type="text" formControlName="self_fund" placeholder="ఉదా: 2,00,000"></ion-input>\n\n      </ion-item>\n\n\n\n      <!-- Capital Need -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>అవసరమైన పెట్టుబడి (Capital Needed from Investors) ₹ <span class="req">*</span></ion-label>\n\n        <ion-input type="text" formControlName="capital_need" placeholder="ఉదా: 10,00,000"></ion-input>\n\n      </ion-item>\n\n\n\n      <!-- Description -->\n\n      <ion-item class="custom-item">\n\n        <ion-label stacked>వ్యాపార ప్రణాళిక వివరణ (Business Concept / Plan)</ion-label>\n\n        <ion-textarea rows="3" formControlName="description" placeholder="మీ వ్యాపార ఆలోచన గురించి క్లుప్తంగా వివరించండి..."></ion-textarea>\n\n      </ion-item>\n\n\n\n      <!-- Submit Button -->\n\n      <button ion-button block type="submit" class="submit-btn">\n\n        🚀 ఎంటర్‌ప్రెన్యూర్ సబ్మిట్ చేయండి (Submit)\n\n      </button>\n\n\n\n    </form>\n\n  </div>\n\n</ion-content>\n\n\n\n'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\entrepreneur\entrepreneur.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
@@ -243,11 +387,11 @@ var DoctorregisterPage = /** @class */ (function () {
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["w" /* ToastController */],
             __WEBPACK_IMPORTED_MODULE_3__providers_service_service__["a" /* ServiceProvider */]])
-    ], DoctorregisterPage);
-    return DoctorregisterPage;
+    ], EntrepreneurPage);
+    return EntrepreneurPage;
 }());
 
-//# sourceMappingURL=doctorregister.js.map
+//# sourceMappingURL=entrepreneur.js.map
 
 /***/ })
 

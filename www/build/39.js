@@ -1,14 +1,14 @@
 webpackJsonp([39],{
 
-/***/ 419:
+/***/ 422:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChurchPageModule", function() { return ChurchPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChurchgoPageModule", function() { return ChurchgoPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__church__ = __webpack_require__(478);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__churchgo__ = __webpack_require__(482);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,35 +18,33 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var ChurchPageModule = /** @class */ (function () {
-    function ChurchPageModule() {
+var ChurchgoPageModule = /** @class */ (function () {
+    function ChurchgoPageModule() {
     }
-    ChurchPageModule = __decorate([
+    ChurchgoPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__church__["a" /* ChurchPage */],
+                __WEBPACK_IMPORTED_MODULE_2__churchgo__["a" /* ChurchgoPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__church__["a" /* ChurchPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__churchgo__["a" /* ChurchgoPage */]),
             ],
         })
-    ], ChurchPageModule);
-    return ChurchPageModule;
+    ], ChurchgoPageModule);
+    return ChurchgoPageModule;
 }());
 
-//# sourceMappingURL=church.module.js.map
+//# sourceMappingURL=churchgo.module.js.map
 
 /***/ }),
 
-/***/ 478:
+/***/ 482:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChurchPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChurchgoPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_service_service__ = __webpack_require__(128);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -58,197 +56,48 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-
-
-var ChurchPage = /** @class */ (function () {
-    function ChurchPage(navCtrl, navParams, formBuilder, service) {
+// import { HomePage } from '../home/home';
+/**
+ * Generated class for the ChurchgoPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var ChurchgoPage = /** @class */ (function () {
+    function ChurchgoPage(navCtrl, navParams) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.formBuilder = formBuilder;
-        this.service = service;
-        this.showSpinner = false;
-        this.submitted = false;
-        this.form = this.formBuilder.group({
-            church_name: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
-            denomination_id: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
-            total_members: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
-            state_id: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
-            district_id: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
-            constituency_id: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
-            mandal_id: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
-            village_id: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
-            street: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
-            pastor_id: [''],
-            location: [''],
-            contactnumber: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
-            description: [''],
-            ministry_id: [''],
-            churchtype: [''],
-            password: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].minLength(6)]],
-            retypepassword: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].minLength(6)]],
-            facebook: [''],
-            youtube: [''],
-            remarks: [''],
-            village_name: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
-            term: [true]
-        });
     }
-    ChurchPage.prototype.gotohome = function () {
-        this.navCtrl.push('FormsPage');
-    };
-    ChurchPage.prototype.onStateChange = function (event) {
-        var _this = this;
-        var stateId = event;
-        this.form.patchValue({
-            state_id: stateId,
-            district_id: '',
-            constituency_id: '',
-            mandal_id: '',
-            village_id: ''
-        });
-        this.districts = [];
-        this.constituency = [];
-        this.mandals = [];
-        this.panchayati = [];
-        if (stateId) {
-            this.service.getdistrict(stateId).subscribe(function (res) {
-                if (res && res.status == 200) {
-                    _this.districts = res.data;
-                }
-            });
-        }
-    };
-    ChurchPage.prototype.ionViewDidLoad = function () {
-        this.getdenomations();
-        this.getbeliver();
-    };
-    ChurchPage.prototype.getdenomations = function () {
-        var _this = this;
-        this.service.getdenomation().subscribe(function (res) {
-            _this.denomation = res.data;
-        });
-    };
-    ChurchPage.prototype.getconstency = function (event) {
-        var _this = this;
-        var id = event;
-        this.form.patchValue({
-            constituency_id: '',
-            mandal_id: '',
-            village_id: ''
-        });
-        this.constituency = [];
-        this.mandals = [];
-        this.panchayati = [];
-        if (!id)
-            return;
-        this.service.getconsistencys().subscribe(function (res) {
-            _this.constituency = res.data.filter(function (data) { return data.dstrct_id == id; });
-        });
-    };
-    ChurchPage.prototype.getmandals = function (event) {
-        var _this = this;
-        var id = event;
-        this.form.patchValue({
-            mandal_id: '',
-            village_id: ''
-        });
-        this.mandals = [];
-        this.panchayati = [];
-        if (!id)
-            return;
-        this.service.getmandals().subscribe(function (res) {
-            _this.mandals = res.data.filter(function (data) { return data.const_id == id; });
-        });
-    };
-    ChurchPage.prototype.gepanchayati = function (event) {
-        var _this = this;
-        var id = event;
-        this.form.patchValue({
-            village_id: ''
-        });
-        this.panchayati = [];
-        if (!id)
-            return;
-        this.service.gepanchayatis().subscribe(function (res) {
-            _this.panchayati = res.data.filter(function (data) { return data.mndl_id == id; });
-        });
-    };
-    ChurchPage.prototype.getbeliver = function () {
-        var _this = this;
-        this.service.getbeliversdata().subscribe(function (res) {
-            if (res.status == 202) {
-                alert(res.message);
+    ChurchgoPage.prototype.openYoutube = function () {
+        var url = 'https://www.youtube.com/channel/UCnk2hURhesjDM7SuOxgmt5A/about';
+        try {
+            if (window.cordova && window.cordova.InAppBrowser) {
+                window.cordova.InAppBrowser.open(url, '_system', 'location=yes');
             }
-            else
-                _this.showSpinner = false;
-            if (res.status == 200) {
-                _this.ministryname = res.data;
+            else {
+                window.open(url, '_system');
             }
-        });
-    };
-    ChurchPage.prototype.postchurchregister = function () {
-        var _this = this;
-        this.showSpinner = true;
-        if (!this.form.get('term') || !this.form.get('term').value) {
-            this.form.patchValue({ term: true });
         }
-        this.submitted = true;
-        console.log(this.form.value);
-        if (this.form.invalid) {
-            alert('దయచేసి ఖాళీ ఫీల్డ్‌లను పూరించండి ');
-            return;
-        }
-        else if (this.form.value.password != this.form.value.retypepassword) {
-            alert("Passwords are Unmatched");
-        }
-        else {
-            console.log(this.form.value);
-            this.service.postchurchregister(this.form.value).subscribe(function (res) {
-                _this.showSpinner = false;
-                if (res.status == 451) {
-                    alert('ఇదే ఫోన్ నెంబర్ తో ఇంతకుముందే రిజిస్టర్ అయ్యారు');
-                }
-                else
-                    _this.showSpinner = false;
-                if (res.status == 200) {
-                    alert('Your Church is Submited Successfully,Please Submit your Church Service Timings');
-                    // this.router.navigate(['/profile'], { queryParams: { id: "1" } });
-                    _this.form.reset();
-                    _this.mandals = [];
-                    _this.constituency = [];
-                    _this.panchayati = [];
-                    _this.submitted = false;
-                }
-            });
+        catch (e) {
+            window.location.href = url;
         }
     };
-    ChurchPage.prototype.churchpastorfilter = function () {
-        var _this = this;
-        if (this.form.value.district_id == null || this.form.value.constituency_id == null) {
-            alert("Please Fill the Districts, Constituency & Mandal");
-        }
-        else {
-            var data = {
-                districts: this.form.value.district_id,
-                constituencyname: this.form.value.constituency_id,
-                mandal_id: this.form.value.mandal_id,
-            };
-            console.log(data);
-            this.service.getpastorsfilters(data).subscribe(function (res) {
-                _this.getchurchpastors = res.data;
-            });
-        }
+    ChurchgoPage.prototype.gotoAbout = function () {
+        this.navCtrl.push('AboutPage');
     };
-    ChurchPage = __decorate([
+    ChurchgoPage.prototype.gotohome = function () {
+        this.navCtrl.push('HomePage');
+    };
+    ChurchgoPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-church',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\church\church.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>చర్చి రిజిస్ట్రేషన్</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding class="pagecss">\n\n  <form [formGroup]="form">\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>చర్చి పేరు <span style="color: red;">*</span></ion-label>\n\n          <ion-input type="text" formControlName="church_name" required\n\n            placeholder="మీ చర్చి పేరు నమోదు చేయండి"></ion-input>\n\n        </ion-item>\n\n        <div *ngIf="submitted && form.get(\'church_name\').errors" class="error-message">\n\n          <div *ngIf="form.get(\'church_name\').errors[\'required\']"> చర్చి పేరు అవసరం </div>\n\n        </div>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>సంప్రదించండి నంబర్ <span style="color: red;">*</span></ion-label>\n\n          <ion-input type="tel" formControlName="contactnumber" placeholder="మీ సంప్రదించండి నంబర్ నమోదు చేయండి"\n\n            maxlength="10" minlength="10"></ion-input>\n\n        </ion-item>\n\n        <div *ngIf="submitted && form.get(\'contactnumber\').errors" class="error-message">\n\n          <div *ngIf="form.get(\'contactnumber\').errors[\'required\']">సంప్రదించండి నంబర్ అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n    </ion-row>\n\n\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మొత్తం చర్చి సభ్యులు <span style="color: red;">*</span></ion-label>\n\n          <ion-input type="number" formControlName="total_members"\n\n            placeholder="మీ మొత్తం చర్చి సభ్యుల నంబర్ నమోదు చేయండి"></ion-input>\n\n        </ion-item>\n\n        <div *ngIf="submitted && form.get(\'total_members\').errors" class="error-message">\n\n          <div *ngIf="form.get(\'total_members\').errors[\'required\']">మొత్తం చర్చి సభ్యులు అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>సెలెక్ట్ డినామినేషన్ మోడల్‌<span style="color: red;">*</span></ion-label>\n\n          <ion-select formControlName="denomination_id" placeholder="దేనోమినేషన్ ఎంచుకోండి">\n\n            <ion-option *ngFor="let i of denomation" [value]="i.id">{{i.denomation_name}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n        <div *ngIf="submitted && form.get(\'denomination_id\').errors" class="error-message">\n\n          <div *ngIf="form.get(\'denomination_id\').errors[\'required\']">దేనోమినేషన్ అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n    </ion-row>\n\n\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-list>\n\n          <ion-label stacked>చర్చి టైపు <span style="color:red;"> * </span></ion-label>\n\n          <ion-item>\n\n            <input type="radio" value="Ministry" formControlName="churchtype">\n\n            <label>మెయిన్ లైన్ / మినిస్ట్రీ చర్చి</label>\n\n          </ion-item>\n\n          <ion-item>\n\n            <input type="radio" value="Independentchurch" formControlName="churchtype" />\n\n            <label>స్వతంత్ర చర్చి </label>\n\n          </ion-item>\n\n        </ion-list>\n\n      </ion-col>\n\n\n\n      <ion-col col-12 *ngIf="form.get(\'churchtype\').value === \'Ministry\'">\n\n        <ion-item>\n\n          <ion-label stacked>మీ మెయిన్ లైన్ / మినిస్ట్రీ చర్చి సెలెక్ట చేయండి</ion-label>\n\n          <ion-select formControlName="ministry_id">\n\n            <ion-option *ngFor="let i of ministryname" [value]="i.id">{{i.ministryname}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-list style="text-align: center;font-weight: 900;"> చిరునామా</ion-list>\n\n        <ion-item>\n\n          <ion-label stacked>రాష్ట్రం / State <span style="color:red;">*</span></ion-label>\n\n          <ion-select formControlName="state_id" (ionChange)="onStateChange($event)" placeholder="రాష్ట్రం ఎంచుకోండి"\n\n            [ngClass]="{\'is-invalid\': submitted && form.get(\'state_id\').errors }">\n\n            <ion-option value="" disabled selected>రాష్ట్రం ఎంచుకోండి</ion-option>\n\n            <ion-option value="1">Andhra Pradesh</ion-option>\n\n            <ion-option value="2">Telangana</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n        <div *ngIf="submitted && form.get(\'state_id\').errors" class="error-message">\n\n          <div *ngIf="form.get(\'state_id\').errors[\'required\']">రాష్ట్రం ఎంచుకోండి</div>\n\n        </div>\n\n        <ion-item>\n\n          <ion-label stacked>జిల్లా ఎంచుకోండి <span style="color:red;">*</span></ion-label>\n\n          <ion-select formControlName="district_id" [disabled]="!form.value.state_id" (ionChange)="getconstency($event)" placeholder="జిల్లా ఎంచుకోండి"\n\n            [ngClass]="{\'is-invalid\': submitted && form.get(\'district_id\').errors }">\n\n            <ion-option value="" selected disabled>ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of districts" [value]="item.id">{{item.distrct_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n        <div *ngIf="submitted && form.get(\'district_id\').errors" class="error-message">\n\n          <div *ngIf="form.get(\'district_id\').errors[\'required\']">జిల్లా ఎంచుకోండి</div>\n\n        </div>\n\n        <ion-item>\n\n          <ion-label stacked>నియోజకవర్గం ఎంచుకోండి <span style="color:red;">*</span></ion-label>\n\n          <ion-select formControlName="constituency_id" [disabled]="!form.value.district_id" (ionChange)="getmandals($event);" placeholder="నియోజకవర్గం ఎంచుకోండి"\n\n            [ngClass]="{\'is-invalid\': submitted && form.get(\'constituency_id\').errors }">\n\n            <ion-option value="" selected disabled>ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of constituency" [value]="item.id">{{item.const_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n        <div *ngIf="submitted && form.get(\'constituency_id\').errors" class="error-message">\n\n          <div *ngIf="form.get(\'constituency_id\').errors[\'required\']">సిటువేషన్సీ ఎంచుకోండి</div>\n\n        </div>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మండలాన్ని ఎంచుకోండి <span style="color:red;">*</span></ion-label>\n\n          <ion-select formControlName="mandal_id" [disabled]="!form.value.constituency_id" (ionChange)="gepanchayati($event);churchpastorfilter();" placeholder="మండలాన్ని ఎంచుకోండి"\n\n            [ngClass]="{\'is-invalid\': submitted && form.get(\'mandal_id\').errors }">\n\n            <ion-option value="" selected disabled>ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of mandals" [value]="item.id">{{item.mndl_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n        <div *ngIf="submitted && form.get(\'mandal_id\').errors" class="error-message">\n\n          <div *ngIf="form.get(\'mandal_id\').errors[\'required\']">మండలాన్ని ఎంచుకోండి</div>\n\n        </div>\n\n      </ion-col>\n\n\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>పంచాయతీని ఎంచుకోండి <span style="color:red;">*</span></ion-label>\n\n          <ion-select formControlName="village_id" [disabled]="!form.value.mandal_id" placeholder="పంచాయతీని ఎంచుకోండి"\n\n            [ngClass]="{\'is-invalid\': submitted && form.get(\'village_id\').errors }">\n\n            <ion-option value="" selected disabled>ఎంచుకోండి</ion-option>\n\n            <ion-option *ngFor="let item of panchayati" [value]="item.id">{{item.pnchyt_nm}}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n        <div *ngIf="submitted && form.get(\'village_id\').errors" class="error-message">\n\n          <div *ngIf="form.get(\'village_id\').errors[\'required\']">పంచాయితీ ఎంచుకోండి</div>\n\n        </div>\n\n      </ion-col>\n\n    </ion-row>\n\n\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>గూగుల్ లొకేషన్</ion-label>\n\n          <ion-input type="text" formControlName="location" placeholder="మీ లొకేషన్ ని నమోదు చేయండి"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>వీధి పేరు నమోదు చేయండి<span style="color:red;">*</span></ion-label>\n\n          <ion-input type="text" formControlName="street" placeholder="వీధి పేరు"\n\n            [ngClass]="{\'is-invalid\': submitted && form.get(\'street\').errors }"></ion-input>\n\n        </ion-item>\n\n        <div *ngIf="submitted && form.get(\'street\').errors" class="error-message">\n\n          <div *ngIf="form.get(\'street\').errors[\'required\']">వీధి పేరు అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n    </ion-row>\n\n\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>పాస్టర్ పేరు (ఇంటి పేరు తో సహా)<span style="color:red;">*</span></ion-label>\n\n          <ion-select formControlName="pastor_id"\n\n            [ngClass]="{\'is-invalid\': submitted && form.get(\'pastor_id\').errors }">\n\n            <ion-option *ngFor="let i of getchurchpastors" [value]="i.id">{{i.pastorname }}</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n        <div *ngIf="submitted && form.get(\'pastor_id\').errors" class="error-message">\n\n          <div *ngIf="form.get(\'pastor_id\').errors[\'required\']">పాస్టర్ పేరు అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n    </ion-row>\n\n\n\n    <!-- Facebook and Youtube inputs -->\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>ఫేస్‌బుక్</ion-label>\n\n          <ion-input type="text" formControlName="facebook" placeholder="మీ ఫేస్‌బుక్ ని నమోదు చేయండి"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>యూట్యూబ్</ion-label>\n\n          <ion-input type="text" formControlName="youtube" placeholder="మీ యూట్యూబ్ ని నమోదు చేయండి"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n    </ion-row>\n\n\n\n    <!-- Village Name and Description inputs -->\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>గ్రామం పేరు <span style="color:red;">*</span></ion-label>\n\n          <ion-input type="text" formControlName="village_name"\n\n            [ngClass]="{\'is-invalid\': submitted && form.get(\'village_name\').errors }"></ion-input>\n\n        </ion-item>\n\n        <div *ngIf="submitted && form.get(\'village_name\').errors" class="error-message">\n\n          <div *ngIf="form.get(\'village_name\').errors[\'required\']">గ్రామం పేరు అవసరం</div>\n\n        </div>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>ఇతర సమాచారం</ion-label>\n\n          <ion-textarea formControlName="description" placeholder="మీ వివరణ నమోదు చేయండి"></ion-textarea>\n\n        </ion-item>\n\n      </ion-col>\n\n    </ion-row>\n\n\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>పాస్‌వర్డ్ <span style="color:red;">*</span></ion-label>\n\n          <ion-input type="password" formControlName="password" placeholder="మీ పాస్‌వర్డ్‌ని నమోదు చేయండి"\n\n            maxlength="16" minlength="8"></ion-input>\n\n        </ion-item>\n\n        <div *ngIf="submitted && form.get(\'password\').errors" class="error-message">\n\n          <div *ngIf="form.get(\'password\').errors[\'required\']">పాస్‌వర్డ్ అవసరం</div>\n\n          <div *ngIf="form.get(\'password\').errors[\'minlength\']">పాస్‌వర్డ్ కనీసం 8 అక్షరాలు ఉండాలి</div>\n\n        </div>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>పాస్వర్డ్ మళ్ళీ నమోదు చేయండి <span style="color:red;">*</span></ion-label>\n\n          <ion-input type="password" formControlName="retypepassword" placeholder="మీ పాస్‌వర్డ్ మళ్ళీ నమోదు చేయండి"\n\n            maxlength="16" minlength="6"></ion-input>\n\n        </ion-item>\n\n        <div *ngIf="submitted && form.get(\'retypepassword\').errors" class="error-message">\n\n          <div *ngIf="form.get(\'retypepassword\').errors[\'required\']">పాస్‌వర్డ్ మళ్ళీ నమోదు చేయాలి</div>\n\n          <div *ngIf="form.get(\'retypepassword\').errors[\'minlength\']">పాస్‌వర్డ్ కనీసం 6 అక్షరాలు ఉండాలి</div>\n\n        </div>\n\n      </ion-col>\n\n    </ion-row>\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <input type="checkbox" value="yes" formControlName="term">\n\n          <label> &nbsp;&nbsp; మీరు అంగీకరిస్తున్నారు మరియు మీకు సమాచారం పంపించడానికి సంగ్రహిస్తున్నారు </label>\n\n        </ion-item>\n\n      </ion-col>\n\n    </ion-row>\n\n\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <div style="text-align: center;">\n\n          <button ion-button color="secondary" (click)="postchurchregister()" [disabled]="showSpinner" style="letter-spacing: 1px;">\n\n            <ion-spinner *ngIf="showSpinner" name="crescent" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"></ion-spinner>\n\n            {{ showSpinner ? \'దయచేసి వేచి ఉండండి, ప్రాసెస్ అవుతోంది...\' : \'నమోదు\' }}\n\n          </button>\n\n        </div>\n\n      </ion-col>\n\n    </ion-row>\n\n  </form>\n\n\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\church\church.html"*/,
+            selector: 'page-churchgo',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\churchgo\churchgo.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-title style="text-align: center;font-family: Ramabhadra,sans-serif!important;"><b>చర్చి పర్మిషన్</b></ion-title>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding class="pagecss">\n\n\n\n  <div class="row" style="background-color: #857474;padding: 2%;border-radius: 8px;">\n\n    <h2\n\n      style="text-align: center;color: #dbd8d8;font-weight: 900;font-family: cursive;font-family: Ramabhadra,sans-serif!important;">\n\n      <u>ఆంధ్రరాష్ట్ర చర్చి పర్మిషన్ గవర్నమెంట్ ఆర్డర్స్</u>\n\n    </h2>\n\n    <hr>\n\n    <div class="col-lg-12">\n\n      <img src="assets/images/rc1.jpg" style="width: 100%; margin-bottom: 10px; border-radius: 4px;">\n\n      <img src="assets/images/rc2.jpg" style="width: 100%; border-radius: 4px;">\n\n    </div>\n\n  </div>\n\n  <div style="background-color: #e4e3e3;border-radius: 8px; margin-top: 15px;">\n\n    <p style="text-align: justify;text-align: center; font-size:20px;font-weight: 900;padding: 1%;">\n\n      నేను పెట్టే వీడియోలు మీరు చూచు నట్లు, వీడియో ఛానల్ సబ్ స్క్రైబ్ చేసుకోండి<br>\n\n    </p>\n\n\n\n    <div style="text-align: center; margin: 20px 0;">\n\n      <button ion-button color="danger" (click)="openYoutube()" style="border-radius: 5px; font-weight: bold;">\n\n        <ion-icon name="logo-youtube" style="margin-right: 8px;"></ion-icon>\n\n        YouTube ఛానల్ సందర్శించండి\n\n      </button>\n\n    </div>\n\n\n\n    <p style="text-align: justify;text-align: center; font-size:20px;font-weight: 900;padding: 1%;">\n\n      నా గురుంచి తెలుసుకొనుటకు\n\n      <a href="javascript:void(0)" (click)="gotoAbout()" style="color: blue; text-decoration: underline;">ఇక్కడ క్లిక్ చేయండి</a>\n\n      <br>\n\n      ప్రొఫెసర్ డాక్టర్.జోసఫ్ పి మోసిగంటి. <br> B.Tech, M.Tech, Ph.D<br>\n\n      చైర్మన్ , ఆంధ్రప్రదేశ్ జీసస్ బిలీవర్స్ అసోసియేషన్ కౌన్సిల్ (JBAC)<br>\n\n      డైరెక్టర్ , సెయింట్ మేరీస్ గ్రూప్ ఆఫ్ ఇంజినీరింగ్ కాలేజెస్, చేబ్రోలు, గుంటూరు . <br>\n\n      Number : (+91)-7075482182 <br>\n\n      (సేవ్ చేసుకొని మెసేజ్-SMS మాత్రమే చేయండి) .\n\n    </p>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\churchgo\churchgo.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["s" /* NavController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["t" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__providers_service_service__["a" /* ServiceProvider */]])
-    ], ChurchPage);
-    return ChurchPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* NavParams */]])
+    ], ChurchgoPage);
+    return ChurchgoPage;
 }());
 
-//# sourceMappingURL=church.js.map
+//# sourceMappingURL=churchgo.js.map
 
 /***/ })
 

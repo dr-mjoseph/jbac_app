@@ -1,0 +1,242 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title style="text-align: center; font-size: 15px;">
+      <b>బోధనా రంగ ఉద్యోగుల నమోదు (Teachers)</b>
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="gotohome()">
+        <ion-icon name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="pagecss">
+  <div class="form-card">
+    <div class="header-box">
+      <div style="font-size: 30px; margin-bottom: 6px;">📚</div>
+      <h3 style="margin: 0; font-size: 16px; font-weight: bold;">బోధనా రంగంలో ఉద్యోగుల నమోదు</h3>
+      <p style="margin: 4px 0 0 0; font-size: 11.5px; opacity: 0.9;">
+        Registration of Employees in Teaching Field (AP & TG)
+      </p>
+    </div>
+
+    <form [formGroup]="teacherForm" (ngSubmit)="submitTeacher()">
+
+      <!-- SECTION 1: PERSONAL DETAILS -->
+      <div class="section-heading">1. వ్యక్తిగత వివరాలు (Personal Details)</div>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>ఇంటిపేరుతో సహా పూర్తి పేరు (Name with Surname) <span class="req">*</span></ion-label>
+        <ion-input type="text" formControlName="name_with_surname" placeholder="ఉదా: కొండేటి రాజేష్ (Kondeti Rajesh)"></ion-input>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>లింగం (Gender) <span class="req">*</span></ion-label>
+        <ion-select formControlName="gender" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">
+          <ion-option value="Male">పురుషుడు (Male)</ion-option>
+          <ion-option value="Female">స్త్రీ (Female)</ion-option>
+          <ion-option value="Other">ఇతరులు (Other)</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>మొబైల్ నంబర్ (Mobile Number) <span class="req">*</span></ion-label>
+        <ion-input type="tel" maxlength="10" formControlName="mobile" placeholder="10 అంకెల మొబైల్ నంబర్"></ion-input>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>ఈమెయిల్ (Email Address)</ion-label>
+        <ion-input type="email" formControlName="email" placeholder="example@mail.com"></ion-input>
+      </ion-item>
+
+
+      <!-- SECTION 2: PROFESSIONAL & TEACHING PROFILE -->
+      <div class="section-heading">2. వృత్తి & బోధనా అనుభవం (Teaching Profile)</div>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>ఖచ్చితమైన హోదా (Exact Designation) <span class="req">*</span></ion-label>
+        <ion-input type="text" formControlName="exact_designation" placeholder="ఉదా: SGT, School Assistant, Lecturer, Principal, Professor..."></ion-input>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>పాత్ర వర్గం (Role Category) <span class="req">*</span></ion-label>
+        <ion-select formControlName="role_category" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">
+          <ion-option *ngFor="let r of roleCategories" [value]="r.name_en">{{ r.name_te }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>విద్యార్హత వర్గం (Qualification Category) <span class="req">*</span></ion-label>
+        <ion-select formControlName="qualification_category" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">
+          <ion-option *ngFor="let q of qualificationCategories" [value]="q.name || q.qualification_name">
+            {{ q.name || q.qualification_name }}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>మొత్తం అనుభవం (Total Experience : Years) <span class="req">*</span></ion-label>
+        <ion-select formControlName="total_experience_years" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">
+          <ion-option *ngFor="let exp of experienceLevels" [value]="exp.name_en">{{ exp.name_te }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>అనుభవం ఉన్న విభాగం / సబ్జెక్ట్ (Experience In : Subject / Field) <span class="req">*</span></ion-label>
+        <ion-input type="text" formControlName="experience_in" placeholder="ఉదా: Mathematics, Physics, English, Computer Science..."></ion-input>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>ఉపాధ్యాయుని రకం (Teacher Type) <span class="req">*</span></ion-label>
+        <ion-select formControlName="teacher_type" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">
+          <ion-option value="Government">ప్రభుత్వ (Government)</ion-option>
+          <ion-option value="Private">ప్రైవేట్ (Private)</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>ఎక్కడ పనిచేస్తున్నారు (Working In) <span class="req">*</span></ion-label>
+        <ion-select formControlName="working_in" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">
+          <ion-option *ngFor="let inst of institutionTypes" [value]="inst.name_en">{{ inst.name_te }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>విద్యా సంస్థ పేరు (Institute Name) <span class="req">*</span></ion-label>
+        <ion-input type="text" formControlName="institute_name" placeholder="ఉదా: Z.P. High School / Andhra Loyola College..."></ion-input>
+      </ion-item>
+
+
+      <!-- SECTION 3: SOCIAL, FAITH & FAMILY BACKGROUND -->
+      <div class="section-heading">3. సామాజిక, ఆధ్యాత్మిక & కుటుంబ నేపథ్యం (Background)</div>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>కులం (Caste Category) <span class="req">*</span></ion-label>
+        <ion-select formControlName="caste" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">
+          <ion-option *ngFor="let c of casteList" [value]="c">{{ c }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>ఉప కులం (Subcaste)</ion-label>
+        <ion-input type="text" formControlName="subcaste" placeholder="ఉప కులం పేరు (ఐచ్ఛికం)"></ion-input>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>విశ్వాస వర్గం / డినామినేషన్ (Faith Category) <span class="req">*</span></ion-label>
+        <ion-select formControlName="faith_category" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">
+          <ion-option *ngFor="let d of denominations" [value]="d.name || d.denomation_name || d.denomination_name">
+            {{ d.name || d.denomation_name || d.denomination_name }}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>కుటుంబ నేపథ్యం (Family Background) <span class="req">*</span></ion-label>
+        <ion-select formControlName="family_background" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">
+          <ion-option *ngFor="let fb of familyBackgrounds" [value]="fb.name_en">{{ fb.name_te }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>మీ చర్చి / పాస్టర్ గారి ఫోన్ నంబర్ (Church / Pastor Phone)</ion-label>
+        <ion-input type="tel" maxlength="10" formControlName="pastor_phone" placeholder="పాస్టర్ గారి 10 అంకెల మొబైల్ నంబర్ (ఐచ్ఛికం)"></ion-input>
+      </ion-item>
+
+
+      <!-- SECTION 4: INSTITUTE ADDRESS (State-Guarded Cascade) -->
+      <div class="section-heading">4. విద్యా సంస్థ చిరునామా (Institute Address)</div>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>రాష్ట్రం (Institute State) <span class="req">*</span></ion-label>
+        <ion-select formControlName="inst_state_id" (ionChange)="onInstStateChange($event)" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">
+          <ion-option *ngFor="let s of states" [value]="s.id">{{ s.state_name || s.name }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>జిల్లా (Institute District) <span class="req">*</span></ion-label>
+        <ion-select formControlName="inst_districts" (ionChange)="onInstDistrictChange($event)" [disabled]="!teacherForm.get('inst_state_id').value" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">
+          <ion-option *ngFor="let d of instDistricts" [value]="d.id">{{ d.distrct_nm || d.districtname }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>నియోజకవర్గం (Institute Constituency) <span class="req">*</span></ion-label>
+        <ion-select formControlName="inst_constituencyname" (ionChange)="onInstConstituencyChange($event)" [disabled]="!teacherForm.get('inst_districts').value" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">
+          <ion-option *ngFor="let c of instConstituencies" [value]="c.id">{{ c.const_nm || c.constituency_name || c.name }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>మండలం (Institute Mandal) <span class="req">*</span></ion-label>
+        <ion-select formControlName="inst_mandals" (ionChange)="onInstMandalChange($event)" [disabled]="!teacherForm.get('inst_constituencyname').value" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">
+          <ion-option *ngFor="let m of instMandals" [value]="m.id">{{ m.mndl_nm || m.mandal_name || m.name }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>పంచాయతీ / గ్రామం (Institute Panchayat) <span class="req">*</span></ion-label>
+        <ion-select formControlName="inst_panchayati" [disabled]="!teacherForm.get('inst_mandals').value" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">
+          <ion-option *ngFor="let p of instPanchayatis" [value]="p.id">{{ p.pnchyt_nm || p.panchayat_name || p.name }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>సంస్థ వీధి / డోర్ నం / ల్యాండ్‌మార్క్ (Street, Door No, Landmark)</ion-label>
+        <ion-input type="text" formControlName="inst_address" placeholder="విద్యా సంస్థ వివరణాత్మక చిరునామా"></ion-input>
+      </ion-item>
+
+
+      <!-- SECTION 5: RESIDENTIAL ADDRESS (State-Guarded Cascade) -->
+      <div class="section-heading">5. నివాస చిరునామా (Residential Address)</div>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>రాష్ట్రం (Residential State) <span class="req">*</span></ion-label>
+        <ion-select formControlName="res_state_id" (ionChange)="onResStateChange($event)" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">
+          <ion-option *ngFor="let s of states" [value]="s.id">{{ s.state_name || s.name }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>జిల్లా (Residential District) <span class="req">*</span></ion-label>
+        <ion-select formControlName="res_districts" (ionChange)="onResDistrictChange($event)" [disabled]="!teacherForm.get('res_state_id').value" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">
+          <ion-option *ngFor="let d of resDistricts" [value]="d.id">{{ d.distrct_nm || d.districtname }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>నియోజకవర్గం (Residential Constituency) <span class="req">*</span></ion-label>
+        <ion-select formControlName="res_constituencyname" (ionChange)="onResConstituencyChange($event)" [disabled]="!teacherForm.get('res_districts').value" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">
+          <ion-option *ngFor="let c of resConstituencies" [value]="c.id">{{ c.const_nm || c.constituency_name || c.name }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>మండలం (Residential Mandal) <span class="req">*</span></ion-label>
+        <ion-select formControlName="res_mandals" (ionChange)="onResMandalChange($event)" [disabled]="!teacherForm.get('res_constituencyname').value" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">
+          <ion-option *ngFor="let m of resMandals" [value]="m.id">{{ m.mndl_nm || m.mandal_name || m.name }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>పంచాయతీ / గ్రామం (Residential Panchayat) <span class="req">*</span></ion-label>
+        <ion-select formControlName="res_panchayati" [disabled]="!teacherForm.get('res_mandals').value" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">
+          <ion-option *ngFor="let p of resPanchayatis" [value]="p.id">{{ p.pnchyt_nm || p.panchayat_name || p.name }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>ఇంటి నంబర్ / వీధి / ల్యాండ్‌మార్క్ (House No, Street, Landmark)</ion-label>
+        <ion-input type="text" formControlName="res_address" placeholder="మీ నివాస పూర్తి చిరునామా"></ion-input>
+      </ion-item>
+
+      <!-- SUBMIT BUTTON -->
+      <button ion-button block class="submit-btn" type="submit">
+        నమోదు చేయండి (Submit Registration)
+      </button>
+
+    </form>
+  </div>
+</ion-content>
