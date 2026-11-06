@@ -126,8 +126,8 @@
       <ion-item class="custom-item">
         <ion-label stacked>విశ్వాస వర్గం / డినామినేషన్ (Faith Category) <span class="req">*</span></ion-label>
         <ion-select formControlName="faith_category" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">
-          <ion-option *ngFor="let d of denominations" [value]="d.name || d.denomation_name || d.denomination_name">
-            {{ d.name || d.denomation_name || d.denomination_name }}
+          <ion-option *ngFor="let d of denominations" [value]="d.denomation_name || d.denomination_name || d.name">
+            {{ d.denomation_name || d.denomination_name || d.name }}
           </ion-option>
         </ion-select>
       </ion-item>
