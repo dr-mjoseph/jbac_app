@@ -26324,6 +26324,27 @@ page-teacher .custom-item {
   margin-bottom: 10px;
   padding-left: 10px;
 }
+page-teacher .cv-upload-item {
+  padding-bottom: 8px;
+}
+page-teacher .cv-action-btn {
+  margin: 8px 0;
+  border-radius: 8px;
+  text-transform: none;
+  font-size: 13.5px;
+  font-weight: bold;
+  height: 44px;
+  -webkit-box-shadow: 0 2px 6px rgba(2, 132, 199, 0.15);
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.15);
+}
+page-teacher .cv-selected-card {
+  background: #ffffff;
+  border: 1.5px solid #0284c7;
+  border-radius: 8px;
+  padding: 10px 12px;
+  -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
 page-teacher .req {
   color: #ef4444;
   font-weight: bold;

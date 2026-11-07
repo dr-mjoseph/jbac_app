@@ -338,10 +338,19 @@ export class TeacherPage {
     reader.readAsDataURL(file);
   }
 
-  removeCvFile() {
+  openCvChooser(fileInput: any) {
+    if (fileInput) {
+      fileInput.click();
+    }
+  }
+
+  removeCvFile(fileInput?: any) {
     this.cvBase64 = '';
     this.cvFileName = '';
     this.teacherForm.patchValue({ cv_profile: '' });
+    if (fileInput) {
+      fileInput.value = '';
+    }
   }
 
   // ==========================================
@@ -515,10 +524,12 @@ export class TeacherPage {
     const formVal = this.teacherForm.value;
 
     const payload = {
+      name: formVal.name_with_surname,
       name_with_surname: formVal.name_with_surname,
       gender: formVal.gender,
       mobile: formVal.mobile,
       email: formVal.email || '',
+      designation: formVal.exact_designation,
       exact_designation: formVal.exact_designation,
       role_category: formVal.role_category,
       qualification_category: formVal.qualification_category,
