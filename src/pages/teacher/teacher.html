@@ -112,6 +112,20 @@
         <ion-textarea formControlName="about_achievements" rows="4" placeholder="మీ విద్యా బోధనా ప్రస్థానం, సాధించిన విజయాలు, గుర్తింపులు లేదా ఇతర ముఖ్య వివరాలు..."></ion-textarea>
       </ion-item>
 
+      <ion-item class="custom-item">
+        <ion-label stacked>సీవీ / ప్రొఫైల్ అప్‌లోడ్ (Upload CV / Profile) <span style="color:#64748b; font-size:12px; font-weight:normal;">(ఐచ్ఛికం / Optional)</span></ion-label>
+        <div style="margin-top: 10px; margin-bottom: 6px;">
+          <input type="file" (change)="onCvFileSelected($event)" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" style="font-size:13px; color:#1e293b; width:100%;">
+          <p style="font-size:11px; color:#64748b; margin-top:4px; margin-bottom:0;">
+            PDF లేదా DOC/DOCX ఫార్మాట్‌లో మాత్రమే (గరిష్టంగా 5MB).
+          </p>
+          <div *ngIf="cvFileName" style="margin-top:6px; font-size:12px; color:#0284c7; font-weight:bold; display:flex; align-items:center; justify-content:space-between;">
+            <span>📄 {{ cvFileName }}</span>
+            <a (click)="removeCvFile()" style="color:#ef4444; text-decoration:none; margin-left:10px; cursor:pointer;">✕ తొలగించు (Remove)</a>
+          </div>
+        </div>
+      </ion-item>
+
 
       <!-- SECTION 3: SOCIAL, FAITH & FAMILY BACKGROUND -->
       <div class="section-heading">3. సామాజిక, ఆధ్యాత్మిక & కుటుంబ నేపథ్యం (Background)</div>
