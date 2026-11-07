@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { IonicPage, NavController, AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ServiceProvider } from '../../providers/service/service';
@@ -47,7 +47,8 @@ export class TeacherPage {
     public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
-    public service: ServiceProvider
+    public service: ServiceProvider,
+    public cdRef: ChangeDetectorRef
   ) {
     this.teacherForm = this.fb.group({
       name_with_surname: ['', [Validators.required, Validators.minLength(3)]],
@@ -329,11 +330,14 @@ export class TeacherPage {
     }
 
     this.cvFileName = file.name;
+    try { this.cdRef.detectChanges(); } catch (e) {}
+
     const reader = new FileReader();
     const self = this;
     reader.onload = function() {
       self.cvBase64 = reader.result as string;
       self.teacherForm.patchValue({ cv_profile: self.cvBase64 });
+      try { self.cdRef.detectChanges(); } catch (e) {}
     };
     reader.readAsDataURL(file);
   }
@@ -351,6 +355,11 @@ export class TeacherPage {
     if (fileInput) {
       fileInput.value = '';
     }
+    const changeInput = document.getElementById('teacherCvChangeInput') as HTMLInputElement;
+    if (changeInput) {
+      changeInput.value = '';
+    }
+    try { this.cdRef.detectChanges(); } catch (e) {}
   }
 
   // ==========================================

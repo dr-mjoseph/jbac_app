@@ -112,50 +112,58 @@
         <ion-textarea formControlName="about_achievements" rows="4" placeholder="మీ విద్యా బోధనా ప్రస్థానం, సాధించిన విజయాలు, గుర్తింపులు లేదా ఇతర ముఖ్య వివరాలు..."></ion-textarea>
       </ion-item>
 
-      <ion-item class="custom-item cv-upload-item">
-        <ion-label stacked>సీవీ / ప్రొఫైల్ అప్‌లోడ్ (Upload CV / Profile) <span style="color:#64748b; font-size:12px; font-weight:normal;">(ఐచ్ఛికం / Optional)</span></ion-label>
-        
-        <input #cvFileInput type="file" (change)="onCvFileSelected($event)" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" style="display:none;">
-
-        <!-- When NO file is selected: Clear Button to Upload CV -->
-        <div *ngIf="!cvFileName" style="padding: 10px 0 6px 0; width: 100%;">
-          <button ion-button type="button" outline color="primary" block icon-start (click)="openCvChooser(cvFileInput)" class="cv-action-btn">
-            <ion-icon name="cloud-upload"></ion-icon>
-            సీవీ / ప్రొఫైల్ ఎంచుకోండి (Choose CV / Profile)
-          </button>
-          <p style="font-size:11px; color:#64748b; margin-top:6px; margin-bottom:2px; text-align: center;">
-            PDF లేదా DOC/DOCX ఫార్మాట్ (గరిష్ట పరిమాణం 5MB)
-          </p>
+      <!-- CV / PROFILE UPLOAD CONTAINER (Outside ion-item for 100% Mobile Touch Reliability) -->
+      <div class="cv-upload-container">
+        <div class="cv-label-box">
+          <span class="cv-main-label">సీవీ / ప్రొఫైల్ అప్‌లోడ్ (Upload CV / Profile)</span>
+          <span class="cv-opt-label">(ఐచ్ఛికం / Optional)</span>
         </div>
 
-        <!-- When file IS selected: File Details & Change / Remove Buttons -->
-        <div *ngIf="cvFileName" style="padding: 10px 0 6px 0; width: 100%;">
-          <div class="cv-selected-card">
-            <div style="display: flex; align-items: center; margin-bottom: 10px;">
-              <span style="font-size: 22px; margin-right: 8px;">📄</span>
-              <div style="flex: 1; overflow: hidden;">
-                <div style="font-size: 13px; font-weight: bold; color: #0f172a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                  {{ cvFileName }}
-                </div>
-                <div style="font-size: 11px; color: #16a34a; font-weight: 600;">
-                  ✓ ఫైల్ సిద్ధంగా ఉంది (Ready to upload)
-                </div>
-              </div>
-            </div>
+        <!-- When NO file is selected -->
+        <div *ngIf="!cvFileName" class="cv-dropzone">
+          <img src="assets/icon/upload.svg" class="cv-upload-icon">
+          <div class="cv-hint-text">
+            మీ సీవీ లేదా ప్రొఫైల్ ఫైల్‌ను ఇక్కడ అప్‌లోడ్ చేయండి (PDF, DOC, DOCX - గరిష్ట పరిమాణం 5MB)
+          </div>
 
-            <div style="display: flex;">
-              <button ion-button type="button" small outline color="primary" (click)="openCvChooser(cvFileInput)" style="flex: 1; margin: 0 4px 0 0; text-transform: none; font-size: 12px; border-radius: 6px;">
-                <ion-icon name="sync" style="margin-right: 4px;"></ion-icon>
-                మార్చండి (Change)
-              </button>
-              <button ion-button type="button" small outline color="danger" (click)="removeCvFile(cvFileInput)" style="flex: 1; margin: 0 0 0 4px; text-transform: none; font-size: 12px; border-radius: 6px;">
-                <ion-icon name="trash" style="margin-right: 4px;"></ion-icon>
-                తొలగించు (Remove)
-              </button>
-            </div>
+          <!-- Direct Native Clickable Button via Overlay Input -->
+          <div class="cv-btn-wrapper">
+            <button ion-button block icon-start class="cv-select-btn" type="button">
+              <ion-icon name="cloud-upload"></ion-icon>
+              సీవీ / ప్రొఫైల్ ఫైల్ ఎంచుకోండి (Choose CV / Profile)
+            </button>
+            <input #teacherCvFileInput id="teacherCvFileInput" type="file" 
+                   (change)="onCvFileSelected($event)" 
+                   accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" 
+                   class="cv-native-input">
           </div>
         </div>
-      </ion-item>
+
+        <!-- When file IS selected -->
+        <div *ngIf="cvFileName" class="cv-file-card">
+          <div class="cv-file-info">
+            <span class="cv-file-icon">📄</span>
+            <div class="cv-file-details">
+              <div class="cv-file-name">{{ cvFileName }}</div>
+              <div class="cv-file-status">✓ ఫైల్ సిద్ధంగా ఉంది (Ready to upload)</div>
+            </div>
+          </div>
+
+          <div class="cv-file-actions">
+            <div class="cv-change-wrapper">
+              <button ion-button small outline color="primary" type="button" class="cv-change-btn">
+                <ion-icon name="sync"></ion-icon> మార్చండి (Change)
+              </button>
+              <input type="file" (change)="onCvFileSelected($event)" 
+                     accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" 
+                     class="cv-native-input">
+            </div>
+            <button ion-button small outline color="danger" type="button" (click)="removeCvFile(teacherCvFileInput)" class="cv-remove-btn">
+              <ion-icon name="trash"></ion-icon> తొలగించు (Remove)
+            </button>
+          </div>
+        </div>
+      </div>
 
 
       <!-- SECTION 3: SOCIAL, FAITH & FAMILY BACKGROUND -->

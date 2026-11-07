@@ -26290,6 +26290,9 @@ page-teacher * {
   font-family: "Ramabhadra", sans-serif !important;
 }
 
+page-teacher {
+  /* CV / Profile Upload Container & Native Button Styling */
+}
 page-teacher .pagecss {
   background-color: #f4f5f8;
 }
@@ -26324,26 +26327,153 @@ page-teacher .custom-item {
   margin-bottom: 10px;
   padding-left: 10px;
 }
-page-teacher .cv-upload-item {
-  padding-bottom: 8px;
+page-teacher .cv-upload-container {
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 14px 12px;
+  margin-bottom: 14px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
-page-teacher .cv-action-btn {
-  margin: 8px 0;
-  border-radius: 8px;
-  text-transform: none;
-  font-size: 13.5px;
+page-teacher .cv-label-box {
+  margin-bottom: 8px;
+}
+page-teacher .cv-main-label {
+  font-size: 13px;
   font-weight: bold;
-  height: 44px;
-  -webkit-box-shadow: 0 2px 6px rgba(2, 132, 199, 0.15);
-  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.15);
+  color: #1e293b;
+  display: inline-block;
 }
-page-teacher .cv-selected-card {
+page-teacher .cv-opt-label {
+  font-size: 11.5px;
+  color: #64748b;
+  margin-left: 4px;
+}
+page-teacher .cv-dropzone {
+  text-align: center;
+  border: 2px dashed #0284c7;
+  border-radius: 8px;
+  padding: 14px 10px;
+  background: #ffffff;
+}
+page-teacher .cv-upload-icon {
+  height: 48px;
+  width: 48px;
+  display: block;
+  margin: 0 auto 6px;
+}
+page-teacher .cv-hint-text {
+  font-size: 11.5px;
+  color: #475569;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+page-teacher .cv-btn-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin: 4px 0 0;
+}
+page-teacher .cv-select-btn {
+  margin: 0 !important;
+  width: 100% !important;
+  height: 44px !important;
+  border-radius: 8px !important;
+  font-size: 13.5px !important;
+  font-weight: bold !important;
+  background: linear-gradient(135deg, #0284c7, #0369a1) !important;
+  color: #ffffff !important;
+  -webkit-box-shadow: 0 3px 8px rgba(2, 132, 199, 0.25) !important;
+  box-shadow: 0 3px 8px rgba(2, 132, 199, 0.25) !important;
+  pointer-events: none;
+}
+page-teacher .cv-native-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 10;
+}
+page-teacher .cv-file-card {
   background: #ffffff;
   border: 1.5px solid #0284c7;
   border-radius: 8px;
-  padding: 10px 12px;
-  -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 12px;
+  -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+page-teacher .cv-file-info {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+page-teacher .cv-file-icon {
+  font-size: 24px;
+  margin-right: 8px;
+}
+page-teacher .cv-file-details {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  overflow: hidden;
+}
+page-teacher .cv-file-name {
+  font-size: 13.5px;
+  font-weight: bold;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+page-teacher .cv-file-status {
+  font-size: 11px;
+  color: #16a34a;
+  font-weight: bold;
+  margin-top: 2px;
+}
+page-teacher .cv-file-actions {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 8px;
+}
+page-teacher .cv-change-wrapper {
+  position: relative;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  overflow: hidden;
+}
+page-teacher .cv-change-btn {
+  margin: 0 !important;
+  width: 100% !important;
+  text-transform: none !important;
+  font-size: 12px !important;
+  border-radius: 6px !important;
+  pointer-events: none;
+}
+page-teacher .cv-remove-btn {
+  -webkit-box-flex: 1 !important;
+  -webkit-flex: 1 !important;
+  -ms-flex: 1 !important;
+  flex: 1 !important;
+  margin: 0 !important;
+  text-transform: none !important;
+  font-size: 12px !important;
+  border-radius: 6px !important;
 }
 page-teacher .req {
   color: #ef4444;
