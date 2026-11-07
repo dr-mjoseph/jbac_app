@@ -78,7 +78,7 @@
       <ion-item class="custom-item">
         <ion-label stacked>మొత్తం అనుభవం (Total Experience : Years) <span class="req">*</span></ion-label>
         <ion-select formControlName="total_experience_years" okText="సరే" cancelText="రద్దు" placeholder="ఇక్కడ క్లిక్ చేసి ఎంచుకోండి">
-          <ion-option *ngFor="let exp of experienceLevels" [value]="exp.name_en">{{ exp.name_te }}</ion-option>
+          <ion-option *ngFor="let exp of experienceLevels" [value]="exp.years_range || exp.name_en">{{ exp.label_te || exp.name_te || exp.years_range }}</ion-option>
         </ion-select>
       </ion-item>
 
@@ -105,6 +105,11 @@
       <ion-item class="custom-item">
         <ion-label stacked>విద్యా సంస్థ పేరు (Institute Name) <span class="req">*</span></ion-label>
         <ion-input type="text" formControlName="institute_name" placeholder="ఉదా: Z.P. High School / Andhra Loyola College..."></ion-input>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label stacked>మీ గురించి మరియు మీ సాధించిన విజయాల గురించి రాయండి (Write about yourself and your achievements)</ion-label>
+        <ion-textarea formControlName="about_achievements" rows="4" placeholder="మీ విద్యా బోధనా ప్రస్థానం, సాధించిన విజయాలు, గుర్తింపులు లేదా ఇతర ముఖ్య వివరాలు..."></ion-textarea>
       </ion-item>
 
 
