@@ -5,7 +5,7 @@
         <ion-icon style="font-size: 20px;" name="home"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title style="text-align: center;"><b>మా సహాయం</b></ion-title>
+    <ion-title style="text-align: center;"><b>సహాయం కోరండి</b></ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -15,30 +15,49 @@
     <ion-row>
       <ion-col col-12>
         <ion-item>
-          <ion-label stacked>వివరణ<span style="color:red;">*</span></ion-label>
-          <ion-textarea type="text" formControlName="description" placeholder="వివరణను ఎంచుకోండి"></ion-textarea>
+          <ion-label stacked>పేరు <span style="color:red;">*</span></ion-label>
+          <ion-input type="text" formControlName="name" placeholder="మీ పూర్తి పేరు నమోదు చేయండి"></ion-input>
         </ion-item>
       </ion-col>
       <ion-col col-12>
         <ion-item>
-          <ion-label stacked>ఏ రకం సహాయం <span style="color:red;">*</span></ion-label>
+          <ion-label stacked>మొబైల్ నంబర్ <span style="color:red;">*</span></ion-label>
+          <ion-input type="tel" maxlength="10" formControlName="mobile_number" placeholder="10 అంకెల మొబైల్ నంబర్"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>చిరునామా <span style="color:red;">*</span></ion-label>
+          <ion-textarea formControlName="address" placeholder="పూర్తి చిరునామా నమోదు చేయండి"></ion-textarea>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>సహాయం రకం <span style="color:red;">*</span></ion-label>
           <ion-select formControlName="help" placeholder="సహాయం ఎంచుకోండి">
-            <ion-option value="" disabled>సహాయం ఎంచుకోండి</ion-option>
-            <ion-option value="CommunitySupport Help">కమ్యూనిటీ మద్దతు సహాయం</ion-option>
-            <ion-option value="Education Help">విద్యా సహాయం</ion-option>
+            <ion-option value="" disabled selected>సహాయం ఎంచుకోండి</ion-option>
+            <ion-option value="CommunitySupport Help">కమ్యూనిటీ సహాయం</ion-option>
+            <ion-option value="Education Help">విద్య సహాయం</ion-option>
             <ion-option value="Financial Help">ఆర్థిక సహాయం</ion-option>
-            <ion-option value="ForChurchConstruction Help">చర్చి నిర్మాణ సహాయం</ion-option>
-            <ion-option value="Legal Help">చట్టపరమైన సహాయం</ion-option>
-            <ion-option value="Medical Help">మెడికల్ సహాయం</ion-option>
-            <ion-option value="PoliceDepartmental Help">పోలీసు విభాగ సహాయం</ion-option>
+            <ion-option value="ForChurchConstruction Help">చర్చి నిర్మాణం కొరకు సహాయం</ion-option>
+            <ion-option value="Legal Help">న్యాయ సహాయం</ion-option>
+            <ion-option value="Medical Help">వైద్య సహాయం</ion-option>
+            <ion-option value="PoliceDepartmental Help">పోలీస్ డిపార్ట్‌మెంట్ సహాయం</ion-option>
             <ion-option value="Political Help">రాజకీయ సహాయం</ion-option>
+            <ion-option value="Other Help">ఇతర సహాయం</ion-option>
           </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>సహాయ వివరాలు / వివరణ <span style="color:red;">*</span></ion-label>
+          <ion-textarea formControlName="description" placeholder="మీకు అవసరమైన సహాయం గురించి వివరంగా రాయండి"></ion-textarea>
         </ion-item>
       </ion-col>
       <ion-col col-12>
         <div class="imgerdt" style="padding: 12px; text-align: center; border: 2px dashed #00548F; border-radius: 8px; background: #fafafa;">
           <img src="assets/icon/upload.svg" style="height: 60px; width: 60px; display: block; margin: 0 auto 6px;">
-          <p style="margin: 4px 0 10px; font-weight: bold; color: #00548F; font-size: 14px;">చిత్రం అప్‌లోడ్ చేయండి (Choose File / Camera)</p>
+          <p style="margin: 4px 0 10px; font-weight: bold; color: #00548F; font-size: 14px;">చిత్రం అప్‌లోడ్ (ఐచ్ఛికం / Optional)</p>
           <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: block; width: 100%; max-width: 290px; margin: 0 auto 10px; padding: 6px; background: #fff; border: 1px solid #ccc; border-radius: 4px;">
           <button ion-button small outline icon-start type="button" (click)="openphoto()" style="margin: 0 auto; display: inline-block;">
             <ion-icon name="camera"></ion-icon> Camera / Gallery
@@ -48,8 +67,8 @@
           </div>
         </div>
       </ion-col>
-      <ion-col col-12 style="text-align: center;">
-        <button ion-button color="secondary" (click)="postmeetings()" style="letter-spacing: 1px;">నమోదు చేయండి</button>
+      <ion-col col-12 style="text-align: center; margin-top: 15px;">
+        <button ion-button color="secondary" block (click)="postmeetings()" style="letter-spacing: 1px; font-weight: bold;">సమర్పించండి</button>
       </ion-col>
 
     </ion-row>

@@ -108,9 +108,14 @@ var HelpPage = /** @class */ (function () {
         this.service = service;
         this.zone = zone;
         this.imagesdata = [];
+        var defName = localStorage.getItem('name') || '';
+        var defMobile = localStorage.getItem('mobile_number') || '';
         this.form = this.formBuilder.group({
+            name: [defName, [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
+            mobile_number: [defMobile, [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
+            address: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
             description: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]],
-            help: ['']
+            help: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]]
         });
     }
     HelpPage.prototype.gotohome = function () {
@@ -241,32 +246,36 @@ var HelpPage = /** @class */ (function () {
     HelpPage.prototype.postmeetings = function () {
         var _this = this;
         if (this.form.invalid) {
-            alert('దయచేసి ఖాళీ ఫీల్డ్‌లను పూరించండి');
+            alert('దయచేసి అన్ని వివరాలను పూరించండి');
         }
         else {
             var data = {
                 usr_id: localStorage.getItem('usr_id'),
-                mobile_number: localStorage.getItem('mobile_number'),
-                name: localStorage.getItem('name'),
+                mobile_number: this.form.value.mobile_number,
+                name: this.form.value.name,
+                address: this.form.value.address,
                 description: this.form.value.description,
                 help: this.form.value.help,
                 reviewImg: this.imagesdata
             };
             this.service.posthelping(data).subscribe(function (res) {
                 if (res.status == 200) {
-                    alert('విజయవంతముగా సబ్మిట్ అయింది');
+                    alert('సహాయ అభ్యర్థన విజయవంతముగా నమోదు చేయబడింది');
                     _this.form.reset();
+                    var defName = localStorage.getItem('name') || '';
+                    var defMobile = localStorage.getItem('mobile_number') || '';
+                    _this.form.patchValue({ name: defName, mobile_number: defMobile });
                     _this.imagesdata = [];
                 }
                 else {
-                    alert('server down');
+                    alert('సర్వర్ సమస్య ఏర్పడింది');
                 }
             });
         }
     };
     HelpPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-help',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\help\help.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>మా సహాయం</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding class="pagecss">\n\n  <form [formGroup]="form">\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>వివరణ<span style="color:red;">*</span></ion-label>\n\n          <ion-textarea type="text" formControlName="description" placeholder="వివరణను ఎంచుకోండి"></ion-textarea>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>ఏ రకం సహాయం <span style="color:red;">*</span></ion-label>\n\n          <ion-select formControlName="help" placeholder="సహాయం ఎంచుకోండి">\n\n            <ion-option value="" disabled>సహాయం ఎంచుకోండి</ion-option>\n\n            <ion-option value="CommunitySupport Help">కమ్యూనిటీ మద్దతు సహాయం</ion-option>\n\n            <ion-option value="Education Help">విద్యా సహాయం</ion-option>\n\n            <ion-option value="Financial Help">ఆర్థిక సహాయం</ion-option>\n\n            <ion-option value="ForChurchConstruction Help">చర్చి నిర్మాణ సహాయం</ion-option>\n\n            <ion-option value="Legal Help">చట్టపరమైన సహాయం</ion-option>\n\n            <ion-option value="Medical Help">మెడికల్ సహాయం</ion-option>\n\n            <ion-option value="PoliceDepartmental Help">పోలీసు విభాగ సహాయం</ion-option>\n\n            <ion-option value="Political Help">రాజకీయ సహాయం</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <div class="imgerdt" style="padding: 12px; text-align: center; border: 2px dashed #00548F; border-radius: 8px; background: #fafafa;">\n\n          <img src="assets/icon/upload.svg" style="height: 60px; width: 60px; display: block; margin: 0 auto 6px;">\n\n          <p style="margin: 4px 0 10px; font-weight: bold; color: #00548F; font-size: 14px;">చిత్రం అప్‌లోడ్ చేయండి (Choose File / Camera)</p>\n\n          <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: block; width: 100%; max-width: 290px; margin: 0 auto 10px; padding: 6px; background: #fff; border: 1px solid #ccc; border-radius: 4px;">\n\n          <button ion-button small outline icon-start type="button" (click)="openphoto()" style="margin: 0 auto; display: inline-block;">\n\n            <ion-icon name="camera"></ion-icon> Camera / Gallery\n\n          </button>\n\n          <div *ngIf="imagesdata.length" style="margin-top: 12px;">\n\n            <img style="max-height: 200px; max-width: 100%; border-radius: 8px; border: 1px solid #00548F;" [src]="imagesdata[0].reviewimg || imagesdata[0].reviewImg">\n\n          </div>\n\n        </div>\n\n      </ion-col>\n\n      <ion-col col-12 style="text-align: center;">\n\n        <button ion-button color="secondary" (click)="postmeetings()" style="letter-spacing: 1px;">నమోదు చేయండి</button>\n\n      </ion-col>\n\n\n\n    </ion-row>\n\n  </form>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\help\help.html"*/,
+            selector: 'page-help',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\help\help.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>సహాయం కోరండి</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding class="pagecss">\n\n  <form [formGroup]="form">\n\n    <ion-row>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>పేరు <span style="color:red;">*</span></ion-label>\n\n          <ion-input type="text" formControlName="name" placeholder="మీ పూర్తి పేరు నమోదు చేయండి"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>మొబైల్ నంబర్ <span style="color:red;">*</span></ion-label>\n\n          <ion-input type="tel" maxlength="10" formControlName="mobile_number" placeholder="10 అంకెల మొబైల్ నంబర్"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>చిరునామా <span style="color:red;">*</span></ion-label>\n\n          <ion-textarea formControlName="address" placeholder="పూర్తి చిరునామా నమోదు చేయండి"></ion-textarea>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>సహాయం రకం <span style="color:red;">*</span></ion-label>\n\n          <ion-select formControlName="help" placeholder="సహాయం ఎంచుకోండి">\n\n            <ion-option value="" disabled selected>సహాయం ఎంచుకోండి</ion-option>\n\n            <ion-option value="CommunitySupport Help">కమ్యూనిటీ సహాయం</ion-option>\n\n            <ion-option value="Education Help">విద్య సహాయం</ion-option>\n\n            <ion-option value="Financial Help">ఆర్థిక సహాయం</ion-option>\n\n            <ion-option value="ForChurchConstruction Help">చర్చి నిర్మాణం కొరకు సహాయం</ion-option>\n\n            <ion-option value="Legal Help">న్యాయ సహాయం</ion-option>\n\n            <ion-option value="Medical Help">వైద్య సహాయం</ion-option>\n\n            <ion-option value="PoliceDepartmental Help">పోలీస్ డిపార్ట్‌మెంట్ సహాయం</ion-option>\n\n            <ion-option value="Political Help">రాజకీయ సహాయం</ion-option>\n\n            <ion-option value="Other Help">ఇతర సహాయం</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <ion-item>\n\n          <ion-label stacked>సహాయ వివరాలు / వివరణ <span style="color:red;">*</span></ion-label>\n\n          <ion-textarea formControlName="description" placeholder="మీకు అవసరమైన సహాయం గురించి వివరంగా రాయండి"></ion-textarea>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-12>\n\n        <div class="imgerdt" style="padding: 12px; text-align: center; border: 2px dashed #00548F; border-radius: 8px; background: #fafafa;">\n\n          <img src="assets/icon/upload.svg" style="height: 60px; width: 60px; display: block; margin: 0 auto 6px;">\n\n          <p style="margin: 4px 0 10px; font-weight: bold; color: #00548F; font-size: 14px;">చిత్రం అప్‌లోడ్ (ఐచ్ఛికం / Optional)</p>\n\n          <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: block; width: 100%; max-width: 290px; margin: 0 auto 10px; padding: 6px; background: #fff; border: 1px solid #ccc; border-radius: 4px;">\n\n          <button ion-button small outline icon-start type="button" (click)="openphoto()" style="margin: 0 auto; display: inline-block;">\n\n            <ion-icon name="camera"></ion-icon> Camera / Gallery\n\n          </button>\n\n          <div *ngIf="imagesdata.length" style="margin-top: 12px;">\n\n            <img style="max-height: 200px; max-width: 100%; border-radius: 8px; border: 1px solid #00548F;" [src]="imagesdata[0].reviewimg || imagesdata[0].reviewImg">\n\n          </div>\n\n        </div>\n\n      </ion-col>\n\n      <ion-col col-12 style="text-align: center; margin-top: 15px;">\n\n        <button ion-button color="secondary" block (click)="postmeetings()" style="letter-spacing: 1px; font-weight: bold;">సమర్పించండి</button>\n\n      </ion-col>\n\n\n\n    </ion-row>\n\n  </form>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\help\help.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["s" /* NavController */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["t" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_4__providers_service_service__["a" /* ServiceProvider */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */]])

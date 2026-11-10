@@ -18,10 +18,15 @@ export class HelpPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public formBuilder: FormBuilder, public camera: Camera, public actionSheetCtrl: ActionSheetController, public service: ServiceProvider, public zone: NgZone) {
 
+    const defName = localStorage.getItem('name') || '';
+    const defMobile = localStorage.getItem('mobile_number') || '';
     this.form = this.formBuilder.group({
+      name: [defName, [Validators.required]],
+      mobile_number: [defMobile, [Validators.required]],
+      address: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      help: ['']
-    })
+      help: ['', [Validators.required]]
+    });
   }
 
   gotohome() {
@@ -146,23 +151,27 @@ export class HelpPage {
 
   postmeetings() {
     if (this.form.invalid) {
-      alert('దయచేసి ఖాళీ ఫీల్డ్‌లను పూరించండి');
+      alert('దయచేసి అన్ని వివరాలను పూరించండి');
     } else {
       var data = {
         usr_id: localStorage.getItem('usr_id'),
-        mobile_number: localStorage.getItem('mobile_number'),
-        name: localStorage.getItem('name'),
+        mobile_number: this.form.value.mobile_number,
+        name: this.form.value.name,
+        address: this.form.value.address,
         description: this.form.value.description,
         help: this.form.value.help,
         reviewImg: this.imagesdata
       }
       this.service.posthelping(data).subscribe((res: any) => {
         if (res.status == 200) {
-          alert('విజయవంతముగా సబ్మిట్ అయింది')
+          alert('సహాయ అభ్యర్థన విజయవంతముగా నమోదు చేయబడింది');
           this.form.reset();
+          const defName = localStorage.getItem('name') || '';
+          const defMobile = localStorage.getItem('mobile_number') || '';
+          this.form.patchValue({ name: defName, mobile_number: defMobile });
           this.imagesdata = [];
         } else {
-          alert('server down')
+          alert('సర్వర్ సమస్య ఏర్పడింది');
         }
       })
     }

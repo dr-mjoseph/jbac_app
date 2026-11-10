@@ -25840,6 +25840,15 @@ page-imagemodal img {
   max-height: 100%;
 }
 
+page-institute ion-card {
+  border-radius: 0 !important;
+  -webkit-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12) !important;
+}
+page-institute ion-img, page-institute ion-img img {
+  border-radius: 0 !important;
+}
+
 page-investor {
   font-family: "Ramabhadra", sans-serif !important;
 }

@@ -14,15 +14,35 @@ export class AddinstitutePage {
 
   addinginsututies: FormGroup;
 
+  collegeTypeOptions: string[] = [
+    'School',
+    'Junior College',
+    'Degree College',
+    'PG College',
+    'Engineering College',
+    'Medical / Nursing College',
+    'Pharmacy College',
+    'B.Ed / D.Ed College',
+    'Polytechnic / ITI',
+    'Bible College',
+    'University',
+    'Other'
+  ];
+  selectedCollegeTypes: string[] = [];
+  gettingLocation: boolean = false;
+  denomation: any = [];
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public camera: Camera, public actionSheetCtrl: ActionSheetController, public formBuilder: FormBuilder, public service: ServiceProvider, private loadingCtrl: LoadingController, public zone: NgZone) {
     this.addinginsututies = this.formBuilder.group({
       checkbox: [''],
       believer_id: [''],
       pastor_id: [''],
+      owner_name: ['', [Validators.required]],
       institutename: ['', [Validators.required]],
+      denomination_id: ['', [Validators.required]],
       collegetype: ['', [Validators.required]],
       courses: ['', [Validators.required]],
-      phonenumber: ['', [Validators.required, Validators.maxLength(10)]],
+      phonenumber: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
       youtube: [''],
       ministry: [''],
       website: [''],
@@ -68,6 +88,51 @@ export class AddinstitutePage {
   ionViewDidLoad() {
     this.getbelivers();
     this.pastorfilter();
+    this.getdenomations();
+  }
+
+  getdenomations() {
+    this.service.getdenomation().subscribe((res: any) => {
+      this.denomation = res && res.data ? res.data : [];
+    });
+  }
+
+  onCollegeTypeCheckbox(type: string, isChecked: boolean) {
+    if (isChecked) {
+      if (this.selectedCollegeTypes.indexOf(type) === -1) {
+        this.selectedCollegeTypes.push(type);
+      }
+    } else {
+      this.selectedCollegeTypes = this.selectedCollegeTypes.filter(t => t !== type);
+    }
+    this.addinginsututies.patchValue({
+      collegetype: this.selectedCollegeTypes.join(', ')
+    });
+  }
+
+  getCurrentLocation() {
+    if (navigator.geolocation) {
+      this.gettingLocation = true;
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          this.zone.run(() => {
+            const url = `https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude}`;
+            this.addinginsututies.patchValue({ location: url });
+            this.gettingLocation = false;
+            alert('ప్రస్తుత లొకేషన్ విజయవంతంగా తీసుకోబడింది');
+          });
+        },
+        (err) => {
+          this.zone.run(() => {
+            this.gettingLocation = false;
+            alert('లొకేషన్ పొందలేకపోయాము. దయచేసి మాన్యువల్‌గా నమోదు చేయండి.');
+          });
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+      );
+    } else {
+      alert('ఈ పరికరంలో జియోలొకేషన్ సపోర్ట్ లేదు.');
+    }
   }
 
   onStateChange(event: any) {
@@ -342,13 +407,21 @@ export class AddinstitutePage {
       alert('దయచేసి ఖాళీ ఫీల్డ్‌లను పూరించండి ');
       this.loading.dismiss();
     } else {
+      if (this.selectedCollegeTypes && this.selectedCollegeTypes.length > 0) {
+        this.addinginsututies.value.collegetype = this.selectedCollegeTypes.join(', ');
+        this.addinginsututies.value.college_type = this.selectedCollegeTypes.join(', ');
+      }
+      this.addinginsututies.value.owner_name = this.addinginsututies.value.owner_name;
+      this.addinginsututies.value.chairman_name = this.addinginsututies.value.owner_name;
+      this.addinginsututies.value.denomination = this.addinginsututies.value.denomination_id;
       this.addinginsututies.value.image = this.imagesdata;
       this.addinginsututies.value.usr_id = localStorage.getItem('usr_id');
       this.addinginsututies.value.number = localStorage.getItem('mobile_number');
       this.service.postinsututies(this.addinginsututies.value).subscribe((res: any) => {
         if (res.status == 200) {
-          alert('విజయవంతముగా సబ్మిట్ అయింది')
+          alert('విజయవంతముగా సబ్మిట్ అయింది');
           this.addinginsututies.reset();
+          this.selectedCollegeTypes = [];
           this.imagesdata = [];
           this.submitted = false;
           this.loading.dismiss();
@@ -358,6 +431,7 @@ export class AddinstitutePage {
         }
       },
         error => {
+          this.loading.dismiss();
         })
     }
   }

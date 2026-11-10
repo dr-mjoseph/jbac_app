@@ -1,3 +1,9 @@
 page-institute {
-
+  ion-card {
+    border-radius: 0 !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12) !important;
+  }
+  ion-img, ion-img img {
+    border-radius: 0 !important;
+  }
 }
