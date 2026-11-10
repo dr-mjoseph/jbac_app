@@ -90,3 +90,4 @@ Write-Host " APK: $finalApk" -ForegroundColor Green
 Write-Host " AAB: $finalAab" -ForegroundColor Green
 Write-Host " Play AAB: $playAab" -ForegroundColor Green
 Write-Host "=============================================" -ForegroundColor Green
+

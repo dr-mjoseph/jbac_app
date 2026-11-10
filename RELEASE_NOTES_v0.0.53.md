@@ -68,3 +68,4 @@
 - **Minimum SDK**: `24` (Android 7.0+)
 - **Version Code**: `53`
 - **Version Name**: `0.0.53`
+
