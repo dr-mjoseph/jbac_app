@@ -1,6 +1,6 @@
 webpackJsonp([31],{
 
-/***/ 429:
+/***/ 428:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FormsPageModule", function() { return FormsPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__forms__ = __webpack_require__(489);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__forms__ = __webpack_require__(488);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,7 +38,7 @@ var FormsPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 489:
+/***/ 488:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -103,6 +103,9 @@ var FormsPage = /** @class */ (function () {
         else if (id == 11) {
             this.navCtrl.push('TeacherPage');
         }
+        else if (id == 12) {
+            this.navCtrl.push('AddinstitutePage');
+        }
         else if (id == 27) {
             this.navCtrl.push('PrivacyPage');
         }
@@ -118,7 +121,7 @@ var FormsPage = /** @class */ (function () {
     };
     FormsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-forms',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\forms\forms.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>రిజిస్ట్రేషన్</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n  <br>\n\n  <ion-card class="hesd" tappable (click)="gotopage(1)">\n\n    <ion-card-header>\n\n      బిలీవర్ రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(2)">\n\n    <ion-card-header>\n\n      విద్యార్థుల రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(3)">\n\n    <ion-card-header>\n\n      మినిస్ట్రీ రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(4)">\n\n    <ion-card-header>\n\n      పాస్టర్ రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(5)">\n\n    <ion-card-header>\n\n      చర్చి రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(6)">\n\n    <ion-card-header>\n\n      సంస్థ రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(7)">\n\n    <ion-card-header>\n\n      పాస్టర్ అసోసియేషన్ రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(8)" style="border-left: 5px solid #00548F; background: linear-gradient(135deg, #e0f2fe, #ffffff);">\n\n    <ion-card-header style="color: #00548F; font-weight: bold;">\n\n      🩺 డాక్టర్ / కౌన్సిలర్ రిజిస్టర్ (Doctor Register)\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(9)" style="border-left: 5px solid #6366f1; background: linear-gradient(135deg, #e0e7ff, #ffffff);">\n\n    <ion-card-header style="color: #4338ca; font-weight: bold;">\n\n      🚀 ఎంటర్‌ప్రెన్యూర్ రిజిస్టర్ (Entrepreneur Register)\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(10)" style="border-left: 5px solid #10b981; background: linear-gradient(135deg, #d1fae5, #ffffff);">\n\n    <ion-card-header style="color: #047857; font-weight: bold;">\n\n      💰 ఇన్వెస్టర్ రిజిస్టర్ (Investor Register)\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(11)" style="border-left: 5px solid #0284c7; background: linear-gradient(135deg, #e0f2fe, #ffffff);">\n\n    <ion-card-header style="color: #0369a1; font-weight: bold;">\n\n      📚 బోధనా రంగ ఉద్యోగుల రిజిస్టర్ (Teachers Register)\n\n    </ion-card-header>\n\n  </ion-card>\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\forms\forms.html"*/,
+            selector: 'page-forms',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\forms\forms.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>రిజిస్ట్రేషన్</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n  <br>\n\n  <ion-card class="hesd" tappable (click)="gotopage(1)">\n\n    <ion-card-header>\n\n      బిలీవర్ రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(2)">\n\n    <ion-card-header>\n\n      విద్యార్థుల రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(3)">\n\n    <ion-card-header>\n\n      మినిస్ట్రీ రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(4)">\n\n    <ion-card-header>\n\n      పాస్టర్ రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(5)">\n\n    <ion-card-header>\n\n      చర్చి రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(6)">\n\n    <ion-card-header>\n\n      సంస్థ రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(7)">\n\n    <ion-card-header>\n\n      పాస్టర్ అసోసియేషన్ రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(8)" style="border-left: 5px solid #00548F; background: linear-gradient(135deg, #e0f2fe, #ffffff);">\n\n    <ion-card-header style="color: #00548F; font-weight: bold;">\n\n      🩺 డాక్టర్ / కౌన్సిలర్ రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(9)" style="border-left: 5px solid #6366f1; background: linear-gradient(135deg, #e0e7ff, #ffffff);">\n\n    <ion-card-header style="color: #4338ca; font-weight: bold;">\n\n      🚀 ఎంటర్‌ప్రెన్యూర్ రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(10)" style="border-left: 5px solid #10b981; background: linear-gradient(135deg, #d1fae5, #ffffff);">\n\n    <ion-card-header style="color: #047857; font-weight: bold;">\n\n      💰 ఇన్వెస్టర్ రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(11)" style="border-left: 5px solid #0284c7; background: linear-gradient(135deg, #e0f2fe, #ffffff);">\n\n    <ion-card-header style="color: #0369a1; font-weight: bold;">\n\n      📚 బోధనా రంగ ఉద్యోగుల రిజిస్టర్\n\n    </ion-card-header>\n\n  </ion-card>\n\n  <ion-card class="hesd" tappable (click)="gotopage(12)" style="border-left: 5px solid #0d9488; background: linear-gradient(135deg, #ccfbf1, #ffffff);">\n\n    <ion-card-header style="color: #0f766e; font-weight: bold;">\n\n      🎓 క్రిస్టియన్ విద్యా సంస్థల నమోదు\n\n    </ion-card-header>\n\n  </ion-card>\n\n</ion-content>'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\forms\forms.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]])
     ], FormsPage);

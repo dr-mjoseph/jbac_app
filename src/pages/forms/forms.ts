@@ -44,6 +44,8 @@ export class FormsPage {
       this.navCtrl.push('InvestorPage');
     } else if (id == 11) {
       this.navCtrl.push('TeacherPage');
+    } else if (id == 12) {
+      this.navCtrl.push('AddinstitutePage');
     }
     else if (id == 27) {
       this.navCtrl.push('PrivacyPage');
