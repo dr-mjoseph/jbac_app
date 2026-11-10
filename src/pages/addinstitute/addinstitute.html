@@ -97,7 +97,7 @@
           <ion-label stacked>డెనామినేషన్ <span style="color:red;">*</span></ion-label>
           <ion-select formControlName="denomination_id" placeholder="డెనామినేషన్ ఎంచుకోండి">
             <ion-option value="" disabled selected>డెనామినేషన్ ఎంచుకోండి</ion-option>
-            <ion-option *ngFor="let item of denomation" [value]="item.id">{{item.denomination}}</ion-option>
+            <ion-option *ngFor="let item of denomation" [value]="item.id">{{ item.denomation_name || item.denomination_name || item.denomination }}</ion-option>
           </ion-select>
         </ion-item>
         <div *ngIf="submitted && i['denomination_id'].errors" class="error-message">
