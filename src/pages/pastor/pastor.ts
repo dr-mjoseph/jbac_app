@@ -26,7 +26,9 @@ export class PastorPage {
   denomation: any;
   bliversdata: any;
   wings: any;
+  leaderlevel: any[] = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, public service: ServiceProvider, public formBuilder: FormBuilder) {
+    this.leaderlevel = this.getDefaultLeaderLevels();
 
 
     this.form = this.formBuilder.group({
@@ -96,7 +98,42 @@ export class PastorPage {
     this.getdenomations();
     this.getbelivers();
     this.getwing();
+    this.getleaderlevels();
     // this.getservice();
+  }
+
+  getDefaultLeaderLevels(): any[] {
+    return [
+      { id: '1', level: 'జిల్లా నాయకుడు', level_name: 'జిల్లా నాయకుడు' },
+      { id: '2', level: 'నియోజకవర్గం నాయకుడు', level_name: 'నియోజకవర్గం నాయకుడు' },
+      { id: '3', level: 'మండల నాయకుడు', level_name: 'మండల నాయకుడు' },
+      { id: '4', level: 'పంచాయతి నాయకుడు', level_name: 'పంచాయతి నాయకుడు' },
+      { id: '5', level: 'వార్డు నాయకుడు', level_name: 'వార్డు నాయకుడు' },
+      { id: '6', level: 'సబ్-వార్డు నాయకుడు', level_name: 'సబ్-వార్డు నాయకుడు' }
+    ];
+  }
+
+  getleaderlevels() {
+    this.leaderlevel = this.getDefaultLeaderLevels();
+    this.service.getleaderlevel().subscribe(
+      (res: any) => {
+        const list = (res && res.data) ? res.data : (Array.isArray(res) ? res : []);
+        const filtered = (list || []).filter((item: any) => {
+          const label = String((item && (item.level || item.level_name)) || '').trim();
+          return label && label.indexOf('రాష్ట్ర') === -1 && label.toLowerCase().indexOf('state') === -1;
+        });
+        if (filtered.length > 0) {
+          this.leaderlevel = filtered.map((item: any, idx: number) => ({
+            ...item,
+            id: String(idx + 1),
+            level: String(item.level || item.level_name || '').replace(/^\d+\.\s*/, '').trim()
+          }));
+        }
+      },
+      () => {
+        this.leaderlevel = this.getDefaultLeaderLevels();
+      }
+    );
   }
 
   getwing() {
@@ -205,13 +242,12 @@ export class PastorPage {
   }
 
   onsubward(event: any) {
-    var s = event
-    if (s == '6') {
+    var s = event && event.target ? event.target.value : event;
+    if (String(s) === '6') {
       this.subward = true;
     } else {
       this.subward = false;
     }
-
   }
 
   onradioleadertype(event: any) {
@@ -220,7 +256,7 @@ export class PastorPage {
       this.leadtype = true
       this.wingtype = false
       this.wingtypes = false
-      this.subward = true
+      this.subward = String(this.form.get('generaltype') && this.form.get('generaltype').value || '') === '6';
     } else {
       this.leadtype = false
       this.wingtype = true

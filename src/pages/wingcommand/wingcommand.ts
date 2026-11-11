@@ -366,14 +366,13 @@ export class WingcommandPage {
     if (isWing) return (x.wing_name || 'వింగ్') + ' లీడర్';
     const gType = String(x.generaltype || '').trim();
     const gLower = gType.toLowerCase();
-    const isTeacherRow = this.selectedUserType === 'teacher' || x.role === 'teacher' || String(x.table_name || '') === 'teacher_reg';
 
-    if (gType.indexOf('రాష్ట్ర') !== -1 || gLower.indexOf('state') !== -1 || (isTeacherRow ? gType === '1' : gType === '0')) return 'రాష్ట్ర లీడర్';
-    if (gType.indexOf('జిల్లా') !== -1 || gLower.indexOf('dist') !== -1 || (isTeacherRow ? gType === '2' : gType === '1')) return 'జిల్లా లీడర్';
-    if (gType.indexOf('నియోజకవర్గ') !== -1 || gLower.indexOf('const') !== -1 || (isTeacherRow ? gType === '3' : gType === '2')) return 'నియోజకవర్గ లీడర్';
-    if (gType.indexOf('మండల') !== -1 || gLower.indexOf('mandal') !== -1 || gLower.indexOf('municip') !== -1 || (isTeacherRow ? gType === '4' : gType === '3')) return 'మండల లీడర్';
-    if (gType.indexOf('పంచాయ') !== -1 || gLower.indexOf('panchayat') !== -1 || gLower.indexOf('village') !== -1 || (isTeacherRow ? gType === '5' : gType === '4')) return 'గ్రామ / పంచాయితీ లీడర్';
-    if (gType.indexOf('వార్డు') !== -1 || gLower.indexOf('ward') !== -1 || (isTeacherRow ? gType === '6' : (gType === '5' || gType === '6'))) return 'వార్డు లీడర్';
+    if (gType.indexOf('రాష్ట్ర') !== -1 || gLower.indexOf('state') !== -1 || gType === '0') return 'రాష్ట్ర లీడర్';
+    if (gType.indexOf('జిల్లా') !== -1 || gLower.indexOf('dist') !== -1 || gType === '1') return 'జిల్లా లీడర్';
+    if (gType.indexOf('నియోజకవర్గ') !== -1 || gLower.indexOf('const') !== -1 || gType === '2') return 'నియోజకవర్గ లీడర్';
+    if (gType.indexOf('మండల') !== -1 || gLower.indexOf('mandal') !== -1 || gLower.indexOf('municip') !== -1 || gType === '3') return 'మండల లీడర్';
+    if (gType.indexOf('పంచాయ') !== -1 || gLower.indexOf('panchayat') !== -1 || gLower.indexOf('village') !== -1 || gType === '4') return 'గ్రామ / పంచాయితీ లీడర్';
+    if (gType.indexOf('వార్డు') !== -1 || gLower.indexOf('ward') !== -1 || gType === '5' || gType === '6') return 'వార్డు లీడర్';
     return 'జనరల్ లీడర్';
   }
 

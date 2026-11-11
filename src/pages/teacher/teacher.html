@@ -188,7 +188,7 @@
       <ion-item class="custom-item" *ngIf="showTeacherLeadershipLevel">
         <ion-label stacked>Select Leadership Level you want (నాయకత్వ స్థాయి) <span class="req">*</span></ion-label>
         <ion-select formControlName="generaltype" okText="సరే" cancelText="రద్దు" placeholder="Select Leadership Level you want">
-          <ion-option *ngFor="let lvl of leaderlevels" [value]="lvl.level || lvl.level_name">{{ lvl.level || lvl.level_name }}</ion-option>
+          <ion-option *ngFor="let lvl of leaderlevels; let i = index" [value]="lvl.level || lvl.level_name">{{ i + 1 }}. {{ lvl.level || lvl.level_name }}</ion-option>
         </ion-select>
       </ion-item>
 

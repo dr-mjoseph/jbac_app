@@ -38,12 +38,16 @@
 ### 3. Teacher Registration Leadership Fields & Hierarchical Teacher Leaders Dashboard
 - **Teacher Registration (`TeacherPage` & Web `TeacherregisterComponent`)**:
   - Directly after the **Upload CV / Profile** field, added **"Do you want to be a Christian Teacher Leader?"** (`YES` / `NO` radio selection) and conditional **"Select Leadership Level you want"** dropdown populated dynamically from the existing `leaderlevel` table (`ServiceProvider.getleaderlevel()` -> `POST leaderlevels`).
+- **Numbered Leadership Hierarchy Starting from District (`PastorPage`, `TeacherPage`, `ProfilePage`, `WingcommandPage`)**:
+  - Removed the **State (`రాష్ట్ర నాయకుడు`)** tier from the Leadership Level hierarchy on Pastor and Teacher registrations (matching Believer Registration, which starts from District) and numbered the dropdown options `1..6`:
+    `1. జిల్లా నాయకుడు` -> `2. నియోజకవర్గం నాయకుడు` -> `3. మండల నాయకుడు` -> `4. పంచాయతి నాయకుడు` -> `5. వార్డు నాయకుడు` -> `6. సబ్-వార్డు నాయకుడు`.
+  - Replaced hardcoded Pastor options in `pastor.html` (including fixing duplicate `value="3"` and State `value="0"`) with dynamic `leaderlevel` binding, numbered Pastor profile (`profile.html`) options `1..6`, and aligned `WingcommandPage` numeric tier resolution (`1=District..6=Sub-Ward`) uniformly across Teacher and Pastor leaders.
 - **Authentication & Profile Support**:
   - Added Teacher Login & Forgot Password Category `'9'` (`బోధనా రంగ ఉద్యోగి / టీచర్ (Teacher)`) across `LoginPage` and `ForgotPasswordPage`.
   - Migrated `teacher_reg` schema (`scripts/migrate_teacher_leaders_v54.js`) with leadership columns, `d_in`, `password`, and `is_first_login` (default password backfilled to `mobile`).
 - **Hierarchical Teacher Leaders Dashboard (`WingcommandPage` & Web `LeadersComponent`)**:
   - Implemented strict Teacher-only isolation (`formshow == 4`, `teacherarr`, `data[4]` response slot) so Teacher Leaders see only Teacher Leader applicants.
-  - Enforced admin approval check before granting dashboard access (`approval_ind == 1 || d_in == 1`), **1-step-down** hierarchy filtering (`State -> District -> Constituency -> Mandal -> Panchayat -> Ward`), and strict geographic matching (e.g., approved Hyderabad District Teacher Leader views unapproved Constituency Teacher Leaders in Hyderabad District; approved Nalgonda Constituency Teacher Leader views unapproved Mandal Teacher Leaders in the same Nalgonda constituency).
+  - Enforced admin approval check before granting dashboard access (`approval_ind == 1 || d_in == 1`), **1-step-down** hierarchy filtering (`1. District -> 2. Constituency -> 3. Mandal -> 4. Panchayat -> 5. Ward -> 6. Sub-Ward`), and strict geographic matching (e.g., approved Hyderabad District Teacher Leader views unapproved Constituency Teacher Leaders in Hyderabad District; approved Nalgonda Constituency Teacher Leader views unapproved Mandal Teacher Leaders in the same Nalgonda constituency).
   - Enabled Teacher Leaders to **Confirm / Approve** (`tableid: 4` -> `/updateconsis`) or **Reject** (`tableid: 4` -> `/deleteboardmember`) subordinate applicants.
 
 ---
@@ -51,8 +55,8 @@
 ## Signed Mobile Release Deliverables
 
 - **Signed Release APK**: `jbacApp-0.0.54.apk` (`130,647,737` bytes; 4-byte zipalign verified; `apksigner verify` v2 + v3 verified)
-- **Signed Release AAB**: `jbacApp-0.0.54.aab` (`127,682,840` bytes; signed via `jarsigner` with `Jbac.keystore`)
-- **Google Play Bundle**: `appreleasesigned.aab` (`127,682,840` bytes; verified with `jarsigner -verify`)
+- **Signed Release AAB**: `jbacApp-0.0.54.aab` (`127,684,739` bytes; signed via `jarsigner` with `Jbac.keystore`)
+- **Google Play Bundle**: `appreleasesigned.aab` (`127,684,739` bytes; verified with `jarsigner -verify`)
 
 ---
 

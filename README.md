@@ -38,9 +38,11 @@ This repository contains the native hybrid Android mobile application for the **
 
 - **Teacher Registration Leadership Fields (`TeacherPage`)**:
   - Added **"Do you want to be a Christian Teacher Leader?"** (`YES` / `NO`) and conditional **"Select Leadership Level you want"** dropdown populated from the `leaderlevel` database table (`ServiceProvider.getleaderlevel()`), positioned directly after CV upload.
+- **Numbered District-to-Sub-Ward Leadership Hierarchy (`PastorPage`, `TeacherPage`, `ProfilePage`, `WingcommandPage`)**:
+  - Removed the State (`రాష్ట్ర నాయకుడు`) level from Pastor and Teacher leadership hierarchies and numbered levels `1..6` starting from District (`1. జిల్లా నాయకుడు` through `6. సబ్-వార్డు నాయకుడు`) while unifying `WingcommandPage` numeric tier mapping (`1..6`).
 - **Hierarchical Teacher Leaders Dashboard (`WingcommandPage`) & Auth Category `9`**:
   - Added Category `9` (`బోధనా రంగ ఉద్యోగి / టీచర్ (Teacher)`) to `LoginPage` and `ForgotPasswordPage`.
-  - Added Teacher Leaders view (`formshow == 4`) with strict Teacher-only isolation, admin-approval requirement, 1-step-down hierarchy (`State -> District -> Constituency -> Mandal -> Panchayat -> Ward`), same-location filtering, and Confirm/Reject actions (`tableid: 4`).
+  - Added Teacher Leaders view (`formshow == 4`) with strict Teacher-only isolation, admin-approval requirement, 1-step-down hierarchy (`1. District -> 2. Constituency -> 3. Mandal -> 4. Panchayat -> 5. Ward -> 6. Sub-Ward`), same-location filtering, and Confirm/Reject actions (`tableid: 4`).
 - **Help Form Reset, Full Name Rename, Denomination & AP/TG Hierarchy (`HelpPage`)**:
   - Added `పూర్తి పేరు *`, `డెనామినేషన్ *`, strict AP/TG 5-level cascade before `చిరునామా *`, and full post-submit reset (`resetFormCompletely()`).
 - **Release `0.0.54` Automated Build**:
