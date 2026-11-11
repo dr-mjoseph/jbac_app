@@ -31,6 +31,11 @@
         🎓 Students Requests (విద్యార్థులు)
       </button>
     </ion-col>
+    <ion-col col-12 text-center *ngIf="formshow == 4">
+      <button ion-button block style="background-color: #047857; color: #fff; font-size: 13px; font-weight: 600; height: 42px;">
+        👨‍🏫 Teachers Requests (ఉపాధ్యాయులు / బోధనా రంగం)
+      </button>
+    </ion-col>
   </ion-row>
 
   <!-- Believers Requests Card -->
@@ -179,6 +184,56 @@
       </div>
       <h4 *ngIf="!studentarr || studentarr.length == 0" text-center style="color: #64748b; padding: 20px;">
         ఈ పరిధిలో ఎటువంటి విద్యార్థి అభ్యర్థనలు లేవు / No Students Requests
+      </h4>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Teachers Requests Card -->
+  <ion-card *ngIf="formshow == 4">
+    <ion-card-header>
+      <ion-card-title text-center style="font-size: 14px; color: #047857;">
+        {{ general != '' ? general + ' Level Teacher Leaders Requests' : 'Teacher Leaders Requests' }} ({{ getSubordinateSubtitle() }})
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div style="overflow: auto;">
+        <table class="table" style="width: 100%;">
+          <thead style="text-align: center;">
+            <tr>
+              <th>S.No</th>
+              <th>పేరు (Name)</th>
+              <th>స్థాయి</th>
+              <th>నియోజకవర్గం</th>
+              <th>మండలం</th>
+              <th>నిర్ణయం</th>
+              <th>కాల్</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let x of teacherarr; let i = index" style="text-align: center;">
+              <td>{{ i + 1 }}</td>
+              <td><b>{{ x.name_with_surname || x.name || '--' }}</b></td>
+              <td><span style="font-size: 10px; background: #dcfce7; color: #047857; padding: 2px 6px; border-radius: 4px;">{{ getDetailedLeaderStatus(x) }}</span></td>
+              <td>{{ x.constituency_name || '--' }}</td>
+              <td>{{ x.mandal_name || '--' }}</td>
+              <td class="actions">
+                <ion-label *ngIf="x.approval_ind == 1" style="color: green;"><b>✓ Accepted</b></ion-label>
+                <div *ngIf="x.approval_ind == 0 || x.approval_ind == null">
+                  <button ion-button small color="success" (click)="confirm(4, x.id)">Confirm</button>
+                  <button ion-button small color="danger" (click)="deleteAlert(4, x.id)">Reject</button>
+                </div>
+              </td>
+              <td class="contact">
+                <a href="tel:+91{{ x.mobile || x.mobile_number }}">
+                  <ion-icon name="call" style="font-size: 20px; color: green;"></ion-icon>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h4 *ngIf="!teacherarr || teacherarr.length == 0" text-center style="color: #64748b; padding: 20px;">
+        ఈ పరిధిలో ఎటువంటి ఉపాధ్యాయ నాయకుల అభ్యర్థనలు లేవు / No Teacher Leader Requests
       </h4>
     </ion-card-content>
   </ion-card>

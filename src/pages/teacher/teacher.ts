@@ -34,6 +34,8 @@ export class TeacherPage {
   familyBackgrounds: any[] = [];
   institutionTypes: any[] = [];
   denominations: any[] = [];
+  leaderlevels: any[] = [];
+  showTeacherLeadershipLevel: boolean = false;
 
   casteList: string[] = ['OC', 'BC-A', 'BC-B', 'BC-C', 'BC-D', 'BC-E', 'SC', 'ST', 'Others / ఇతరులు'];
 
@@ -94,7 +96,11 @@ export class TeacherPage {
       about_achievements: [''],
 
       // CV / Profile Upload (Optional)
-      cv_profile: ['']
+      cv_profile: [''],
+
+      // Teacher Leadership Interest & Level
+      leadership: ['', [Validators.required]],
+      generaltype: ['']
     });
   }
 
@@ -135,10 +141,12 @@ export class TeacherPage {
     this.institutionTypes = this.getDefaultInstitutionTypes();
     this.experienceLevels = this.getDefaultExperienceLevels();
     this.denominations = this.getDefaultDenominations();
+    this.leaderlevels = this.getDefaultLeaderLevels();
 
     this.loadStates();
     this.loadTeachingMasterData();
     this.loadDenominations();
+    this.loadLeaderLevels();
   }
 
   gotohome() {
@@ -221,6 +229,47 @@ export class TeacherPage {
         }
       }
     );
+  }
+
+  loadLeaderLevels() {
+    this.service.getleaderlevel().subscribe(
+      (res: any) => {
+        const list = (res && res.data) ? res.data : (Array.isArray(res) ? res : []);
+        if (list && list.length > 0) {
+          this.leaderlevels = list;
+        } else if (!this.leaderlevels || this.leaderlevels.length === 0) {
+          this.leaderlevels = this.getDefaultLeaderLevels();
+        }
+      },
+      () => {
+        if (!this.leaderlevels || this.leaderlevels.length === 0) {
+          this.leaderlevels = this.getDefaultLeaderLevels();
+        }
+      }
+    );
+  }
+
+  getDefaultLeaderLevels(): any[] {
+    return [
+      { id: 1, level: 'రాష్ట్ర నాయకుడు', level_name: 'రాష్ట్ర నాయకుడు' },
+      { id: 2, level: 'జిల్లా నాయకుడు', level_name: 'జిల్లా నాయకుడు' },
+      { id: 3, level: 'నియోజకవర్గం నాయకుడు', level_name: 'నియోజకవర్గం నాయకుడు' },
+      { id: 4, level: 'మండల నాయకుడు', level_name: 'మండల నాయకుడు' },
+      { id: 5, level: 'పంచాయతి నాయకుడు', level_name: 'పంచాయతి నాయకుడు' }
+    ];
+  }
+
+  onLeadershipChange(choice: string) {
+    const levelCtrl = this.teacherForm.get('generaltype');
+    if (choice === 'YES') {
+      this.showTeacherLeadershipLevel = true;
+      levelCtrl.setValidators([Validators.required]);
+    } else {
+      this.showTeacherLeadershipLevel = false;
+      levelCtrl.clearValidators();
+      levelCtrl.setValue('');
+    }
+    levelCtrl.updateValueAndValidity();
   }
 
   getDefaultDenominations(): any[] {
@@ -575,6 +624,11 @@ export class TeacherPage {
       about_achievements: formVal.about_achievements || '',
       description: formVal.about_achievements || '',
 
+      // Teacher Leadership
+      leadership: formVal.leadership || 'NO',
+      leadertype: formVal.leadership === 'YES' ? '1' : '',
+      generaltype: formVal.leadership === 'YES' ? (formVal.generaltype || '') : '',
+
       // CV / Profile
       cv_profile: this.cvBase64 || '',
       cv_file: this.cvBase64 || ''
@@ -585,6 +639,7 @@ export class TeacherPage {
       (res: any) => {
         loader.dismiss();
         if (res && (res.status === 200 || res.id)) {
+          self.showTeacherLeadershipLevel = false;
           const successAlert = self.alertCtrl.create({
             title: 'నమోదు పూర్తయింది! (Success)',
             subTitle: 'మీ బోధనా రంగ ఉద్యోగి వివరాలు విజయవంతంగా నమోదు చేయబడ్డాయి.',

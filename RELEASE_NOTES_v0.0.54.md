@@ -35,13 +35,24 @@
   - Updated `POST /dashboardapi/posthelping` and `/api/posthelping` to persist the new denomination and geographic hierarchy fields into `helps`.
   - Updated `ALL /dashboardapi/gethelps` and `/api/gethelps` with `LEFT JOIN` lookups returning `denomination_name`, `district_name`, `constituency_name`, `mandal_name`, and `panchayat_name`.
 
+### 3. Teacher Registration Leadership Fields & Hierarchical Teacher Leaders Dashboard
+- **Teacher Registration (`TeacherPage` & Web `TeacherregisterComponent`)**:
+  - Directly after the **Upload CV / Profile** field, added **"Do you want to be a Christian Teacher Leader?"** (`YES` / `NO` radio selection) and conditional **"Select Leadership Level you want"** dropdown populated dynamically from the existing `leaderlevel` table (`ServiceProvider.getleaderlevel()` -> `POST leaderlevels`).
+- **Authentication & Profile Support**:
+  - Added Teacher Login & Forgot Password Category `'9'` (`బోధనా రంగ ఉద్యోగి / టీచర్ (Teacher)`) across `LoginPage` and `ForgotPasswordPage`.
+  - Migrated `teacher_reg` schema (`scripts/migrate_teacher_leaders_v54.js`) with leadership columns, `d_in`, `password`, and `is_first_login` (default password backfilled to `mobile`).
+- **Hierarchical Teacher Leaders Dashboard (`WingcommandPage` & Web `LeadersComponent`)**:
+  - Implemented strict Teacher-only isolation (`formshow == 4`, `teacherarr`, `data[4]` response slot) so Teacher Leaders see only Teacher Leader applicants.
+  - Enforced admin approval check before granting dashboard access (`approval_ind == 1 || d_in == 1`), **1-step-down** hierarchy filtering (`State -> District -> Constituency -> Mandal -> Panchayat -> Ward`), and strict geographic matching (e.g., approved Hyderabad District Teacher Leader views unapproved Constituency Teacher Leaders in Hyderabad District; approved Nalgonda Constituency Teacher Leader views unapproved Mandal Teacher Leaders in the same Nalgonda constituency).
+  - Enabled Teacher Leaders to **Confirm / Approve** (`tableid: 4` -> `/updateconsis`) or **Reject** (`tableid: 4` -> `/deleteboardmember`) subordinate applicants.
+
 ---
 
 ## Signed Mobile Release Deliverables
 
-- **Signed Release APK**: `jbacApp-0.0.54.apk` (`130,643,641` bytes; 4-byte zipalign verified; `apksigner verify` v2 + v3 verified)
-- **Signed Release AAB**: `jbacApp-0.0.54.aab` (`127,679,243` bytes; signed via `jarsigner` with `Jbac.keystore`)
-- **Google Play Bundle**: `appreleasesigned.aab` (`127,679,243` bytes; verified with `jarsigner -verify`)
+- **Signed Release APK**: `jbacApp-0.0.54.apk` (`130,647,737` bytes; 4-byte zipalign verified; `apksigner verify` v2 + v3 verified)
+- **Signed Release AAB**: `jbacApp-0.0.54.aab` (`127,682,840` bytes; signed via `jarsigner` with `Jbac.keystore`)
+- **Google Play Bundle**: `appreleasesigned.aab` (`127,682,840` bytes; verified with `jarsigner -verify`)
 
 ---
 
@@ -51,3 +62,4 @@
 - **Minimum SDK**: `24` (from `config.xml`)
 - **Version Code**: `54`
 - **Version Name**: `0.0.54`
+

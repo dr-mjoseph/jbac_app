@@ -69,6 +69,7 @@ var WingcommandPage = /** @class */ (function () {
         this.belearr = [];
         this.studentarr = [];
         this.pastorarr = [];
+        this.teacherarr = [];
         this.formshow = 1;
         this.selectedUserType = 'believer';
         this.general = '';
@@ -79,6 +80,31 @@ var WingcommandPage = /** @class */ (function () {
         this.isShowDiv = true;
         this.formshow = 1;
     }
+    WingcommandPage.prototype.resolveLeaderHierarchyStep = function (u) {
+        if (!u)
+            return 0;
+        var raw = String((u.generaltype !== undefined && u.generaltype !== null) ? u.generaltype : '').trim();
+        var lower = raw.toLowerCase();
+        if (raw.indexOf('రాష్ట్ర') !== -1 || lower.indexOf('state') !== -1)
+            return 0;
+        if (raw.indexOf('జిల్లా') !== -1 || lower.indexOf('dist') !== -1)
+            return 1;
+        if (raw.indexOf('నియోజకవర్గ') !== -1 || lower.indexOf('const') !== -1)
+            return 2;
+        if (raw.indexOf('మండల') !== -1 || lower.indexOf('mandal') !== -1 || lower.indexOf('municip') !== -1)
+            return 3;
+        if (raw.indexOf('పంచాయ') !== -1 || lower.indexOf('panchayat') !== -1 || lower.indexOf('village') !== -1)
+            return 4;
+        if (raw.indexOf('సబ్') !== -1 || lower.indexOf('subward') !== -1)
+            return 6;
+        if (raw.indexOf('వార్డు') !== -1 || lower.indexOf('ward') !== -1)
+            return 5;
+        var num = Number(raw);
+        if (!isNaN(num) && raw !== '') {
+            return num;
+        }
+        return 0;
+    };
     WingcommandPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad WingcommandPage');
         this.category_id = localStorage.getItem("category_id");
@@ -89,6 +115,10 @@ var WingcommandPage = /** @class */ (function () {
         else if (this.category_id === '2') {
             this.selectedUserType = 'student';
             this.formshow = 2;
+        }
+        else if (this.category_id === '9') {
+            this.selectedUserType = 'teacher';
+            this.formshow = 4;
         }
         else {
             this.selectedUserType = 'believer';
@@ -126,6 +156,8 @@ var WingcommandPage = /** @class */ (function () {
                     _this.formshow = 3;
                 else if (forceUserType === 'student')
                     _this.formshow = 2;
+                else if (forceUserType === 'teacher')
+                    _this.formshow = 4;
                 else
                     _this.formshow = 1;
             }
@@ -137,6 +169,10 @@ var WingcommandPage = /** @class */ (function () {
                 else if (userRole === 'student' || storedCat === '2') {
                     _this.selectedUserType = 'student';
                     _this.formshow = 2;
+                }
+                else if (userRole === 'teacher' || storedCat === '9') {
+                    _this.selectedUserType = 'teacher';
+                    _this.formshow = 4;
                 }
                 else {
                     _this.selectedUserType = 'believer';
@@ -151,40 +187,41 @@ var WingcommandPage = /** @class */ (function () {
         if (!this.cachedUserRes)
             return;
         var u = this.cachedUserRes;
-        this.leaderid = u.leadertype;
-        if (u.leadertype == 1) {
+        this.leaderid = u.leadertype || (this.selectedUserType === 'teacher' ? '1' : '');
+        if (u.leadertype == 1 || (u.leadertype != 2 && this.selectedUserType === 'teacher')) {
             this.leaders = "Leader ";
         }
         else if (u.leadertype == 2) {
             this.leaders = "Wing ";
         }
-        this.myresdata = u.generaltype;
+        var step = this.resolveLeaderHierarchyStep(u);
+        this.myresdata = step;
         var loader = this.loadingCtrl.create({
             content: 'డేటా లోడ్ అవుతోంది... (Loading data...)'
         });
         loader.present().catch(function () { });
-        if (u.leadertype == 1) {
-            if (u.generaltype == 0) {
+        if (u.leadertype == 1 || (u.leadertype != 2 && this.selectedUserType === 'teacher')) {
+            if (step == 0) {
                 this.generals = "State";
                 this.general = "District ";
             }
-            else if (u.generaltype == 1) {
+            else if (step == 1) {
                 this.generals = "District";
                 this.general = "Constituency ";
             }
-            else if (u.generaltype == 2) {
+            else if (step == 2) {
                 this.generals = "Constituency";
                 this.general = "Mandal ";
             }
-            else if (u.generaltype == 3) {
+            else if (step == 3) {
                 this.generals = "Mandal ";
                 this.general = "Panchayat ";
             }
-            else if (u.generaltype == 4) {
+            else if (step == 4) {
                 this.generals = "Panchayat ";
                 this.general = "Ward ";
             }
-            else if (u.generaltype == 5 || u.generaltype == 6) {
+            else if (step >= 5) {
                 this.generals = "Ward ";
                 this.general = "";
             }
@@ -192,7 +229,7 @@ var WingcommandPage = /** @class */ (function () {
                 "usr_id": localStorage.getItem("usr_id"),
                 "category_id": localStorage.getItem("category_id"),
                 "user_type": this.selectedUserType,
-                "leadertype": u.leadertype,
+                "leadertype": u.leadertype || '1',
                 "wingtypes": u.wingtypes,
                 "generaltype": u.generaltype,
                 state_id: u.state_id || 1,
@@ -202,24 +239,37 @@ var WingcommandPage = /** @class */ (function () {
                 panchayat_id: u.village_id
             };
             this.service.getLeaderswebsiteD(data).subscribe(function (result) {
-                var rawBelievers = result.data[0] || [];
-                var rawPastors = result.data[2] || [];
-                var rawStudents = result.data[3] || [];
+                loader.dismiss().catch(function () { });
+                var rawBelievers = (result && result.data && result.data[0]) ? result.data[0] : [];
+                var rawPastors = (result && result.data && result.data[2]) ? result.data[2] : [];
+                var rawStudents = (result && result.data && result.data[3]) ? result.data[3] : [];
+                var rawTeachers = (result && result.data && result.data[4]) ? result.data[4] : [];
                 if (_this.selectedUserType === 'pastor') {
                     _this.pastorarr = rawPastors.filter(function (x) { return Number((x && x.approval_ind)) !== 2; });
                     _this.belearr = [];
                     _this.studentarr = [];
+                    _this.teacherarr = [];
                 }
                 else if (_this.selectedUserType === 'student') {
                     _this.studentarr = rawStudents.filter(function (x) { return Number((x && x.approval_ind)) !== 2; });
                     _this.belearr = [];
                     _this.pastorarr = [];
+                    _this.teacherarr = [];
+                }
+                else if (_this.selectedUserType === 'teacher') {
+                    _this.teacherarr = rawTeachers.filter(function (x) { return Number((x && x.approval_ind)) !== 2 && Number((x && x.d_in)) !== 1; });
+                    _this.belearr = [];
+                    _this.pastorarr = [];
+                    _this.studentarr = [];
                 }
                 else {
                     _this.belearr = rawBelievers.filter(function (x) { return Number((x && x.approval_ind)) !== 2; });
                     _this.pastorarr = [];
                     _this.studentarr = [];
+                    _this.teacherarr = [];
                 }
+            }, function () {
+                loader.dismiss().catch(function () { });
             });
         }
         else if (u.leadertype == 2) {
@@ -272,16 +322,19 @@ var WingcommandPage = /** @class */ (function () {
                     _this.pastorarr = rawPastors.filter(function (x) { return Number((x && x.approval_ind)) !== 2; });
                     _this.belearr = [];
                     _this.studentarr = [];
+                    _this.teacherarr = [];
                 }
                 else if (_this.selectedUserType === 'student') {
                     _this.studentarr = rawStudents.filter(function (x) { return Number((x && x.approval_ind)) !== 2; });
                     _this.belearr = [];
                     _this.pastorarr = [];
+                    _this.teacherarr = [];
                 }
                 else {
                     _this.belearr = rawBelievers.filter(function (x) { return Number((x && x.approval_ind)) !== 2; });
                     _this.pastorarr = [];
                     _this.studentarr = [];
+                    _this.teacherarr = [];
                 }
             });
         }
@@ -320,16 +373,25 @@ var WingcommandPage = /** @class */ (function () {
             this.selectedUserType = 'believer';
             this.pastorarr = [];
             this.studentarr = [];
+            this.teacherarr = [];
         }
         else if (id == 3) {
             this.selectedUserType = 'pastor';
             this.belearr = [];
             this.studentarr = [];
+            this.teacherarr = [];
         }
         else if (id == 2) {
             this.selectedUserType = 'student';
             this.belearr = [];
             this.pastorarr = [];
+            this.teacherarr = [];
+        }
+        else if (id == 4) {
+            this.selectedUserType = 'teacher';
+            this.belearr = [];
+            this.pastorarr = [];
+            this.studentarr = [];
         }
         this.fetchSubordinateRequests();
     };
@@ -381,17 +443,19 @@ var WingcommandPage = /** @class */ (function () {
         if (isWing)
             return (x.wing_name || 'వింగ్') + ' లీడర్';
         var gType = String(x.generaltype || '').trim();
-        if (gType === '0' || gType.toLowerCase().includes('state'))
+        var gLower = gType.toLowerCase();
+        var isTeacherRow = this.selectedUserType === 'teacher' || x.role === 'teacher' || String(x.table_name || '') === 'teacher_reg';
+        if (gType.indexOf('రాష్ట్ర') !== -1 || gLower.indexOf('state') !== -1 || (isTeacherRow ? gType === '1' : gType === '0'))
             return 'రాష్ట్ర లీడర్';
-        if (gType === '1' || gType.toLowerCase().includes('dist'))
+        if (gType.indexOf('జిల్లా') !== -1 || gLower.indexOf('dist') !== -1 || (isTeacherRow ? gType === '2' : gType === '1'))
             return 'జిల్లా లీడర్';
-        if (gType === '2' || gType.toLowerCase().includes('const'))
+        if (gType.indexOf('నియోజకవర్గ') !== -1 || gLower.indexOf('const') !== -1 || (isTeacherRow ? gType === '3' : gType === '2'))
             return 'నియోజకవర్గ లీడర్';
-        if (gType === '3' || gType.toLowerCase().includes('mandal') || gType.toLowerCase().includes('municip'))
+        if (gType.indexOf('మండల') !== -1 || gLower.indexOf('mandal') !== -1 || gLower.indexOf('municip') !== -1 || (isTeacherRow ? gType === '4' : gType === '3'))
             return 'మండల లీడర్';
-        if (gType === '4' || gType.toLowerCase().includes('panchayat') || gType.toLowerCase().includes('village'))
+        if (gType.indexOf('పంచాయ') !== -1 || gLower.indexOf('panchayat') !== -1 || gLower.indexOf('village') !== -1 || (isTeacherRow ? gType === '5' : gType === '4'))
             return 'గ్రామ / పంచాయితీ లీడర్';
-        if (gType === '5' || gType === '6' || gType.toLowerCase().includes('ward'))
+        if (gType.indexOf('వార్డు') !== -1 || gLower.indexOf('ward') !== -1 || (isTeacherRow ? gType === '6' : (gType === '5' || gType === '6')))
             return 'వార్డు లీడర్';
         return 'జనరల్ లీడర్';
     };
@@ -410,7 +474,7 @@ var WingcommandPage = /** @class */ (function () {
     };
     WingcommandPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-wingcommand',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\wingcommand\wingcommand.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button icon-only (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>నాయకత్వ అభ్యర్థనలు (Leaders)</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n  <p style="color: white; text-align: center; font-size: 1.1rem; margin-top: 10px;">\n\n    <b>{{ generals }} {{ wingtypes }} {{ leaders }}</b>\n\n  </p>\n\n\n\n  <!-- User Specific Request Header Button -->\n\n  <ion-row style="padding: 0 15px;" justify-content-center>\n\n    <ion-col col-12 text-center *ngIf="formshow == 1">\n\n      <button ion-button block color="primary" style="font-size: 13px; font-weight: 600; height: 42px;">\n\n        👥 Believers Requests (విశ్వాసులు)\n\n      </button>\n\n    </ion-col>\n\n    <ion-col col-12 text-center *ngIf="formshow == 3">\n\n      <button ion-button block color="danger" style="font-size: 13px; font-weight: 600; height: 42px;">\n\n        ✝️ Pastors Requests (పాస్టర్లు)\n\n      </button>\n\n    </ion-col>\n\n    <ion-col col-12 text-center *ngIf="formshow == 2">\n\n      <button ion-button block color="secondary" style="font-size: 13px; font-weight: 600; height: 42px;">\n\n        🎓 Students Requests (విద్యార్థులు)\n\n      </button>\n\n    </ion-col>\n\n  </ion-row>\n\n\n\n  <!-- Believers Requests Card -->\n\n  <ion-card *ngIf="formshow == 1">\n\n    <ion-card-header>\n\n      <ion-card-title text-center style="font-size: 14px; color: #00548F;">\n\n        {{ general != \'\' ? general + \' Level Believers Requests\' : \'Believers Requests\' }} ({{ getSubordinateSubtitle() }})\n\n      </ion-card-title>\n\n    </ion-card-header>\n\n    <ion-card-content>\n\n      <div style="overflow: auto;">\n\n        <table class="table" style="width: 100%;">\n\n          <thead style="text-align: center;">\n\n            <tr>\n\n              <th>S.No</th>\n\n              <th>పేరు (Name)</th>\n\n              <th>స్థాయి</th>\n\n              <th>నియోజకవర్గం</th>\n\n              <th>మండలం</th>\n\n              <th>నిర్ణయం</th>\n\n              <th>కాల్</th>\n\n            </tr>\n\n          </thead>\n\n          <tbody>\n\n            <tr *ngFor="let x of belearr; let i = index" style="text-align: center;">\n\n              <td>{{ i + 1 }}</td>\n\n              <td><b>{{ x.fname }} {{ x.lname || \'\' }}</b></td>\n\n              <td><span style="font-size: 10px; background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 4px;">{{ getDetailedLeaderStatus(x) }}</span></td>\n\n              <td>{{ x.constituency_name || x.nativeplace || \'--\' }}</td>\n\n              <td>{{ x.mandal_name || \'--\' }}</td>\n\n              <td class="actions">\n\n                <ion-label *ngIf="x.approval_ind == 1" style="color: green;"><b>✓ Accepted</b></ion-label>\n\n                <div *ngIf="x.approval_ind == 0 || x.approval_ind == null">\n\n                  <button ion-button small color="success" (click)="confirm(1, x.id)">Confirm</button>\n\n                  <button ion-button small color="danger" (click)="deleteAlert(1, x.id)">Reject</button>\n\n                </div>\n\n              </td>\n\n              <td class="contact">\n\n                <a href="tel:+91{{ x.mobile_number }}">\n\n                  <ion-icon name="call" style="font-size: 20px; color: green;"></ion-icon>\n\n                </a>\n\n              </td>\n\n            </tr>\n\n          </tbody>\n\n        </table>\n\n      </div>\n\n      <h4 *ngIf="!belearr || belearr.length == 0" text-center style="color: #64748b; padding: 20px;">\n\n        ఈ పరిధిలో ఎటువంటి విశ్వాసి అభ్యర్థనలు లేవు / No Believers Requests\n\n      </h4>\n\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n  <!-- Pastors Requests Card -->\n\n  <ion-card *ngIf="formshow == 3">\n\n    <ion-card-header>\n\n      <ion-card-title text-center style="font-size: 14px; color: #8b0000;">\n\n        {{ general != \'\' ? general + \' Level Pastors Requests\' : \'Pastors Requests\' }} ({{ getSubordinateSubtitle() }})\n\n      </ion-card-title>\n\n    </ion-card-header>\n\n    <ion-card-content>\n\n      <div style="overflow: auto;">\n\n        <table class="table" style="width: 100%;">\n\n          <thead style="text-align: center;">\n\n            <tr>\n\n              <th>S.No</th>\n\n              <th>పాస్టర్ పేరు</th>\n\n              <th>స్థాయి</th>\n\n              <th>నియోజకవర్గం</th>\n\n              <th>మండలం</th>\n\n              <th>నిర్ణయం</th>\n\n              <th>కాల్</th>\n\n            </tr>\n\n          </thead>\n\n          <tbody>\n\n            <tr *ngFor="let x of pastorarr; let i = index" style="text-align: center;">\n\n              <td>{{ i + 1 }}</td>\n\n              <td><b>{{ x.pastorname }}</b></td>\n\n              <td><span style="font-size: 10px; background: #fee2e2; color: #991b1b; padding: 2px 6px; border-radius: 4px;">{{ getDetailedLeaderStatus(x) }}</span></td>\n\n              <td>{{ x.constituency_name || x.nativeplace || \'--\' }}</td>\n\n              <td>{{ x.mandal_name || \'--\' }}</td>\n\n              <td class="actions">\n\n                <ion-label *ngIf="x.approval_ind == 1" style="color: green;"><b>✓ Accepted</b></ion-label>\n\n                <div *ngIf="x.approval_ind == 0 || x.approval_ind == null">\n\n                  <button ion-button small color="success" (click)="confirm(3, x.id)">Confirm</button>\n\n                  <button ion-button small color="danger" (click)="deleteAlert(3, x.id)">Reject</button>\n\n                </div>\n\n              </td>\n\n              <td class="contact">\n\n                <a href="tel:+91{{ x.phonenumber }}">\n\n                  <ion-icon name="call" style="font-size: 20px; color: green;"></ion-icon>\n\n                </a>\n\n              </td>\n\n            </tr>\n\n          </tbody>\n\n        </table>\n\n      </div>\n\n      <h4 *ngIf="!pastorarr || pastorarr.length == 0" text-center style="color: #64748b; padding: 20px;">\n\n        ఈ పరిధిలో ఎటువంటి పాస్టర్ అభ్యర్థనలు లేవు / No Pastors Requests\n\n      </h4>\n\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n  <!-- Students Requests Card -->\n\n  <ion-card *ngIf="formshow == 2">\n\n    <ion-card-header>\n\n      <ion-card-title text-center style="font-size: 14px; color: #1e7e34;">\n\n        {{ general != \'\' ? general + \' Level Students Requests\' : \'Students Requests\' }} ({{ getSubordinateSubtitle() }})\n\n      </ion-card-title>\n\n    </ion-card-header>\n\n    <ion-card-content>\n\n      <div style="overflow: auto;">\n\n        <table class="table" style="width: 100%;">\n\n          <thead style="text-align: center;">\n\n            <tr>\n\n              <th>S.No</th>\n\n              <th>విద్యార్థి పేరు</th>\n\n              <th>స్థాయి</th>\n\n              <th>నియోజకవర్గం</th>\n\n              <th>మండలం</th>\n\n              <th>నిర్ణయం</th>\n\n              <th>కాల్</th>\n\n            </tr>\n\n          </thead>\n\n          <tbody>\n\n            <tr *ngFor="let x of studentarr; let i = index" style="text-align: center;">\n\n              <td>{{ i + 1 }}</td>\n\n              <td><b>{{ x.studentname || x.fname }}</b></td>\n\n              <td><span style="font-size: 10px; background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 4px;">{{ getDetailedLeaderStatus(x) }}</span></td>\n\n              <td>{{ x.constituency_name || x.nativeplace || \'--\' }}</td>\n\n              <td>{{ x.mandal_name || \'--\' }}</td>\n\n              <td class="actions">\n\n                <ion-label *ngIf="x.approval_ind == 1" style="color: green;"><b>✓ Accepted</b></ion-label>\n\n                <div *ngIf="x.approval_ind == 0 || x.approval_ind == null">\n\n                  <button ion-button small color="success" (click)="confirm(2, x.id)">Confirm</button>\n\n                  <button ion-button small color="danger" (click)="deleteAlert(2, x.id)">Reject</button>\n\n                </div>\n\n              </td>\n\n              <td class="contact">\n\n                <a href="tel:+91{{ x.number || x.mobile_number }}">\n\n                  <ion-icon name="call" style="font-size: 20px; color: green;"></ion-icon>\n\n                </a>\n\n              </td>\n\n            </tr>\n\n          </tbody>\n\n        </table>\n\n      </div>\n\n      <h4 *ngIf="!studentarr || studentarr.length == 0" text-center style="color: #64748b; padding: 20px;">\n\n        ఈ పరిధిలో ఎటువంటి విద్యార్థి అభ్యర్థనలు లేవు / No Students Requests\n\n      </h4>\n\n    </ion-card-content>\n\n  </ion-card>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\wingcommand\wingcommand.html"*/,
+            selector: 'page-wingcommand',template:/*ion-inline-start:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\wingcommand\wingcommand.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button icon-only (click)="gotohome()">\n\n        <ion-icon style="font-size: 20px;" name="home"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n    <ion-title style="text-align: center;"><b>నాయకత్వ అభ్యర్థనలు (Leaders)</b></ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="pagecss">\n\n  <p style="color: white; text-align: center; font-size: 1.1rem; margin-top: 10px;">\n\n    <b>{{ generals }} {{ wingtypes }} {{ leaders }}</b>\n\n  </p>\n\n\n\n  <!-- User Specific Request Header Button -->\n\n  <ion-row style="padding: 0 15px;" justify-content-center>\n\n    <ion-col col-12 text-center *ngIf="formshow == 1">\n\n      <button ion-button block color="primary" style="font-size: 13px; font-weight: 600; height: 42px;">\n\n        👥 Believers Requests (విశ్వాసులు)\n\n      </button>\n\n    </ion-col>\n\n    <ion-col col-12 text-center *ngIf="formshow == 3">\n\n      <button ion-button block color="danger" style="font-size: 13px; font-weight: 600; height: 42px;">\n\n        ✝️ Pastors Requests (పాస్టర్లు)\n\n      </button>\n\n    </ion-col>\n\n    <ion-col col-12 text-center *ngIf="formshow == 2">\n\n      <button ion-button block color="secondary" style="font-size: 13px; font-weight: 600; height: 42px;">\n\n        🎓 Students Requests (విద్యార్థులు)\n\n      </button>\n\n    </ion-col>\n\n    <ion-col col-12 text-center *ngIf="formshow == 4">\n\n      <button ion-button block style="background-color: #047857; color: #fff; font-size: 13px; font-weight: 600; height: 42px;">\n\n        👨‍🏫 Teachers Requests (ఉపాధ్యాయులు / బోధనా రంగం)\n\n      </button>\n\n    </ion-col>\n\n  </ion-row>\n\n\n\n  <!-- Believers Requests Card -->\n\n  <ion-card *ngIf="formshow == 1">\n\n    <ion-card-header>\n\n      <ion-card-title text-center style="font-size: 14px; color: #00548F;">\n\n        {{ general != \'\' ? general + \' Level Believers Requests\' : \'Believers Requests\' }} ({{ getSubordinateSubtitle() }})\n\n      </ion-card-title>\n\n    </ion-card-header>\n\n    <ion-card-content>\n\n      <div style="overflow: auto;">\n\n        <table class="table" style="width: 100%;">\n\n          <thead style="text-align: center;">\n\n            <tr>\n\n              <th>S.No</th>\n\n              <th>పేరు (Name)</th>\n\n              <th>స్థాయి</th>\n\n              <th>నియోజకవర్గం</th>\n\n              <th>మండలం</th>\n\n              <th>నిర్ణయం</th>\n\n              <th>కాల్</th>\n\n            </tr>\n\n          </thead>\n\n          <tbody>\n\n            <tr *ngFor="let x of belearr; let i = index" style="text-align: center;">\n\n              <td>{{ i + 1 }}</td>\n\n              <td><b>{{ x.fname }} {{ x.lname || \'\' }}</b></td>\n\n              <td><span style="font-size: 10px; background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 4px;">{{ getDetailedLeaderStatus(x) }}</span></td>\n\n              <td>{{ x.constituency_name || x.nativeplace || \'--\' }}</td>\n\n              <td>{{ x.mandal_name || \'--\' }}</td>\n\n              <td class="actions">\n\n                <ion-label *ngIf="x.approval_ind == 1" style="color: green;"><b>✓ Accepted</b></ion-label>\n\n                <div *ngIf="x.approval_ind == 0 || x.approval_ind == null">\n\n                  <button ion-button small color="success" (click)="confirm(1, x.id)">Confirm</button>\n\n                  <button ion-button small color="danger" (click)="deleteAlert(1, x.id)">Reject</button>\n\n                </div>\n\n              </td>\n\n              <td class="contact">\n\n                <a href="tel:+91{{ x.mobile_number }}">\n\n                  <ion-icon name="call" style="font-size: 20px; color: green;"></ion-icon>\n\n                </a>\n\n              </td>\n\n            </tr>\n\n          </tbody>\n\n        </table>\n\n      </div>\n\n      <h4 *ngIf="!belearr || belearr.length == 0" text-center style="color: #64748b; padding: 20px;">\n\n        ఈ పరిధిలో ఎటువంటి విశ్వాసి అభ్యర్థనలు లేవు / No Believers Requests\n\n      </h4>\n\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n  <!-- Pastors Requests Card -->\n\n  <ion-card *ngIf="formshow == 3">\n\n    <ion-card-header>\n\n      <ion-card-title text-center style="font-size: 14px; color: #8b0000;">\n\n        {{ general != \'\' ? general + \' Level Pastors Requests\' : \'Pastors Requests\' }} ({{ getSubordinateSubtitle() }})\n\n      </ion-card-title>\n\n    </ion-card-header>\n\n    <ion-card-content>\n\n      <div style="overflow: auto;">\n\n        <table class="table" style="width: 100%;">\n\n          <thead style="text-align: center;">\n\n            <tr>\n\n              <th>S.No</th>\n\n              <th>పాస్టర్ పేరు</th>\n\n              <th>స్థాయి</th>\n\n              <th>నియోజకవర్గం</th>\n\n              <th>మండలం</th>\n\n              <th>నిర్ణయం</th>\n\n              <th>కాల్</th>\n\n            </tr>\n\n          </thead>\n\n          <tbody>\n\n            <tr *ngFor="let x of pastorarr; let i = index" style="text-align: center;">\n\n              <td>{{ i + 1 }}</td>\n\n              <td><b>{{ x.pastorname }}</b></td>\n\n              <td><span style="font-size: 10px; background: #fee2e2; color: #991b1b; padding: 2px 6px; border-radius: 4px;">{{ getDetailedLeaderStatus(x) }}</span></td>\n\n              <td>{{ x.constituency_name || x.nativeplace || \'--\' }}</td>\n\n              <td>{{ x.mandal_name || \'--\' }}</td>\n\n              <td class="actions">\n\n                <ion-label *ngIf="x.approval_ind == 1" style="color: green;"><b>✓ Accepted</b></ion-label>\n\n                <div *ngIf="x.approval_ind == 0 || x.approval_ind == null">\n\n                  <button ion-button small color="success" (click)="confirm(3, x.id)">Confirm</button>\n\n                  <button ion-button small color="danger" (click)="deleteAlert(3, x.id)">Reject</button>\n\n                </div>\n\n              </td>\n\n              <td class="contact">\n\n                <a href="tel:+91{{ x.phonenumber }}">\n\n                  <ion-icon name="call" style="font-size: 20px; color: green;"></ion-icon>\n\n                </a>\n\n              </td>\n\n            </tr>\n\n          </tbody>\n\n        </table>\n\n      </div>\n\n      <h4 *ngIf="!pastorarr || pastorarr.length == 0" text-center style="color: #64748b; padding: 20px;">\n\n        ఈ పరిధిలో ఎటువంటి పాస్టర్ అభ్యర్థనలు లేవు / No Pastors Requests\n\n      </h4>\n\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n  <!-- Students Requests Card -->\n\n  <ion-card *ngIf="formshow == 2">\n\n    <ion-card-header>\n\n      <ion-card-title text-center style="font-size: 14px; color: #1e7e34;">\n\n        {{ general != \'\' ? general + \' Level Students Requests\' : \'Students Requests\' }} ({{ getSubordinateSubtitle() }})\n\n      </ion-card-title>\n\n    </ion-card-header>\n\n    <ion-card-content>\n\n      <div style="overflow: auto;">\n\n        <table class="table" style="width: 100%;">\n\n          <thead style="text-align: center;">\n\n            <tr>\n\n              <th>S.No</th>\n\n              <th>విద్యార్థి పేరు</th>\n\n              <th>స్థాయి</th>\n\n              <th>నియోజకవర్గం</th>\n\n              <th>మండలం</th>\n\n              <th>నిర్ణయం</th>\n\n              <th>కాల్</th>\n\n            </tr>\n\n          </thead>\n\n          <tbody>\n\n            <tr *ngFor="let x of studentarr; let i = index" style="text-align: center;">\n\n              <td>{{ i + 1 }}</td>\n\n              <td><b>{{ x.studentname || x.fname }}</b></td>\n\n              <td><span style="font-size: 10px; background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 4px;">{{ getDetailedLeaderStatus(x) }}</span></td>\n\n              <td>{{ x.constituency_name || x.nativeplace || \'--\' }}</td>\n\n              <td>{{ x.mandal_name || \'--\' }}</td>\n\n              <td class="actions">\n\n                <ion-label *ngIf="x.approval_ind == 1" style="color: green;"><b>✓ Accepted</b></ion-label>\n\n                <div *ngIf="x.approval_ind == 0 || x.approval_ind == null">\n\n                  <button ion-button small color="success" (click)="confirm(2, x.id)">Confirm</button>\n\n                  <button ion-button small color="danger" (click)="deleteAlert(2, x.id)">Reject</button>\n\n                </div>\n\n              </td>\n\n              <td class="contact">\n\n                <a href="tel:+91{{ x.number || x.mobile_number }}">\n\n                  <ion-icon name="call" style="font-size: 20px; color: green;"></ion-icon>\n\n                </a>\n\n              </td>\n\n            </tr>\n\n          </tbody>\n\n        </table>\n\n      </div>\n\n      <h4 *ngIf="!studentarr || studentarr.length == 0" text-center style="color: #64748b; padding: 20px;">\n\n        ఈ పరిధిలో ఎటువంటి విద్యార్థి అభ్యర్థనలు లేవు / No Students Requests\n\n      </h4>\n\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n  <!-- Teachers Requests Card -->\n\n  <ion-card *ngIf="formshow == 4">\n\n    <ion-card-header>\n\n      <ion-card-title text-center style="font-size: 14px; color: #047857;">\n\n        {{ general != \'\' ? general + \' Level Teacher Leaders Requests\' : \'Teacher Leaders Requests\' }} ({{ getSubordinateSubtitle() }})\n\n      </ion-card-title>\n\n    </ion-card-header>\n\n    <ion-card-content>\n\n      <div style="overflow: auto;">\n\n        <table class="table" style="width: 100%;">\n\n          <thead style="text-align: center;">\n\n            <tr>\n\n              <th>S.No</th>\n\n              <th>పేరు (Name)</th>\n\n              <th>స్థాయి</th>\n\n              <th>నియోజకవర్గం</th>\n\n              <th>మండలం</th>\n\n              <th>నిర్ణయం</th>\n\n              <th>కాల్</th>\n\n            </tr>\n\n          </thead>\n\n          <tbody>\n\n            <tr *ngFor="let x of teacherarr; let i = index" style="text-align: center;">\n\n              <td>{{ i + 1 }}</td>\n\n              <td><b>{{ x.name_with_surname || x.name || \'--\' }}</b></td>\n\n              <td><span style="font-size: 10px; background: #dcfce7; color: #047857; padding: 2px 6px; border-radius: 4px;">{{ getDetailedLeaderStatus(x) }}</span></td>\n\n              <td>{{ x.constituency_name || \'--\' }}</td>\n\n              <td>{{ x.mandal_name || \'--\' }}</td>\n\n              <td class="actions">\n\n                <ion-label *ngIf="x.approval_ind == 1" style="color: green;"><b>✓ Accepted</b></ion-label>\n\n                <div *ngIf="x.approval_ind == 0 || x.approval_ind == null">\n\n                  <button ion-button small color="success" (click)="confirm(4, x.id)">Confirm</button>\n\n                  <button ion-button small color="danger" (click)="deleteAlert(4, x.id)">Reject</button>\n\n                </div>\n\n              </td>\n\n              <td class="contact">\n\n                <a href="tel:+91{{ x.mobile || x.mobile_number }}">\n\n                  <ion-icon name="call" style="font-size: 20px; color: green;"></ion-icon>\n\n                </a>\n\n              </td>\n\n            </tr>\n\n          </tbody>\n\n        </table>\n\n      </div>\n\n      <h4 *ngIf="!teacherarr || teacherarr.length == 0" text-center style="color: #64748b; padding: 20px;">\n\n        ఈ పరిధిలో ఎటువంటి ఉపాధ్యాయ నాయకుల అభ్యర్థనలు లేవు / No Teacher Leader Requests\n\n      </h4>\n\n    </ion-card-content>\n\n  </ion-card>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\rajes\StudioProjects\jbac_app\src\pages\wingcommand\wingcommand.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_service_service__["a" /* ServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */]])
     ], WingcommandPage);

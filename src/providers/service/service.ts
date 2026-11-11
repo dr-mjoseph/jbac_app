@@ -394,5 +394,9 @@ export class ServiceProvider {
   getTeachingMasterData() {
     return this.http.get(this.testApi + 'teaching-master-data');
   }
+
+  getleaderlevel() {
+    return this.http.post(this.testApi + 'leaderlevels', {});
+  }
 }
 

@@ -99,6 +99,8 @@ export class ForgotPasswordPage {
         this.category = 'పాస్టర్ల అసోసియేషన్';
       } else if (this.passloginform.value.category == 8) {
         this.category = 'డాక్టర్ / కౌన్సిలర్';
+      } else if (this.passloginform.value.category == 9) {
+        this.category = 'టీచర్ / బోధనా రంగ ఉద్యోగి';
       }
 
       this.service.checknumberpassword(this.passloginform.value).subscribe((res: any) => {

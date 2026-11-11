@@ -170,6 +170,28 @@
         </div>
       </div>
 
+      <div class="custom-item" style="background: #fff; border-radius: 10px; padding: 12px 14px; margin-bottom: 12px; border: 1px solid #e2e8f0;">
+        <div style="font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 8px;">
+          Do you want to be a Christian Teacher Leader? <span class="req">*</span>
+          <div style="font-size: 12px; font-weight: 400; color: #64748b;">మీరు క్రైస్తవ ఉపాధ్యాయ నాయకుడిగా ఉండాలనుకుంటున్నారా?</div>
+        </div>
+        <div style="display: flex; gap: 24px; align-items: center; padding: 4px 0;">
+          <label style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; color: #1e293b;">
+            <input type="radio" value="YES" formControlName="leadership" (change)="onLeadershipChange('YES')" style="width: 18px; height: 18px;"> YES
+          </label>
+          <label style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; color: #1e293b;">
+            <input type="radio" value="NO" formControlName="leadership" (change)="onLeadershipChange('NO')" style="width: 18px; height: 18px;"> NO
+          </label>
+        </div>
+      </div>
+
+      <ion-item class="custom-item" *ngIf="showTeacherLeadershipLevel">
+        <ion-label stacked>Select Leadership Level you want (నాయకత్వ స్థాయి) <span class="req">*</span></ion-label>
+        <ion-select formControlName="generaltype" okText="సరే" cancelText="రద్దు" placeholder="Select Leadership Level you want">
+          <ion-option *ngFor="let lvl of leaderlevels" [value]="lvl.level || lvl.level_name">{{ lvl.level || lvl.level_name }}</ion-option>
+        </ion-select>
+      </ion-item>
+
 
       <!-- SECTION 3: SOCIAL, FAITH & FAMILY BACKGROUND -->
       <div class="section-heading">3. సామాజిక, ఆధ్యాత్మిక & కుటుంబ నేపథ్యం (Background)</div>

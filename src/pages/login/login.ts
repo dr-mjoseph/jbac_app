@@ -100,6 +100,8 @@ export class LoginPage {
             } else if (this.passloginform.value.category == 8) {
               localStorage.setItem('category', 'Doctor');
               localStorage.setItem('is_doctor', '1');
+            } else if (this.passloginform.value.category == 9) {
+              localStorage.setItem('category', 'Teacher');
             }
           }
 
