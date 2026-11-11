@@ -3,7 +3,7 @@
 This repository contains the native hybrid Android mobile application for the **Jesus Believers Association Council (JBAC)**.
 
 - **Package Name**: `io.ionic.starterjbac`
-- **Current Version**: `0.0.54` (`versionCode: 54`)
+- **Current Version**: `0.0.55` (`versionCode: 55`)
 - **Repository**: [`dr-mjoseph/jbac_app`](https://github.com/dr-mjoseph/jbac_app)
 - **Sibling Web Repository**: [`dr-mjoseph/jbac_web`](https://github.com/dr-mjoseph/jbac_web)
 
@@ -16,11 +16,11 @@ This repository contains the native hybrid Android mobile application for the **
 | **`minSdkVersion`** | `24` | Android 7.0 (Nougat) or higher — complies with Google Play automatic app protection |
 | **`targetSdkVersion`** | `36` | Android API Level 36 |
 | **`compileSdkVersion`** | `36` | Aligned with API Level 36 toolchain |
-| **`versionCode`** | `54` | Google Play Console Release 54 |
-| **`versionName`** | `0.0.54` | Matching semantic release version |
+| **`versionCode`** | `55` | Google Play Console Release 55 |
+| **`versionName`** | `0.0.55` | Matching semantic release version |
 | **Signing Keystore** | `Jbac.keystore` | Production release keystore (Alias: `jbac`, SHA-256 digest) |
-| **Release APK** | `jbacApp-0.0.54.apk` | Signed with v2 & v3 schemes (zipalign 4-byte aligned) |
-| **Release AAB** | `jbacApp-0.0.54.aab` | Signed with `jarsigner` (`SHA256withRSA`) |
+| **Release APK** | `jbacApp-0.0.55.apk` | Signed with v2 & v3 schemes (zipalign 4-byte aligned) |
+| **Release AAB** | `jbacApp-0.0.55.aab` | Signed with `jarsigner` (`SHA256withRSA`) |
 | **Play Store Bundle** | `appreleasesigned.aab` | Play Console ready bundle |
 
 ---
@@ -34,8 +34,10 @@ This repository contains the native hybrid Android mobile application for the **
 
 ---
 
-## 🌟 Recent Updates (Release 0.0.54)
+## 🌟 Recent Updates (Release 0.0.55)
 
+- **Version Code Bump (`0.0.55` / `versionCode: 55`, API Level 36)**:
+  - Incremented unused release version to `0.0.55` (`versionCode 55`, `targetSdkVersion 36`) via `build_and_sign_release_v55.ps1` (`jbacApp-0.0.55.apk`, `jbacApp-0.0.55.aab`, `appreleasesigned.aab`) for Google Play Console upload after `versionCode 54` was already consumed.
 - **Teacher Registration Leadership Fields (`TeacherPage`)**:
   - Added **"Do you want to be a Christian Teacher Leader?"** (`YES` / `NO`) and conditional **"Select Leadership Level you want"** dropdown populated from the `leaderlevel` database table (`ServiceProvider.getleaderlevel()`), positioned directly after CV upload.
 - **Numbered District-to-Sub-Ward Leadership Hierarchy (`PastorPage`, `TeacherPage`, `ProfilePage`, `WingcommandPage`)**:
@@ -45,8 +47,8 @@ This repository contains the native hybrid Android mobile application for the **
   - Added Teacher Leaders view (`formshow == 4`) with strict Teacher-only isolation, admin-approval requirement, 1-step-down hierarchy (`1. District -> 2. Constituency -> 3. Mandal -> 4. Panchayat -> 5. Ward -> 6. Sub-Ward`), same-location filtering, and Confirm/Reject actions (`tableid: 4`).
 - **Help Form Reset, Full Name Rename, Denomination & AP/TG Hierarchy (`HelpPage`)**:
   - Added `పూర్తి పేరు *`, `డెనామినేషన్ *`, strict AP/TG 5-level cascade before `చిరునామా *`, and full post-submit reset (`resetFormCompletely()`).
-- **Release `0.0.54` Automated Build**:
-  - Built and signed with `build_and_sign_release_v54.ps1` (`targetSdkVersion 36`, `versionCode 54`).
+- **Release `0.0.55` Automated Build**:
+  - Built and signed with `build_and_sign_release_v55.ps1` (`targetSdkVersion 36`, `versionCode 55`).
 
 ---
 
@@ -74,32 +76,32 @@ This repository contains the native hybrid Android mobile application for the **
 
 A complete automated build and signing script is included in the mobile repository:
 ```powershell
-powershell -ExecutionPolicy Bypass -File "C:\Users\rajes\StudioProjects\jbac_app\build_and_sign_release_v54.ps1"
+powershell -ExecutionPolicy Bypass -File "C:\Users\rajes\StudioProjects\jbac_app\build_and_sign_release_v55.ps1"
 ```
 
 The script executes the following automated pipeline:
 1. **Compiles Ionic assets & Gradle release binaries**:
    ```bash
    cd platforms/android
-   gradle.bat clean assembleRelease bundleRelease -PcdvVersionCode=54 -PcdvTargetSdkVersion=36 -PcdvBuildToolsVersion=30.0.3 --stacktrace
+   gradle.bat clean assembleRelease bundleRelease -PcdvVersionCode=55 -PcdvTargetSdkVersion=36 -PcdvBuildToolsVersion=30.0.3 --stacktrace
    ```
 2. **Zipaligns & Signs APK** using `apksigner` with `Jbac.keystore`:
    ```bash
-   apksigner sign --ks Jbac.keystore --ks-pass pass:123456 --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true jbacApp-0.0.54.apk
+   apksigner sign --ks Jbac.keystore --ks-pass pass:123456 --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true jbacApp-0.0.55.apk
    ```
 3. **Signs AAB (Android App Bundle)** using `jarsigner` with `Jbac.keystore`:
    ```bash
-   jarsigner -sigalg SHA256withRSA -digestalg SHA-256 -keystore Jbac.keystore -storepass 123456 jbacApp-0.0.54.aab jbac
+   jarsigner -sigalg SHA256withRSA -digestalg SHA-256 -keystore Jbac.keystore -storepass 123456 jbacApp-0.0.55.aab jbac
    ```
-4. **Validates APK badging** using Android `aapt` to verify `minSdkVersion 24`, `targetSdkVersion 36`, and `versionCode 54`.
+4. **Validates APK badging** using Android `aapt` to verify `minSdkVersion 24`, `targetSdkVersion 36`, and `versionCode 55`.
 
 ---
 
-## 📦 Generated Release Artifacts (v0.0.54)
+## 📦 Generated Release Artifacts (v0.0.55)
 
-- **Test APK**: `C:\Users\rajes\StudioProjects\jbac_app\jbacApp-0.0.54.apk`
+- **Test APK**: `C:\Users\rajes\StudioProjects\jbac_app\jbacApp-0.0.55.apk`
   - Suitable for direct sideloading and testing on physical Android devices.
-- **Production AAB**: `C:\Users\rajes\StudioProjects\jbac_app\jbacApp-0.0.54.aab`
+- **Production AAB**: `C:\Users\rajes\StudioProjects\jbac_app\jbacApp-0.0.55.aab`
   - Ready for direct upload to the Google Play Console Production or Open Testing track.
 - **Upload Bundle Alias**: `C:\Users\rajes\StudioProjects\jbac_app\appreleasesigned.aab`
 
