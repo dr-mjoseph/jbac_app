@@ -9,33 +9,116 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content padding class="pagecss">
-  <form [formGroup]="form">
+  <form [formGroup]="form" autocomplete="off">
     <ion-row>
+      <!-- 1. పూర్తి పేరు -->
       <ion-col col-12>
         <ion-item>
-          <ion-label stacked>పేరు <span style="color:red;">*</span></ion-label>
+          <ion-label stacked>పూర్తి పేరు <span style="color:red;">*</span></ion-label>
           <ion-input type="text" formControlName="name" placeholder="మీ పూర్తి పేరు నమోదు చేయండి"></ion-input>
         </ion-item>
       </ion-col>
+
+      <!-- 2. మొబైల్ నంబర్ -->
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>మొబైల్ నంబర్ <span style="color:red;">*</span></ion-label>
-          <ion-input type="tel" maxlength="10" formControlName="mobile_number" placeholder="10 అంకెల మొబైల్ నంబర్"></ion-input>
+          <ion-input type="tel" maxlength="10" formControlName="mobile_number" (ionInput)="numericOnly($event)" placeholder="10 అంకెల మొబైల్ నంబర్"></ion-input>
         </ion-item>
       </ion-col>
+
+      <!-- 3. డెనామినేషన్ -->
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>డెనామినేషన్ <span style="color:red;">*</span></ion-label>
+          <ion-select formControlName="denomination_id" okText="సరే" cancelText="రద్దు" placeholder="డెనామినేషన్ ఎంచుకోండి">
+            <ion-option value="" disabled selected>డెనామినేషన్ ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of denomation" [value]="item.id">
+              {{ item.denomation_name || item.denomination_name || item.denomination }}
+            </ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <!-- 4. రాష్ట్రం (AP & TG) -->
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>రాష్ట్రం <span style="color:red;">*</span></ion-label>
+          <ion-select formControlName="state_id" okText="సరే" cancelText="రద్దు" placeholder="రాష్ట్రం ఎంచుకోండి" (ionChange)="onStateChange($event)">
+            <ion-option value="" disabled selected>రాష్ట్రం ఎంచుకోండి</ion-option>
+            <ion-option value="1">ఆంధ్రప్రదేశ్</ion-option>
+            <ion-option value="2">తెలంగాణ</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <!-- 5. జిల్లా -->
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>జిల్లా <span style="color:red;">*</span></ion-label>
+          <ion-select formControlName="district_id" okText="సరే" cancelText="రద్దు" [disabled]="!form.value.state_id" placeholder="జిల్లాను ఎంచుకోండి" (ionChange)="onDistrictChange($event)">
+            <ion-option value="" disabled selected>జిల్లాను ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of districts" [value]="item.id">
+              {{ item.distrct_nm || item.districtname || item.district_name }}
+            </ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <!-- 6. నియోజకవర్గం -->
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>నియోజకవర్గం <span style="color:red;">*</span></ion-label>
+          <ion-select formControlName="constituency_id" okText="సరే" cancelText="రద్దు" [disabled]="!form.value.district_id" placeholder="నియోజకవర్గాన్ని ఎంచుకోండి" (ionChange)="onConstituencyChange($event)">
+            <ion-option value="" disabled selected>నియోజకవర్గాన్ని ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of constituencies" [value]="item.id">
+              {{ item.const_nm || item.constituencyname || item.name }}
+            </ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <!-- 7. మండలం -->
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>మండలం <span style="color:red;">*</span></ion-label>
+          <ion-select formControlName="mandal_id" okText="సరే" cancelText="రద్దు" [disabled]="!form.value.constituency_id" placeholder="మండలాన్ని ఎంచుకోండి" (ionChange)="onMandalChange($event)">
+            <ion-option value="" disabled selected>మండలాన్ని ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of mandals" [value]="item.id">
+              {{ item.mndl_nm || item.mandalname || item.name }}
+            </ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <!-- 8. పంచాయతీ / వార్డు / సబ్-వార్డు -->
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>పంచాయతీ / వార్డు / సబ్-వార్డు <span style="color:red;">*</span></ion-label>
+          <ion-select formControlName="panchayat_id" okText="సరే" cancelText="రద్దు" [disabled]="!form.value.mandal_id" placeholder="పంచాయతీ / వార్డును ఎంచుకోండి">
+            <ion-option value="" disabled selected>పంచాయతీ / వార్డును ఎంచుకోండి</ion-option>
+            <ion-option *ngFor="let item of panchayats" [value]="item.id">
+              {{ item.pnchyt_nm || item.panchayatname || item.name }}
+            </ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <!-- 9. చిరునామా (Placed after Panchayat/Ward/Sub-Ward) -->
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>చిరునామా <span style="color:red;">*</span></ion-label>
-          <ion-textarea formControlName="address" placeholder="పూర్తి చిరునామా నమోదు చేయండి"></ion-textarea>
+          <ion-textarea formControlName="address" placeholder="ఇంటి నంబర్, వీధి, కాలనీ / గ్రామం మొదలైన పూర్తి చిరునామా"></ion-textarea>
         </ion-item>
       </ion-col>
+
+      <!-- 10. సహాయం రకం -->
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>సహాయం రకం <span style="color:red;">*</span></ion-label>
-          <ion-select formControlName="help" placeholder="సహాయం ఎంచుకోండి">
-            <ion-option value="" disabled selected>సహాయం ఎంచుకోండి</ion-option>
+          <ion-select formControlName="help" okText="సరే" cancelText="రద్దు" placeholder="సహాయం రకాన్ని ఎంచుకోండి">
+            <ion-option value="" disabled selected>సహాయం రకాన్ని ఎంచుకోండి</ion-option>
             <ion-option value="CommunitySupport Help">కమ్యూనిటీ సహాయం</ion-option>
             <ion-option value="Education Help">విద్య సహాయం</ion-option>
             <ion-option value="Financial Help">ఆర్థిక సహాయం</ion-option>
@@ -48,12 +131,16 @@
           </ion-select>
         </ion-item>
       </ion-col>
+
+      <!-- 11. సహాయ వివరాలు / వివరణ -->
       <ion-col col-12>
         <ion-item>
           <ion-label stacked>సహాయ వివరాలు / వివరణ <span style="color:red;">*</span></ion-label>
           <ion-textarea formControlName="description" placeholder="మీకు అవసరమైన సహాయం గురించి వివరంగా రాయండి"></ion-textarea>
         </ion-item>
       </ion-col>
+
+      <!-- 12. చిత్రం అప్‌లోడ్ (ఐచ్ఛికం) -->
       <ion-col col-12>
         <div class="imgerdt" style="padding: 12px; text-align: center; border: 2px dashed #00548F; border-radius: 8px; background: #fafafa;">
           <img src="assets/icon/upload.svg" style="height: 60px; width: 60px; display: block; margin: 0 auto 6px;">
@@ -61,18 +148,17 @@
           <input type="file" id="helpFileInput" (change)="onFileSelected($event)" accept="image/*" style="display: block; width: 100%; max-width: 290px; margin: 0 auto 10px; padding: 6px; background: #fff; border: 1px solid #ccc; border-radius: 4px;">
           <input type="file" id="helpCameraInput" (change)="onFileSelected($event)" accept="image/*" capture="environment" style="display: none;">
           <button ion-button small outline icon-start type="button" (click)="openphoto()" style="margin: 0 auto; display: inline-block;">
-            <ion-icon name="camera"></ion-icon> Camera / Gallery
+            <ion-icon name="camera"></ion-icon> కెమెరా / గ్యాలరీ
           </button>
           <div *ngIf="imagesdata.length" style="margin-top: 12px;">
             <img style="max-height: 200px; max-width: 100%; border-radius: 8px; border: 1px solid #00548F;" [src]="imagesdata[0].reviewimg || imagesdata[0].reviewImg">
           </div>
         </div>
       </ion-col>
+
       <ion-col col-12 style="text-align: center; margin-top: 15px;">
         <button ion-button color="secondary" block (click)="postmeetings()" style="letter-spacing: 1px; font-weight: bold;">సమర్పించండి</button>
       </ion-col>
-
     </ion-row>
   </form>
-
 </ion-content>
